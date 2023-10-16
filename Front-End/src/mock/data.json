@@ -1,0 +1,97 @@
+[
+  {
+    "id": 1,
+    "name": "Club 1",
+    "images": ["image1", "image2", "image3"],
+    "location": {
+      "id": 1,
+      "city": "Buenos Aires",
+      "postal_code": 1111,
+      "address": "AV bla bla bla"
+    },
+    "playing_field": {
+      "id": 1,
+      "images": ["image1", "image2", "image3"],
+      "sports": {
+        "id": 1,
+        "name": "Deporte 1"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "name": "Club 1",
+    "images": ["image1", "image2", "image3"],
+    "location": {
+      "id": 2,
+      "city": "Buenos Aires",
+      "postal_code": 1111,
+      "address": "AV bla bla bla"
+    },
+    "playing_field": {
+      "id": 2,
+      "images": ["image1", "image2", "image3"],
+      "sports": {
+        "id": 2,
+        "name": "Deporte 1"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "name": "Club 1",
+    "images": ["image1", "image2", "image3"],
+    "location": {
+      "id": 3,
+      "city": "Buenos Aires",
+      "postal_code": 1111,
+      "address": "AV bla bla bla"
+    },
+    "playing_field": {
+      "id": 3,
+      "images": ["image1", "image2", "image3"],
+      "sports": {
+        "id": 3,
+        "name": "Deporte 1"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "name": "Club 1",
+    "images": ["image1", "image2", "image3"],
+    "location": {
+      "id": 4,
+      "city": "Buenos Aires",
+      "postal_code": 1111,
+      "address": "AV bla bla bla"
+    },
+    "playing_field": {
+      "id": 4,
+      "images": ["image1", "image2", "image3"],
+      "sports": {
+        "id": 4,
+        "name": "Deporte 1"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "name": "Club 1",
+    "images": ["image1", "image2", "image3"],
+    "location": {
+      "id": 5,
+      "city": "Buenos Aires",
+      "postal_code": 1111,
+      "address": "AV bla bla bla"
+    },
+    "playing_field": {
+      "id": 5,
+      "images": ["image1", "image2", "image3"],
+      "sports": {
+        "id": 5,
+        "name": "Deporte 1"
+      }
+    }
+  }
+]
