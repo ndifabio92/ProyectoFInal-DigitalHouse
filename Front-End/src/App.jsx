@@ -1,13 +1,10 @@
-import {Container } from '@mui/material/'
 import './App.css'
-import Header from './components/Header'
+import { Navigation } from './routes/navigation'
 
-function App() {
-  
+const App = () => {
+
   return (
-    <Container>
-      <Header/>
-    </Container>
+    <Navigation />
   )
 }
 
