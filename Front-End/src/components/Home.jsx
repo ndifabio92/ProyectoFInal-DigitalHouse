@@ -5,7 +5,7 @@ import Recomendations from './Recomendations';
 import SearchBar from './SearchBar';
 
 
-function Body() {
+function Home() {
   return (
     <Container maxWidth="xxl"
         sx={{
@@ -23,4 +23,4 @@ function Body() {
   );
 }
 
-export default Body;
+export default Home;

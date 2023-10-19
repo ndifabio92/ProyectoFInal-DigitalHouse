@@ -1,17 +1,27 @@
 import Container from '@mui/material/Box';
-
+import SearchBoxCity from './SearchBoxCity';
+import SearchBoxSport from './SearchBoxSport';
+import InputDate from './InputDate';
+import InputTime from './inputTime';
 
 function SearchBar() {
   return (
     <Container maxWidth="xxl"
       sx={{
-        margin: '10px',
         color: '#1F2E7B',
-        
+        display:'flex',
+        flexWrap: 'wrap',
+        gap:'20px',
+        alignItems:'center',
+        justifyContent:'space-around',
+        margin: '40px'
       }}
      >
-
-        esta es la barra de busqueda
+      
+      <SearchBoxCity/>
+      <SearchBoxSport/>
+      <InputDate/>
+      <InputTime/>
 
     </Container>
     
