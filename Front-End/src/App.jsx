@@ -1,13 +1,15 @@
-import {Container } from '@mui/material/'
+
 import './App.css'
-import Header from './components/Header'
+import Header from './components/Header.jsx'
+import Body from './components/Home'
 
 function App() {
   
   return (
-    <Container>
+    <>
       <Header/>
-    </Container>
+      <Body/>
+    </>
   )
 }
 
