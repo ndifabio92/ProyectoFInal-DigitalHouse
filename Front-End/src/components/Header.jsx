@@ -45,8 +45,9 @@ function Header() {
             padding:'0px',
             margin:'0px',
             backgroundColor: '#1F2E7B', 
-            height: '100px',
-    
+            height: '110px',
+            borderBottom:'5px solid #FF914D',
+            borderTop:'5px solid #FF914D',
             }}
           >
 

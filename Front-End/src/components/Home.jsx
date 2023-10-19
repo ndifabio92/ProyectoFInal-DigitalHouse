@@ -7,13 +7,17 @@ import SearchBar from './SearchBar';
 
 function Home() {
   return (
-    <Container maxWidth="xxl"
+    <Container id='home' maxWidth="xxl"
         sx={{
-            padding:'0',
-            mt:'100px',
+            padding:'0px',
+            paddingLeft: '0px',
+            paddingRight: '0px',
+            mt:'105px',
+            mb:'43px',
             display: 'flex',
             flexDirection: 'column',
             textAlign:'center',
+            width: '100%',
         }}
      >
         <SearchBar/>
