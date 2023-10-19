@@ -5,12 +5,13 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 
 const ciudades = [
-  { label: 'Córdoba'},
+  { label: "Córdoba"},
   { label: "Mendoza"},
   { label: "Buenos Aires"},
-];
 
-export default function SearchBoxCity() {
+
+];
+ const SearchBoxCity = (props) => {
 
   const [city, setCity] = React.useState('')
 
@@ -19,13 +20,22 @@ export default function SearchBoxCity() {
       disablePortal
       id="searchBoxCity"
       options={ciudades}
-      sx={{ width: 200 }}
-      renderInput={(params) => <TextField {...params} label="Ciudad" />}
+      sx={{ 
+        width: 200,
+        color: '#FF914D',
+      }}
+      renderInput={(params) => <TextField {...params} label="Ciudad" 
       value={city}
-      onChange={(newCity) => setCity(newCity)}
+      sx={{color: '#FF914D',}}
+      onChange={(newCity) =>{
+        setCity(newCity)
+        props(newCity)
+      }} />}
     />
     
 
   );
 }
 
+
+export default SearchBoxCity

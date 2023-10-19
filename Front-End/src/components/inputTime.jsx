@@ -7,19 +7,25 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 
 
-export default function InputTime() {
-    const [hour, setHour] = React.useState('')
+const InputTime = (props) => {
   
+    const [time, setTime] = React.useState('')
+
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['TimePicker']}>
             <TimePicker
               label="Elige un horario"
               sx={{ width: 200 }}
-              value={hour}
-              onChange={(newHour) => setHour(newHour)}
+              value={time}
+              onChange={(newTime) => {
+              setTime(newTime)
+              props(newTime)
+              }}
             />
           </DemoContainer>
       </LocalizationProvider>
     );
   }
+
+  export default InputTime

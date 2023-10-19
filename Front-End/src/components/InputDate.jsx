@@ -10,7 +10,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 const today = new Date()
 const inicialDay = (today.getFullYear() + '-'+ today.getMonth + '-'+ today.getDay)
 
-export default function InputDate() {
+const InputDate = (props) => {
+
     const [date, setDate] = React.useState(dayjs(inicialDay));
 
   
@@ -21,10 +22,14 @@ export default function InputDate() {
               label="Elige un día"
               sx={{ width: 200 }}
               value={date}
-              onChange={(newDate) => setDate(newDate)}
+              onChange={(newDate) => {
+                setDate(newDate)
+                props(newDate)
+              }}
             />
           </DemoContainer>
       </LocalizationProvider>
     );
   }
 
+  export default InputDate
