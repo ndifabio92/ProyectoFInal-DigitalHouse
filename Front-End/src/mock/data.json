@@ -9,8 +9,6 @@
       "zip": 1043,
       "street": "Av. Córdoba 4580"
     },
-    "zip": 1111,
-    "street": "AV bla bla bla",
     "phone_number": 111111,
     "playing_field": {
       "id": 1,
@@ -30,8 +28,6 @@
       "zip": 5000,
       "street": "Av. Concepcion Arenales 280"
     },
-    "zip": 1111,
-    "street": "AV bla bla bla",
     "phone_number": 111111,
     "playing_field": {
       "id": 2,
@@ -51,8 +47,6 @@
       "zip": 5500,
       "street": "Av. Colón 4598"
     },
-    "zip": 1111,
-    "street": "AV bla bla bla",
     "phone_number": 111111,
     "playing_field": {
       "id": 3,
@@ -65,15 +59,13 @@
   {
     "id": 4,
     "name": "SWING NATACION",
-    "images": ["./nat1.png", "./nat2.png", "./nat4.png"],
+    "images": ["./nat1.png", "./nat2.png", "./nat.jpg"],
     "location": {
       "id": 4,
       "city": "Buenos Aires",
       "zip": 1120,
       "street": "Av. San Martin 3800"
     },
-    "zip": 1111,
-    "street": "AV bla bla bla",
     "phone_number": 111111,
     "playing_field": {
       "id": 4,
