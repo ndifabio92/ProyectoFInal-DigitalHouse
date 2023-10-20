@@ -106,9 +106,7 @@ const Recomendations = () => {
 
   const { data } = useDataMock();
 
-  const maxSteps = 4
-
-  console.log(maxSteps)
+  const maxSteps = data ? data.length : 2;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -123,113 +121,115 @@ const Recomendations = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ 
+    <Container maxWidth="xl" sx={{
       backgroundColor: '#FFFFFF',
       color: '#1F2E7B',
     }}>
 
-    <h2>Nuestras Recomendaciones</h2>
-    
-      <Box maxWidth="md"
-        sx={{ 
-          mx:'auto',
-          backgroundColor: '#FFFFFF',
-          flexGrow: 1,
-          
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
+      <h2>Nuestras Recomendaciones</h2>
 
-        
-
-        <Paper
-          square
-          elevation={0}
+      {
+        data &&
+        <Box maxWidth="md"
           sx={{
+            mx: 'auto',
+            backgroundColor: '#FFFFFF',
+            flexGrow: 1,
+
+            textAlign: 'center',
             display: 'flex',
-            alignItems: 'center',
-            height: 50,
-            pl: 2,
-            bgcolor: 'background.default',
-            textAlign: 'center',
-          }}
-        >
-          <Typography
-          sx={{
-            maxWidth:800,
-            textAlign: 'center',
-          }}
-          >{data[activeStep]?.name}</Typography>
-        </Paper>
+            flexDirection: 'column',
+          }}>
+          <Paper
+            square
+            elevation={0}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              height: 50,
+              pl: 2,
+              bgcolor: 'background.default',
+              textAlign: 'center',
+            }}
+          >
+            <Typography
+              sx={{
+                maxWidth: 800,
+                textAlign: 'center',
+              }}
+            >{data[activeStep].name}</Typography>
+          </Paper>
 
-        <AutoPlaySwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
-        >
-          {data?.map((club, index) => (
-            <div key={club.id}>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <Container>
-                  <Box
-                  component="img"
-                  sx={{
-                    height: 255,
-                    maxWidth: 400,
-                    overflow: 'hidden',
-                    width: '100%',
-                  }}
-                  src={club.images[0]}
-                />
-                <Box
-                  component="img"
-                  sx={{
-                    height: 255,
-                    maxWidth: 400,
-                    overflow: 'hidden',
-                    width: '100%',
-                  }}
-                  src={club.images[1]}
-                />
+          <AutoPlaySwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={activeStep}
+            onChangeIndex={handleStepChange}
+            enableMouseEvents
+          >
+            {
+              data.map((club, index) => (
+                <div key={club.id}>
+                  {Math.abs(activeStep - index) <= 2 ? (
+                    <Container>
+                      <Box
+                        component="img"
+                        sx={{
+                          height: 255,
+                          maxWidth: 400,
+                          overflow: 'hidden',
+                          width: '100%',
+                        }}
+                        src={club.images[0]}
+                      />
+                      <Box
+                        component="img"
+                        sx={{
+                          height: 255,
+                          maxWidth: 400,
+                          overflow: 'hidden',
+                          width: '100%',
+                        }}
+                        src={club.images[1]}
+                      />
 
-                </Container>
-                
-              ) : null}
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
-        <MobileStepper
-          steps={maxSteps}
-          position="static"
-          activeStep={activeStep}
-          nextButton={
-            <Button
-              size="small"
-              onClick={handleNext}
-              disabled={activeStep === maxSteps - 1}
-            >
-              Next
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-              Back
-            </Button>
-          }
-        />
-      </Box>
+                    </Container>
+
+                  ) : null}
+                </div>
+              ))
+            }
+          </AutoPlaySwipeableViews>
+          <MobileStepper
+            steps={maxSteps}
+            position="static"
+            activeStep={activeStep}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={activeStep === maxSteps - 1}
+              >
+                Next
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowLeft />
+                ) : (
+                  <KeyboardArrowRight />
+                )}
+              </Button>
+            }
+            backButton={
+              <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowRight />
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
+                Back
+              </Button>
+            }
+          />
+        </Box>
+      }
     </Container>
   );
 }
