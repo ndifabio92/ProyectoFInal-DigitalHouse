@@ -1,11 +1,10 @@
-
 import { Container } from '@mui/material';
-import Categories from '../../components/Categories';
-import Recomendations from '../../components/Recomendations';
-import SearchBar from '../../components/SearchBar';
+import Categories from '../../components/categories/Categories';
+import Recomendations from '../../components/recomendations/Recomendations';
+import SearchBar from '../../components/ui/search/SearchBar';
 
 
-function Home() {
+const Home = () => {
   return (
     <Container maxWidth="xxl"
       sx={{

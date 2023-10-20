@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = ['Crear cuenta', 'Iniciar sesión'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Header() {
+const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -39,7 +39,6 @@ function Header() {
 
   return (
 
-
     <AppBar position="fixed">
       <Container maxWidth="xxl" sx={{
         padding: '0px',
@@ -51,12 +50,11 @@ function Header() {
       >
 
         <Toolbar disableGutters>
-
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               display: 'flex',
               fontFamily: 'monospace',
@@ -130,11 +128,13 @@ function Header() {
                 alignContent: 'rigth',
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              {
+                pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))
+              }
             </Menu>
           </Box>
 
@@ -165,11 +165,13 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {
+                settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))
+              }
             </Menu>
           </Box>
 
