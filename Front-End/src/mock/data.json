@@ -9,6 +9,9 @@
       "zip": 1043,
       "street": "Av. Córdoba 4580"
     },
+    "zip": 1111,
+    "street": "AV bla bla bla",
+    "phone_number": 111111,
     "playing_field": {
       "id": 1,
       "sports": {
@@ -27,6 +30,9 @@
       "zip": 5000,
       "street": "Av. Concepcion Arenales 280"
     },
+    "zip": 1111,
+    "street": "AV bla bla bla",
+    "phone_number": 111111,
     "playing_field": {
       "id": 2,
       "sports": {
@@ -45,6 +51,9 @@
       "zip": 5500,
       "street": "Av. Colón 4598"
     },
+    "zip": 1111,
+    "street": "AV bla bla bla",
+    "phone_number": 111111,
     "playing_field": {
       "id": 3,
       "sports": {
@@ -63,6 +72,9 @@
       "zip": 1120,
       "street": "Av. San Martin 3800"
     },
+    "zip": 1111,
+    "street": "AV bla bla bla",
+    "phone_number": 111111,
     "playing_field": {
       "id": 4,
       "sports": {
@@ -71,5 +83,4 @@
       }
     }
   }
-  
 ]
