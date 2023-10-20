@@ -1,4 +1,4 @@
-import FormAdmin from "../../components/admin/FormAdmin";
+import FormAdmin from "../../components/admin/form/FormAdmin";
 
 const Admin = () => {
     return (
