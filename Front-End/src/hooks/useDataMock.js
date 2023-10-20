@@ -22,6 +22,7 @@ const useDataMock = () => {
         };
 
         fetchData();
+        
     }, []);
 
     return { data, isLoading };

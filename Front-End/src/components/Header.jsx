@@ -41,11 +41,12 @@ function Header() {
 
     
     <AppBar position="fixed">
-      <Container maxWidth="xxl" sx = {{
+      <Container maxWidth="xxl" sx={{
             padding:'0px',
             margin:'0px',
             backgroundColor: '#1F2E7B', 
-            height: '100px'
+            height: '100px',
+    
             }}
           >
 
@@ -65,7 +66,7 @@ function Header() {
                     }}
                   >
                     <img src={logo} style={{ height: '100px' }}/>
-                    <spam>Qué Deporte jugamos hoy? </spam>
+                    <span>Qué Deporte jugamos hoy? </span>
                 </Typography>
 
 
