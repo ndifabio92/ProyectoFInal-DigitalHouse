@@ -25,6 +25,7 @@ function CardProducts({name, url, city }) {
                     component="img"
                     height={150}
                     image={url}
+                    sx={{margin: '20px'}}
                     />
                     <CardContent sx={{ 
                     width: 600,

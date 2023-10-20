@@ -12,14 +12,14 @@ function Categories() {
   return (
     <Container maxWidth="xxl"
       sx={{
-        margin: '10px',
         backgroundColor: '#FFFFFF', 
         color: '#1F2E7B',
         display:'flex',
         justifyContent:'space-around',
         textAlign:'center',
         gap:'10px',
-        flexWrap:'wrap'
+        flexWrap:'wrap',
+        padding:'40px'
       }}
      >
       

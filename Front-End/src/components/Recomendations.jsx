@@ -14,7 +14,6 @@ function Recomendations() {
   return (
     <Container maxWidth="xxl"
       sx={{
-        margin: '10px',
         color: '#FFFFFF', 
         backgroundColor: '#1F2E7B',
         textAlign:'center',
@@ -22,7 +21,7 @@ function Recomendations() {
      >
       <h2>NUESTRAS RECOMENDACIONES</h2>
       <Box sx={{
-        margin: '10px',
+        margin: '30px',
         backgroundColor: '#1F2E7B', 
         color: '#1F2E7B',
         display:'flex',
