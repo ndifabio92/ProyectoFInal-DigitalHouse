@@ -16,89 +16,6 @@ import { Container } from '@mui/material';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-/*
-const  data  = [
-  {
-    "id": 1,
-    "name": "LOS AMIGOS FUTBOL 5",
-    "images": ["./futbol3.png", "./futbol2.png", "./futbol3.png"],
-    "location": {
-      "id": 1,
-      "city": "Buenos Aires",
-      "zip": 1043,
-      "street": "Av. Córdoba 4580"
-    },
-    "phone_number": 111111,
-    "playing_field": {
-      "id": 1,
-      "sports": {
-        "id": 1,
-        "name": "Futbol"
-      }
-    }
-  },
-  {
-    "id": 2,
-    "name": "LAWN TENIS CLUB",
-    "images": ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png"],
-    "location": {
-      "id": 2,
-      "city": "Córdoba",
-      "zip": 5000,
-      "street": "Av. Concepcion Arenales 280"
-    },
-    "phone_number": 111111,
-    "playing_field": {
-      "id": 2,
-      "sports": {
-        "id": 2,
-        "name": "Tenis"
-      }
-    }
-  },
-  {
-    "id": 3,
-    "name": "LAS PALETAS CLUB DE PADEL",
-    "images": ["./padel1.jpg", "./padel2.jpg", "./padel3.jpg"],
-    "location": {
-      "id": 3,
-      "city": "Mendoza",
-      "zip": 5500,
-      "street": "Av. Colón 4598"
-    },
-    "phone_number": 111111,
-    "playing_field": {
-      "id": 3,
-      "sports": {
-        "id": 3,
-        "name": "Padel"
-      }
-    }
-  },
-  {
-    "id": 4,
-    "name": "SWING NATACION",
-    "images": ["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg"],
-    "location": {
-      "id": 4,
-      "city": "Buenos Aires",
-      "zip": 1120,
-      "street": "Av. San Martin 3800"
-    },
-    "phone_number": 111111,
-    "playing_field": {
-      "id": 4,
-      "sports": {
-        "id": 4,
-        "name": "Natación"
-      }
-    }
-  }
-]
-
-*/
-
-
 const Recomendations = () => {
 
   const theme = useTheme();
@@ -106,7 +23,7 @@ const Recomendations = () => {
 
   const { data } = useDataMock();
 
-  const maxSteps = data ? data.length : 2;
+  const maxSteps = data ? data.length : 0;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -120,6 +37,8 @@ const Recomendations = () => {
     setActiveStep(step);
   };
 
+  if(maxSteps>0){
+
   return (
     <Container maxWidth="xl" sx={{
       backgroundColor: '#FFFFFF',
@@ -130,13 +49,13 @@ const Recomendations = () => {
 
       {
         data &&
-        <Box maxWidth="md"
+        <Box maxWidth="xl"
           sx={{
             mx: 'auto',
             backgroundColor: '#FFFFFF',
             flexGrow: 1,
-
             textAlign: 'center',
+            justifyContent:'center',
             display: 'flex',
             flexDirection: 'column',
           }}>
@@ -148,6 +67,8 @@ const Recomendations = () => {
               alignItems: 'center',
               height: 50,
               pl: 2,
+              color: '#1F2E7B',
+              justifyContent:'center',
               bgcolor: 'background.default',
               textAlign: 'center',
             }}
@@ -171,26 +92,19 @@ const Recomendations = () => {
                 <div key={club.id}>
                   {Math.abs(activeStep - index) <= 2 ? (
                     <Container>
-                      <Box
+                      {club.images.map((image, imageIndex) => (
+                        <Box
                         component="img"
+                        key={imageIndex}
                         sx={{
-                          height: 255,
-                          maxWidth: 400,
+                          maxWidth: 230,
+                          maxHeight: 130,
                           overflow: 'hidden',
                           width: '100%',
                         }}
-                        src={club.images[0]}
-                      />
-                      <Box
-                        component="img"
-                        sx={{
-                          height: 255,
-                          maxWidth: 400,
-                          overflow: 'hidden',
-                          width: '100%',
-                        }}
-                        src={club.images[1]}
-                      />
+                        src={image}
+                      />                          
+                      ))}
 
                     </Container>
 
@@ -198,8 +112,16 @@ const Recomendations = () => {
                 </div>
               ))
             }
-          </AutoPlaySwipeableViews>
+          </AutoPlaySwipeableViews >
+          
           <MobileStepper
+            sx={{display:'flex',
+              justifyContent:'space-between',
+              flexWrap:'nowrap',
+              mx:'auto',
+              width:'300px',
+              textAlign: 'center',
+              }}
             steps={maxSteps}
             position="static"
             activeStep={activeStep}
@@ -232,8 +154,34 @@ const Recomendations = () => {
       }
     </Container>
   );
+
+  }
+
+
 }
 
 export default Recomendations;
 
 
+/*
+
+<Box
+                        component="img"
+                        sx={{
+                          height: 255,
+                          maxWidth: 400,
+                          overflow: 'hidden',
+                          width: '100%',
+                        }}
+                        src={club.images[0]}
+                      />
+                      <Box
+                        component="img"
+                        sx={{
+                          height: 255,
+                          maxWidth: 400,
+                          overflow: 'hidden',
+                          width: '100%',
+                        }}
+                        src={club.images[1]}
+                      />*/
