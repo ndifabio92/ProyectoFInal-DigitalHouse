@@ -40,11 +40,7 @@ const Recomendations = () => {
 
 
   return (
-    <Container maxWidth="xl" sx={{
-      backgroundColor: '#FFFFFF',
-      color: '#1F2E7B',
-    }}>
-
+    <>
       {
         data &&
         <Box maxWidth="xl"
@@ -153,7 +149,7 @@ const Recomendations = () => {
           />
         </Box>
       }
-    </Container>
+    </>
   );
 
   
