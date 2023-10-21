@@ -37,15 +37,13 @@ const Recomendations = () => {
     setActiveStep(step);
   };
 
-  if(maxSteps>0){
+
 
   return (
     <Container maxWidth="xl" sx={{
       backgroundColor: '#FFFFFF',
       color: '#1F2E7B',
     }}>
-
-      <h2>Nuestras Recomendaciones</h2>
 
       {
         data &&
@@ -59,6 +57,9 @@ const Recomendations = () => {
             display: 'flex',
             flexDirection: 'column',
           }}>
+
+          <h2>Nuestras Recomendaciones</h2>
+
           <Paper
             square
             elevation={0}
@@ -155,33 +156,10 @@ const Recomendations = () => {
     </Container>
   );
 
-  }
+  
 
 
 }
 
 export default Recomendations;
 
-
-/*
-
-<Box
-                        component="img"
-                        sx={{
-                          height: 255,
-                          maxWidth: 400,
-                          overflow: 'hidden',
-                          width: '100%',
-                        }}
-                        src={club.images[0]}
-                      />
-                      <Box
-                        component="img"
-                        sx={{
-                          height: 255,
-                          maxWidth: 400,
-                          overflow: 'hidden',
-                          width: '100%',
-                        }}
-                        src={club.images[1]}
-                      />*/
