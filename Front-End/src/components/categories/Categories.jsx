@@ -18,7 +18,7 @@ const Categories = () => {
         textAlign: 'center',
         gap: '10px',
         flexWrap: 'wrap',
-        padding: '40px'
+        padding: '100px'
       }}
     >
 
