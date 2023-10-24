@@ -3,7 +3,7 @@ package com.dh.canchas365.security;
 import com.dh.canchas365.security.filters.JwtAuthenticationFilter;
 import com.dh.canchas365.security.filters.JwtAuthorizationFilter;
 import com.dh.canchas365.security.jwt.JwtUtils;
-import com.dh.canchas365.service.UserDetailsServiceImpl;
+import com.dh.canchas365.service.auth.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,8 +54,10 @@ public class SecurityConfig {
                     // permito crear roles para crear los roles iniciales.. luego comentar
                     //auth.requestMatchers("/rol/create").permitAll();
                     // permito crear usuario para crear el usuario maestro.. luego comentar
-                    auth.requestMatchers("/usuarios/crear").permitAll();
-                    auth.anyRequest().authenticated();
+                    //auth.requestMatchers("/usuarios/crear").permitAll();
+                    // comento esta linea que me quite el secrity a toda la API
+                    //auth.anyRequest().authenticated();
+                    auth.anyRequest().permitAll();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

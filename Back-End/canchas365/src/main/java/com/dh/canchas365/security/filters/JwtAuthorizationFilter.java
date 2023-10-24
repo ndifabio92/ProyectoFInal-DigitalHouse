@@ -1,7 +1,7 @@
 package com.dh.canchas365.security.filters;
 
 import com.dh.canchas365.security.jwt.JwtUtils;
-import com.dh.canchas365.service.UserDetailsServiceImpl;
+import com.dh.canchas365.service.auth.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

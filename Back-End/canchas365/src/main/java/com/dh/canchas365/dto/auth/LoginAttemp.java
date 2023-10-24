@@ -1,4 +1,4 @@
-package com.dh.canchas365.dto;
+package com.dh.canchas365.dto.auth;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

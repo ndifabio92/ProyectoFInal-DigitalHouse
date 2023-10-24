@@ -1,4 +1,4 @@
-package com.dh.canchas365.controller;
+package com.dh.canchas365.controller.auth;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,12 +1,12 @@
-package com.dh.canchas365.controller;
+package com.dh.canchas365.controller.auth;
 
-import com.dh.canchas365.dto.CrearUsuarioDTO;
-import com.dh.canchas365.dto.LoginAttemp;
-import com.dh.canchas365.dto.UsuarioDto;
-import com.dh.canchas365.model.ERol;
-import com.dh.canchas365.model.Rol;
-import com.dh.canchas365.model.Usuario;
-import com.dh.canchas365.repository.UsuarioRepository;
+import com.dh.canchas365.dto.auth.CrearUsuarioDTO;
+import com.dh.canchas365.dto.auth.LoginAttemp;
+import com.dh.canchas365.dto.auth.UsuarioDto;
+import com.dh.canchas365.model.emun.ERol;
+import com.dh.canchas365.model.auth.Rol;
+import com.dh.canchas365.model.auth.Usuario;
+import com.dh.canchas365.repository.auth.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

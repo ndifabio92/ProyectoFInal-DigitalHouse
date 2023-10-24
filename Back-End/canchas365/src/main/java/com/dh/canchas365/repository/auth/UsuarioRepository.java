@@ -1,6 +1,6 @@
-package com.dh.canchas365.repository;
+package com.dh.canchas365.repository.auth;
 
-import com.dh.canchas365.model.Usuario;
+import com.dh.canchas365.model.auth.Usuario;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

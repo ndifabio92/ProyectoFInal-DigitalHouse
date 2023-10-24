@@ -1,4 +1,4 @@
-package com.dh.canchas365.service;
+package com.dh.canchas365.service.auth;
 
 import org.springframework.stereotype.Service;
 

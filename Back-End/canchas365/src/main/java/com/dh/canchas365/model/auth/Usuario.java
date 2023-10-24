@@ -1,5 +1,6 @@
-package com.dh.canchas365.model;
+package com.dh.canchas365.model.auth;
 
+import com.dh.canchas365.model.auth.Rol;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -40,7 +41,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "id_operador", referencedColumnName = "op_codoper", nullable = false)
     private Operador operador;*/
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Rol.class, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Rol.class, cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles;
 }
