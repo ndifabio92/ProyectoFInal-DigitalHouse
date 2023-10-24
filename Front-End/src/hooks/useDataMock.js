@@ -11,7 +11,7 @@ const useDataMock = () => {
                 const response = await import('../mock/data.json');
                 const jsonData = response.default;
 
-                await new Promise(resolve => setTimeout(resolve, 5000));
+                await new Promise(resolve => setTimeout(resolve, 5));
 
                 setData(jsonData);
                 setIsLoading(false);
