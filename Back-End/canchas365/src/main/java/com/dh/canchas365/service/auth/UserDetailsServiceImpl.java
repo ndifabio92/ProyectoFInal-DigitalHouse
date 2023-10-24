@@ -1,7 +1,7 @@
-package com.dh.canchas365.service;
+package com.dh.canchas365.service.auth;
 
-import com.dh.canchas365.model.Usuario;
-import com.dh.canchas365.repository.UsuarioRepository;
+import com.dh.canchas365.model.auth.Usuario;
+import com.dh.canchas365.repository.auth.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

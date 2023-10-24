@@ -1,6 +1,6 @@
 package com.dh.canchas365.security.filters;
 
-import com.dh.canchas365.model.Usuario;
+import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.security.jwt.JwtUtils;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;

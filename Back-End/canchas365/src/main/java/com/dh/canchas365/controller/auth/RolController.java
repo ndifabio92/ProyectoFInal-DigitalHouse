@@ -1,9 +1,9 @@
-package com.dh.canchas365.controller;
+package com.dh.canchas365.controller.auth;
 
-import com.dh.canchas365.dto.RolDTO;
-import com.dh.canchas365.model.ERol;
-import com.dh.canchas365.model.Rol;
-import com.dh.canchas365.repository.RolRepository;
+import com.dh.canchas365.dto.auth.RolDTO;
+import com.dh.canchas365.model.emun.ERol;
+import com.dh.canchas365.model.auth.Rol;
+import com.dh.canchas365.repository.auth.RolRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
