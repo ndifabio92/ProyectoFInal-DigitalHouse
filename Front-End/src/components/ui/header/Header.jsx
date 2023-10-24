@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = ['Crear cuenta', 'Iniciar sesión'];
 
 const Header = () => {
+  
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
