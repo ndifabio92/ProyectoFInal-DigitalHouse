@@ -29,12 +29,13 @@ const SearchBar = () => {
     <Container maxWidth="xxl"
       sx={{
         color: '#FF914D',
+        backgroundColor: '#FFFFFF',
         display: 'flex',
         flexWrap: 'wrap',
         gap: '20px',
         alignItems: 'center',
         justifyContent: 'space-around',
-        margin: '40px'
+        padding: '50px'
       }}
     >
 
