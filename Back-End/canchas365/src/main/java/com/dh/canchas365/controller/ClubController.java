@@ -39,11 +39,6 @@ public class ClubController {
         return response;
     }
 
-    @GetMapping("/recommended")
-    public List<Club> getClubsrecommended(){
-        return clubService.getClubsRecommended();
-    }
-
     @PutMapping
     public ResponseEntity<Club> updateClub(@RequestBody Club club) throws ResourceNotFoundException {
         ResponseEntity<Club> responseEntity = null;
@@ -56,5 +51,10 @@ public class ClubController {
             responseEntity = new ResponseEntity<Club>(clubService.updateClub(club), HttpStatus.OK);
         }
         return responseEntity;
+    }
+
+    @GetMapping("/recommended")
+    public List<Club> getClubsrecommended(){
+        return clubService.getClubsRecommended();
     }
 }
