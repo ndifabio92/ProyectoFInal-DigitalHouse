@@ -11,7 +11,7 @@ export const Navigation = () => {
             <Header />
             <Routes>
                 <Route exact path="/" element={<Home/>} />
-                <Route exact path='/:id' element={<Detail/>}/>
+                <Route exact path='/club/:id' element={<Detail/>}/>
                 <Route exact path="/admin" element={<Admin/>}/>
                 <Route path="*" element={<h1>NOT FOUND</h1>}/>
             </Routes>
