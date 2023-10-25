@@ -30,9 +30,9 @@ const Products = () => {
       }}>
 
         {
-          data?.map((reco) => (
+          data?.map((club) => (
 
-            <CardProducts key={reco.id} name={reco.name} url={reco.images[0]} city={reco.location.city} />
+            <CardProducts key={club.id} name={club.name} url={club.images[0]} city={club.location.city} id={club.id}/>
           ))
         }
       </Box>
