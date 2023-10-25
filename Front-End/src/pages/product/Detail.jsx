@@ -25,7 +25,7 @@ const Detail = () => {
       sx={{
         mt: '100px',
         mb: '40px',
-        padding:'40px',
+        padding:'10px',
         color: '#011A5B',
         backgroundColor:'#EDEBEE',
       }}
@@ -47,8 +47,10 @@ const Detail = () => {
       <Box maxWidth="xs"
         sx={{ 
           border:'2px solid #FF914D',
+          color: '#FFFFFF',
+          backgroundColor:'#FF914D',
           textAlign:'center',
-          padding:'20px',
+          padding:'10px',
         }}
       >
         <p> Domicilio: {club?.adress?.street}</p>
