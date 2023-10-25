@@ -1,13 +1,19 @@
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { Link } from "react-router-dom"
 
-const CardProducts = ({ name, url, city }) => {
+const CardProducts = ({ name, url, city, id }) => {
+
+    let ruta = ('./' + id)
 
     return (
-        <Card>
+        <Card >
+        <Link to={ruta}>
+
             <CardActionArea sx={{
                 width: 600,
                 height: 200,
@@ -17,6 +23,7 @@ const CardProducts = ({ name, url, city }) => {
                 display: 'flex',
                 flexDirection: 'row'
             }}
+
             >
                 <CardMedia
                     component="img"
@@ -24,6 +31,7 @@ const CardProducts = ({ name, url, city }) => {
                     image={url}
                     sx={{ margin: '20px' }}
                 />
+
                 <CardContent sx={{
                     width: 600,
                     border: 'none',
@@ -38,6 +46,7 @@ const CardProducts = ({ name, url, city }) => {
                     </Typography>
                 </CardContent>
             </CardActionArea>
+            </Link>
         </Card>
     )
 }
