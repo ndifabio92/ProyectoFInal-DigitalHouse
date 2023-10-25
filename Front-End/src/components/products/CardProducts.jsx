@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 
 const CardProducts = ({ name, url, city, id }) => {
 
-    let ruta = ('./' + id)
+    let ruta = ('./club/' + id)
 
     return (
         <Card >
