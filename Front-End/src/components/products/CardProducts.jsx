@@ -17,7 +17,7 @@ const CardProducts = ({ name, url, city, id }) => {
 
 
     return (
-        <Card >
+        <Card>
             
             <CardActionArea 
                 onClick={handleClick}
