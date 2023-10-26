@@ -17,9 +17,9 @@ const Home = () => {
       }}
       id='home'
     >
-      <Categories />
-      <SearchBar />
-      <Recomendations />
+      <Categories/>
+      <SearchBar/>
+      <Recomendations/>
       <Products/>
     </Container>
   );

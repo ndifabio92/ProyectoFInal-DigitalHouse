@@ -6,13 +6,15 @@ const useFetchApi = (endpoint, id='') => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const isId = id=="" ? "" : `/${id}` 
+
     useEffect(() => {
         const fetchData = async () => {
-            console.log(`http://localhost:8080/${endpoint}/${id}`)
+            console.log(`http://localhost:8080/${endpoint}${isId}`)
             try {
                 setIsLoading(true)
                 setError(null)
-                const response = await fetch(`http://localhost:8080/${endpoint}/${id}`);
+                const response = await fetch(`http://localhost:8080/${endpoint}${isId}`);
                 const jsonData = await response.json();
 
                 setData(jsonData);
