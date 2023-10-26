@@ -25,8 +25,6 @@ const Recomendations = () => {
 
   const { data, isLoading, error } = useFetchApi('club/recommended')
 
-  console.log(data)
-
   const maxSteps = data ? data.length : 0;
 
   const handleNext = () => {
