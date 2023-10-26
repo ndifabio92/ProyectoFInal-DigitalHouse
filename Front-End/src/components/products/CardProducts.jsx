@@ -11,14 +11,14 @@ const CardProducts = ({ name, url, city, id }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        let ruta = ('./club/' + id);
+        let ruta = ('/club/' + id);
         navigate(ruta); 
     };
 
 
     return (
-        <Card >
-
+        <Card>
+            
             <CardActionArea 
                 onClick={handleClick}
                 sx={{

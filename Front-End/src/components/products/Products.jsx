@@ -31,13 +31,11 @@ const Products = () => {
 
         {
           data?.map((club) => (
-
             <CardProducts key={club.id} name={club.name} url={club.images[0]} city={club.location.city} id={club.id}/>
           ))
         }
       </Box>
-
-
+      
     </Container>
 
   );
