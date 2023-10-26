@@ -1,10 +1,48 @@
 import { Button, Container, TextField } from "@mui/material";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
 import useDataMock from "../../../hooks/useDataMock";
+import AWS from 'aws-sdk';
+
+
 
 export default function FormAdmin() {
+
+    const [imagenUrl, setImagenUrl] = useState([]);
+
+    useEffect(() => {
+       AWS.config.update({
+        accessKeyId: 'AKIAY3PLHSUJENAA5T2V',
+        secretAccessKey:'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',
+        region: 'us-east-1'
+        });
+        
+        const s3 = new AWS.S3();
+
+        const params = {
+            Bucket: '1023c05-grupo1',
+        };
+        s3.listObjectsV2(params, (err, data) => {
+            if (err) console.log(err, err.stack);
+            else {
+                const imagenes = data.Contents.map((imagen) => {
+                    return s3.getSignedUrl('getObject', {
+                        Bucket: '1023c05-grupo1',
+                        Key: imagen.Key,
+                        Expires: 60 * 5,
+                    });
+                });
+                setImagenUrl(imagenes);
+            }
+        });
+    }, []);
+    console.log(imagenUrl);
+
+    
+
+
     const initialValues = { name: '', email: '' }
     const { data } = useDataMock();
     console.log(data)
