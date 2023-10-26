@@ -1,5 +1,6 @@
 package com.dh.canchas365.model;
 
+import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Adress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -38,4 +39,8 @@ public class Club {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_adress", referencedColumnName = "id", nullable = false)
     private Adress adress;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "club")
+    @JsonIgnore
+    private Set<Images> images = new HashSet<>();
 }
