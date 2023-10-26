@@ -1,22 +1,36 @@
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const CardProducts = ({ name, url, city }) => {
+const CardProducts = ({ name, url, city, id }) => {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        let ruta = ('/club/' + id);
+        navigate(ruta); 
+    };
+
 
     return (
         <Card>
-            <CardActionArea sx={{
-                width: 600,
-                height: 200,
-                border: 'none',
-                backgroundColor: '#EDEBEE',
-                padding: '20',
-                display: 'flex',
-                flexDirection: 'row'
-            }}
+            
+            <CardActionArea 
+                onClick={handleClick}
+                sx={{
+                    width: 600,
+                    height: 200,
+                    border: 'none',
+                    backgroundColor: '#EDEBEE',
+                    padding: '20',
+                    display: 'flex',
+                    flexDirection: 'row'
+                }}
+
             >
                 <CardMedia
                     component="img"
@@ -24,6 +38,7 @@ const CardProducts = ({ name, url, city }) => {
                     image={url}
                     sx={{ margin: '20px' }}
                 />
+
                 <CardContent sx={{
                     width: 600,
                     border: 'none',
@@ -38,6 +53,7 @@ const CardProducts = ({ name, url, city }) => {
                     </Typography>
                 </CardContent>
             </CardActionArea>
+           
         </Card>
     )
 }
