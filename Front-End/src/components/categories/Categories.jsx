@@ -26,7 +26,6 @@ const Categories = () => {
           backgroundColor: '#FF914D',
           color:'#011A5B',
           height: '100px',
-
           }}
         >
 
