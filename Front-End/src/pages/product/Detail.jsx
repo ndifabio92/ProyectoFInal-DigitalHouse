@@ -1,24 +1,25 @@
 import { useParams } from 'react-router-dom'
 import { Box, Container, IconButton } from '@mui/material';
-import { useState, useEffect} from 'react';
 import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
-import Images from './Images';
+import Images from '../../components/products/Images';
+import useFetchApi from '../../hooks/useFetchApi';
+import { useNavigate } from 'react-router-dom';
 
 const Detail = () => {
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+      navigate('/'); 
+  };
+
   const {id} = useParams();
 
-  const [club, setClub] = useState();
-  const getData = async () => {
-    const data = await
-    fetch('http://localhost:8080/club/'+ id)
-    const convert = await data.json();
-    setClub(convert)
-    }
+  console.log(id)
 
-    useEffect(() => {
-      getData();
-    }, []);
+  const { data, isLoading, error } = useFetchApi('club',id)
+
+  console.log(data)
 
   return (
     <Container maxWidth="xl"
@@ -36,8 +37,8 @@ const Detail = () => {
           flexDirection:'row',
           justifyContent:'space-between'
         }} >
-        <h2>{club?.name}</h2>
-        <IconButton aria-label="Volver" size="large" >
+        <h2>{data?.name}</h2>
+        <IconButton aria-label="Volver" size="large" onClick={handleClick} >
         <ArrowCircleLeftTwoToneIcon fontSize="inherit" color="#1F2E7B" />
         </IconButton>
       </Box>
@@ -53,10 +54,10 @@ const Detail = () => {
           padding:'10px',
         }}
       >
-        <p> Domicilio: {club?.adress?.street}</p>
-        <p> Ciudad: {club?.adress?.city?.name}</p>
-        <p> Provincia: {club?.adress?.state?.name}</p>
-        <p> Teléfono: {club?.phone_number}</p>
+        <p> Domicilio: {data?.adress?.street}</p>
+        <p> Ciudad: {data?.adress?.city?.name}</p>
+        <p> Provincia: {data?.adress?.state?.name}</p>
+        <p> Teléfono: {data?.phone_number}</p>
       </Box> 
 
     </Container>
