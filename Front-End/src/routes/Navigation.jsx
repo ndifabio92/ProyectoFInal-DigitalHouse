@@ -4,6 +4,7 @@ import Header from "../components/ui/header/Header"
 import Home from "../pages/home/Home"
 import Footer from "../components/ui/footer/Footer"
 import Detail from "../pages/product/Detail"
+import NotFound from "../pages/notFound/NotFound"
 
 export const Navigation = () => {
     return (
@@ -13,7 +14,7 @@ export const Navigation = () => {
                 <Route exact path="/" element={<Home/>} />
                 <Route exact path='/club/:id' element={<Detail/>}/>
                 <Route exact path="/admin" element={<Admin/>}/>
-                <Route path="*" element={<h1>NOT FOUND</h1>}/>
+                <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />
         </>

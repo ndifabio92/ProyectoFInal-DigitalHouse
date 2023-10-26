@@ -8,12 +8,13 @@ import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
 import { Box, Button } from '@mui/material';
 import Swal from 'sweetalert2';
+import Loading from '../../loading/Loading';
 
 const TableAdmin = () => {
-    const { data } = useFetchApi('club/list');
+    const { data, isLoading, error } = useFetchApi('club/list');
+    console.error(error);
 
     const handleDelete = (id) => {
-        console.log(id)
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
             icon: 'warning',
@@ -34,39 +35,42 @@ const TableAdmin = () => {
     }
     return (
         <Box sx={{ width: "100%" }}>
-            <Paper sx={{ width: "100%", mb: 2 }}>
-                <TableContainer component={Paper}>
-                    {data &&
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align='center'>Id</TableCell>
-                                    <TableCell align="center">Nombre</TableCell>
-                                    <TableCell align="center">Acciones</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {data.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row" align='center'>
-                                            {row.id}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row" align='center'>
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row" align='center'>
-                                            <Button variant="contained" color="error" onClick={() => handleDelete(row.id)}>Eliminar Producto</Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    }
-                </TableContainer>
-            </Paper>
+            {
+                isLoading ? <Loading /> :
+                    <Paper sx={{ width: "100%", mb: 2 }}>
+                        <TableContainer component={Paper}>
+                            {data &&
+                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align='center'>Id</TableCell>
+                                            <TableCell align="center">Nombre</TableCell>
+                                            <TableCell align="center">Acciones</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {data.map((row) => (
+                                            <TableRow
+                                                key={row.id}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row" align='center'>
+                                                    {row.id}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align='center'>
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align='center'>
+                                                    <Button variant="contained" color="error" onClick={() => handleDelete(row.id)}>Eliminar Producto</Button>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            }
+                        </TableContainer>
+                    </Paper>
+            }
         </Box>
     );
 }

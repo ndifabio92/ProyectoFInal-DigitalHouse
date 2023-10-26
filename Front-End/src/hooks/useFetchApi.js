@@ -5,7 +5,7 @@ const useFetchApi = (endpoint, id = '') => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const isId = id === "" ? "" : `/${id}`
+    const isId = id === "" ? "" : `/${id}`;
 
     useEffect(() => {
         const fetchData = async () => {

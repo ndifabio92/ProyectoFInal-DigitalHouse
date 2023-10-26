@@ -15,7 +15,6 @@ const CardProducts = ({ name, url, city, id }) => {
         navigate(ruta); 
     };
 
-
     return (
         <Card>
             
