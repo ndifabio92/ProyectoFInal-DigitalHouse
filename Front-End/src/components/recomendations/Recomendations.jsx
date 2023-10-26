@@ -1,4 +1,3 @@
-
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -8,20 +7,25 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import useDataMock from '../../hooks/useDataMock';
 import { useState } from 'react';
 import { Container } from '@mui/material';
+import useFetchApi from '../../hooks/useFetchApi';
+
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const Recomendations = () => {
 
+  const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"]]
+
   const theme = useTheme();
   
   const [activeStep, setActiveStep] = useState(0);
 
-  const { data } = useDataMock();
+  const { data, isLoading, error } = useFetchApi('club/recommended')
+
+  console.log(data)
 
   const maxSteps = data ? data.length : 0;
 
@@ -89,7 +93,7 @@ const Recomendations = () => {
                 <div key={club.id}>
                   {Math.abs(activeStep - index) <= 2 ? (
                     <Container>
-                      {club.images.map((image, imageIndex) => (
+                      {imagenes[index].map((image, imageIndex) => (
                         <Box
                         component="img"
                         key={imageIndex}
@@ -158,4 +162,3 @@ const Recomendations = () => {
 }
 
 export default Recomendations;
-
