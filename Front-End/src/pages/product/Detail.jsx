@@ -15,11 +15,7 @@ const Detail = () => {
 
   const {id} = useParams();
 
-  console.log(id)
-
   const { data, isLoading, error } = useFetchApi('club',id)
-
-  console.log(data)
 
   return (
     <Container maxWidth="xl"
