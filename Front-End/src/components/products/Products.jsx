@@ -1,13 +1,15 @@
 import Container from '@mui/material/Box';
 import CardProducts from './CardProducts';
 import Box from '@mui/material/Box';
-import useDataMock from '../../hooks/useDataMock';
+import useFetchApi from '../../hooks/useFetchApi';
 
 
 const Products = () => {
 
-  const { data } = useDataMock();
+  const { data, isLoading, error } = useFetchApi('club/list')
 
+  const imagenes = ["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png","./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png","./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg","./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"
+]
   return (
     <Container maxWidth="xl"
       sx={{
@@ -31,13 +33,11 @@ const Products = () => {
 
         {
           data?.map((club) => (
-
-            <CardProducts key={club.id} name={club.name} url={club.images[0]} city={club.location.city} id={club.id}/>
+            <CardProducts key={club.id} name={club.name} url={imagenes[club.id]} city={club.adress.city.name} id={club.id}/>
           ))
         }
       </Box>
-
-
+      
     </Container>
 
   );
