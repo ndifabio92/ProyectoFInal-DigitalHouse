@@ -1,8 +1,54 @@
+import { useState } from "react";
+import { Button, Container } from "@mui/material";
 import FormAdmin from "../../components/admin/form/FormAdmin";
+import TableAdmin from "../../components/admin/table/TableAdmin";
 
 const Admin = () => {
+    const [showAdd, setShowAdd] = useState(false);
+    const [showTable, setShowTable] = useState(false);
+
+    const viewAdd = () => {
+        setShowAdd(!showAdd)
+        setShowTable(false)
+    }
+
+    const viewTable = () => {
+        setShowAdd(false)
+        setShowTable(!showTable)
+    }
     return (
-        <FormAdmin />
+        <Container maxWidth="xxl"
+            sx={{
+                backgroundColor: '#FFFFFF',
+                color: '#1F2E7B',
+                display: 'flex',
+                flexDirection: 'column',
+                direction: 'row',
+                textAlign: 'center',
+                gap: '10px',
+                flexWrap: 'wrap',
+                mt: '150px',
+                padding: '40px'
+            }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button variant="outlined" onClick={viewAdd}>Agregar Producto</Button>
+                <Button variant="outlined" onClick={viewTable}>Lista de productos</Button>
+            </div>
+            {
+                showAdd && (
+                    <div style={{ marginTop: '2%', padding: '0% 5% 0%' }}>
+                        <FormAdmin />
+                    </div>
+                )
+            }
+            {
+                showTable && (
+                    <div style={{ marginTop: '2%', padding: '0% 5% 0%' }}>
+                        <TableAdmin />
+                    </div>
+                )
+            }
+        </Container>
     )
 }
 

@@ -17,19 +17,7 @@ export default function FormAdmin() {
         }
     })
     return (
-        <Container maxWidth="xxl"
-            sx={{
-                backgroundColor: '#FFFFFF',
-                color: '#1F2E7B',
-                display: 'flex',
-                justifyContent: 'space-around',
-                textAlign: 'center',
-                gap: '10px',
-                flexWrap: 'wrap',
-                mt: '150px',
-                padding: '40px'
-            }}
-        >
+        <Container>
             <form onSubmit={formik.handleSubmit} className={`${styles.form}`}>
                 <TextField variant="outlined" size="small" label="Name" type="text" name="name" className="input-background"
                     value={formik.values.name}
