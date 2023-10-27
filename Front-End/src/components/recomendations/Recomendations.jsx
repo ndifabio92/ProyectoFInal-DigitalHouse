@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -26,38 +27,37 @@ const Recomendations = () => {
   const { data, isLoading, error } = useFetchApi('club/recommended')
 
   console.log(data)
+=======
+import Carousel from 'react-material-ui-carousel'
+import { Container } from '@mui/material'
+import useDataMock from '../../hooks/useDataMock';
+import { Box } from '@mui/system';
 
-  const maxSteps = data ? data.length : 0;
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStepChange = (step) => {
-    setActiveStep(step);
-  };
-
-
+const Recomendations = () => {
+  const { data } = useDataMock();
+>>>>>>> 2330f84082debcc6c6aef4e988b3c9ab781e7365
 
   return (
-    <>
+    <Carousel animation='slide' duration={800} navButtonsAlwaysVisible fullHeightHover>
       {
-        data &&
-        <Box maxWidth="xl"
-          sx={{
-            mx: 'auto',
-            backgroundColor: '#FFFFFF',
-            flexGrow: 1,
-            textAlign: 'center',
-            justifyContent:'center',
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
+        data && data.map((club) => (
+          <div key={club.id}>
+            <Container>
+              {club.images.map((image, imageIndex) => (
+                <Box
+                  component="img"
+                  key={imageIndex}
+                  sx={{
+                    maxWidth: 230,
+                    maxHeight: 130,
+                    overflow: 'hidden',
+                    width: '100%',
+                  }}
+                  src={image}
+                />
+              ))}
 
+<<<<<<< HEAD
           <h2>Nuestras Recomendaciones</h2>
 
           <Paper
@@ -152,13 +152,18 @@ const Recomendations = () => {
             }
           />
         </Box>
+=======
+            </Container>
+          </div>
+        ))
+>>>>>>> 2330f84082debcc6c6aef4e988b3c9ab781e7365
       }
-    </>
-  );
-
-  
-
-
+    </Carousel>
+  )
 }
+<<<<<<< HEAD
 
 export default Recomendations;
+=======
+export default Recomendations
+>>>>>>> 2330f84082debcc6c6aef4e988b3c9ab781e7365
