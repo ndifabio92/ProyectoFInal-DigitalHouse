@@ -39,7 +39,7 @@ const Recomendations = () => {
         {
           data && data.map((club, index) => (
             <div key={club.id}>
-              <Button onClick={() => handleClick()}
+              <Button onClick={() => handleClick(club.id)}
                 sx={{
                   maxWidth: 800,
                   textAlign: 'center',
