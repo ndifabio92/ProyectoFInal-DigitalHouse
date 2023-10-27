@@ -1,4 +1,3 @@
-
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -8,20 +7,33 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import useDataMock from '../../hooks/useDataMock';
 import { useState } from 'react';
 import { Container } from '@mui/material';
+import useFetchApi from '../../hooks/useFetchApi';
+import { useNavigate } from 'react-router-dom';
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const Recomendations = () => {
 
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+
+    var idString = id.toString()
+    let ruta = ('/club/' + idString);
+    navigate(ruta); 
+  };
+
+
+  const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"]]
+
   const theme = useTheme();
   
   const [activeStep, setActiveStep] = useState(0);
 
-  const { data } = useDataMock();
+  const { data, isLoading, error } = useFetchApi('club/recommended')
 
   const maxSteps = data ? data.length : 0;
 
@@ -37,6 +49,8 @@ const Recomendations = () => {
     setActiveStep(step);
   };
 
+
+  const id = data ? data[activeStep].id : ''
 
 
   return (
@@ -70,12 +84,15 @@ const Recomendations = () => {
               textAlign: 'center',
             }}
           >
-            <Button 
+            <Button
+              onClick={() => handleClick(id)}
               sx={{
                 maxWidth: 800,
                 textAlign: 'center',
               }}
-            >{data[activeStep].name}</Button>
+            >
+              {data[activeStep].name}
+            </Button>
           </Paper>
 
           <AutoPlaySwipeableViews
@@ -89,7 +106,7 @@ const Recomendations = () => {
                 <div key={club.id}>
                   {Math.abs(activeStep - index) <= 2 ? (
                     <Container>
-                      {club.images.map((image, imageIndex) => (
+                      {imagenes[index].map((image, imageIndex) => (
                         <Box
                         component="img"
                         key={imageIndex}
@@ -158,4 +175,3 @@ const Recomendations = () => {
 }
 
 export default Recomendations;
-
