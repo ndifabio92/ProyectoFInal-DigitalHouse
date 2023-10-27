@@ -57,30 +57,31 @@ const supportLinkStyle = {
     fontWeight: 'bold',
 };
 
-export default function NotFound() {
+const NotFound = () => {
     return (
         <Grid container style={containerStyle} justifyContent="center" alignItems="center">
             <Grid item xs={12}>
-            <Typography variant="h1" style={textBaseStyle}>
-                404
-            </Typography>
-            <Typography variant="h2" style={pageTitleStyle}>
-                Página no disponible :(
-            </Typography>
-            <Typography variant="body1" style={textMessageStyle}>
-                Lo sentimos, no pudimos encontrar la página que estás buscando.
-            </Typography>
-            <div style={actionButtonsStyle}>
-                <Button >
-                <a href="/" style={homeButtonStyle}>
-                Regresar al inicio 
-                </a>
-                </Button>
-                <a href="/" style={supportLinkStyle}>
-                Contactar a soporte <span>&rarr;</span>
-                </a>
-            </div>
+                <Typography variant="h1" style={textBaseStyle}>
+                    404
+                </Typography>
+                <Typography variant="h2" style={pageTitleStyle}>
+                    Página no disponible :(
+                </Typography>
+                <Typography variant="body1" style={textMessageStyle}>
+                    Lo sentimos, no pudimos encontrar la página que estás buscando.
+                </Typography>
+                <div style={actionButtonsStyle}>
+                    <Button >
+                        <a href="/" style={homeButtonStyle}>
+                            Regresar al inicio
+                        </a>
+                    </Button>
+                    <a href="/" style={supportLinkStyle}>
+                        Contactar a soporte <span>&rarr;</span>
+                    </a>
+                </div>
             </Grid>
         </Grid>
     );
 }
+export default NotFound;
