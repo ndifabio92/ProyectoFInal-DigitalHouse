@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -11,12 +10,22 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import { useState } from 'react';
 import { Container } from '@mui/material';
 import useFetchApi from '../../hooks/useFetchApi';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const Recomendations = () => {
+
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+
+    var idString = id.toString()
+    let ruta = ('/club/' + idString);
+    navigate(ruta); 
+  };
+
 
   const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"]]
 
@@ -26,38 +35,39 @@ const Recomendations = () => {
 
   const { data, isLoading, error } = useFetchApi('club/recommended')
 
-  console.log(data)
-=======
-import Carousel from 'react-material-ui-carousel'
-import { Container } from '@mui/material'
-import useDataMock from '../../hooks/useDataMock';
-import { Box } from '@mui/system';
+  const maxSteps = data ? data.length : 0;
 
-const Recomendations = () => {
-  const { data } = useDataMock();
->>>>>>> 2330f84082debcc6c6aef4e988b3c9ab781e7365
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
+
+
+  const id = data ? data[activeStep].id : ''
+
 
   return (
-    <Carousel animation='slide' duration={800} navButtonsAlwaysVisible fullHeightHover>
+    <>
       {
-        data && data.map((club) => (
-          <div key={club.id}>
-            <Container>
-              {club.images.map((image, imageIndex) => (
-                <Box
-                  component="img"
-                  key={imageIndex}
-                  sx={{
-                    maxWidth: 230,
-                    maxHeight: 130,
-                    overflow: 'hidden',
-                    width: '100%',
-                  }}
-                  src={image}
-                />
-              ))}
+        data &&
+        <Box maxWidth="xl"
+          sx={{
+            mx: 'auto',
+            backgroundColor: '#FFFFFF',
+            flexGrow: 1,
+            textAlign: 'center',
+            justifyContent:'center',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
 
-<<<<<<< HEAD
           <h2>Nuestras Recomendaciones</h2>
 
           <Paper
@@ -74,12 +84,15 @@ const Recomendations = () => {
               textAlign: 'center',
             }}
           >
-            <Button 
+            <Button
+              onClick={() => handleClick(id)}
               sx={{
                 maxWidth: 800,
                 textAlign: 'center',
               }}
-            >{data[activeStep].name}</Button>
+            >
+              {data[activeStep].name}
+            </Button>
           </Paper>
 
           <AutoPlaySwipeableViews
@@ -152,18 +165,13 @@ const Recomendations = () => {
             }
           />
         </Box>
-=======
-            </Container>
-          </div>
-        ))
->>>>>>> 2330f84082debcc6c6aef4e988b3c9ab781e7365
       }
-    </Carousel>
-  )
+    </>
+  );
+
+  
+
+
 }
-<<<<<<< HEAD
 
 export default Recomendations;
-=======
-export default Recomendations
->>>>>>> 2330f84082debcc6c6aef4e988b3c9ab781e7365

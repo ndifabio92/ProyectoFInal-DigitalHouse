@@ -1,54 +1,54 @@
+import { Container, Grid, Button, Box } from '@mui/material';
+import React from 'react';
 
-import { Container } from '@mui/material';
-import Box from '@mui/material/Box';
-
-const imagenPrinc = '../futbol1.png'
-const imagenes = ["../futbol2.png", "../futbol3.png","../futbol4.png","../futbol5.png"]
+const imagenPrinc = '../futbol1.png';
+const imagenes = ["../futbol2.png", "../futbol3.png", "../futbol4.png", "../futbol5.png"];
 
 const Images = () => {
-
   return (
-    <Container maxWidth="xl" sx={{
+    <Container maxWidth="xl" 
+      sx={{
         mx: 'auto',
-        textAlign: 'center',
-        justifyContent:'center',
-        display: 'flex',
-        padding:'40px',
-        backgroundColor:'#EDEBEE',
-        border:'2px solid #FF914D',
-        }}>
-      
-        <Box 
-          sx={{  
-            width: '400px',
-            height: '400px',
-          }}>
-            <img src={imagenPrinc} height={'100%'} alt="" />
-        </Box>
-        <Box 
-          sx={{  
-            width: '400px',
-            height: '400px',
-            display: 'flex',
-            flexWrap:'wrap',
-          }}>
-           {imagenes.map((image, imageIndex) => (
-              <Box
-                component="img"
-                key={imageIndex}
-                src={image}
-                sx={{
-                  width: '50%',
-              }}
-                    
-            />                          
+        padding: '40px',
+        backgroundColor: '#FFFFFF',
+      }}
+    >
+      <Grid container spacing={1}>
+
+        <Grid item xs={12} md={6}>
+          <img src={imagenPrinc} alt="" style={{ width: '100%', height:'100%'}} />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Grid container spacing={1}>
+            {imagenes.map((image, imageIndex) => (
+              <Grid key={imageIndex} item xs={6} md={6}>
+                <img src={image} alt="" style={{ width: '100%', height:'100%'}} />
+              </Grid>
             ))}
-        </Box>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Box sx={{
+          textAlign:'left',
+          margin: '10px',
+          display:'flex',
+          justifyContent:'flex-end'
+        }}>
+        <Button 
+        variant="contained"
+        sx={{
+          padding: '10px',
+        }}
+      >
+        Ver Mas
+      </Button>
+      </Box>
       
+
     </Container>
   );
-
-  
 }
 
 export default Images;
