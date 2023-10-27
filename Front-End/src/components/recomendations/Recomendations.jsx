@@ -10,12 +10,22 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import { useState } from 'react';
 import { Container } from '@mui/material';
 import useFetchApi from '../../hooks/useFetchApi';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const Recomendations = () => {
+
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+
+    var idString = id.toString()
+    let ruta = ('/club/' + idString);
+    navigate(ruta); 
+  };
+
 
   const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"]]
 
@@ -24,8 +34,6 @@ const Recomendations = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const { data, isLoading, error } = useFetchApi('club/recommended')
-
-  console.log(data)
 
   const maxSteps = data ? data.length : 0;
 
@@ -41,6 +49,8 @@ const Recomendations = () => {
     setActiveStep(step);
   };
 
+
+  const id = data ? data[activeStep].id : ''
 
 
   return (
@@ -74,12 +84,15 @@ const Recomendations = () => {
               textAlign: 'center',
             }}
           >
-            <Button 
+            <Button
+              onClick={() => handleClick(id)}
               sx={{
                 maxWidth: 800,
                 textAlign: 'center',
               }}
-            >{data[activeStep].name}</Button>
+            >
+              {data[activeStep].name}
+            </Button>
           </Paper>
 
           <AutoPlaySwipeableViews
