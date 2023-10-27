@@ -40,8 +40,8 @@ const Detail = () => {
 
         }} >
         <h4>{data?.name}</h4>
-        <IconButton aria-label="Volver" size="large" onClick={handleClick} >
-        <ArrowCircleLeftTwoToneIcon fontSize="inherit" color="#1F2E7B" />
+        <IconButton aria-label="Volver" color='#FFFFFF' size="large" onClick={handleClick} >
+          <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
         </IconButton>
       </Box>
       <Box maxWidth="xs"

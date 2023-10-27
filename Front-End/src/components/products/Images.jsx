@@ -1,11 +1,17 @@
-import { Container, Grid, Button, Box } from '@mui/material';
-import React from 'react';
+import { Container, Grid, Button, Box, Modal,Typography} from '@mui/material';
+import ImageModal from './ImageModal';
 
 const imagenPrinc = '../futbol1.png';
 const imagenes = ["../futbol2.png", "../futbol3.png", "../futbol4.png", "../futbol5.png"];
 
+
+
+
+
 const Images = () => {
   return (
+    <>
+    
     <Container maxWidth="xl" 
       sx={{
         mx: 'auto',
@@ -29,25 +35,10 @@ const Images = () => {
           </Grid>
         </Grid>
       </Grid>
-
-      <Box sx={{
-          textAlign:'left',
-          margin: '10px',
-          display:'flex',
-          justifyContent:'flex-end'
-        }}>
-        <Button 
-        variant="contained"
-        sx={{
-          padding: '10px',
-        }}
-      >
-        Ver Mas
-      </Button>
-      </Box>
-      
-
     </Container>
+    <ImageModal/>
+    </>
+
   );
 }
 

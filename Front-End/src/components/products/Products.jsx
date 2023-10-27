@@ -30,10 +30,7 @@ const Products = () => {
       return newData;
     }
   
-    
     const nuevoArray = data ? reduceData(data) : []
-
-
 
   return (
     <Container maxWidth="xl"
