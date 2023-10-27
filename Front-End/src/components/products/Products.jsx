@@ -12,7 +12,6 @@ const Products = () => {
 ]
 
 
-
 const reduceData = (data) => {
     
   const newData = [];
