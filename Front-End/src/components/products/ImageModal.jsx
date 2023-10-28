@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -17,12 +17,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 
-const ImageModal = ( ) => {
+const ImageModal = ({ images }) => {
+  // const images = ["../futbol1.png", "../futbol2.png", "../futbol3.png", "../futbol4.png", "../futbol5.png", "../tenis4.png", "../tenis1.png", "../tenis2.png", "../tenis3.png", "../tenis4.png", "../padel1.jpg", "../padel2.jpg", "../padel3.jpg", "../padel4.jpg", "../padel5.jpg", "../nat1.png", "../nat2.png", "../nat4.jpg", "../nat5.jpg", "../nata3.jpg"
+  // ]
 
-  const images = ["../futbol1.png", "../futbol2.png", "../futbol3.png", "../futbol4.png", "../futbol5.png", "../tenis4.png", "../tenis1.png", "../tenis2.png", "../tenis3.png", "../tenis4.png", "../padel1.jpg", "../padel2.jpg", "../padel3.jpg", "../padel4.jpg", "../padel5.jpg", "../nat1.png", "../nat2.png", "../nat4.jpg", "../nat5.jpg", "../nata3.jpg"
-  ]
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
 
   const handleOpen = () => {
@@ -33,8 +32,8 @@ const ImageModal = ( ) => {
     setOpen(false);
   };
 
-  const descriptionElementRef = React.useRef(null);
-  React.useEffect(() => {
+  const descriptionElementRef = useRef(null);
+  useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -46,31 +45,31 @@ const ImageModal = ( ) => {
   return (
     <>
 
-    <Box sx={{
-        textAlign:'left',
+      <Box sx={{
+        textAlign: 'left',
         margin: '10px',
-        display:'flex',
-        justifyContent:'flex-end'
+        display: 'flex',
+        justifyContent: 'flex-end'
       }}>
-      <Button 
-      variant="contained"
-      sx={{
-        padding: '10px',
-      }}
-      onClick={handleOpen}
-    >
-      Ver Mas
-    </Button>
-    </Box>
+        <Button
+          variant="contained"
+          sx={{
+            padding: '10px',
+          }}
+          onClick={handleOpen}
+        >
+          Ver Mas
+        </Button>
+      </Box>
 
-    
-    <Dialog
+
+      <Dialog
         open={open}
         onClose={handleClose}
         scroll={'paper'}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
-        sx={{margin:'50px'}}
+        sx={{ margin: '50px' }}
         fullScreen={true}
       >
         <IconButton
@@ -78,7 +77,7 @@ const ImageModal = ( ) => {
           onClick={handleClose}
           sx={{
             position: 'absolute',
-            right:10,
+            right: 10,
             top: 8,
             color: (theme) => theme.palette.grey[500],
           }}
@@ -86,23 +85,25 @@ const ImageModal = ( ) => {
           <CloseIcon />
         </IconButton>
 
-        <DialogContent dividers={scroll === 'paper'} sx={{padding:'30px'}}>
+        <DialogContent dividers={scroll === 'paper'} sx={{ padding: '30px' }}>
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
-            
+
           >
             <ImageList variant="masonry" cols={3} gap={8} >
-            {images.map((image, imageIndex) => (
-              <ImageListItem key={imageIndex}>
-                <img
-                  src={image}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
+              {
+                images?.map((image, imageIndex) => (
+                  <ImageListItem key={imageIndex}>
+                    <img
+                      src={image}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))
+              }
+            </ImageList>
           </DialogContentText>
         </DialogContent>
       </Dialog>
