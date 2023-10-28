@@ -31,23 +31,26 @@ const Detail = () => {
       <Box sx={{
           display:'flex',
           flexDirection:'row',
-          justifyContent:'space-between'
-        }} >
-        <h2>{data?.name}</h2>
-        <IconButton aria-label="Volver" size="large" onClick={handleClick} >
-        <ArrowCircleLeftTwoToneIcon fontSize="inherit" color="#1F2E7B" />
-        </IconButton>
-      </Box>
-
-      <Images/>
-      
-      <Box maxWidth="xs"
-        sx={{ 
-          border:'2px solid #FF914D',
+          justifyContent:'space-between',
           color: '#FFFFFF',
           backgroundColor:'#FF914D',
-          textAlign:'center',
+          fontSize:'30px',
+          fontWeight:'bold',
+          paddingLeft: '20px',
+
+        }} >
+        <h4>{data?.name}</h4>
+        <IconButton aria-label="Volver" color='#FFFFFF' size="large" onClick={handleClick} >
+          <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
+        </IconButton>
+      </Box>
+      <Box maxWidth="xs"
+        sx={{ 
+          color: '#011A5B',
+          backgroundColor:'#FFFFFF',
+          textAlign:'left',
           padding:'10px',
+          paddingLeft: '150px',
         }}
       >
         <p> Domicilio: {data?.adress?.street}</p>
@@ -55,7 +58,7 @@ const Detail = () => {
         <p> Provincia: {data?.adress?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
       </Box> 
-
+      <Images/>
     </Container>
     
   )
