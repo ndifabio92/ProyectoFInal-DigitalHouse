@@ -7,19 +7,20 @@ import useFetchApi from '../../hooks/useFetchApi';
 
 const Recomendations = () => {
 
-  const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"],["./futbol1.png", "./futbol2.png", "./futbol3.png","./futbol4.png","./futbol5.png"],["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png","./tenis4.png"],["./padel1.jpg", "./padel2.jpg", "./padel3.jpg","./padel4.jpg","./padel5.jpg"],["./nat1.png", "./nat2.png", "./nat4.jpg","./nat5.jpg","./nata3.jpg"]]
-
-
   const navigate = useNavigate();
-
-  const { data, isLoading, error } = useFetchApi('club/recommended')
 
   const handleClick = (id) => {
 
     var idString = id.toString()
     let ruta = ('/club/' + idString);
-    navigate(ruta); 
+    navigate(ruta);
   };
+
+
+  const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png", "./futbol5.png"], ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png", "./tenis4.png"], ["./padel1.jpg", "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg"], ["./nat1.png", "./nat2.png", "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"], ["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png", "./futbol5.png"], ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png", "./tenis4.png"], ["./padel1.jpg", "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg"], ["./nat1.png", "./nat2.png", "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"], ["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png", "./futbol5.png"], ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png", "./tenis4.png"], ["./padel1.jpg", "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg"], ["./nat1.png", "./nat2.png", "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"]]
+
+  const { data, isLoading, error } = useFetchApi('club/recommended')
+
 
   return (
     <Container maxWidth="xl"
@@ -28,7 +29,7 @@ const Recomendations = () => {
         backgroundColor: '#FFFFFF',
         flexGrow: 1,
         textAlign: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         display: 'flex',
         flexDirection: 'column',
         color: '#1F2E7B',
@@ -43,21 +44,21 @@ const Recomendations = () => {
                 sx={{
                   maxWidth: 800,
                   textAlign: 'center',
-                  fontSize:'30px',
+                  fontSize: '30px',
                   color: '#1F2E7B',
                   fontWeight: 'bold'
                 }}
-              > 
-                {club.name} 
+              >
+                {club.name}
               </Button>
               <Container sx={{
-                display:'flex',
-                flexDirection:'row',
-                flexWrap:'wrap',
-                justifyContent:'center',
-                alignItems:'center',
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                alignItems: 'center',
                 maxHeight: 800,
-               
+
               }}>
                 {imagenes[index].map((image, imageIndex) => (
                   <Box
