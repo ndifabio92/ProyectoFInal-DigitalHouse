@@ -7,13 +7,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
 import { Box, Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
+
 
 const TableAdmin = () => {
     const { data, isLoading, error } = useFetchApi('club/list');
     console.error(error);
 
+    
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
@@ -33,6 +37,16 @@ const TableAdmin = () => {
             }
         })
     }
+
+    const handleChange = (id) => {    
+
+    }
+
+    const handleView = (id) => {    
+
+    }
+
+
     return (
         <Box sx={{ width: "100%" }}>
             {
@@ -45,7 +59,11 @@ const TableAdmin = () => {
                                         <TableRow>
                                             <TableCell align='center'>Id</TableCell>
                                             <TableCell align="center">Nombre</TableCell>
-                                            <TableCell align="center">Acciones</TableCell>
+                                            <TableCell align='center'>Domicilio</TableCell>
+                                            <TableCell align='center'>Ciudad</TableCell>
+                                            <TableCell align='center'>Telefono</TableCell>
+                                            <TableCell align='center'>Recomendado</TableCell>
+                                            <TableCell align='center'>Acciones</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -61,8 +79,23 @@ const TableAdmin = () => {
                                                     {row.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    <Button variant="contained" color="error" onClick={() => handleDelete(row.id)}>Eliminar Producto</Button>
+                                                {row.adress.street + " N° " + row.adress.number } 
                                                 </TableCell>
+                                                <TableCell component="th" scope="row" align='center'>
+                                                {row.adress.city.name + ", " + row.adress.city.state.name } 
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align='center'>
+                                                    {row.phone_number}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align='center'>
+                                                    {row.recommended? "Si" : "No"}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align='center' sx={{display:'flex', flexDirection:'column', gap:'10px'}}>
+                                                    <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleView(row.id)}>Canchas</Button>
+                                                    <Button variant="outlined" startIcon={<DeleteIcon/>} onClick={() => handleDelete(row.id)}>Eliminar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleChange(row.id)}>Modificar</Button>
+                                                </TableCell>
+                                                
                                             </TableRow>
                                         ))}
                                     </TableBody>
