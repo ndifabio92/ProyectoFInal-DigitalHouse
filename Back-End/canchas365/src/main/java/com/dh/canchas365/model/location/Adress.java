@@ -35,7 +35,7 @@ public class Adress implements Serializable {
     @Column(length = 45)
     private String apartment;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_city", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
