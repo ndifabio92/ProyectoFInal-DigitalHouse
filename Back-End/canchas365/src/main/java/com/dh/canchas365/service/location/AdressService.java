@@ -3,8 +3,9 @@ package com.dh.canchas365.service.location;
 import com.dh.canchas365.dto.location.AdressDTO;
 import com.dh.canchas365.model.location.Adress;
 import com.dh.canchas365.model.location.City;
-import com.dh.canchas365.repository.location.AddressRepository;
+import com.dh.canchas365.repository.location.AdressRepository;
 import com.dh.canchas365.repository.location.CityRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class AdressService {
 
     @Autowired
-    private AddressRepository addressRepository;
+    private AdressRepository adressRepository;
 
     @Autowired
     private CityRepository cityRepository;
@@ -30,6 +31,11 @@ public class AdressService {
             adress.setCity(optionalCity.get());
         }
 
-        return addressRepository.save(adress);
+        return adressRepository.save(adress);
+    }
+
+    public Adress updateAdress(Adress adress){
+
+        return adressRepository.save(adress);
     }
 }

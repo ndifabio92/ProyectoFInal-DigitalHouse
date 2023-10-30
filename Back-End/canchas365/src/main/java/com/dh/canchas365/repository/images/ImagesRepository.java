@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface ImagesRepository extends JpaRepository<Images, Long> {
 
-    @Query(value = "select * from images i where id_club= :idClub", nativeQuery = true)
+    @Query(value = "select * from images i where i.id_club= :idClub", nativeQuery = true)
     List<Images> getImagesByClub(@Param("idClub") Long idClub);
 }

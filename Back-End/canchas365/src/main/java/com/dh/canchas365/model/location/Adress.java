@@ -8,6 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table
-public class Adress {
+public class Adress implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,8 +35,9 @@ public class Adress {
     @Column(length = 45)
     private String apartment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_city", nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private City city;
 

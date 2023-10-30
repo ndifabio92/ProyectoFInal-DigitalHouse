@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Container } from "@mui/material";
+import { Button, Container, Box } from "@mui/material";
 import FormAdmin from "../../components/admin/form/FormAdmin";
 import TableAdmin from "../../components/admin/table/TableAdmin";
 
@@ -17,11 +17,12 @@ const Admin = () => {
         setShowTable(!showTable)
     }
     return (
-        <Container maxWidth="xxl"
+        <> 
+        <Container maxWidth="xxl" 
             sx={{
                 backgroundColor: '#FFFFFF',
                 color: '#1F2E7B',
-                display: 'flex',
+                display: { xs: 'none', sm: 'flex' },
                 flexDirection: 'column',
                 direction: 'row',
                 textAlign: 'center',
@@ -49,6 +50,19 @@ const Admin = () => {
                 )
             }
         </Container>
+        <Box 
+            sx={{
+            display: { xs: 'block', sm: 'none' },
+            color: 'red',
+            padding: '30px',
+            textAlign:'center',
+            fontSize: '15px',
+            marginY:'150px'}}
+        >
+            <p>Pagina no disponible desde el tipo de dispositivo desde el que desea acceder</p>
+        </Box>
+
+        </>
     )
 }
 
