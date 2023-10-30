@@ -38,7 +38,7 @@ const TablePlayfields = () => {
                     '',
                     'success'
                 )
-                
+
             }
         })
     }
@@ -58,7 +58,7 @@ const TablePlayfields = () => {
                     <Typography variant="h4" component="h4" sx={{color:'#011A5B', fontWeight:'bold'}} >
                         Nombre del club
                     </Typography>
-                <Button variant="contained" size="small" onClick={() => handleAdd()}> Agregar Club </Button>
+                <Button variant="contained" size="small" onClick={() => handleAdd()}> Agregar Cancha </Button>
             </Box>
             {
                 isLoading ? <Loading /> :
