@@ -45,7 +45,7 @@ public class ClubService {
             throw new ResourceDuplicateException("Ese nombre de Club ya existe");
         }
 
-        Optional<Adress> optionalAdress = adressRepository.findByAdress(dto.getAdress().getStreet(), dto.getAdress().getNumber(), dto.getAdress().getIdCity());
+        Optional<Adress> optionalAdress = adressRepository.findByAdress(dto.getAdress().getStreet(), dto.getAdress().getNumber(), dto.getAdress().getCity().getId());
         if(optionalAdress.isPresent()){
             clubToSave.setAdress(optionalAdress.get());
         }
