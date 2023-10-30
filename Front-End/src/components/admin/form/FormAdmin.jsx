@@ -21,6 +21,7 @@ export default function FormAdmin() {
             apartment: '',
             city: ''
         },
+        images: []
     }
     const formik = useFormik({
         initialValues,
