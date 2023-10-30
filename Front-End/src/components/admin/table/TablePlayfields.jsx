@@ -6,19 +6,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
-import { Box, Button } from '@mui/material';
+import { Box, Container, Button, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
-import { ENDPOINTS } from '../../../constants/endpoints';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 
-const TableAdmin = () => {
-    const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}/list`);
+//cuando este el endpoint de canchas por club se debe pasar por prop el idClub para incluit en el fetch
+const TablePlayfields = () => {
 
-    const navigate = useNavigate();
+    const {id} = useParams();
 
+    const { data, isLoading, error } = useFetchApi('playingField/club',id)
+
+    
+    
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
@@ -30,24 +33,33 @@ const TableAdmin = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(data)
                 Swal.fire(
                     'Eliminado',
                     '',
                     'success'
                 )
+
             }
         })
     }
 
-    const handleChange = (id) => {
+    const handleAdd = () => {    
 
     }
 
-    const handleView = (id) => navigate(`/admin/club/${id}`);
+    const handleChange = (id) => {    
+
+    }
+
 
     return (
-        <Box sx={{ width: "100%" }}>
+        <Container sx={{ width: "100%", marginTop:'150px', marginBottom:'40px' }}>
+            <Box sx={{display:'flex', justifyContent:'space-between', padding:'20px'}}>
+                    <Typography variant="h4" component="h4" sx={{color:'#011A5B', fontWeight:'bold'}} >
+                        Nombre del club
+                    </Typography>
+                <Button variant="contained" size="small" onClick={() => handleAdd()}> Agregar Cancha </Button>
+            </Box>
             {
                 isLoading ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
@@ -57,11 +69,8 @@ const TableAdmin = () => {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align='center'>Id</TableCell>
-                                            <TableCell align="center">Nombre</TableCell>
-                                            <TableCell align='center'>Domicilio</TableCell>
-                                            <TableCell align='center'>Ciudad</TableCell>
-                                            <TableCell align='center'>Telefono</TableCell>
-                                            <TableCell align='center'>Recomendado</TableCell>
+                                            <TableCell align='center'>Deporte</TableCell>
+                                            <TableCell align="center">Descripcion</TableCell>
                                             <TableCell align='center'>Acciones</TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -75,25 +84,16 @@ const TableAdmin = () => {
                                                     {row.id}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.name}
+                                                    deporte
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.adress.street + " N° " + row.adress.number}
+                                                {row.description} 
                                                 </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.adress.idCity}
+                                                <TableCell component="th" scope="row" align='center' sx={{display:'flex', flexDirection:'column', gap:'10px'}}>
+                                                    <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleChange(row.id)}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<DeleteIcon/>} onClick={() => handleDelete(row.id)}>Eliminar</Button>
                                                 </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.phone_number}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.recommended ? "Si" : "No"}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
-                                                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(row.id)}>Modificar</Button>
-                                                </TableCell>
+                                                
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -102,7 +102,7 @@ const TableAdmin = () => {
                         </TableContainer>
                     </Paper>
             }
-        </Box>
+        </Container>
     );
 }
-export default TableAdmin
+export default TablePlayfields
