@@ -19,32 +19,40 @@ const CardProducts = ({ name, tel, url, city, id }) => {
             <CardActionArea
                 onClick={handleClick}
                 sx={{
-                    width: 600,
-                    height: 200,
+                    width: 170,
+                    height: 280,
                     border: 'none',
                     backgroundColor: '#EDEBEE',
-                    padding: '20',
                     display: 'flex',
-                    flexDirection: 'row'
+                    justifyContent:'space-between',
+                    flexDirection: 'column'
                 }}
 
             >
+                <Typography variant="p" component="p" 
+                    sx={{
+                        height:'30px', 
+                        padding:'10px',
+                        margin:'auto',
+                        fontSize:'16px',
+                        fontWeight:'bold',
+                        color: '#1F2E7B',
+                    }}>
+                        {name}
+                </Typography>
                 <CardMedia
                     component="img"
-                    height={150}
+                    height={170}
                     image={url}
                     sx={{ margin: '20px' }}
                 />
 
                 <CardContent sx={{
-                    width: 600,
                     border: 'none',
                     color: '#1F2E7B',
-                    padding: '10',
+                    padding: '10px',
                 }}>
-                    <Typography variant="h5" component="h3">
-                        {name}
-                    </Typography>
+                    
                     <Typography variant="p" component="p">
                         {city}
                     </Typography>

@@ -49,16 +49,16 @@ const Admin = () => {
                 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Agregar Producto" />
                         <Tab label="Lista de productos" />
+                        <Tab label="Agregar Producto" />
                         <Tab label="Item Three" />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <FormAdmin />
+                    <TableAdmin />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <TableAdmin />
+                    <FormAdmin />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                     Item Three

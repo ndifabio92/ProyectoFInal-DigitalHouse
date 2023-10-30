@@ -26,7 +26,7 @@ const Products = () => {
         isLoading ? <Loading />
           :
           <Box sx={{
-            margin: '30px',
+            mx: 'auto',
             backgroundColor: '#FFFFFF',
             color: '#1F2E7B',
             display: 'flex',

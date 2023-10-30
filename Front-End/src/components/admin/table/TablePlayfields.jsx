@@ -6,12 +6,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
-import { Box, Container, Button, Typography } from '@mui/material';
+import { Box, Container, Button, Typography, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import { useParams } from 'react-router-dom'
+import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
+import { useNavigate } from 'react-router-dom';
+
 
 //cuando este el endpoint de canchas por club se debe pasar por prop el idClub para incluit en el fetch
 const TablePlayfields = () => {
@@ -20,7 +23,11 @@ const TablePlayfields = () => {
 
     const { data, isLoading, error } = useFetchApi('playingField/club',id)
 
-    
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/admin');
+      };
     
     const handleDelete = (id) => {
         Swal.fire({
@@ -54,6 +61,9 @@ const TablePlayfields = () => {
 
     return (
         <Container sx={{ width: "100%", marginTop:'150px', marginBottom:'40px' }}>
+            <IconButton aria-label="Volver" color='#FFFFFF' size="large" onClick={handleClick} sx={{position:'absolute', right:'10px', top:'100px', display:'block'}} >
+                <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
+            </IconButton>
             <Box sx={{display:'flex', justifyContent:'space-between', padding:'20px'}}>
                     <Typography variant="h4" component="h4" sx={{color:'#011A5B', fontWeight:'bold'}} >
                         Nombre del club
