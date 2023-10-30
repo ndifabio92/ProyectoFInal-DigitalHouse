@@ -14,4 +14,10 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
 
     @Query("select c from Club c where c.recommended= 1")
     List<Club> getClubRecommended();
+
+    @Query("select c from Club c where c.name= ?1")
+    Optional<Club> findByName(String name);
+
+    @Query(value = "select * from club ORDER BY RAND() LIMIT 10", nativeQuery = true)
+    List<Club> getRandomClubs();
 }

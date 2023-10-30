@@ -4,21 +4,20 @@ import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Adress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table
-public class Club {
+public class Club implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,15 +31,17 @@ public class Club {
 
     private Boolean recommended;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "club")
-    @JsonIgnore
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<PlayingField> playingFields = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_adress", referencedColumnName = "id", nullable = false)
     private Adress adress;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "club")
-    @JsonIgnore
+    @OneToMany( cascade = CascadeType.ALL, mappedBy = "club", orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Images> images = new HashSet<>();
+
 }
