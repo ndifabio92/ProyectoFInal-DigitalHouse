@@ -11,14 +11,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
-import TablePlayfields from './TablePlayfields';
+import { useNavigate } from 'react-router-dom';
 
 
 const TableAdmin = () => {
     const { data, isLoading, error } = useFetchApi('club/list');
-    console.error(error);
 
-    
+    const navigate = useNavigate();
+
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
@@ -44,9 +44,9 @@ const TableAdmin = () => {
     }
 
     const handleView = (id) => {    
-
+        let ruta = ('/admin/club/' + id);
+        navigate(ruta); 
     }
-
 
     return (
         <Box sx={{ width: "100%" }}>
@@ -69,7 +69,6 @@ const TableAdmin = () => {
                                     </TableHead>
                                     <TableBody>
                                         {data.map((row) => (
-                                            <>
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -84,7 +83,7 @@ const TableAdmin = () => {
                                                 {row.adress.street + " N° " + row.adress.number } 
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                {row.adress.city.name + ", " + row.adress.city.state.name } 
+                                                {row.adress.idCity} 
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.phone_number}
@@ -98,8 +97,6 @@ const TableAdmin = () => {
                                                     <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleChange(row.id)}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
-                                            <TablePlayfields />
-                                            </> 
                                         ))}
                                     </TableBody>
                                 </Table>
