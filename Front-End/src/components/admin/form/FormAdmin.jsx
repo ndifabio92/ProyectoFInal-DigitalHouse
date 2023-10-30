@@ -2,7 +2,6 @@ import { Button, Container, FormControlLabel, MenuItem, Switch, TextField } from
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
-import SelectInput from "../../selectinput/SelectInput";
 
 
 export default function FormAdmin() {
@@ -21,7 +20,7 @@ export default function FormAdmin() {
             floor: '',
             apartment: '',
             city: ''
-        }
+        },
     }
     const formik = useFormik({
         initialValues,

@@ -25,6 +25,7 @@ const TableAdmin = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
+                console.log(data)
                 Swal.fire(
                     'Eliminado',
                     '',
