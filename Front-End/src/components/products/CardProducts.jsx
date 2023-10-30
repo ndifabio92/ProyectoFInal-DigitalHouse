@@ -5,20 +5,18 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { ENDPOINTS } from '../../constants/endpoints';
 
 const CardProducts = ({ name, url, city, id }) => {
 
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        let ruta = ('/club/' + id);
-        navigate(ruta); 
-    };
+    const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${id}`);
 
     return (
         <Card>
-            
-            <CardActionArea 
+
+            <CardActionArea
                 onClick={handleClick}
                 sx={{
                     width: 600,
@@ -52,7 +50,7 @@ const CardProducts = ({ name, url, city, id }) => {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-           
+
         </Card>
     )
 }

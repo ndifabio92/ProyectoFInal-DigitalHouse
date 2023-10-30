@@ -9,10 +9,10 @@ import useFetchApi from '../../../hooks/useFetchApi';
 import { Box, Button } from '@mui/material';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
+import { ENDPOINTS } from '../../../constants/endpoints';
 
 const TableAdmin = () => {
-    const { data, isLoading, error } = useFetchApi('club/list');
-    console.error(error);
+    const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}/list`);
 
     const handleDelete = (id) => {
         Swal.fire({
