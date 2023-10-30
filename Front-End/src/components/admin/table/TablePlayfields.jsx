@@ -11,11 +11,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
-import TablePlayfields from './TablePlayfields';
 
-
-const TableAdmin = () => {
-    const { data, isLoading, error } = useFetchApi('club/list');
+//cuando este el endpoint de canchas por club se debe pasar por prop el idClub para incluit en el fetch
+const TablePlayfields = () => {
+    const { data, isLoading, error } = useFetchApi('playingField/list');
     console.error(error);
 
     
@@ -39,11 +38,11 @@ const TableAdmin = () => {
         })
     }
 
-    const handleChange = (id) => {    
+    const handleAdd = () => {    
 
     }
 
-    const handleView = (id) => {    
+    const handleChange = (id) => {    
 
     }
 
@@ -59,17 +58,14 @@ const TableAdmin = () => {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align='center'>Id</TableCell>
-                                            <TableCell align="center">Nombre</TableCell>
-                                            <TableCell align='center'>Domicilio</TableCell>
-                                            <TableCell align='center'>Ciudad</TableCell>
-                                            <TableCell align='center'>Telefono</TableCell>
-                                            <TableCell align='center'>Recomendado</TableCell>
+                                            <TableCell align='center'>Deporte</TableCell>
+                                            <TableCell align="center">Descripcion</TableCell>
+                                            <TableCell align='center'>Club</TableCell>
                                             <TableCell align='center'>Acciones</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {data.map((row) => (
-                                            <>
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -78,28 +74,21 @@ const TableAdmin = () => {
                                                     {row.id}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.name}
+                                                    {row.sport.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                {row.adress.street + " N° " + row.adress.number } 
+                                                {row.description} 
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                {row.adress.city.name + ", " + row.adress.city.state.name } 
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.phone_number}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.recommended? "Si" : "No"}
+                                                {row.club.name} 
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{display:'flex', flexDirection:'column', gap:'10px'}}>
-                                                    <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleView(row.id)}>Canchas</Button>
-                                                    <Button variant="outlined" startIcon={<DeleteIcon/>} onClick={() => handleDelete(row.id)}>Eliminar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleAdd(row.id)}>Agregar</Button>
                                                     <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleChange(row.id)}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<DeleteIcon/>} onClick={() => handleDelete(row.id)}>Eliminar</Button>
                                                 </TableCell>
+                                                
                                             </TableRow>
-                                            <TablePlayfields />
-                                            </> 
                                         ))}
                                     </TableBody>
                                 </Table>
@@ -110,4 +99,4 @@ const TableAdmin = () => {
         </Box>
     );
 }
-export default TableAdmin
+export default TablePlayfields
