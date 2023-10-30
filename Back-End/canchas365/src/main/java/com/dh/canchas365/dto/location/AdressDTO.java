@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 public class AdressDTO {
 
-    private Long id;
-
     private String street;
 
     private Integer number;
