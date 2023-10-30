@@ -41,12 +41,12 @@ public class PlayingFieldService {
             throw new ResourceNotFoundException("No existe un club con el id "+dto.getIdClub());
         }
 
-        Optional<Sport> optionalSport = sportRepository.findById(dto.getIdSport());
+        Optional<Sport> optionalSport = sportRepository.findById(dto.getSport().getId());
         if(optionalSport.isPresent()){
             playingField.setSport(optionalSport.get());
         }
         else{
-            throw new ResourceNotFoundException("No existe un deporte con el id "+dto.getIdSport());
+            throw new ResourceNotFoundException("No existe un deporte con el id "+dto.getSport().getId());
         }
         ModelMapper mapper = new ModelMapper();
         return mapper.map(playingFieldRepository.save(playingField),PlayingFieldDTO.class);

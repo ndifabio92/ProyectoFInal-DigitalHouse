@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-public class Sport {
+public class Sport implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

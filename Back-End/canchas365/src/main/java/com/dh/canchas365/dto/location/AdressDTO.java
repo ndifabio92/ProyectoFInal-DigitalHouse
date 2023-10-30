@@ -1,5 +1,6 @@
 package com.dh.canchas365.dto.location;
 
+import com.dh.canchas365.model.location.City;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,7 @@ public class AdressDTO {
 
     private String apartment;
 
-    private Long idCity;
+    //private Long idCity;
+
+    private City city;
 }

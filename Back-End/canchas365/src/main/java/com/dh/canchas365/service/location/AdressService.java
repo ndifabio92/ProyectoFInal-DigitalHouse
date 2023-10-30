@@ -26,7 +26,7 @@ public class AdressService {
         adress.setNumber(dto.getNumber());
         adress.setFloor(dto.getFloor());
         adress.setApartment(dto.getApartment());
-        Optional<City> optionalCity = cityRepository.findById(dto.getIdCity());
+        Optional<City> optionalCity = cityRepository.findById(dto.getCity().getId());
         if(optionalCity.isPresent()){
             adress.setCity(optionalCity.get());
         }

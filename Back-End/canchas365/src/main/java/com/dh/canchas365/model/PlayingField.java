@@ -27,7 +27,7 @@ public class PlayingField implements Serializable {
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Club club;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_sport", referencedColumnName = "id", nullable = false)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Sport sport;

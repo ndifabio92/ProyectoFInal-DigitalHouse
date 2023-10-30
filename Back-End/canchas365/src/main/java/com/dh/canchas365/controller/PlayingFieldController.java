@@ -67,15 +67,15 @@ public class PlayingFieldController {
             throw new ResourceNotFoundException("No existe cancha con el id "+id);
         }
         else{
-            System.out.println("la concha de la lora");
+//            System.out.println("la concha de la lora");
             playingFieldService.deletePlayingField(playingFieldDTO.getId());
             responseEntity = new ResponseEntity<PlayingFieldDTO>(HttpStatus.OK);
         }
         return responseEntity;
     }
 
-    @GetMapping("/club/{idPlayingField}")
-    public List<PlayingFieldDTO> getPlayingFieldByClub(@PathVariable("idPlayingField") Long id){
+    @GetMapping("/club/{idClub}")
+    public List<PlayingFieldDTO> getPlayingFieldByClub(@PathVariable("idClub") Long id){
         return playingFieldService.getPlayingFieldByClub(id);
     }
 }
