@@ -12,10 +12,10 @@ export const Navigation = () => {
         <>
             <Header />
             <Routes>
-                <Route exact path="/" element={<Home/>} />
-                <Route exact path='/club/:id' element={<Detail/>}/>
-                <Route exact path="/admin" element={<Admin/>}/>
-                <Route exact path="/admin/club/:id" element={<TablePlayfields/>}/>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path='/club/:id' element={<Detail />} />
+                <Route exact path="/admin" element={<Admin />} />
+                <Route exact path="/admin/club/:id" element={<TablePlayfields />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />

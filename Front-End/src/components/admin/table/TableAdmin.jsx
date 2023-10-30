@@ -11,11 +11,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
+import { ENDPOINTS } from '../../../constants/endpoints';
 import { useNavigate } from 'react-router-dom';
 
-
 const TableAdmin = () => {
-    const { data, isLoading, error } = useFetchApi('club/list');
+    const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}/list`);
 
     const navigate = useNavigate();
 
@@ -30,6 +30,7 @@ const TableAdmin = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
+                console.log(data)
                 Swal.fire(
                     'Eliminado',
                     '',
@@ -39,14 +40,11 @@ const TableAdmin = () => {
         })
     }
 
-    const handleChange = (id) => {    
+    const handleChange = (id) => {
 
     }
 
-    const handleView = (id) => {    
-        let ruta = ('/admin/club/' + id);
-        navigate(ruta); 
-    }
+    const handleView = (id) => navigate(`/admin/club/${id}`);
 
     return (
         <Box sx={{ width: "100%" }}>
@@ -80,21 +78,21 @@ const TableAdmin = () => {
                                                     {row.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                {row.adress.street + " N° " + row.adress.number } 
+                                                    {row.adress.street + " N° " + row.adress.number}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                {row.adress.idCity} 
+                                                    {row.adress.idCity}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.phone_number}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.recommended? "Si" : "No"}
+                                                    {row.recommended ? "Si" : "No"}
                                                 </TableCell>
-                                                <TableCell component="th" scope="row" align='center' sx={{display:'flex', flexDirection:'column', gap:'10px'}}>
-                                                    <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleView(row.id)}>Canchas</Button>
-                                                    <Button variant="outlined" startIcon={<DeleteIcon/>} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon/>} onClick={() => handleChange(row.id)}>Modificar</Button>
+                                                <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
+                                                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(row.id)}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
