@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 
 const Footer = () => {
 
@@ -16,13 +15,14 @@ const Footer = () => {
         height: '40px',
         position: 'fixed',
         bottom: 0,
+        zIndex:'10',
         alignItems:'center',
         justifyContent:'flex-start',
         width: '100%',
       }}
     >
-        <img src={logo} style={{ height: '30px', marginLeft:'10px',marginRight:'5px' }} />
-        <span> © 2023 Todos los derechos reservados </span>
+      <img src={logo} style={{ height: '30px', marginLeft:'10px',marginRight:'5px' }} />
+      <span> © 2023 Todos los derechos reservados </span>
     </Box>
   );
 }

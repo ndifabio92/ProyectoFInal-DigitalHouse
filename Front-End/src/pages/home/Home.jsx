@@ -6,7 +6,7 @@ import Products from '../../components/products/Products';
 
 const Home = () => {
   return (
-    <Container maxWidth="xl"
+    <Container maxWidth="lg"
       sx={{
         padding: '0',
         mt: '100px',
