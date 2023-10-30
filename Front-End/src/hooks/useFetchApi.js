@@ -1,18 +1,35 @@
 import { useState, useEffect } from 'react';
+import { METHODS } from '../constants/methods';
 
-const useFetchApi = (endpoint, id = '') => {
+const useFetchApi = (endpoint, payload = '', method = METHODS.GET) => {
 
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const isId = id === "" ? "" : `/${id}`;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setIsLoading(true)
                 setError(null)
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_API}${endpoint}${isId}`);
+
+                let url = `${import.meta.env.VITE_BACKEND_API}${endpoint}`;
+
+                if (payload) {
+                    url += `/${payload}`;
+                }
+
+                const options = {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+
+                if (method !== METHODS.GET && payload) {
+                    options.body = JSON.stringify(payload);
+                }
+                const response = await fetch(url, options);
                 const jsonData = await response.json();
 
                 setData(jsonData);

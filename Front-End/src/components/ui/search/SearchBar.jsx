@@ -1,29 +1,31 @@
-import { useState } from 'react';
 import Container from '@mui/material/Box';
-import SearchBoxCity from '../../dropbox/SearchBoxCity';
-import SearchBoxSport from '../../dropbox/SearchBoxSport';
-import InputDate from '../../date-time/InputDate';
-import InputTime from '../../date-time/InputTime';
 import Button from '@mui/material/Button';
+import { useForm } from '../../../hooks/useForm';
+import SelectInput from '../../selectinput/SelectInput';
+import Datepicker from '../../datepicker/datepicker';
+
 
 const SearchBar = () => {
-  const [city, setCity] = useState('')
-  const [sport, setSport] = useState('')
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
 
-  const handleCity = (newCity) => {
-    setCity(newCity)
-  }
-  const handleSport = (newSport) => {
-    setSport(newSport)
-  }
-  const handleDate = (newDate) => {
-    setDate(newDate)
-  }
-  const handleTime = (newTime) => {
-    setTime(newTime)
-  }
+  const cities = [
+    { id: 1, name: "Córdoba" },
+    { id: 2, name: "Mendoza" },
+    { id: 3, name: "Buenos Aires" },
+  ];
+
+  const sports = [
+    { id: 1, name: "Fútbol" },
+    { id: 2, name: "Tenis" },
+    { id: 3, name: "Padel" },
+    { id: 4, name: "Natación" },
+  ];
+
+  const { values, handleChange } = useForm({
+    city: '',
+    sport: '',
+    date: '',
+    time: ''
+  });
 
   return (
     <Container maxWidth="xxl"
@@ -39,10 +41,10 @@ const SearchBar = () => {
       }}
     >
 
-      <SearchBoxCity props={handleCity} />
-      <SearchBoxSport props={handleSport} />
-      <InputDate props={handleDate} />
-      <InputTime props={handleTime} />
+      <SelectInput handleChange={handleChange} options={cities} name="city" />
+      <SelectInput handleChange={handleChange} options={sports} name="sport" />
+      <Datepicker handleChange={handleChange} name="date" type="DatePicker" />
+      <Datepicker handleChange={handleChange} name="time" type="DatePicker" />
       <Button variant="contained" type='submit'>Buscar Turno</Button>
 
     </Container >
