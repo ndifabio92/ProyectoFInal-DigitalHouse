@@ -32,8 +32,8 @@ const Admin = () => {
                 padding: '40px'
             }}>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button variant="outlined" onClick={viewAdd}>Agregar Producto</Button>
-                <Button variant="outlined" onClick={viewTable}>Lista de productos</Button>
+                <Button variant="outlined" onClick={viewAdd}>Agregar Club </Button>
+                <Button variant="outlined" onClick={viewTable}>Lista de Clubes </Button>
             </div>
             {
                 showAdd && (

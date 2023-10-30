@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const CardProducts = ({ name, url, city, id }) => {
+const CardProducts = ({ name, tel, url, city, id }) => {
 
     const navigate = useNavigate();
 
@@ -47,8 +47,11 @@ const CardProducts = ({ name, url, city, id }) => {
                     <Typography variant="h5" component="h3">
                         {name}
                     </Typography>
-                    <Typography variant="h5" component="h5">
+                    <Typography variant="p" component="p">
                         {city}
+                    </Typography>
+                    <Typography variant="p" component="p">
+                        {tel}
                     </Typography>
                 </CardContent>
             </CardActionArea>
