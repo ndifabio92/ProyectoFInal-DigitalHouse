@@ -14,6 +14,7 @@ import Loading from '../../loading/Loading';
 import { useParams } from 'react-router-dom'
 import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
 import { useNavigate } from 'react-router-dom';
+import TitleClub from '../../products/TitleClub';
 
 
 
@@ -65,9 +66,7 @@ const TablePlayfields = () => {
                 <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
             </IconButton>
             <Box sx={{display:'flex', justifyContent:'space-between', padding:'20px'}}>
-                    <Typography variant="h4" component="h4" sx={{color:'#011A5B', fontWeight:'bold'}} >
-                        Nombre del club
-                    </Typography>
+                    <TitleClub id={id}/>
                 <Button variant="contained" size="small" onClick={() => handleAdd()}> Agregar Cancha </Button>
             </Box>
             {

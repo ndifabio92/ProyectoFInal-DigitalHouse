@@ -15,14 +15,13 @@ const CardProducts = ({ name, tel, city, id }) => {
 
     const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
-    console.log(data)
-
     const navigate = useNavigate();
 
     const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${id}`);
 
 
     return (
+        
         <Card>
 
             <CardActionArea
@@ -51,7 +50,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                 </Typography>
                 <CardMedia
                     component="img"
-                    height={170}
+                    height={100}
                     image={data? data[0].url : ''}
                     sx={{ margin: '20px' }}
                 />
