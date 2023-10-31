@@ -6,12 +6,21 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ENDPOINTS } from '../../constants/endpoints';
+import useFetchApi from '../../hooks/useFetchApi';
 
-const CardProducts = ({ name, tel, url, city, id }) => {
+
+
+
+const CardProducts = ({ name, tel, city, id }) => {
+
+    const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
+
+    console.log(data)
 
     const navigate = useNavigate();
 
     const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${id}`);
+
 
     return (
         <Card>
@@ -43,7 +52,7 @@ const CardProducts = ({ name, tel, url, city, id }) => {
                 <CardMedia
                     component="img"
                     height={170}
-                    image={url}
+                    image={data? data[0].url : ''}
                     sx={{ margin: '20px' }}
                 />
 

@@ -10,9 +10,6 @@ const Products = () => {
 
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.RANDOM}`);
 
-  const imagenes = ["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png", "./futbol5.png", "./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png", "./tenis4.png", "./padel1.jpg", "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg", "./nat1.png", "./nat2.png", "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"
-  ]
-
   return (
     <Container maxWidth="xl"
       sx={{
@@ -38,7 +35,7 @@ const Products = () => {
 
             {
               data?.map((club) => (
-                <CardProducts key={club.id} name={club.name} tel={club.phone_number} url={imagenes[club.id]} city={club.adress.street + " N° " + club.adress.number} id={club.id} />
+                <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.adress.street + " N° " + club.adress.number + ", " + club.adress.city.name } id={club.id} />
               ))
             }
           </Box>

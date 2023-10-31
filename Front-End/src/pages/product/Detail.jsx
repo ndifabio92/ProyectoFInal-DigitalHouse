@@ -54,12 +54,12 @@ const Detail = () => {
           paddingLeft: '150px',
         }}
       >
-        <p> Domicilio: {data?.adress?.street}</p>
+        <p> Domicilio: {data?.adress?.street + " N° " + data?.adress?.number}</p>
         <p> Ciudad: {data?.adress?.city?.name}</p>
-        <p> Provincia: {data?.adress?.state?.name}</p>
+        <p> Provincia: {data?.adress?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
       </Box>
-      <Images />
+      <Images id={id} />
     </Container>
 
   )

@@ -2,7 +2,6 @@ import Carousel from 'react-material-ui-carousel'
 import { Container, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
-
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
 import Loading from '../loading/Loading';
@@ -16,7 +15,6 @@ const Recomendations = () => {
   const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png"], ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png"], ["./padel1.jpg", "./padel2.jpg", "./padel3.jpg", "./padel4.jpg"], ["./nat1.png", "./nat2.png", "./nat4.jpg", "./nat5.jpg"], ["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png"], ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png"], [ "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg"], ["./nat1.png",  "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"], ["./futbol1.png", "./futbol3.png", "./futbol4.png", "./futbol5.png"], ["./tenis1.png", "./tenis2.png", "./tenis3.png", "./tenis4.png"], [ "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg"], ["./nat1.png", "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"]]
 
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.RECOMMENDED);
-
 
   return (
     <Container maxWidth="xl"

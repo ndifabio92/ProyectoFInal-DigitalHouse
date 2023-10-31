@@ -16,7 +16,7 @@ import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTo
 import { useNavigate } from 'react-router-dom';
 
 
-//cuando este el endpoint de canchas por club se debe pasar por prop el idClub para incluit en el fetch
+
 const TablePlayfields = () => {
 
     const {id} = useParams();
@@ -94,7 +94,7 @@ const TablePlayfields = () => {
                                                     {row.id}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    deporte
+                                                    {row.sport.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                 {row.description} 
