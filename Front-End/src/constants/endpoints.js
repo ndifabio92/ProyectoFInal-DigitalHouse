@@ -4,5 +4,6 @@ export const ENDPOINTS = {
     ADDRESS: 'adress',
     RECOMMENDED: 'club/recommended',
     RANDOM: 'club/random',
-    IMAGES:'image/club'
+    IMAGES:'image/club',
+    SPORT:'sport'
 }

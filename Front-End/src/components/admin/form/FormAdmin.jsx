@@ -3,8 +3,7 @@ import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
 
-
-export default function FormAdmin() {
+const FormAdmin = () => {
 
     const cities = [
         { id: 1, name: "Córdoba" },
@@ -121,3 +120,5 @@ export default function FormAdmin() {
         </Container>
     )
 }
+
+export default FormAdmin

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { METHODS } from '../constants/methods';
 
-const useFetchApi = (endpoint, payload = '', method = METHODS.GET) => {
+const useFetchApi = (endpoint, method = METHODS.GET, payload = '') => {
 
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
