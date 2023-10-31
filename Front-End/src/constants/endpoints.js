@@ -3,5 +3,6 @@ export const ENDPOINTS = {
     PLAYINGFIELD: 'playingField',
     ADDRESS: 'adress',
     RECOMMENDED: 'club/recommended',
-    RANDOM: 'club/random'
+    RANDOM: 'club/random',
+    IMAGES:'image/club'
 }

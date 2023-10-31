@@ -81,7 +81,7 @@ const TableAdmin = () => {
                                                     {row.adress.street + " N° " + row.adress.number}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.adress.idCity}
+                                                    {row.adress.city.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.phone_number}
