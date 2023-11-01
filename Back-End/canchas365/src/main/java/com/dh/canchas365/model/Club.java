@@ -1,8 +1,7 @@
 package com.dh.canchas365.model;
 
 import com.dh.canchas365.model.images.Images;
-import com.dh.canchas365.model.location.Adress;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.dh.canchas365.model.location.Address;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -38,7 +37,7 @@ public class Club implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_adress", referencedColumnName = "id", nullable = false)
-    private Adress adress;
+    private Address address;
 
     @OneToMany( cascade = CascadeType.ALL, mappedBy = "club", orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
