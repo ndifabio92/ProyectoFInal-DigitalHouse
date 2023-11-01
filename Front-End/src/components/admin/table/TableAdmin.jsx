@@ -66,7 +66,7 @@ const TableAdmin = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {data.map((row) => (
+                                        {data?.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

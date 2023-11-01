@@ -2,8 +2,11 @@ import { Button, Container, FormControlLabel, MenuItem, Switch, TextField } from
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
+import { useNavigate } from 'react-router-dom';
 
-const FormAdmin = () => {
+export default function FormAdmin() {
+
+    const navigate = useNavigate();
 
     const cities = [
         { id: 1, name: "Córdoba" },
@@ -22,13 +25,36 @@ const FormAdmin = () => {
         },
         images: []
     }
+
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: () => {
+            console.log(formik.values)
+            submitForm(formik.values); 
+          },
+    });
+
+    const submitForm = async (values) => {
+        try {
+          const response = await fetch('http://localhost:8080/club', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+          });
+      
+          if (response.ok) {
+            console.log("La Solicitur Post se envio correctamente")
+            navigate('/admin');
+          } else {
+            console.log("error")
+          }
+        } catch (error) {
+            console.log(error)
         }
-    })
+      };
 
     return (
         <Container maxWidth="md">
@@ -48,16 +74,12 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.phone_number}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Telefono" type="number" name="phone_number" className="input-background"
+                <TextField variant="outlined" size="small" label="Telefono" type="text" name="phone_number" className="input-background"
                     value={formik.values.phone_number}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
               
-                {
-                    formik.touched.recommended && formik.errors.recommended && (
-                        <span style={{ color: 'red' }}>{formik.errors.recommended}</span>
-                    )
-                }
+                
                 {
                     formik.touched.address?.street && formik.errors.address?.street && (
                         <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
@@ -90,7 +112,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Apartamento" type="string" name="address.apartment" className="input-background" 
+                <TextField variant="outlined" size="small" label="Apartamento" type="text" name="address.apartment" className="input-background" 
                     value={formik.values.address?.apartment}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -99,8 +121,8 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.city}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Ciudad" select name="address.city" className="input-background" 
-                    value={formik.values.address.city}
+                <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
+                    value={formik.values.address?.city}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {cities.map((option) => (
                         <MenuItem key={option.id} value={option.id}>
@@ -108,6 +130,12 @@ const FormAdmin = () => {
                         </MenuItem>
                     ))}
                 </TextField>
+
+                {
+                    formik.touched.recommended && formik.errors.recommended && (
+                        <span style={{ color: 'red' }}>{formik.errors.recommended}</span>
+                    )
+                }
                 
                     <FormControlLabel labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background"
                         checked={formik.values.recommended}
@@ -120,5 +148,3 @@ const FormAdmin = () => {
         </Container>
     )
 }
-
-export default FormAdmin

@@ -1,37 +1,60 @@
-import { Button, Container, MenuItem, TextField } from "@mui/material";
+import { Button, Container, FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
-import { ENDPOINTS } from '../../../constants/endpoints';
-import useFetchApi from '../../../hooks/useFetchApi';
-import { METHODS } from '../../../constants/methods';
+import { useNavigate } from 'react-router-dom';
 
+export default function FormAdmin() {
 
-const FormPlayfields = ({idClub}) => {
+    const navigate = useNavigate();
 
-    const sports= [{ id: 1, name: 'FUTBOL 5'}, { id: 2, name: 'FUTBOL 7'},{ id: 3, name: 'FUTBOL 9'},{ id: 4, name: 'FUTBOL 11'}, { id: 5, name: 'TENIS'}, { id: 6, name: 'PADEL'}, { id: 7, name: 'NATACION'}];
-
+    const cities = [
+        { id: 1, name: "Córdoba" },
+        { id: 2, name: "Mendoza" },
+        { id: 3, name: "Buenos Aires" },
+    ];
 
     const initialValues = {
-        description: '', 
-        club: {
-            id: {idClub}
+        name: '', phone_number: '', recommended: false,
+        address: {
+            street: '',
+            number: '',
+            floor: '',
+            apartment: '',
+            city: ''
         },
-        sport: {
-            name: ''
-        },
+        images: []
     }
 
-    const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}`, formik, METHODS.POST);
-
-    //ver si el useFormik me retorna un objeto con los valores cargados
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: () => {
+            console.log(formik.values)
+            submitForm(formik.values); 
+          },
+    });
+
+    const submitForm = async (values) => {
+        try {
+          const response = await fetch('http://localhost:8080/club', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+          });
+      
+          if (response.ok) {
+            console.log("La Solicitur Post se envio correctamente")
+            navigate('/admin');
+          } else {
+            console.log("error")
+          }
+        } catch (error) {
+            console.log(error)
         }
-    })
+      };
 
     return (
         <Container maxWidth="md">
@@ -43,24 +66,83 @@ const FormPlayfields = ({idClub}) => {
                     )
                 }
                 <TextField variant="outlined" size="small" label="Nombre" type="text" name="name" className="input-background"
-                    value={formik.values.description}
+                    value={formik.values.name}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
-                <TextField variant="outlined" size="small" label="Ciudad" select name="address.city" className="input-background" 
-                    value={formik.values.sports.id}
+                {
+                    formik.touched.phone_number && formik.errors.phone_number && (
+                        <span style={{ color: 'red' }}>{formik.errors.phone_number}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Telefono" type="text" name="phone_number" className="input-background"
+                    value={formik.values.phone_number}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+              
+                {
+                    formik.touched.recommended && formik.errors.recommended && (
+                        <span style={{ color: 'red' }}>{formik.errors.recommended}</span>
+                    )
+                }
+                {
+                    formik.touched.address?.street && formik.errors.address?.street && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Calle" type="text" name="address.street" className="input-background" 
+                    value={formik.values.address?.street}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+                {
+                    formik.touched.address?.number && formik.errors.address?.number && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.number}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Numero" type="number" name="address.number" className="input-background" 
+                    value={formik.values.address?.number}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+                {
+                    formik.touched.address?.floor && formik.errors.address?.floor && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.floor}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Piso" type="number" name="address.floor" className="input-background" 
+                    value={formik.values.address?.floor}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+                {
+                    formik.touched.address?.apartment && formik.errors.address?.apartment && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Apartamento" type="string" name="address.apartment" className="input-background" 
+                    value={formik.values.address?.apartment}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+                {
+                    formik.touched.address?.city && formik.errors.address?.city && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.city}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
+                    value={formik.values.address.city}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
-                    {sports.map((option) => (
+                    {cities.map((option) => (
                         <MenuItem key={option.id} value={option.id}>
                             {option.name}
                         </MenuItem>
                     ))}
                 </TextField>
                 
+                    <FormControlLabel labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background"
+                        checked={formik.values.recommended}
+                        onChange={formik.handleChange} onBlur={formik.handleBlur} />}
+                    />
+                {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
                 <Button variant="contained" type="submit">Crear Producto</Button>
             </form>
         </Container>
     )
 }
-
-export default FormPlayfields
