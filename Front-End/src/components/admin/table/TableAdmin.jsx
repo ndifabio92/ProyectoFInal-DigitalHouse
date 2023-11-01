@@ -39,7 +39,7 @@ const TableAdmin = () => {
                     const response = fetch(`http://localhost:8080/club/${id}`, {
                     method: 'DELETE',
                     });
-                    if (!response) {
+                    if (response) {
                         console.log('Club eliminado con éxito');
                         navigate('/admin');
                     } else {

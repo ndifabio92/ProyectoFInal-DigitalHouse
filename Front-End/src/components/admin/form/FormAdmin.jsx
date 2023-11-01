@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 export default function FormAdmin() {
@@ -47,7 +48,13 @@ export default function FormAdmin() {
           });
       
           if (response.ok) {
-            navigate('/admin');
+            Swal.fire({
+                title: 'Club agregado con éxito',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Confirmar',
+            }).then(() => {
+            navigate('/admin');})
             console.log("La Solicitur Post se envio correctamente")
           } else {
             console.log("error")
