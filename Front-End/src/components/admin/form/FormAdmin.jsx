@@ -4,6 +4,7 @@ import { validationSchemaForm as validationSchema } from "../../../validations/V
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function FormAdmin() {
 
     const navigate = useNavigate();
@@ -46,8 +47,8 @@ export default function FormAdmin() {
           });
       
           if (response.ok) {
-            console.log("La Solicitur Post se envio correctamente")
             navigate('/admin');
+            console.log("La Solicitur Post se envio correctamente")
           } else {
             console.log("error")
           }
@@ -55,6 +56,7 @@ export default function FormAdmin() {
             console.log(error)
         }
       };
+    
 
     return (
         <Container maxWidth="md">
