@@ -26,6 +26,7 @@ function CustomTabPanel(props) {
 }
 
 const Admin = () => {
+
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -55,7 +56,7 @@ const Admin = () => {
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <TableAdmin />
+                    <TableAdmin  />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <FormAdmin />

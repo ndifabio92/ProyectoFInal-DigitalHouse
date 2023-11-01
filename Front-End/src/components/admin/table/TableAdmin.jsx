@@ -23,7 +23,7 @@ const TableAdmin = () => {
 
     const navigate = useNavigate();
 
-    /*
+    
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
@@ -36,7 +36,7 @@ const TableAdmin = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = fetch(`${ENDPOINTS.CLUB}/${id}`, {
+                    const response = fetch(`http://localhost:8080/club/${id}`, {
                     method: 'DELETE',
                     });
                     if (!response) {
@@ -59,30 +59,7 @@ const TableAdmin = () => {
             }
         })
     }
-    */
-
-  const handleDelete = (id) => {
-    try {
-        fetch(`http://localhost:8080/club/${id}`, {
-            method: 'DELETE',
-        })
-        .then((response) => {
-            if (response.ok) {
-                console.log('Club eliminado con éxito');
-                navigate('/admin');
-            } else {
-                console.error('Error al eliminar el club:', response.statusText);
-            }
-        })
-        .catch((error) => {
-            console.error('Error al eliminar el club:', error);
-        });
-    } catch (error) {
-        console.error('Error al realizar la solicitud DELETE:', error);
-    }
-}
-        
-    
+   
 
     const handleChange = (id) => {
 
