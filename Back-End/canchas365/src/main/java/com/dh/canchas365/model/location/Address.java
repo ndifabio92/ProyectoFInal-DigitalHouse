@@ -1,9 +1,7 @@
 package com.dh.canchas365.model.location;
 
-import com.dh.canchas365.model.Club;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +17,7 @@ import java.io.Serializable;
 @Builder
 @Entity
 @Table
-public class Adress implements Serializable {
+public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

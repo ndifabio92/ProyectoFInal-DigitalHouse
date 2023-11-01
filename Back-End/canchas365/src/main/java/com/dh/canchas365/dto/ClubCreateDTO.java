@@ -1,7 +1,7 @@
 package com.dh.canchas365.dto;
 
 import com.dh.canchas365.dto.images.ImageDTO;
-import com.dh.canchas365.dto.location.AdressDTO;
+import com.dh.canchas365.dto.location.AddressDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public class ClubCreateDTO {
 
     private Boolean recommended;
 
-    private AdressDTO adress;
+    private AddressDTO address;
 
     private Set<ImageDTO> images;
 }

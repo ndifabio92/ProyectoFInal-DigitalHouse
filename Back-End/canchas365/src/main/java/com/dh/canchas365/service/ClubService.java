@@ -6,10 +6,10 @@ import com.dh.canchas365.dto.images.ImageDTO;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.model.Club;
 import com.dh.canchas365.model.images.Images;
-import com.dh.canchas365.model.location.Adress;
+import com.dh.canchas365.model.location.Address;
 import com.dh.canchas365.repository.ClubRepository;
 import com.dh.canchas365.repository.images.ImagesRepository;
-import com.dh.canchas365.repository.location.AdressRepository;
+import com.dh.canchas365.repository.location.AddressRepository;
 import com.dh.canchas365.service.location.AdressService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -25,7 +25,7 @@ public class ClubService {
     private ClubRepository clubRepository;
 
     @Autowired
-    private AdressRepository adressRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
     private AdressService adressService;
@@ -45,13 +45,13 @@ public class ClubService {
             throw new ResourceDuplicateException("Ese nombre de Club ya existe");
         }
 
-        Optional<Adress> optionalAdress = adressRepository.findByAdress(dto.getAdress().getStreet(), dto.getAdress().getNumber(), dto.getAdress().getCity().getId());
+        Optional<Address> optionalAdress = addressRepository.findByAddress(dto.getAddress().getStreet(), dto.getAddress().getNumber(), dto.getAddress().getCity().getId());
         if(optionalAdress.isPresent()){
-            clubToSave.setAdress(optionalAdress.get());
+            clubToSave.setAddress(optionalAdress.get());
         }
         else{
-            Adress adressSaved = adressService.createAddress(dto.getAdress());
-            clubToSave.setAdress(adressSaved);
+            Address addressSaved = adressService.createAddress(dto.getAddress());
+            clubToSave.setAddress(addressSaved);
         }
 
         Club clubSaved = clubRepository.save(clubToSave);
