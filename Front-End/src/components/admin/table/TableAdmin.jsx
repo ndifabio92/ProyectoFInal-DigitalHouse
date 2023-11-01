@@ -78,10 +78,10 @@ const TableAdmin = () => {
                                                     {row.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.adress.street + " N° " + row.adress.number}
+                                                    {row.address.street + " N° " + row.address.number}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.adress.city.name}
+                                                    {row.address.city.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.phone_number}

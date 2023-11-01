@@ -35,7 +35,7 @@ const Products = () => {
 
             {
               data?.map((club) => (
-                <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.adress.street + " N° " + club.adress.number + ", " + club.adress.city.name } id={club.id} />
+                <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />
               ))
             }
           </Box>
