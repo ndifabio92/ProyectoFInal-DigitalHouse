@@ -84,10 +84,10 @@ const ImageModal = ({ images }) => {
           >
             <ImageList variant="masonry" cols={3} gap={8} >
               {
-                images?.map((image, imageIndex) => (
-                  <ImageListItem key={imageIndex}>
+                images?.map((image) => (
+                  <ImageListItem key={image.id}>
                     <img
-                      src={image}
+                      src={image.url}
                       loading="lazy"
                     />
                   </ImageListItem>

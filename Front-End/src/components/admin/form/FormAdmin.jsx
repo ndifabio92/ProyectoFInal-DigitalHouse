@@ -1,4 +1,4 @@
-import { Button, Container, Box, FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
+import { Button, Container, FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
@@ -64,7 +64,7 @@ export default function FormAdmin() {
                         <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Calle" type="text" name="address.street" className="input-background" id='input'
+                <TextField variant="outlined" size="small" label="Calle" type="text" name="address.street" className="input-background" 
                     value={formik.values.address?.street}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -73,7 +73,7 @@ export default function FormAdmin() {
                         <span style={{ color: 'red' }}>{formik.errors.address?.number}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Numero" type="number" name="address.number" className="input-background" id='input'
+                <TextField variant="outlined" size="small" label="Numero" type="number" name="address.number" className="input-background" 
                     value={formik.values.address?.number}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -82,7 +82,7 @@ export default function FormAdmin() {
                         <span style={{ color: 'red' }}>{formik.errors.address?.floor}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Piso" type="number" name="address.floor" className="input-background" id='input'
+                <TextField variant="outlined" size="small" label="Piso" type="number" name="address.floor" className="input-background" 
                     value={formik.values.address?.floor}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -91,7 +91,7 @@ export default function FormAdmin() {
                         <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Apartamento" type="string" name="address.apartment" className="input-background" id='input'
+                <TextField variant="outlined" size="small" label="Apartamento" type="string" name="address.apartment" className="input-background" 
                     value={formik.values.address?.apartment}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -100,7 +100,7 @@ export default function FormAdmin() {
                         <span style={{ color: 'red' }}>{formik.errors.address?.city}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Ciudad" select name="address.city" className="input-background" id='input'
+                <TextField variant="outlined" size="small" label="Ciudad" select name="address.city" className="input-background" 
                     value={formik.values.address.city}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {cities.map((option) => (
@@ -110,12 +110,10 @@ export default function FormAdmin() {
                     ))}
                 </TextField>
                 
-                <Box> 
-                    <FormControlLabel labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background" id='input'
+                    <FormControlLabel labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background"
                         checked={formik.values.recommended}
                         onChange={formik.handleChange} onBlur={formik.handleBlur} />}
                     />
-                </Box>
                 {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
                 <Button variant="contained" type="submit">Crear Producto</Button>

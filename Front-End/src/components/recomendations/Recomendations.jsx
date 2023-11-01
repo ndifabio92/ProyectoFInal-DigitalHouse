@@ -1,11 +1,11 @@
 import Carousel from 'react-material-ui-carousel'
 import { Container, Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/system';
-
+import { useNavigate } from 'react-router-dom'
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
 import Loading from '../loading/Loading';
+import TitleClub from '../products/TitleClub';
+import ImagesCarousel from './ImagesCarousel';
 
 const Recomendations = () => {
 
@@ -13,10 +13,9 @@ const Recomendations = () => {
 
   const handleClick = (id) => navigate(`${ENDPOINTS.CLUB}/${id.toString()}`)
 
-  const imagenes = [["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png"], ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png"], ["./padel1.jpg", "./padel2.jpg", "./padel3.jpg", "./padel4.jpg"], ["./nat1.png", "./nat2.png", "./nat4.jpg", "./nat5.jpg"], ["./futbol1.png", "./futbol2.png", "./futbol3.png", "./futbol4.png"], ["./tenis4.png", "./tenis1.png", "./tenis2.png", "./tenis3.png"], [ "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg"], ["./nat1.png",  "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"], ["./futbol1.png", "./futbol3.png", "./futbol4.png", "./futbol5.png"], ["./tenis1.png", "./tenis2.png", "./tenis3.png", "./tenis4.png"], [ "./padel2.jpg", "./padel3.jpg", "./padel4.jpg", "./padel5.jpg"], ["./nat1.png", "./nat4.jpg", "./nat5.jpg", "./nata3.jpg"]]
+  
 
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.RECOMMENDED);
-
 
   return (
     <Container maxWidth="xl"
@@ -39,41 +38,10 @@ const Recomendations = () => {
             {
               data && data.map((club, index) => (
                 <div key={club.id}>
-                  <Button onClick={() => handleClick(club.id)}
-                    sx={{
-                      maxWidth: 800,
-                      textAlign: 'center',
-                      fontSize: '30px',
-                      color: '#1F2E7B',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    {club.name}
+                  <Button onClick={() => handleClick(club.id)}>
+                    <TitleClub id ={club.id}/>
                   </Button>
-                  <Container sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    maxHeight: 800,
-
-                  }}>
-                    {imagenes[index].map((image, imageIndex) => (
-                      <Box
-                        component="img"
-                        key={imageIndex}
-                        sx={{
-                          maxWidth: 230,
-                          maxHeight: 130,
-                          overflow: 'hidden',
-                          width: '100%',
-                        }}
-                        src={image}
-                      />
-                    ))}
-
-                  </Container>
+                    <ImagesCarousel id ={club.id}/>
                 </div>
               ))
             }

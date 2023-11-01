@@ -14,9 +14,10 @@ import Loading from '../../loading/Loading';
 import { useParams } from 'react-router-dom'
 import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
 import { useNavigate } from 'react-router-dom';
+import TitleClub from '../../products/TitleClub';
 
 
-//cuando este el endpoint de canchas por club se debe pasar por prop el idClub para incluit en el fetch
+
 const TablePlayfields = () => {
 
     const {id} = useParams();
@@ -65,9 +66,7 @@ const TablePlayfields = () => {
                 <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
             </IconButton>
             <Box sx={{display:'flex', justifyContent:'space-between', padding:'20px'}}>
-                    <Typography variant="h4" component="h4" sx={{color:'#011A5B', fontWeight:'bold'}} >
-                        Nombre del club
-                    </Typography>
+                    <TitleClub id={id}/>
                 <Button variant="contained" size="small" onClick={() => handleAdd()}> Agregar Cancha </Button>
             </Box>
             {
@@ -94,7 +93,7 @@ const TablePlayfields = () => {
                                                     {row.id}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    deporte
+                                                    {row.sport.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                 {row.description} 
