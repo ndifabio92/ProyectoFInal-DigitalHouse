@@ -66,9 +66,9 @@ public class CategoryController extends CustomFieldException {
             Optional<Category> optional = service.findById(id);
             if(optional.isPresent()){
                 service.delete(id);
-                return ResponseEntity.status(HttpStatus.OK).body("Id Eliminado correctamente");
+                return ResponseEntity.status(HttpStatus.OK).build();
             }else {
-                return ResponseEntity.notFound().build();
+                throw new Exception("El id ingresado no existe");
             }
         } catch (Exception ex) {
             return customResponseError(ex);
