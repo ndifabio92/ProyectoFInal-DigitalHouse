@@ -1,7 +1,7 @@
 package com.dh.canchas365.controller.location;
 
-import com.dh.canchas365.dto.location.CityCreateDTO;
-import com.dh.canchas365.dto.location.CityDTO;
+import com.dh.canchas365.dto.location.CityCreateDto;
+import com.dh.canchas365.dto.location.CityDto;
 import com.dh.canchas365.model.location.City;
 import com.dh.canchas365.service.location.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ public class CityController {
     private CityService cityService;
 
     @PostMapping
-    public ResponseEntity<City> createCity(@RequestBody CityCreateDTO dto){
+    public ResponseEntity<City> createCity(@RequestBody CityCreateDto dto){
         return new ResponseEntity<City>(cityService.createCity(dto), HttpStatus.CREATED);
 
     }
 
     @GetMapping("/list")
-    public List<CityDTO> getAllCities(){
+    public List<CityDto> getAllCities(){
         return cityService.getAllCities();
     }
 }

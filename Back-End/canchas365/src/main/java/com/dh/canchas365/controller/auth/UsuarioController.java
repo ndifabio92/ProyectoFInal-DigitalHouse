@@ -1,6 +1,6 @@
 package com.dh.canchas365.controller.auth;
 
-import com.dh.canchas365.dto.auth.CrearUsuarioDTO;
+import com.dh.canchas365.dto.auth.CrearUsuarioDto;
 import com.dh.canchas365.dto.auth.LoginAttemp;
 import com.dh.canchas365.dto.auth.UsuarioDto;
 import com.dh.canchas365.model.emun.ERol;
@@ -40,7 +40,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearUsuario(@Valid @RequestBody CrearUsuarioDTO crearUsuarioDTO){
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody CrearUsuarioDto crearUsuarioDTO){
 
         Set<Rol> roles = crearUsuarioDTO.getRoles().stream()
                 .map(role -> Rol.builder().name(ERol.valueOf(role)).build())

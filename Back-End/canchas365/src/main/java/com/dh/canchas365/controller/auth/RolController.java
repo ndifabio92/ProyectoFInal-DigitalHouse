@@ -1,6 +1,6 @@
 package com.dh.canchas365.controller.auth;
 
-import com.dh.canchas365.dto.auth.RolDTO;
+import com.dh.canchas365.dto.auth.RolDto;
 import com.dh.canchas365.model.emun.ERol;
 import com.dh.canchas365.model.auth.Rol;
 import com.dh.canchas365.repository.auth.RolRepository;
@@ -20,7 +20,7 @@ public class RolController {
     private RolRepository rolRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<?> crearRol(@Valid @RequestBody RolDTO rolDTO){
+    public ResponseEntity<?> crearRol(@Valid @RequestBody RolDto rolDTO){
 
         Rol rol = Rol.builder().name(ERol.valueOf(rolDTO.getName())).build();
 

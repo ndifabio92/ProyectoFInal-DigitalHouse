@@ -1,7 +1,7 @@
 package com.dh.canchas365.dto;
 
-import com.dh.canchas365.dto.images.ImageDTO;
-import com.dh.canchas365.dto.location.AddressDTO;
+import com.dh.canchas365.dto.images.ImageDto;
+import com.dh.canchas365.dto.location.AddressDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ClubCreateDTO {
+public class ClubCreateDto {
 
     private Long id;
 
@@ -25,7 +25,7 @@ public class ClubCreateDTO {
 
     private Boolean recommended;
 
-    private AddressDTO address;
+    private AddressDto address;
 
-    private Set<ImageDTO> images;
+    private Set<ImageDto> images;
 }

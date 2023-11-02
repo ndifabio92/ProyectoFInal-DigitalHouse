@@ -1,5 +1,6 @@
 package com.dh.canchas365.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SportDTO {
+public class CategoryDto {
     private Long id;
 
-    private String name;
+    private String title;
+
+    private String description;
+
+    private String url;
 }

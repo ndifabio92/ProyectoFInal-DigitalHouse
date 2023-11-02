@@ -30,6 +30,6 @@ public class PlayingField implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_sport", referencedColumnName = "id", nullable = false)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private Sport sport;
+    private Category category;
 
 }

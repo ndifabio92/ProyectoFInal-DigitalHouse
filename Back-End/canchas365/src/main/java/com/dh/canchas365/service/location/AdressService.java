@@ -1,6 +1,6 @@
 package com.dh.canchas365.service.location;
 
-import com.dh.canchas365.dto.location.AddressDTO;
+import com.dh.canchas365.dto.location.AddressDto;
 import com.dh.canchas365.model.location.Address;
 import com.dh.canchas365.model.location.City;
 import com.dh.canchas365.repository.location.AddressRepository;
@@ -19,7 +19,7 @@ public class AdressService {
     @Autowired
     private CityRepository cityRepository;
 
-    public Address createAddress(AddressDTO dto){
+    public Address createAddress(AddressDto dto){
         Address address = new Address();
         address.setStreet(dto.getStreet());
         address.setNumber(dto.getNumber());

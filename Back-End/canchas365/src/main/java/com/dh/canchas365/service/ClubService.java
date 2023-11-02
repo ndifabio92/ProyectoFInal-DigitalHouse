@@ -1,8 +1,8 @@
 package com.dh.canchas365.service;
 
-import com.dh.canchas365.dto.ClubCreateDTO;
+import com.dh.canchas365.dto.ClubCreateDto;
 import com.dh.canchas365.dto.ClubDTO;
-import com.dh.canchas365.dto.images.ImageDTO;
+import com.dh.canchas365.dto.images.ImageDto;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.model.Club;
 import com.dh.canchas365.model.images.Images;
@@ -34,7 +34,7 @@ public class ClubService {
     private ImagesRepository imagesRepository;
 
     @Transactional
-    public Club createClub(ClubCreateDTO dto) throws ResourceDuplicateException {
+    public Club createClub(ClubCreateDto dto) throws ResourceDuplicateException {
         Club clubToSave = new Club();
         clubToSave.setName(dto.getName());
         clubToSave.setPhone_number(dto.getPhone_number());
@@ -57,7 +57,7 @@ public class ClubService {
         Club clubSaved = clubRepository.save(clubToSave);
 
         List<Images> imagesTosave = new ArrayList<>();
-        for(ImageDTO imgDto: dto.getImages()){
+        for(ImageDto imgDto: dto.getImages()){
             Images imageToSave = new Images();
             imageToSave.setUrl(imgDto.getUrl());
             imageToSave.setClub(clubSaved);

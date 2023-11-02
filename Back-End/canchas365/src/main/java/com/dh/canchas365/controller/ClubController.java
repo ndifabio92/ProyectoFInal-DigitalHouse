@@ -1,6 +1,6 @@
 package com.dh.canchas365.controller;
 
-import com.dh.canchas365.dto.ClubCreateDTO;
+import com.dh.canchas365.dto.ClubCreateDto;
 import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
@@ -21,7 +21,7 @@ public class ClubController {
     private ClubService clubService;
 
     @PostMapping
-    public ResponseEntity<?> createClub(@RequestBody ClubCreateDTO dto){
+    public ResponseEntity<?> createClub(@RequestBody ClubCreateDto dto){
         try {
             return new ResponseEntity<Club>(clubService.createClub(dto), HttpStatus.CREATED);
         } catch (ResourceDuplicateException e) {

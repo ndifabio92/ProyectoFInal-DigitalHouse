@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ImageDTO {
+public class ImageDto {
 
     private Long id;
 
