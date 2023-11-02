@@ -1,7 +1,7 @@
 package com.dh.canchas365.controller;
 
 import com.dh.canchas365.dto.ClubCreateDto;
-import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.dto.ClubDto;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.Club;
@@ -31,39 +31,39 @@ public class ClubController {
     }
 
     @GetMapping("/list")
-    public List<ClubDTO> getAllClubs(){
+    public List<ClubDto> getAllClubs(){
         return clubService.getAllClubs();
     }
 
     @GetMapping("/{idClub}")
-    public ResponseEntity<ClubDTO> getClubById(@PathVariable("idClub") Long id){
-        ResponseEntity<ClubDTO> response =  null;
-        ClubDTO club = clubService.findById(id);
+    public ResponseEntity<ClubDto> getClubById(@PathVariable("idClub") Long id){
+        ResponseEntity<ClubDto> response =  null;
+        ClubDto club = clubService.findById(id);
         if(club == null){
-            response = new ResponseEntity<ClubDTO>( HttpStatus.NO_CONTENT);
+            response = new ResponseEntity<ClubDto>( HttpStatus.NO_CONTENT);
         }
-        else response = new ResponseEntity<ClubDTO>(club, HttpStatus.OK);
+        else response = new ResponseEntity<ClubDto>(club, HttpStatus.OK);
         return response;
     }
 
     @PutMapping
-    public ResponseEntity<ClubDTO> updateClub(@RequestBody Club club) throws ResourceNotFoundException {
-        ResponseEntity<ClubDTO> responseEntity = null;
+    public ResponseEntity<ClubDto> updateClub(@RequestBody Club club) throws ResourceNotFoundException {
+        ResponseEntity<ClubDto> responseEntity = null;
 
         if(clubService.findById(club.getId()) == null){
-            responseEntity = new ResponseEntity<ClubDTO>(HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity<ClubDto>(HttpStatus.NOT_FOUND);
             throw new ResourceNotFoundException("No existe club con el id "+club.getId());
         }
         else{
-            responseEntity = new ResponseEntity<ClubDTO>(clubService.updateClub(club), HttpStatus.OK);
+            responseEntity = new ResponseEntity<ClubDto>(clubService.updateClub(club), HttpStatus.OK);
         }
         return responseEntity;
     }
 
     @DeleteMapping("/{idClub}")
-    public ResponseEntity<ClubDTO>  deleteClub(@PathVariable("idClub") Long id) throws ResourceNotFoundException {
-        ResponseEntity<ClubDTO> responseEntity = null;
-        ClubDTO club = clubService.findById(id);
+    public ResponseEntity<ClubDto>  deleteClub(@PathVariable("idClub") Long id) throws ResourceNotFoundException {
+        ResponseEntity<ClubDto> responseEntity = null;
+        ClubDto club = clubService.findById(id);
         if( club == null){
             responseEntity = new ResponseEntity(HttpStatus.NOT_FOUND);
             throw new ResourceNotFoundException("No existe club con el id "+id);
@@ -71,18 +71,18 @@ public class ClubController {
         else{
             System.out.println("la concha de la lora");
             clubService.deleteClub(club.getId());
-            responseEntity = new ResponseEntity<ClubDTO>(HttpStatus.OK);
+            responseEntity = new ResponseEntity<ClubDto>(HttpStatus.OK);
         }
         return responseEntity;
     }
 
     @GetMapping("/recommended")
-    public List<ClubDTO> getClubsrecommended(){
+    public List<ClubDto> getClubsrecommended(){
         return clubService.getClubsRecommended();
     }
 
     @GetMapping("/random")
-    public List<ClubDTO> getRandomClubs(){
+    public List<ClubDto> getRandomClubs(){
         return clubService.getRandomClubs();
     }
 }
