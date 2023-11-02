@@ -27,15 +27,30 @@ export default function FormAdmin() {
         images: []
     }
 
+    const isComplete = (values) => {
+        if (
+            values.name != '' &&
+            values.phone_number != '' &&
+            values.address.street != '' &&
+            values.address.number != '' &&
+            values.address.city.id != ''
+        ){
+            console.log(values.name)
+            return true 
+        }
+        else{
+            return false
+        }
+    };
+
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: () => {
-            submitForm(formik.values); 
-          },
+        onSubmit: () => { submitForm(formik.values)},
     });
 
     const submitForm = async (values) => {
+
             try {
                 const response = await fetch('http://localhost:8080/club', {
                     method: 'POST',
@@ -64,9 +79,22 @@ export default function FormAdmin() {
     }
 
     return (
+        
         <Container maxWidth="md">
-            <form onSubmit={formik.handleSubmit} className={`${styles.form}` }>
-              
+            
+            <form onSubmit={(e) => { 
+                e.preventDefault();
+                if(isComplete(formik.values)){formik.handleSubmit(e)}
+                else{
+                    Swal.fire({
+                        title: 'Debe completar todos los campos del formulario',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }) 
+                }
+            }}  className={`${styles.form}` }>
+           
                 {
                     formik.touched.name && formik.errors.name && (
                         <span style={{ color: 'red' }}>{formik.errors.name}</span>
@@ -152,6 +180,8 @@ export default function FormAdmin() {
 
                 <Button variant="contained" type="submit">Agregar Club</Button>
             </form>
+            
         </Container>
     )
 }
+
