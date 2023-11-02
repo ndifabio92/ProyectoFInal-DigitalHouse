@@ -21,10 +21,10 @@ public class CategoryController extends CustomFieldException {
     private CategoryService service;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Category category, BindingResult result){
+    public ResponseEntity<?> create(@RequestBody Category category, BindingResult bindingResult){
         try{
-            if(result.hasErrors()) {
-                return validate(result);
+            if(bindingResult.hasErrors()) {
+                return validate(bindingResult);
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(service.create(category));
         } catch (Exception ex) {
@@ -48,18 +48,30 @@ public class CategoryController extends CustomFieldException {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category category, @PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(category,id));
+    public ResponseEntity<?> update(@RequestBody Category category, @PathVariable Long id, BindingResult bindingResult){
+        try {
+            if(bindingResult.hasErrors()) {
+                return validate(bindingResult);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(service.update(category,id));
+        }
+        catch (Exception ex) {
+            return customResponseError(ex);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Optional<Category> optional = service.findById(id);
-        if(optional.isPresent()){
-            service.delete(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Id Eliminado correctamente");
-        }else {
-            return ResponseEntity.notFound().build();
+        try {
+            Optional<Category> optional = service.findById(id);
+            if(optional.isPresent()){
+                service.delete(id);
+                return ResponseEntity.status(HttpStatus.OK).body("Id Eliminado correctamente");
+            }else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception ex) {
+            return customResponseError(ex);
         }
     }
 }
