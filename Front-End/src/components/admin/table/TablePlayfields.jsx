@@ -6,29 +6,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
-import { Box, Container, Button, Typography, IconButton } from '@mui/material';
+import {Container, Button} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
-import { useParams } from 'react-router-dom'
-import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
-import { useNavigate } from 'react-router-dom';
-import TitleClub from '../../products/TitleClub';
 
 
 
-const TablePlayfields = () => {
 
-    const {id} = useParams();
+
+const TablePlayfields = (id) => {
+
+   
 
     const { data, isLoading, error } = useFetchApi('playingField/club',id)
 
-    const navigate = useNavigate();
-
-    const handleClick = () => {
-        navigate('/admin');
-      };
     
     const handleDelete = (id) => {
         Swal.fire({
@@ -62,13 +55,7 @@ const TablePlayfields = () => {
 
     return (
         <Container sx={{ width: "100%", marginTop:'150px', marginBottom:'40px' }}>
-            <IconButton aria-label="Volver" color='#FFFFFF' size="large" onClick={handleClick} sx={{position:'absolute', right:'10px', top:'100px', display:'block'}} >
-                <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
-            </IconButton>
-            <Box sx={{display:'flex', justifyContent:'space-between', padding:'20px'}}>
-                    <TitleClub id={id}/>
-                <Button variant="contained" size="small" onClick={() => handleAdd()}> Agregar Cancha </Button>
-            </Box>
+            
             {
                 isLoading ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>

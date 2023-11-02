@@ -14,11 +14,16 @@ import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import { useNavigate } from 'react-router-dom';
 
+
+
+
 const TableAdmin = () => {
-    const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}/list`);
+
+    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}/list`);
 
     const navigate = useNavigate();
 
+    
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
@@ -30,15 +35,31 @@ const TableAdmin = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(data)
-                Swal.fire(
-                    'Eliminado',
-                    '',
-                    'success'
-                )
+                try {
+                    const response = fetch(`http://localhost:8080/club/${id}`, {
+                    method: 'DELETE',
+                    });
+                    if (response) {
+                        console.log('Club eliminado con éxito');
+                        navigate('/admin');
+                    } else {
+                        console.error('Error al eliminar el club:', error);
+                    }
+
+                    Swal.fire(
+                        'Eliminado',
+                        '',
+                        'success'
+                    )
+
+                } catch (error) {
+                    console.error('Error al realizar la solicitud DELETE:', error);
+                }
+                
             }
         })
     }
+   
 
     const handleChange = (id) => {
 
@@ -66,7 +87,7 @@ const TableAdmin = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {data.map((row) => (
+                                        {data?.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

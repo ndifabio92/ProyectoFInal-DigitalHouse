@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { Container, Box } from "@mui/material";
-import FormAdmin from "../../components/admin/form/FormAdmin";
-import TableAdmin from "../../components/admin/table/TableAdmin";
+import { useParams } from 'react-router-dom'
+import FormPlayfields from "../../components/admin/form/FormPlayfields";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import TitleClub from '../../components/products/TitleClub';
+import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
+import { Box, Container, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import TablePlayfields from "../../components/admin/table/TablePlayfields";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -25,9 +29,17 @@ function CustomTabPanel(props) {
     )
 }
 
-const Admin = () => {
+const Playfields = () => {
+
+    const { id } = useParams();
 
     const [value, setValue] = useState(0);
+    
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/admin');
+      };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -35,6 +47,13 @@ const Admin = () => {
 
     return (
         <>
+
+            <IconButton aria-label="Volver" color='#FFFFFF' size="large" onClick={handleClick} sx={{position:'absolute', right:'10px', top:'100px', display:'block'}} >
+                <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
+            </IconButton>
+            
+            <TitleClub id={id}/>
+       
             <Container maxWidth="xxl"
                 sx={{
                     backgroundColor: '#FFFFFF',
@@ -50,20 +69,17 @@ const Admin = () => {
                 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Listado de Clubes" />
-                        <Tab label="Agregar Club" />
-                        <Tab label="Item Three" />
+                        <Tab label="Listado de Canchas" />
+                        <Tab label="Agregar Cancha" />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <TableAdmin  />
+                    <TablePlayfields id={id} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormAdmin />
+                    <FormPlayfields />
                 </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                    Item Three
-                </CustomTabPanel>
+
             </Container>
             <Box
                 sx={{
@@ -82,4 +98,4 @@ const Admin = () => {
     )
 }
 
-export default Admin;
+export default Playfields;
