@@ -51,7 +51,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                 <CardMedia
                     component="img"
                     height={100}
-                    image={data? data[0].url : ''}
+                    image={data? data[0]?.url : ''}
                     sx={{ margin: '20px' }}
                 />
 
