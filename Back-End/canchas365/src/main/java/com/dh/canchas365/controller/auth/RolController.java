@@ -20,17 +20,17 @@ public class RolController {
     private RolRepository rolRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<?> crearRol(@Valid @RequestBody RolDto rolDTO){
+    public ResponseEntity<?> crearRol(@Valid @RequestBody RolDto rolDto){
 
-        Rol rol = Rol.builder().name(ERol.valueOf(rolDTO.getName())).build();
+        Rol rol = Rol.builder().name(ERol.valueOf(rolDto.getName())).build();
 
         rolRepository.save(rol);
 
         /*Usuario usuario = Usuario.builder()
-                .username(crearUsuarioDTO.getUsername())
-                .email(crearUsuarioDTO.getEmail())
-                .password(passwordEncoder.encode(crearUsuarioDTO.getPassword()))
-                //.operador(operadorService.getOperadorById(crearUsuarioDTO.getOperador()))
+                .username(crearUsuarioDto.getUsername())
+                .email(crearUsuarioDto.getEmail())
+                .password(passwordEncoder.encode(crearUsuarioDto.getPassword()))
+                //.operador(operadorService.getOperadorById(crearUsuarioDto.getOperador()))
                 .roles(roles)
                 .build();
 

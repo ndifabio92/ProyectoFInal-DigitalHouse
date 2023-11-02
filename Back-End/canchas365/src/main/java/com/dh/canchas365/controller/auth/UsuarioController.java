@@ -40,17 +40,17 @@ public class UsuarioController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearUsuario(@Valid @RequestBody CrearUsuarioDto crearUsuarioDTO){
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody CrearUsuarioDto crearUsuarioDto){
 
-        Set<Rol> roles = crearUsuarioDTO.getRoles().stream()
+        Set<Rol> roles = crearUsuarioDto.getRoles().stream()
                 .map(role -> Rol.builder().name(ERol.valueOf(role)).build())
                 .collect(Collectors.toSet());
 
         Usuario usuario = Usuario.builder()
-                .username(crearUsuarioDTO.getUsername())
-                .email(crearUsuarioDTO.getEmail())
-                .password(passwordEncoder.encode(crearUsuarioDTO.getPassword()))
-                //.operador(operadorService.getOperadorById(crearUsuarioDTO.getOperador()))
+                .username(crearUsuarioDto.getUsername())
+                .email(crearUsuarioDto.getEmail())
+                .password(passwordEncoder.encode(crearUsuarioDto.getPassword()))
+                //.operador(operadorService.getOperadorById(crearUsuarioDto.getOperador()))
                 .roles(roles)
                 .build();
 
