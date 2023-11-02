@@ -4,17 +4,16 @@ import { validationSchemaForm as validationSchema } from "../../../validations/V
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { ENDPOINTS } from '../../../constants/endpoints';
+import useFetchApi from '../../../hooks/useFetchApi';
+
 
 
 export default function FormAdmin() {
 
-    const navigate = useNavigate();
+    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CITY}/list`);
 
-    const cities = [
-        { id: 1, name: "Córdoba" },
-        { id: 2, name: "Mendoza" },
-        { id: 3, name: "Buenos Aires" },
-    ];
+    const navigate = useNavigate();
 
     const initialValues = {
         name: '', phone_number: '', recommended: false,
@@ -32,38 +31,37 @@ export default function FormAdmin() {
         initialValues,
         validationSchema,
         onSubmit: () => {
-            console.log(formik.values)
             submitForm(formik.values); 
           },
     });
 
     const submitForm = async (values) => {
-        try {
-          const response = await fetch('http://localhost:8080/club', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values),
-          });
-      
-          if (response.ok) {
-            Swal.fire({
-                title: 'Club agregado con éxito',
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Confirmar',
-            }).then(() => {
-            navigate('/admin');})
-            console.log("La Solicitur Post se envio correctamente")
-          } else {
-            console.log("error")
-          }
-        } catch (error) {
-            console.log(error)
-        }
-      };
-    
+            try {
+                const response = await fetch('http://localhost:8080/club', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(values),
+                });
+        
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Club agregado con éxito',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                    navigate('/admin');})
+                    console.log("La Solicitur Post se envio correctamente")
+                } else {
+                    console.log("error")
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        
+    }
 
     return (
         <Container maxWidth="md">
@@ -131,11 +129,11 @@ export default function FormAdmin() {
                     )
                 }
                 <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
-                    value={formik.values.address?.city}
+                    value={formik.values.address?.city.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
-                    {cities.map((option) => (
-                        <MenuItem key={option.id} value={option.id}>
-                            {option.name}
+                    {data?.map((city) => (
+                        <MenuItem key={city.id} value={city.id}>
+                            {city.name}
                         </MenuItem>
                     ))}
                 </TextField>
@@ -152,7 +150,7 @@ export default function FormAdmin() {
                     />
                 {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
-                <Button variant="contained" type="submit">Crear Producto</Button>
+                <Button variant="contained" type="submit">Agregar Club</Button>
             </form>
         </Container>
     )
