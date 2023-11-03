@@ -2,7 +2,7 @@ package com.dh.canchas365.controller.auth;
 
 import com.dh.canchas365.dto.auth.CrearUsuarioDTO;
 import com.dh.canchas365.dto.auth.LoginAttemp;
-import com.dh.canchas365.dto.auth.UsuarioDTO;
+import com.dh.canchas365.dto.auth.UsuarioDto;
 import com.dh.canchas365.model.emun.ERol;
 import com.dh.canchas365.model.auth.Rol;
 import com.dh.canchas365.model.auth.Usuario;
@@ -70,10 +70,10 @@ public class UsuarioController {
     public ResponseEntity<?> getUsuario(@RequestBody LoginAttemp loginAttemp){
         Optional optional = usuarioRepository.findByUsername(loginAttemp.getUsername());
         Usuario usuario = null;
-        UsuarioDTO usuarioDto = null;
+        UsuarioDto usuarioDto = null;
         if(!optional.isEmpty()){
             usuario = (Usuario) optional.get();
-            usuarioDto = new UsuarioDTO();
+            usuarioDto = new UsuarioDto();
             usuarioDto.setId(usuario.getId());
             usuarioDto.setEmail(usuario.getEmail());
             //usuarioDto.setOperador(usuario.getOperador());
