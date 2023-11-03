@@ -33,6 +33,8 @@ const Playfields = () => {
 
     const { id } = useParams();
 
+    console.log(id)
+
     const [value, setValue] = useState(0);
     
     const navigate = useNavigate();

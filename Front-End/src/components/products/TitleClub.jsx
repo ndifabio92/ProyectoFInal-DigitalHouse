@@ -8,8 +8,6 @@ const TitleClub = ({id}) =>{
 
     const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}/${id}`)
 
-
-
     return(
         <Typography variant="h3" component="h3" 
         sx={{

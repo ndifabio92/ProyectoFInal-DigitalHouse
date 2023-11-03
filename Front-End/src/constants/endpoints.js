@@ -8,3 +8,4 @@ export const ENDPOINTS = {
     SPORT:'sport',
     CITY: 'city',
 }
+
