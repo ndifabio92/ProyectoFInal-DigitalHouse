@@ -1,6 +1,5 @@
 package com.dh.canchas365.controller;
 
-import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.PlayingField;

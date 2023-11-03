@@ -36,11 +36,15 @@ public class Club implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_adress", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_address", referencedColumnName = "id", nullable = false)
     private Address address;
 
     @OneToMany( cascade = CascadeType.ALL, mappedBy = "club", orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Images> images = new HashSet<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false )
+    private Category category;
 
 }
