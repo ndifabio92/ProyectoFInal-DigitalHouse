@@ -7,6 +7,7 @@ import com.dh.canchas365.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,12 +39,16 @@ public class CategoryController extends CustomFieldException {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getById(@PathVariable("id") Long id){
-        Optional<Category> optional = service.findById(id);
-        if(optional.isPresent()){
-            return ResponseEntity.ok(optional.get());
-        }else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getById(@PathVariable("id") Long id){
+        try {
+            Optional<Category> optional = service.findById(id);
+            if(optional.isPresent()){
+                return ResponseEntity.ok(optional.get());
+            }else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id ingresa no existe");
+            }
+        } catch (Exception ex) {
+            return customResponseError(ex);
         }
     }
 
@@ -53,7 +58,12 @@ public class CategoryController extends CustomFieldException {
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
-            return ResponseEntity.status(HttpStatus.OK).body(service.update(category,id));
+            Optional<Category> optional = service.findById(id);
+            if(optional.isPresent()) {
+                return ResponseEntity.status(HttpStatus.OK).body(service.update(category,id));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id ingresa no existe");
+            }
         }
         catch (Exception ex) {
             return customResponseError(ex);
@@ -64,11 +74,11 @@ public class CategoryController extends CustomFieldException {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             Optional<Category> optional = service.findById(id);
-            if(optional.isPresent()){
+            if(optional.isPresent()) {
                 service.delete(id);
-                return ResponseEntity.status(HttpStatus.OK).build();
-            }else {
-                throw new Exception("El id ingresado no existe");
+                return ResponseEntity.status(HttpStatus.OK).body("Categoria Eliminada exitosamente");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id ingresa no existe");
             }
         } catch (Exception ex) {
             return customResponseError(ex);

@@ -4,6 +4,7 @@ import com.dh.canchas365.dto.ClubCreateDto;
 import com.dh.canchas365.dto.ClubDto;
 import com.dh.canchas365.dto.images.ImageDto;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
+import com.dh.canchas365.model.Category;
 import com.dh.canchas365.model.Club;
 import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Address;
@@ -12,6 +13,7 @@ import com.dh.canchas365.repository.images.ImagesRepository;
 import com.dh.canchas365.repository.location.AddressRepository;
 import com.dh.canchas365.service.location.AdressService;
 import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,9 @@ public class ClubService {
 
     @Autowired
     private ImagesRepository imagesRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Transactional
     public Club createClub(ClubCreateDto dto) throws ResourceDuplicateException {
@@ -54,6 +59,16 @@ public class ClubService {
             clubToSave.setAddress(addressSaved);
         }
 
+        Optional<Category> optionalCategory = categoryService.findById(dto.getId_category());
+        if(optionalCategory.isEmpty()) {
+            try {
+                throw new Exception("El id Category no existe");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        clubToSave.setCategory(optionalCategory.get());
+
         Club clubSaved = clubRepository.save(clubToSave);
 
         List<Images> imagesTosave = new ArrayList<>();
@@ -71,6 +86,8 @@ public class ClubService {
     @Transactional
     public ClubDto updateClub(Club club){
 
+        Optional<Category> category = categoryService.findById(club.getCategory().getId());
+        club.setCategory(category.get());
         Club clubSaved = clubRepository.save(club);
 
         ModelMapper mapper = new ModelMapper();

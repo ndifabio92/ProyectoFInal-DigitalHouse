@@ -12,10 +12,7 @@ import lombok.Setter;
 @Setter
 public class CategoryDto {
     private Long id;
-
     private String title;
-
     private String description;
-
     private String url;
 }

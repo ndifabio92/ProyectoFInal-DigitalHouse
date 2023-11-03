@@ -5,13 +5,11 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.io.Serializable;
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Entity
+@Table(name = "Category")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
