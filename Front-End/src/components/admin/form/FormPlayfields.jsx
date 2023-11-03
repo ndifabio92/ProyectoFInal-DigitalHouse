@@ -3,17 +3,16 @@ import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { ENDPOINTS } from '../../../constants/endpoints';
-import useFetchApi from '../../../hooks/useFetchApi';
-
-
 
 export default function FormAdmin() {
 
-    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CITY}/list`);
-
     const navigate = useNavigate();
+
+    const cities = [
+        { id: 1, name: "Córdoba" },
+        { id: 2, name: "Mendoza" },
+        { id: 3, name: "Buenos Aires" },
+    ];
 
     const initialValues = {
         name: '', phone_number: '', recommended: false,
@@ -27,74 +26,40 @@ export default function FormAdmin() {
         images: []
     }
 
-    const isComplete = (values) => {
-        if (
-            values.name != '' &&
-            values.phone_number != '' &&
-            values.address.street != '' &&
-            values.address.number != '' &&
-            values.address.city.id != ''
-        ){
-            console.log(values.name)
-            return true 
-        }
-        else{
-            return false
-        }
-    };
-
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: () => { submitForm(formik.values)},
+        onSubmit: () => {
+            console.log(formik.values)
+            submitForm(formik.values); 
+          },
     });
 
     const submitForm = async (values) => {
-
-            try {
-                const response = await fetch('http://localhost:8080/club', {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(values),
-                });
-        
-                if (response.ok) {
-                    Swal.fire({
-                        title: 'Club agregado con éxito',
-                        icon: 'warning',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Confirmar',
-                    }).then(() => {
-                    navigate('/admin');})
-                    console.log("La Solicitur Post se envio correctamente")
-                } else {
-                    console.log("error")
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        
-    }
+        try {
+          const response = await fetch('http://localhost:8080/club', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+          });
+      
+          if (response.ok) {
+            console.log("La Solicitur Post se envio correctamente")
+            navigate('/admin');
+          } else {
+            console.log("error")
+          }
+        } catch (error) {
+            console.log(error)
+        }
+      };
 
     return (
-        
         <Container maxWidth="md">
-            
-            <form onSubmit={(e) => { 
-                e.preventDefault();
-                if(isComplete(formik.values)){formik.handleSubmit(e)}
-                else{
-                    Swal.fire({
-                        title: 'Debe completar todos los campos del formulario',
-                        icon: 'warning',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Confirmar',
-                    }) 
-                }
-            }}  className={`${styles.form}` }>
-           
+            <form onSubmit={formik.handleSubmit} className={`${styles.form}` }>
+              
                 {
                     formik.touched.name && formik.errors.name && (
                         <span style={{ color: 'red' }}>{formik.errors.name}</span>
@@ -114,7 +79,11 @@ export default function FormAdmin() {
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
               
-                
+                {
+                    formik.touched.recommended && formik.errors.recommended && (
+                        <span style={{ color: 'red' }}>{formik.errors.recommended}</span>
+                    )
+                }
                 {
                     formik.touched.address?.street && formik.errors.address?.street && (
                         <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
@@ -147,7 +116,7 @@ export default function FormAdmin() {
                         <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Apartamento" type="text" name="address.apartment" className="input-background" 
+                <TextField variant="outlined" size="small" label="Apartamento" type="string" name="address.apartment" className="input-background" 
                     value={formik.values.address?.apartment}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -157,20 +126,14 @@ export default function FormAdmin() {
                     )
                 }
                 <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
-                    value={formik.values.address?.city.id}
+                    value={formik.values.address.city}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
-                    {data?.map((city) => (
-                        <MenuItem key={city.id} value={city.id}>
-                            {city.name}
+                    {cities.map((option) => (
+                        <MenuItem key={option.id} value={option.id}>
+                            {option.name}
                         </MenuItem>
                     ))}
                 </TextField>
-
-                {
-                    formik.touched.recommended && formik.errors.recommended && (
-                        <span style={{ color: 'red' }}>{formik.errors.recommended}</span>
-                    )
-                }
                 
                     <FormControlLabel labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background"
                         checked={formik.values.recommended}
@@ -178,10 +141,8 @@ export default function FormAdmin() {
                     />
                 {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
-                <Button variant="contained" type="submit">Agregar Club</Button>
+                <Button variant="contained" type="submit">Crear Producto</Button>
             </form>
-            
         </Container>
     )
 }
-
