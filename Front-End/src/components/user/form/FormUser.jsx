@@ -40,7 +40,7 @@ const FormUser = () => {
               <Field name="firstName">
                   {({ field }) => (
                     <div>
-                      <TextField {...field} variant="outlined" size="small" label="Nombre" />
+                      <TextField {...field} variant="outlined" size="small" label="Nombre" fullWidth/>
                       <ErrorMessage name="firstName" component="div" style={{ color: 'red' }} />
                     </div>
                   )}
@@ -51,7 +51,7 @@ const FormUser = () => {
               <Field name="lastName">
                   {({ field }) => (
                     <div>
-                      <TextField {...field} variant="outlined" size="small" label="Apellido" />
+                      <TextField {...field} variant="outlined" size="small" label="Apellido" fullWidth/>
                       <ErrorMessage name="lastName" component="div" style={{ color: 'red' }} />
                     </div>
                   )}
@@ -62,7 +62,7 @@ const FormUser = () => {
             <Field name="email">
                   {({ field }) => (
                     <div>
-                      <TextField {...field} variant="outlined" size="small" label="Correo Electrónico" />
+                      <TextField {...field} variant="outlined" size="small" label="Correo Electrónico" fullWidth/>
                       <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
                     </div>
                   )}
@@ -73,7 +73,7 @@ const FormUser = () => {
             <Field name="password">
                   {({ field }) => (
                     <div>
-                      <TextField {...field} variant="outlined" size="small" label="Contraseña" type="password" />
+                      <TextField {...field} variant="outlined" size="small" label="Contraseña" type="password" fullWidth/>
                       <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
                     </div>
                   )}
