@@ -1,6 +1,6 @@
 package com.dh.canchas365.controller.location;
 
-import com.dh.canchas365.dto.location.AddressDto;
+import com.dh.canchas365.dto.location.AddressDTO;
 import com.dh.canchas365.model.location.Address;
 import com.dh.canchas365.service.location.AdressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class AddressController {
     private AdressService adressService;
 
     @PostMapping
-    public ResponseEntity<Address> createAddress(@RequestBody AddressDto dto){
+    public ResponseEntity<Address> createAddress(@RequestBody AddressDTO dto){
         return new ResponseEntity<Address>(adressService.createAddress(dto), HttpStatus.CREATED);
     }
 }

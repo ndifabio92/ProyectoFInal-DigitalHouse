@@ -1,6 +1,6 @@
 package com.dh.canchas365.dto;
 
-import com.dh.canchas365.dto.location.AddressDto;
+import com.dh.canchas365.dto.location.AddressDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ClubDto {
+public class ClubDTO {
 
     private Long id;
 
@@ -22,7 +22,7 @@ public class ClubDto {
 
     private Boolean recommended;
 
-    private AddressDto address;
+    private AddressDTO address;
 
     private CategoryDto category;
 

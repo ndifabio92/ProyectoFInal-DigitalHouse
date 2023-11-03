@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrearUsuarioDto {
+public class CrearUsuarioDTO {
 
     @Email
     @NotBlank

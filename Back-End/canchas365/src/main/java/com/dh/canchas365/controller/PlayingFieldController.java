@@ -1,6 +1,6 @@
 package com.dh.canchas365.controller;
 
-import com.dh.canchas365.dto.PlayingFieldDto;
+import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.PlayingField;
 import com.dh.canchas365.service.PlayingFieldService;
@@ -19,27 +19,27 @@ public class PlayingFieldController {
     private PlayingFieldService playingFieldService;
 
     @PostMapping
-    public ResponseEntity<?> createPlayingField(@RequestBody PlayingFieldDto dto){
+    public ResponseEntity<?> createPlayingField(@RequestBody PlayingFieldDTO dto){
         try {
-            return new ResponseEntity<PlayingFieldDto>(playingFieldService.create(dto), HttpStatus.CREATED);
+            return new ResponseEntity<PlayingFieldDTO>(playingFieldService.create(dto), HttpStatus.CREATED);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/list")
-    public List<PlayingFieldDto> getAllPlayingFields(){
+    public List<PlayingFieldDTO> getAllPlayingFields(){
         return playingFieldService.getAllPlayingFields();
     }
 
     @GetMapping("/{idPlayingField}")
-    public ResponseEntity<PlayingFieldDto> getPlayingFieldById(@PathVariable("idPlayingField") Long id){
-        ResponseEntity<PlayingFieldDto> response =  null;
-        PlayingFieldDto playingField = playingFieldService.findById(id);
+    public ResponseEntity<PlayingFieldDTO> getPlayingFieldById(@PathVariable("idPlayingField") Long id){
+        ResponseEntity<PlayingFieldDTO> response =  null;
+        PlayingFieldDTO playingField = playingFieldService.findById(id);
         if(playingField == null){
-            response = new ResponseEntity<PlayingFieldDto>( HttpStatus.NO_CONTENT);
+            response = new ResponseEntity<PlayingFieldDTO>( HttpStatus.NO_CONTENT);
         }
-        else response = new ResponseEntity<PlayingFieldDto>(playingField, HttpStatus.OK);
+        else response = new ResponseEntity<PlayingFieldDTO>(playingField, HttpStatus.OK);
         return response;
     }
 
@@ -58,9 +58,9 @@ public class PlayingFieldController {
     }
 
     @DeleteMapping("/{idPlayingField}")
-    public ResponseEntity<PlayingFieldDto> deletePlayingField(@PathVariable("idPlayingField") Long id) throws ResourceNotFoundException {
-        ResponseEntity<PlayingFieldDto> responseEntity = null;
-        PlayingFieldDto playingFieldDTO = playingFieldService.findById(id);
+    public ResponseEntity<PlayingFieldDTO> deletePlayingField(@PathVariable("idPlayingField") Long id) throws ResourceNotFoundException {
+        ResponseEntity<PlayingFieldDTO> responseEntity = null;
+        PlayingFieldDTO playingFieldDTO = playingFieldService.findById(id);
         if( playingFieldDTO == null){
             responseEntity = new ResponseEntity(HttpStatus.NOT_FOUND);
             throw new ResourceNotFoundException("No existe cancha con el id "+id);
@@ -68,13 +68,13 @@ public class PlayingFieldController {
         else{
 //            System.out.println("la concha de la lora");
             playingFieldService.deletePlayingField(playingFieldDTO.getId());
-            responseEntity = new ResponseEntity<PlayingFieldDto>(HttpStatus.OK);
+            responseEntity = new ResponseEntity<PlayingFieldDTO>(HttpStatus.OK);
         }
         return responseEntity;
     }
 
     @GetMapping("/club/{idClub}")
-    public List<PlayingFieldDto> getPlayingFieldByClub(@PathVariable("idClub") Long id){
+    public List<PlayingFieldDTO> getPlayingFieldByClub(@PathVariable("idClub") Long id){
         return playingFieldService.getPlayingFieldByClub(id);
     }
 }

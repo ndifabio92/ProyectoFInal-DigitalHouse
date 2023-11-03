@@ -1,7 +1,7 @@
 package com.dh.canchas365.service.location;
 
-import com.dh.canchas365.dto.location.CityCreateDto;
-import com.dh.canchas365.dto.location.CityDto;
+import com.dh.canchas365.dto.location.CityCreateDTO;
+import com.dh.canchas365.dto.location.CityDTO;
 import com.dh.canchas365.model.location.City;
 import com.dh.canchas365.model.location.State;
 import com.dh.canchas365.repository.location.CityRepository;
@@ -23,7 +23,7 @@ public class CityService {
     @Autowired
     private StateRepository stateRepository;
 
-    public City createCity(CityCreateDto dto){
+    public City createCity(CityCreateDTO dto){
         City city = new City();
         city.setName(dto.getName());
         Optional<State> optionalState = stateRepository.findById(dto.getIdState());
@@ -33,13 +33,13 @@ public class CityService {
         return cityRepository.save(city);
     }
 
-    public List<CityDto> getAllCities(){
+    public List<CityDTO> getAllCities(){
         List<City> cities =  cityRepository.findAll();
         ModelMapper mapper = new ModelMapper();
-        List<CityDto> cityDtos = new ArrayList<CityDto>();
+        List<CityDTO> cityDTOS = new ArrayList<CityDTO>();
         for(City city: cities){
-            cityDtos.add(mapper.map(city, CityDto.class));
+            cityDTOS.add(mapper.map(city, CityDTO.class));
         }
-        return cityDtos;
+        return cityDTOS;
     }
 }

@@ -1,8 +1,8 @@
 package com.dh.canchas365.service;
 
-import com.dh.canchas365.dto.ClubCreateDto;
-import com.dh.canchas365.dto.ClubDto;
-import com.dh.canchas365.dto.images.ImageDto;
+import com.dh.canchas365.dto.ClubCreateDTO;
+import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.dto.images.ImageDTO;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.model.Category;
 import com.dh.canchas365.model.Club;
@@ -13,7 +13,6 @@ import com.dh.canchas365.repository.images.ImagesRepository;
 import com.dh.canchas365.repository.location.AddressRepository;
 import com.dh.canchas365.service.location.AdressService;
 import jakarta.transaction.Transactional;
-import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,7 @@ public class ClubService {
     private CategoryService categoryService;
 
     @Transactional
-    public Club createClub(ClubCreateDto dto) throws ResourceDuplicateException {
+    public Club createClub(ClubCreateDTO dto) throws ResourceDuplicateException {
         Club clubToSave = new Club();
         clubToSave.setName(dto.getName());
         clubToSave.setPhone_number(dto.getPhone_number());
@@ -72,7 +71,7 @@ public class ClubService {
         Club clubSaved = clubRepository.save(clubToSave);
 
         List<Images> imagesTosave = new ArrayList<>();
-        for(ImageDto imgDto: dto.getImages()){
+        for(ImageDTO imgDto: dto.getImages()){
             Images imageToSave = new Images();
             imageToSave.setUrl(imgDto.getUrl());
             imageToSave.setClub(clubSaved);
@@ -84,24 +83,24 @@ public class ClubService {
         return clubSaved;
     }
     @Transactional
-    public ClubDto updateClub(Club club){
+    public ClubDTO updateClub(Club club){
 
         Optional<Category> category = categoryService.findById(club.getCategory().getId());
         club.setCategory(category.get());
         Club clubSaved = clubRepository.save(club);
 
         ModelMapper mapper = new ModelMapper();
-        ClubDto clubDTO = mapper.map(clubSaved, ClubDto.class);
+        ClubDTO clubDTO = mapper.map(clubSaved, ClubDTO.class);
 
         return clubDTO;
     }
 
-    public List<ClubDto> getAllClubs(){
+    public List<ClubDTO> getAllClubs(){
         List<Club> clubes =clubRepository.findAll();
         ModelMapper mapper = new ModelMapper();
-        List<ClubDto> clubesDTO = new ArrayList<ClubDto>();
+        List<ClubDTO> clubesDTO = new ArrayList<ClubDTO>();
         for(Club club: clubes){
-            clubesDTO.add(mapper.map(club, ClubDto.class));
+            clubesDTO.add(mapper.map(club, ClubDTO.class));
         }
         return clubesDTO;
     }
@@ -112,32 +111,32 @@ public class ClubService {
 
     }
 
-    public ClubDto findById(Long id){
+    public ClubDTO findById(Long id){
         Optional<Club> clubOptional = clubRepository.findById(id);
         ModelMapper mapper = new ModelMapper();
-        ClubDto clubDTO = null;
+        ClubDTO clubDTO = null;
         if(clubOptional.isPresent()) {
-            clubDTO = mapper.map(clubOptional.get(), ClubDto.class);
+            clubDTO = mapper.map(clubOptional.get(), ClubDTO.class);
         }
         return clubDTO;
     }
 
-    public List<ClubDto> getClubsRecommended(){
+    public List<ClubDTO> getClubsRecommended(){
         List<Club> clubes =clubRepository.getClubRecommended();
         ModelMapper mapper = new ModelMapper();
-        List<ClubDto> clubesDTO = new ArrayList<ClubDto>();
+        List<ClubDTO> clubesDTO = new ArrayList<ClubDTO>();
         for(Club club: clubes){
-            clubesDTO.add(mapper.map(club, ClubDto.class));
+            clubesDTO.add(mapper.map(club, ClubDTO.class));
         }
         return clubesDTO;
     }
 
-    public List<ClubDto> getRandomClubs(){
+    public List<ClubDTO> getRandomClubs(){
         List<Club> clubes =clubRepository.getRandomClubs();
         ModelMapper mapper = new ModelMapper();
-        List<ClubDto> clubesDTO = new ArrayList<ClubDto>();
+        List<ClubDTO> clubesDTO = new ArrayList<ClubDTO>();
         for(Club club: clubes){
-            clubesDTO.add(mapper.map(club, ClubDto.class));
+            clubesDTO.add(mapper.map(club, ClubDTO.class));
         }
         return clubesDTO;
     }

@@ -1,8 +1,8 @@
 package com.dh.canchas365.controller.auth;
 
-import com.dh.canchas365.dto.auth.CrearUsuarioDto;
+import com.dh.canchas365.dto.auth.CrearUsuarioDTO;
 import com.dh.canchas365.dto.auth.LoginAttemp;
-import com.dh.canchas365.dto.auth.UsuarioDto;
+import com.dh.canchas365.dto.auth.UsuarioDTO;
 import com.dh.canchas365.model.emun.ERol;
 import com.dh.canchas365.model.auth.Rol;
 import com.dh.canchas365.model.auth.Usuario;
@@ -40,7 +40,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearUsuario(@Valid @RequestBody CrearUsuarioDto crearUsuarioDto){
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody CrearUsuarioDTO crearUsuarioDto){
 
         Set<Rol> roles = crearUsuarioDto.getRoles().stream()
                 .map(role -> Rol.builder().name(ERol.valueOf(role)).build())
@@ -70,10 +70,10 @@ public class UsuarioController {
     public ResponseEntity<?> getUsuario(@RequestBody LoginAttemp loginAttemp){
         Optional optional = usuarioRepository.findByUsername(loginAttemp.getUsername());
         Usuario usuario = null;
-        UsuarioDto usuarioDto = null;
+        UsuarioDTO usuarioDto = null;
         if(!optional.isEmpty()){
             usuario = (Usuario) optional.get();
-            usuarioDto = new UsuarioDto();
+            usuarioDto = new UsuarioDTO();
             usuarioDto.setId(usuario.getId());
             usuarioDto.setEmail(usuario.getEmail());
             //usuarioDto.setOperador(usuario.getOperador());

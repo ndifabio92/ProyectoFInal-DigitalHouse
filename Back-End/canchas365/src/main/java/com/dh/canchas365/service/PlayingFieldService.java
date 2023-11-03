@@ -1,6 +1,6 @@
 package com.dh.canchas365.service;
 
-import com.dh.canchas365.dto.PlayingFieldDto;
+import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.Category;
 import com.dh.canchas365.model.Club;
@@ -28,7 +28,7 @@ public class PlayingFieldService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public PlayingFieldDto create(PlayingFieldDto dto) throws ResourceNotFoundException {
+    public PlayingFieldDTO create(PlayingFieldDTO dto) throws ResourceNotFoundException {
         PlayingField playingField = new PlayingField();
         playingField.setDescription(dto.getDescription());
 
@@ -48,21 +48,21 @@ public class PlayingFieldService {
             throw new ResourceNotFoundException("No existe un deporte con el id "+dto.getCategory().getId());
         }
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(playingFieldRepository.save(playingField), PlayingFieldDto.class);
+        return mapper.map(playingFieldRepository.save(playingField), PlayingFieldDTO.class);
     }
 
     public PlayingField updatePlayingField(PlayingField playingField){
         return playingFieldRepository.save(playingField);
     }
 
-    public List<PlayingFieldDto> getAllPlayingFields(){
+    public List<PlayingFieldDTO> getAllPlayingFields(){
         List<PlayingField> playingFields =  playingFieldRepository.findAll();
         ModelMapper mapper = new ModelMapper();
-        List<PlayingFieldDto> playingFieldDtos = new ArrayList<PlayingFieldDto>();
+        List<PlayingFieldDTO> playingFieldDTOS = new ArrayList<PlayingFieldDTO>();
         for(PlayingField pf: playingFields){
-            playingFieldDtos.add(mapper.map(pf, PlayingFieldDto.class));
+            playingFieldDTOS.add(mapper.map(pf, PlayingFieldDTO.class));
         }
-        return playingFieldDtos;
+        return playingFieldDTOS;
 
     }
 
@@ -70,23 +70,23 @@ public class PlayingFieldService {
         playingFieldRepository.deleteById(id);
     }
 
-    public PlayingFieldDto findById(Long id){
+    public PlayingFieldDTO findById(Long id){
         Optional<PlayingField> playingFieldOptional = playingFieldRepository.findById(id);
         ModelMapper mapper = new ModelMapper();
-        PlayingFieldDto playingFieldDTO = null;
+        PlayingFieldDTO playingFieldDTO = null;
         if(playingFieldOptional.isPresent()){
-            playingFieldDTO = mapper.map(playingFieldOptional.get(), PlayingFieldDto.class);
+            playingFieldDTO = mapper.map(playingFieldOptional.get(), PlayingFieldDTO.class);
         }
         return playingFieldDTO;
     }
 
-    public List<PlayingFieldDto> getPlayingFieldByClub(Long idClub){
+    public List<PlayingFieldDTO> getPlayingFieldByClub(Long idClub){
         List<PlayingField> playingFields =  playingFieldRepository.getPlayingFieldsByClub(idClub);
         ModelMapper mapper = new ModelMapper();
-        List<PlayingFieldDto> playingFieldDtos = new ArrayList<PlayingFieldDto>();
+        List<PlayingFieldDTO> playingFieldDTOS = new ArrayList<PlayingFieldDTO>();
         for(PlayingField pf: playingFields){
-            playingFieldDtos.add(mapper.map(pf, PlayingFieldDto.class));
+            playingFieldDTOS.add(mapper.map(pf, PlayingFieldDTO.class));
         }
-        return playingFieldDtos;
+        return playingFieldDTOS;
     }
 }
