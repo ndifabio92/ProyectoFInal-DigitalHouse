@@ -2,6 +2,7 @@ package com.dh.canchas365.controller;
 
 import com.dh.canchas365.dto.ClubCreateDTO;
 import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.Club;
@@ -12,10 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/club")
-public class ClubController {
+public class ClubController extends CustomFieldException {
 
     @Autowired
     private ClubService clubService;
@@ -23,27 +25,30 @@ public class ClubController {
     @PostMapping
     public ResponseEntity<?> createClub(@RequestBody ClubCreateDTO dto){
         try {
-            return new ResponseEntity<Club>(clubService.createClub(dto), HttpStatus.CREATED);
+            return new ResponseEntity<>(clubService.createClub(dto), HttpStatus.CREATED);
         } catch (ResourceDuplicateException e) {
-            return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-
+            return customResponseError(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/list")
+    @GetMapping()
     public List<ClubDTO> getAllClubs(){
         return clubService.getAllClubs();
     }
 
-    @GetMapping("/{idClub}")
-    public ResponseEntity<ClubDTO> getClubById(@PathVariable("idClub") Long id){
-        ResponseEntity<ClubDTO> response =  null;
-        ClubDTO club = clubService.findById(id);
-        if(club == null){
-            response = new ResponseEntity<ClubDTO>( HttpStatus.NO_CONTENT);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getClubById(@PathVariable("id") Long id){
+        try {
+            ClubDTO club = clubService.findById(id);
+            if(club == null) {
+                return customResponseError("El id ingresado no existe", HttpStatus.NOT_FOUND);
+            }
+            return ResponseEntity.ok(club);
+
+        } catch (Exception ex) {
+            return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        else response = new ResponseEntity<ClubDTO>(club, HttpStatus.OK);
-        return response;
+
     }
 
     @PutMapping
@@ -60,8 +65,8 @@ public class ClubController {
         return responseEntity;
     }
 
-    @DeleteMapping("/{idClub}")
-    public ResponseEntity<ClubDTO>  deleteClub(@PathVariable("idClub") Long id) throws ResourceNotFoundException {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ClubDTO>  deleteClub(@PathVariable("id") Long id) throws ResourceNotFoundException {
         ResponseEntity<ClubDTO> responseEntity = null;
         ClubDTO club = clubService.findById(id);
         if( club == null){
@@ -69,7 +74,6 @@ public class ClubController {
             throw new ResourceNotFoundException("No existe club con el id "+id);
         }
         else{
-            System.out.println("la concha de la lora");
             clubService.deleteClub(club.getId());
             responseEntity = new ResponseEntity<ClubDTO>(HttpStatus.OK);
         }

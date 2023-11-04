@@ -15,9 +15,9 @@ public class CustomFieldException {
         return ResponseEntity.badRequest().body(erroresResult);
     }
 
-    public static ResponseEntity<Map<String, String>> customResponseError(Exception e) {
+    public static ResponseEntity<Map<String, String>> customResponseError(String message, HttpStatus status) {
         Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        errorResponse.put("error", message);
+        return ResponseEntity.status(status).body(errorResponse);
     }
 }

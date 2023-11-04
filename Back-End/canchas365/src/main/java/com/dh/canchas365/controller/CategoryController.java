@@ -29,7 +29,7 @@ public class CategoryController extends CustomFieldException {
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(service.create(category));
         } catch (Exception ex) {
-            return customResponseError(ex);
+            return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -45,10 +45,10 @@ public class CategoryController extends CustomFieldException {
             if(optional.isPresent()){
                 return ResponseEntity.ok(optional.get());
             }else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id ingresa no existe");
+                return customResponseError("El id ingresado no existe", HttpStatus.NOT_FOUND);
             }
         } catch (Exception ex) {
-            return customResponseError(ex);
+            return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -62,11 +62,11 @@ public class CategoryController extends CustomFieldException {
             if(optional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.OK).body(service.update(category,id));
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id ingresa no existe");
+                return customResponseError("El id ingresado no existe", HttpStatus.NOT_FOUND);
             }
         }
         catch (Exception ex) {
-            return customResponseError(ex);
+            return customResponseError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -76,12 +76,12 @@ public class CategoryController extends CustomFieldException {
             Optional<Category> optional = service.findById(id);
             if(optional.isPresent()) {
                 service.delete(id);
-                return ResponseEntity.status(HttpStatus.OK).body("Categoria Eliminada exitosamente");
+                return customResponseError("Categoria Eliminada exitosamente", HttpStatus.OK);
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id ingresa no existe");
+                return customResponseError("El id ingresado no existe", HttpStatus.NOT_FOUND);
             }
         } catch (Exception ex) {
-            return customResponseError(ex);
+            return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
