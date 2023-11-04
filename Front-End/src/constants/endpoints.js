@@ -7,4 +7,5 @@ export const ENDPOINTS = {
     IMAGES:'image/club',
     SPORT:'sport',
     CITY: 'city',
+    CATEGORY: 'category',
 }

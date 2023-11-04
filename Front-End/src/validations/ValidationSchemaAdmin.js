@@ -4,6 +4,7 @@ const citySchema = Yup.object().shape({
     id: Yup.string().required('Dato obligatorio'),
 });
 
+
 const addressSchema = Yup.object().shape({
     street: Yup.string().required('Dato obligatorio'),
     number: Yup.string().required('Dato obligatorio'),
@@ -14,6 +15,7 @@ const addressSchema = Yup.object().shape({
 
 export const validationSchemaForm = Yup.object().shape({
     name: Yup.string().required('Dato obligatorio'),
+    id_category:Yup.string().required('Dato obligatorio'),
     phone_number: Yup.string().required('Dato obligatorio'),
     recommended: Yup.boolean(),
     address: addressSchema,

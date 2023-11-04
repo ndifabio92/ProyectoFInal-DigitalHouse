@@ -5,6 +5,7 @@ import Images from "../../components/products/Images";
 import useFetchApi from "../../hooks/useFetchApi";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../constants/endpoints";
+import { METHODS } from '../../constants/methods';
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Detail = () => {
 
   const { id } = useParams();
 
-  const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`, id);
+  const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
 
   return (
     <Container
