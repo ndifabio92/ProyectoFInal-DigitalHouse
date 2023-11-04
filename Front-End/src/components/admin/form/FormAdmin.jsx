@@ -23,17 +23,19 @@ export default function FormAdmin() {
             number: '',
             floor: '',
             apartment: '',
-            city:{id:''}, 
+            city: {
+                id:'',
+            }, 
             
         },
-        id_category: '', 
+        category: {id:''}, 
         images: []
     }
 
     const isComplete = (values) => {
         if (
             values.name != '' &&
-            values.id_category != '' &&
+            values.category.id != '' &&
             values.phone_number != '' &&
             values.address.street != '' &&
             values.address.number != '' &&
@@ -114,8 +116,8 @@ export default function FormAdmin() {
                         <span style={{ color: 'red' }}>{formik.errors.address?.category?.id}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Categoria" select name="id_category" className="input-background" 
-                    value={formik.values.id_category}
+                <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
+                    value={formik.values.category.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {categories?.map((category) => (
                         <MenuItem key={category.id} value={category.id}>
