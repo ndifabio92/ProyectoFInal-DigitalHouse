@@ -49,16 +49,16 @@ public class ClubService {
             throw new ResourceDuplicateException("Ese nombre de Club ya existe");
         }
 
-        Optional<Address> optionalAdress = addressRepository.findByAddress(dto.getAddress().getStreet(), dto.getAddress().getNumber(), dto.getAddress().getCity().getId());
-        if(optionalAdress.isPresent()){
-            clubToSave.setAddress(optionalAdress.get());
+        Optional<Address> optionalAddress = addressRepository.findByAddress(dto.getAddress().getStreet(), dto.getAddress().getNumber(), dto.getAddress().getCity().getId());
+        if(optionalAddress.isPresent()){
+            clubToSave.setAddress(optionalAddress.get());
         }
         else{
             Address addressSaved = adressService.createAddress(dto.getAddress());
             clubToSave.setAddress(addressSaved);
         }
 
-        Optional<Category> optionalCategory = categoryService.findById(dto.getId_category());
+        Optional<Category> optionalCategory = categoryService.findById(dto.getCategory().getId());
         if(optionalCategory.isEmpty()) {
             try {
                 throw new Exception("El id Category no existe");
