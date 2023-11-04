@@ -79,6 +79,7 @@ const TableAdmin = () => {
                                         <TableRow>
                                             <TableCell align='center'>Id</TableCell>
                                             <TableCell align="center">Nombre</TableCell>
+                                            <TableCell align="center">Deporte</TableCell>
                                             <TableCell align='center'>Domicilio</TableCell>
                                             <TableCell align='center'>Ciudad</TableCell>
                                             <TableCell align='center'>Telefono</TableCell>
@@ -87,7 +88,7 @@ const TableAdmin = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {data?.map((row) => (
+                                        {data.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -97,6 +98,9 @@ const TableAdmin = () => {
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.name}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align='center'>
+                                                    {row.category.title}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.address.street + " N° " + row.address.number}
