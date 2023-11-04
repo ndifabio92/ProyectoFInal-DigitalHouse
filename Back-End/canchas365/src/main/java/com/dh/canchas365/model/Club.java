@@ -43,7 +43,7 @@ public class Club implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Images> images = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false )
     private Category category;
 
