@@ -15,13 +15,18 @@ import MenuItem from "@mui/material/MenuItem";
 const pages = ["Crear cuenta", "Iniciar sesión"];
 const settings = ["Perfil", "Cerrar sesión"];
 
-const user = {
-  name: "Lali",
-  surname: "Perez",
-};
+//Aca hay que reemplazar por el llamado a la API
+// const user = {
+//   name: "Lali",
+//   surname: "Perez",
+// };
+
+const user = null;
 
 const Header = () => {
   const logo = "./logoNaranjaNeg.png";
+
+  //Manejo del menu Crear cuenta e Iniciar sesión
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -32,6 +37,7 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
+  //Manejo del menu del user
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -71,66 +77,71 @@ const Header = () => {
             <span>Qué Deporte jugamos hoy? </span>
           </Typography>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              mx: "50px",
-              justifyContent: "flex-end",
-            }}
-          >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+          {!user ? (
+            <>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                  mx: "50px",
+                  justifyContent: "flex-end",
+                }}
               >
-                {page}
-              </Button>
-            ))}
-          </Box>
+                {pages.map((page) => (
+                  <Button
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "flex", md: "none" },
-              justifyContent: "flex-end",
-            }}
-          >
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              keepMounted
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-                alignContent: "rigth",
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "flex", md: "none" },
+                  justifyContent: "flex-end",
+                }}
+              >
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
 
-          {user ? (
-            <Box sx={{ flexGrow: 0 }}>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  keepMounted
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                    alignContent: "rigth",
+                  }}
+                >
+                  {pages.map((page) => (
+                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </>
+          ) : (
+            <Box sx={{ flexGrow: 0.2 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar>{user.name[0] + user.surname[0]}</Avatar>
+                  <Avatar sx={{ background: "#FF914D" }}>
+                    {user.name[0] + user.surname[0]}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
 
@@ -157,10 +168,11 @@ const Header = () => {
                 ))}
               </Menu>
             </Box>
-          ) : null}
+          )}
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
+
 export default Header;
