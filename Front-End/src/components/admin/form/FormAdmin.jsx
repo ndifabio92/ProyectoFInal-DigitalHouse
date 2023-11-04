@@ -14,7 +14,6 @@ export default function FormAdmin() {
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}/list`);
 
-
     const navigate = useNavigate();
 
     const initialValues = {
