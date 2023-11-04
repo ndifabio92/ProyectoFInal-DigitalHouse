@@ -16,17 +16,17 @@ const pages = ["Crear cuenta", "Iniciar sesión"];
 const settings = ["Perfil", "Cerrar sesión"];
 
 //Aca hay que reemplazar por el llamado a la API
-// const user = {
-//   name: "Lali",
-//   surname: "Perez",
-// };
+const user = {
+  name: "Lali",
+  surname: "Perez",
+};
 
-const user = null;
+//const user = null;
 
 const Header = () => {
   const logo = "./logoNaranjaNeg.png";
 
-  //Manejo del menu Crear cuenta e Iniciar sesión
+  //Manejo del menu "Crear cuenta" e "Iniciar sesión"
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -53,28 +53,32 @@ const Header = () => {
       <Container
         maxWidth="xxl"
         sx={{
-          padding: "0px",
+          padding: "8px",
           margin: "0px",
           backgroundColor: "#1F2E7B",
-          height: "100px",
+          height: "120px",
         }}
       >
         <Toolbar disableGutters>
           <Typography
-            variant="h6"
+            variant="h4"
             noWrap
             component="a"
             href="/"
             sx={{
               display: "flex",
-              fontFamily: "monospace",
               color: "inherit",
               fontSize: 12,
               alignItems: "end",
             }}
           >
             <img src={logo} style={{ height: "100px" }} />
-            <span>Qué Deporte jugamos hoy? </span>
+            <div style={{ display: "block" }}>
+              <h1>
+                canchas<span style={{ color: "#FF914D", margin: 0 }}>365</span>
+              </h1>
+              <span>¿Qué deporte jugamos hoy? </span>
+            </div>
           </Typography>
 
           {!user ? (
@@ -136,7 +140,14 @@ const Header = () => {
               </Box>
             </>
           ) : (
-            <Box sx={{ flexGrow: 0.2 }}>
+            <Box
+              sx={{
+                marginLeft: "auto",
+                display: "flex",
+                alignItems: "center",
+                marginRight: 2,
+              }}
+            >
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar sx={{ background: "#FF914D" }}>
