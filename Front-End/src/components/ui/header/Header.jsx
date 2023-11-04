@@ -16,10 +16,10 @@ const pages = ["Crear cuenta", "Iniciar sesión"];
 const settings = ["Perfil", "Cerrar sesión"];
 
 //Aca hay que reemplazar por el llamado a la API
-const user = {
-  name: "Lali",
-  surname: "Perez",
-};
+ const user = {
+   name: "Lali",
+   surname: "Perez",
+ };
 
 //const user = null;
 
@@ -148,7 +148,7 @@ const Header = () => {
                 marginRight: 2,
               }}
             >
-              <Tooltip title="Open settings">
+              <Tooltip title="Ver perfil">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar sx={{ background: "#FF914D" }}>
                     {user.name[0] + user.surname[0]}
