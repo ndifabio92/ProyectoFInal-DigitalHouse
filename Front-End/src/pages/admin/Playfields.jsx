@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import FormPlayfields from "../../components/admin/form/FormPlayfields";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import TitleClub from '../../components/products/TitleClub';
+import TitleClub from '../../components/products/TitleClub'
 import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
 import { Box, Container, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ function CustomTabPanel(props) {
 
 const Playfields = () => {
 
-    const { id } = useParams();
+    const {id} = useParams();
 
     const [value, setValue] = useState(0);
     
@@ -48,12 +48,7 @@ const Playfields = () => {
     return (
         <>
 
-            <IconButton aria-label="Volver" color='#FFFFFF' size="large" onClick={handleClick} sx={{position:'absolute', right:'10px', top:'100px', display:'block'}} >
-                <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
-            </IconButton>
-            
-            <TitleClub id={id}/>
-       
+    
             <Container maxWidth="xxl"
                 sx={{
                     backgroundColor: '#FFFFFF',
@@ -67,12 +62,20 @@ const Playfields = () => {
                     mt: '150px',
                     padding: '40px'
                 }}>
+
+                <IconButton aria-label="Volver" color='#FFFFFF' size="large" onClick={handleClick} sx={{position:'absolute', right:'10px', top:'100px', display:'block'}} >
+                    <ArrowCircleLeftTwoToneIcon fontSize="large" color='#FFFFFF' />
+                </IconButton>
+            
+                <TitleClub id ={id}/>
+
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Listado de Canchas" />
                         <Tab label="Agregar Cancha" />
                     </Tabs>
                 </Box>
+                
                 <CustomTabPanel value={value} index={0}>
                     <TablePlayfields idClub={id} />
                 </CustomTabPanel>

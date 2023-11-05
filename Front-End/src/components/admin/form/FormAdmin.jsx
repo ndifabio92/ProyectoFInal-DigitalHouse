@@ -1,4 +1,4 @@
-import { Button, Container, FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
+import { Button, Container, FormControlLabel, MenuItem, Switch, TextField, experimental_extendTheme } from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
@@ -12,6 +12,8 @@ const FormAdmin = () => {
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
     const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}/list`);
+
+    
 
     const initialValues = {
         name: '', phone_number: '', recommended: false,
@@ -46,12 +48,10 @@ const FormAdmin = () => {
 
     const formik = useFormik({
         initialValues,
-        validationSchema,
-        onSubmit: () => { 
-            submitForm(formik.values)
-        },
+        validationSchema
     });
 
+    
     const submitForm = async (values) => {
 
             try {
@@ -62,7 +62,7 @@ const FormAdmin = () => {
                     },
                     body: JSON.stringify(values),
                 })
-                const data = await response.json()
+              const data = await response.json()
 
                 if (response.ok) {
                     Swal.fire({
@@ -73,16 +73,19 @@ const FormAdmin = () => {
                     }).then(() => {
                        console.log("La Solicitur Post se envio correctamente")
                     }) 
-                } else {
-                    Swal.fire({
+                } 
+                else {
+                 Swal.fire({
                         title: data.error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
                        console.log(data.error)
-                    })
+                    }
+                    )
                 }
+                
             } catch (error) {
                 console.log(error)
             }
@@ -96,7 +99,7 @@ const FormAdmin = () => {
             <form onSubmit={(e) => { 
                 e.preventDefault();
                 if(isComplete(formik.values)){
-                    formik.handleSubmit(e) 
+                    submitForm(formik.values)
                 }
                 else{
                     Swal.fire({

@@ -32,9 +32,6 @@ const FormPlayfields = ({idClub}) => {
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: () => { 
-            submitForm(formik.values)
-        },
     });
 
     const submitForm = async (values) => {
@@ -83,7 +80,7 @@ const FormPlayfields = ({idClub}) => {
             <form onSubmit={(e) => { 
                 e.preventDefault();
                 if(isComplete(formik.values)){
-                    formik.handleSubmit(e) 
+                    submitForm(formik.values)
                 }
                 else{
                     Swal.fire({
