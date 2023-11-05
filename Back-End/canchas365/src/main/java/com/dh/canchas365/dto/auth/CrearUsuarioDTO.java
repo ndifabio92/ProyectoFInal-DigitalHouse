@@ -15,15 +15,16 @@ public class CrearUsuarioDTO {
 
     @Email
     @NotBlank
-    private String email;
+    private String username;
 
     @NotBlank
-    private String username;
+    private String name;
+
+    @NotBlank
+    private String lastname;
 
     @NotBlank
     private String password;
 
     private Set<String> roles;
-
-    //private Short operador;
 }
