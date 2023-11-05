@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "usuario")
+@Table(name = "user")
 public class Usuario implements Serializable {
 
     @Id
@@ -48,6 +48,6 @@ public class Usuario implements Serializable {
     private Operador operador;*/
 
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = Rol.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @JoinTable(name = "user_rol", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_rol"))
     private Set<Rol> roles;
 }
