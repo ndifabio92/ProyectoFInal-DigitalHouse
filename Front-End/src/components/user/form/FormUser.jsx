@@ -19,7 +19,6 @@ const FormUser = () => {
     username: Yup.string().required('El username es requerido'),
     name: Yup.string().required('El nombre es requerido'),
     lastname: Yup.string().required('El apellido es requerido'),
-    email: Yup.string().email('Correo electrónico inválido').required('El correo electrónico es requerido'),
     password: Yup.string().required('La contraseña es requerida').min(6, 'La contraseña debe tener al menos 6 caracteres'),
   });
 
@@ -27,13 +26,14 @@ const FormUser = () => {
 
   const onSubmit = async (values) => {
     try {
-      const response = await fetch('http://localhost:8080/user/signup', {
+      const response = await fetch('http://localhost:8080/user/signup' ,  {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values),
       });
+console.log(values);
 
       if (response.ok) {
         console.log('Usuario creado exitosamente');
@@ -57,7 +57,7 @@ const FormUser = () => {
       <Formik 
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={onSubmit}
+        onSubmit={onSubmit} 
       >
         {() => (
           <Form className={`${styles.form}` }>
