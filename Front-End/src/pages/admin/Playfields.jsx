@@ -74,10 +74,10 @@ const Playfields = () => {
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <TablePlayfields id={id} />
+                    <TablePlayfields idClub={id} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormPlayfields />
+                    <FormPlayfields idClub={id} />
                 </CustomTabPanel>
 
             </Container>

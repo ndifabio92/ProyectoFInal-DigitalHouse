@@ -12,16 +12,18 @@ import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
-import { useNavigate, useState, useEffect } from 'react';
-
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const TableAdmin = () => {
 
+    
+
     const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
 
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
     const [clubs, setClubs] = useState([])
 

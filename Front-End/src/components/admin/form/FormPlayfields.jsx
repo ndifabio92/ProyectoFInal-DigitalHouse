@@ -1,148 +1,130 @@
-import { Button, Container, FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
+import { Button, Container, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
-import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { ENDPOINTS } from '../../../constants/endpoints';
+import useFetchApi from '../../../hooks/useFetchApi';
 
-export default function FormAdmin() {
 
-    const navigate = useNavigate();
+const FormPlayfields = ({idClub}) => {
 
-    const cities = [
-        { id: 1, name: "Córdoba" },
-        { id: 2, name: "Mendoza" },
-        { id: 3, name: "Buenos Aires" },
-    ];
+    const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+    
 
     const initialValues = {
-        name: '', phone_number: '', recommended: false,
-        address: {
-            street: '',
-            number: '',
-            floor: '',
-            apartment: '',
-            city: ''
-        },
-        images: []
+        description: '', idClub: parseInt(idClub), 
+        category: {id:''}, 
     }
+
+    const isComplete = (values) => {
+        if (
+            values.description != '' &&
+            values.category.id != '' 
+        ){
+            return true 
+        }
+        else{
+            return false
+        }
+    };
 
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: () => {
-            console.log(formik.values)
-            submitForm(formik.values); 
-          },
+        onSubmit: () => { 
+            submitForm(formik.values)
+        },
     });
 
     const submitForm = async (values) => {
-        try {
-          const response = await fetch('http://localhost:8080/club', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values),
-          });
-      
-          if (response.ok) {
-            console.log("La Solicitur Post se envio correctamente")
-            navigate('/admin');
-          } else {
-            console.log("error")
-          }
-        } catch (error) {
-            console.log(error)
-        }
-      };
+
+        console.log(values)
+
+            try {
+                const response = await fetch('http://localhost:8080/playingField', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(values),
+                })
+                const data = await response.json()
+
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Cancha agregada con éxito',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
+                } else {
+                    Swal.fire({
+                        title: data.error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(data.error)
+                    })
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        
+    }
 
     return (
+        
         <Container maxWidth="md">
-            <form onSubmit={formik.handleSubmit} className={`${styles.form}` }>
-              
+            
+            <form onSubmit={(e) => { 
+                e.preventDefault();
+                if(isComplete(formik.values)){
+                    formik.handleSubmit(e) 
+                }
+                else{
+                    Swal.fire({
+                        title: 'Debe completar todos los campos del formulario',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }) 
+                }
+            }}  className={`${styles.form}` }>
+           
                 {
-                    formik.touched.name && formik.errors.name && (
-                        <span style={{ color: 'red' }}>{formik.errors.name}</span>
+                    formik.touched.description && formik.errors.description && (
+                        <span style={{ color: 'red' }}>{formik.errors.description}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Nombre" type="text" name="name" className="input-background"
-                    value={formik.values.name}
+                <TextField variant="outlined" size="small" label="Nombre" type="text" name="description" className="input-background"
+                    value={formik.values.description}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                
+
+
                 {
-                    formik.touched.phone_number && formik.errors.phone_number && (
-                        <span style={{ color: 'red' }}>{formik.errors.phone_number}</span>
+                    formik.touched.category && formik.errors.category && (
+                        <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Telefono" type="text" name="phone_number" className="input-background"
-                    value={formik.values.phone_number}
-                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                
-              
-                {
-                    formik.touched.recommended && formik.errors.recommended && (
-                        <span style={{ color: 'red' }}>{formik.errors.recommended}</span>
-                    )
-                }
-                {
-                    formik.touched.address?.street && formik.errors.address?.street && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
-                    )
-                }
-                <TextField variant="outlined" size="small" label="Calle" type="text" name="address.street" className="input-background" 
-                    value={formik.values.address?.street}
-                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                
-                {
-                    formik.touched.address?.number && formik.errors.address?.number && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.number}</span>
-                    )
-                }
-                <TextField variant="outlined" size="small" label="Numero" type="number" name="address.number" className="input-background" 
-                    value={formik.values.address?.number}
-                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                
-                {
-                    formik.touched.address?.floor && formik.errors.address?.floor && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.floor}</span>
-                    )
-                }
-                <TextField variant="outlined" size="small" label="Piso" type="number" name="address.floor" className="input-background" 
-                    value={formik.values.address?.floor}
-                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                
-                {
-                    formik.touched.address?.apartment && formik.errors.address?.apartment && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
-                    )
-                }
-                <TextField variant="outlined" size="small" label="Apartamento" type="string" name="address.apartment" className="input-background" 
-                    value={formik.values.address?.apartment}
-                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                
-                {
-                    formik.touched.address?.city && formik.errors.address?.city && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.city}</span>
-                    )
-                }
-                <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
-                    value={formik.values.address.city}
+                <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
+                    value={formik.values.category.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
-                    {cities.map((option) => (
-                        <MenuItem key={option.id} value={option.id}>
-                            {option.name}
+                    {categories?.map((category) => (
+                        <MenuItem key={category.id} value={category.id}>
+                            {category.title}
                         </MenuItem>
                     ))}
                 </TextField>
-                
-                    <FormControlLabel labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background"
-                        checked={formik.values.recommended}
-                        onChange={formik.handleChange} onBlur={formik.handleBlur} />}
-                    />
-                {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
-                <Button variant="contained" type="submit">Crear Producto</Button>
+                <Button variant="contained" type="submit">Agregar Cancha</Button>
             </form>
+            
         </Container>
     )
 }
+
+export default FormPlayfields
