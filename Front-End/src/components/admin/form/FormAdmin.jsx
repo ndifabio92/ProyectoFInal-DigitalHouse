@@ -7,8 +7,7 @@ import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
 
 
-
-export default function FormAdmin() {
+const FormAdmin = () => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
@@ -219,3 +218,5 @@ export default function FormAdmin() {
         </Container>
     )
 }
+
+export default FormAdmin
