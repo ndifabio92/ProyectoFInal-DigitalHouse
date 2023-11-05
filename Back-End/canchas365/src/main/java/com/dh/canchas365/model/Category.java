@@ -14,6 +14,7 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 45, nullable = false, unique = true)
     @NotEmpty(message = "El titulo es obligatorio")
     private String title;
