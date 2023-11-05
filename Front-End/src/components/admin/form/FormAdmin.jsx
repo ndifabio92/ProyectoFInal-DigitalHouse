@@ -1,20 +1,19 @@
-import { Button, Container, FormControlLabel, MenuItem, Switch, TextField } from "@mui/material";
+import { Button, Container, FormControlLabel, MenuItem, Switch, TextField, experimental_extendTheme } from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
 
 
-
-export default function FormAdmin() {
+const FormAdmin = () => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+    
     const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}/list`);
 
-    const navigate = useNavigate();
+    
 
     const initialValues = {
         name: '', phone_number: '', recommended: false,
@@ -26,7 +25,6 @@ export default function FormAdmin() {
             city: {
                 id:'',
             }, 
-            
         },
         category: {id:''}, 
         images: []
@@ -48,13 +46,12 @@ export default function FormAdmin() {
         }
     };
 
-
     const formik = useFormik({
         initialValues,
-        validationSchema,
-        onSubmit: () => { submitForm(formik.values)},
+        validationSchema
     });
 
+    
     const submitForm = async (values) => {
 
             try {
@@ -64,8 +61,9 @@ export default function FormAdmin() {
                     'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(values),
-                });
-        
+                })
+              const data = await response.json()
+
                 if (response.ok) {
                     Swal.fire({
                         title: 'Club agregado con éxito',
@@ -73,11 +71,21 @@ export default function FormAdmin() {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                    navigate('/admin');})
-                    console.log("La Solicitur Post se envio correctamente")
-                } else {
-                    console.log("error")
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
+                } 
+                else {
+                 Swal.fire({
+                        title: data.error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(data.error)
+                    }
+                    )
                 }
+                
             } catch (error) {
                 console.log(error)
             }
@@ -90,7 +98,9 @@ export default function FormAdmin() {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(isComplete(formik.values)){formik.handleSubmit(e)}
+                if(isComplete(formik.values)){
+                    submitForm(formik.values)
+                }
                 else{
                     Swal.fire({
                         title: 'Debe completar todos los campos del formulario',
@@ -113,7 +123,7 @@ export default function FormAdmin() {
 
                 {
                     formik.touched.category && formik.errors.category && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.category?.id}</span>
+                        <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
                     )
                 }
                 <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
@@ -212,3 +222,4 @@ export default function FormAdmin() {
     )
 }
 
+export default FormAdmin

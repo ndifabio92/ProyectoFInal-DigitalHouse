@@ -23,5 +23,6 @@ export const validationSchemaForm = Yup.object().shape({
     phone_number: Yup.string().required('Dato obligatorio'),
     recommended: Yup.boolean(),
     address: addressSchema,
+    description: Yup.string().required('Dato obligatorio'),
 });
 
