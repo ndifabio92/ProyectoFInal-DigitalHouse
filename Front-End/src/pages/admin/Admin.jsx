@@ -59,7 +59,7 @@ const Admin = () => {
                     <TableAdmin  />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormAdmin />
+                    <FormAdmin  />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                     Item Three
