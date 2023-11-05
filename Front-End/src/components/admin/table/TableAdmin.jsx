@@ -12,16 +12,24 @@ import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useState, useEffect } from 'react';
 
 
 
 
 const TableAdmin = () => {
 
-    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}/list`);
+    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
 
-    const navigate = useNavigate();
+    const navigate = useNavigate
+
+    const [clubs, setClubs] = useState([])
+
+    useEffect(() => {
+        if (data) {
+            setClubs(data)
+        }
+    }, [data]);
 
     
     const handleDelete = (id) => {
@@ -41,7 +49,8 @@ const TableAdmin = () => {
                     });
                     if (response) {
                         console.log('Club eliminado con éxito');
-                        navigate('/admin');
+                        setClubs(clubs.filter((club) => club.id !== id));
+                    
                     } else {
                         console.error('Error al eliminar el club:', error);
                     }
@@ -73,7 +82,7 @@ const TableAdmin = () => {
                 isLoading ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
                         <TableContainer component={Paper}>
-                            {data &&
+                            {clubs &&
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
@@ -88,7 +97,7 @@ const TableAdmin = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {data.map((row) => (
+                                        {clubs.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
