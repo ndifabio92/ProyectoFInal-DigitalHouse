@@ -6,7 +6,8 @@ import Home from "../pages/home/Home"
 import Footer from "../components/ui/footer/Footer"
 import Detail from "../pages/product/Detail"
 import NotFound from "../pages/notFound/NotFound"
-import Playfields from "../components/admin/table/TablePlayfields"
+import Playfields from "../pages/admin/Playfields"
+
 
 export const Navigation = () => {
     return (
