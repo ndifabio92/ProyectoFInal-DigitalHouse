@@ -1,6 +1,5 @@
 package com.dh.canchas365.dto;
 
-import com.dh.canchas365.model.Sport;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +19,5 @@ public class PlayingFieldDTO {
 
     //private Long idSport;
 
-    private SportDTO sport;
+    private CategoryDto category;
 }

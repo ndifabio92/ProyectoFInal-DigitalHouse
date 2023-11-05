@@ -4,6 +4,7 @@ import com.dh.canchas365.dto.ClubCreateDTO;
 import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.dto.images.ImageDTO;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
+import com.dh.canchas365.model.Category;
 import com.dh.canchas365.model.Club;
 import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Address;
@@ -33,6 +34,9 @@ public class ClubService {
     @Autowired
     private ImagesRepository imagesRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @Transactional
     public Club createClub(ClubCreateDTO dto) throws ResourceDuplicateException {
         Club clubToSave = new Club();
@@ -45,14 +49,24 @@ public class ClubService {
             throw new ResourceDuplicateException("Ese nombre de Club ya existe");
         }
 
-        Optional<Address> optionalAdress = addressRepository.findByAddress(dto.getAddress().getStreet(), dto.getAddress().getNumber(), dto.getAddress().getCity().getId());
-        if(optionalAdress.isPresent()){
-            clubToSave.setAddress(optionalAdress.get());
+        Optional<Address> optionalAddress = addressRepository.findByAddress(dto.getAddress().getStreet(), dto.getAddress().getNumber(), dto.getAddress().getCity().getId());
+        if(optionalAddress.isPresent()){
+            clubToSave.setAddress(optionalAddress.get());
         }
         else{
             Address addressSaved = adressService.createAddress(dto.getAddress());
             clubToSave.setAddress(addressSaved);
         }
+
+        Optional<Category> optionalCategory = categoryService.findById(dto.getCategory().getId());
+        if(optionalCategory.isEmpty()) {
+            try {
+                throw new Exception("El id Category no existe");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        clubToSave.setCategory(optionalCategory.get());
 
         Club clubSaved = clubRepository.save(clubToSave);
 
@@ -71,6 +85,8 @@ public class ClubService {
     @Transactional
     public ClubDTO updateClub(Club club){
 
+        Optional<Category> category = categoryService.findById(club.getCategory().getId());
+        club.setCategory(category.get());
         Club clubSaved = clubRepository.save(club);
 
         ModelMapper mapper = new ModelMapper();

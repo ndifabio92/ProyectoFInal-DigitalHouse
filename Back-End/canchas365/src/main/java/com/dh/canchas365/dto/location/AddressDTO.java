@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressDTO {
-
+    private Long id;
     private String street;
 
     private Integer number;
@@ -19,8 +19,6 @@ public class AddressDTO {
     private Integer floor;
 
     private String apartment;
-
-    //private Long idCity;
 
     private City city;
 }

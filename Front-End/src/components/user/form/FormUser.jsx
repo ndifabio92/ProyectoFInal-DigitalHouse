@@ -3,26 +3,31 @@ import { Button, Container, TextField } from "@mui/material";
 import * as Yup from 'yup';
 import styles from './styles.module.css';
 
+
 const FormUser = () => {
 
+
   const initialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
+    username: '',
+    name: '',
+    lastname: '',
     password: '',
+    roles: ["USER"]
   };
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('El nombre es requerido'),
-    lastName: Yup.string().required('El apellido es requerido'),
+    username: Yup.string().required('El username es requerido'),
+    name: Yup.string().required('El nombre es requerido'),
+    lastname: Yup.string().required('El apellido es requerido'),
     email: Yup.string().email('Correo electrónico inválido').required('El correo electrónico es requerido'),
     password: Yup.string().required('La contraseña es requerida').min(6, 'La contraseña debe tener al menos 6 caracteres'),
   });
 
+  
 
   const onSubmit = async (values) => {
     try {
-      const response = await fetch('/usuarios/crear', {
+      const response = await fetch('http://localhost:8080/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,7 +37,10 @@ const FormUser = () => {
 
       if (response.ok) {
         console.log('Usuario creado exitosamente');
-      } else {
+      
+      } 
+      
+      else {
         console.error('Fallo al crear el usuario');
       }
     } catch (error) {
@@ -53,34 +61,35 @@ const FormUser = () => {
       >
         {() => (
           <Form className={`${styles.form}` }>
+
             <div>
-              <Field name="firstName">
+              <Field name="username">
+                  {({ field }) => (
+                    <div>
+                      <TextField {...field} variant="outlined" size="small" label="Username" fullWidth/>
+                      <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
+                    </div>
+                  )}
+                </Field>
+            </div>
+
+            <div>
+              <Field name="name">
                   {({ field }) => (
                     <div>
                       <TextField {...field} variant="outlined" size="small" label="Nombre" fullWidth/>
-                      <ErrorMessage name="firstName" component="div" style={{ color: 'red' }} />
+                      <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
                     </div>
                   )}
                 </Field>
             </div>
 
             <div>
-              <Field name="lastName">
+              <Field name="lastname">
                   {({ field }) => (
                     <div>
                       <TextField {...field} variant="outlined" size="small" label="Apellido" fullWidth/>
-                      <ErrorMessage name="lastName" component="div" style={{ color: 'red' }} />
-                    </div>
-                  )}
-                </Field>
-            </div>
-
-            <div>
-            <Field name="email">
-                  {({ field }) => (
-                    <div>
-                      <TextField {...field} variant="outlined" size="small" label="Correo Electrónico" fullWidth/>
-                      <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
+                      <ErrorMessage name="lastname" component="div" style={{ color: 'red' }} />
                     </div>
                   )}
                 </Field>

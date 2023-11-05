@@ -1,9 +1,7 @@
 package com.dh.canchas365.service.location;
 
-import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.dto.location.CityCreateDTO;
 import com.dh.canchas365.dto.location.CityDTO;
-import com.dh.canchas365.model.PlayingField;
 import com.dh.canchas365.model.location.City;
 import com.dh.canchas365.model.location.State;
 import com.dh.canchas365.repository.location.CityRepository;

@@ -9,8 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SportDTO {
+public class CategoryDto {
     private Long id;
-
-    private String name;
+    private String title;
+    private String description;
+    private String url;
 }
