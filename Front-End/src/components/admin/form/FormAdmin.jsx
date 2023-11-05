@@ -121,7 +121,7 @@ export default function FormAdmin() {
 
                 {
                     formik.touched.category && formik.errors.category && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.category?.id}</span>
+                        <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
                     )
                 }
                 <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
