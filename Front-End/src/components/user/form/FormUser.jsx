@@ -19,11 +19,28 @@ const FormUser = () => {
     password: Yup.string().required('La contraseña es requerida').min(6, 'La contraseña debe tener al menos 6 caracteres'),
   });
 
-  
-  const onSubmit = (values) => {
-    console.log(values);
+
+  const onSubmit = async (values) => {
+    try {
+      const response = await fetch('/usuarios/crear', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        console.log('Usuario creado exitosamente');
+      } else {
+        console.error('Fallo al crear el usuario');
+      }
+    } catch (error) {
+      console.error('Ocurrió un error:', error);
+    }
   };
-  
+
+
 
   return (
     <Container maxWidth="md">
