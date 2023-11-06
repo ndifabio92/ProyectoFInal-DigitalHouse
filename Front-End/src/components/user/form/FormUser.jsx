@@ -24,7 +24,7 @@ const FormUser = () => {
 
   
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, { resetForm }) => {
     try {
       const response = await fetch('http://localhost:8080/user/signup' ,  {
         method: 'POST',
@@ -37,6 +37,7 @@ console.log(values);
 
       if (response.ok) {
         console.log('Usuario creado exitosamente');
+        resetForm();
       
       } 
       
@@ -107,6 +108,7 @@ console.log(values);
             </div>
 
             <Button variant="contained" type="submit">Registrarse</Button>
+            
           </Form>
         )}
       </Formik>
