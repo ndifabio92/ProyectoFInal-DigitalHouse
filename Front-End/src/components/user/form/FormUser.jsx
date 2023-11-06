@@ -3,8 +3,14 @@ import { Button, Container, TextField } from "@mui/material";
 import styles from './styles.module.css';
 import { validationSchemaUser as validationSchema } from "../../../validations/ValidationSchemaUser"
 import Swal from 'sweetalert2';
+import useFetchDataApi from '../../../hooks/useFetchDataApi';
+import { ENDPOINTS } from '../../../constants/endpoints';
+import { METHODS } from '../../../constants/methods';
+import Loading from '../../loading/Loading';
+import { useEffect } from 'react';
 
 const FormUser = () => {
+  const { data, isLoading, error, fetchData } = useFetchDataApi();
 
   const initialValues = {
     username: '',
@@ -14,108 +20,88 @@ const FormUser = () => {
     roles: ["USER"]
   };
 
-
-  const onSubmit = async (values, { resetForm }) => {
-    try {
-      const response = await fetch('http://localhost:8080/user/signup' ,  {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: 'Fallo la creacion',
+        icon: 'error',
       });
-      
-const data = await response.json()
-console.log(data);
-
-
-
-      if (response.ok) {
-        resetForm();
-        Swal.fire({
-          title: 'Usuario creado exitosamente',
-          icon: 'warning',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Confirmar',
-      }).then(() => {
-        console.log('Usuario creado exitosamente');
-    }) 
-  } 
-      
-      else {
-        console.error('Fallo al crear el usuario');
-      }
-    } catch (error) {
-      console.error('Ocurrió un error:', error);
     }
-  };
-
+    if (data) {
+      Swal.fire({
+        title: 'Usuario creado exitosamente',
+        icon: 'success',
+      });
+    }
+  }, [data, error])
 
 
   return (
     <Container maxWidth="md">
-    <div>
-    <h1>Crear Usuario</h1>
-      <Formik 
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit} 
-      >
-        {() => (
-          <Form className={`${styles.form}` }>
+      <div>
+        <h1>Crear Usuario</h1>
+        {isLoading ? <Loading /> :
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={async (values) => await fetchData(ENDPOINTS.USER_CREATE, METHODS.POST, values)}
+          >
+            {() => (
+              <Form className={`${styles.form}`}>
 
-            <div>
-              <Field name="username">
-                  {({ field }) => (
-                    <div>
-                      <TextField {...field} variant="outlined" size="small" label="Username (email)" fullWidth/>
-                      <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
-                    </div>
-                  )}
-                </Field>
-            </div>
+                <div>
+                  <Field name="username">
+                    {({ field }) => (
+                      <div>
+                        <TextField {...field} variant="outlined" size="small" label="Username (email)" fullWidth />
+                        <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
+                      </div>
+                    )}
+                  </Field>
+                </div>
 
-            <div>
-              <Field name="name">
-                  {({ field }) => (
-                    <div>
-                      <TextField {...field} variant="outlined" size="small" label="Nombre" fullWidth/>
-                      <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
-                    </div>
-                  )}
-                </Field>
-            </div>
+                <div>
+                  <Field name="name">
+                    {({ field }) => (
+                      <div>
+                        <TextField {...field} variant="outlined" size="small" label="Nombre" fullWidth />
+                        <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
+                      </div>
+                    )}
+                  </Field>
+                </div>
 
-            <div>
-              <Field name="lastname">
-                  {({ field }) => (
-                    <div>
-                      <TextField {...field} variant="outlined" size="small" label="Apellido" fullWidth/>
-                      <ErrorMessage name="lastname" component="div" style={{ color: 'red' }} />
-                    </div>
-                  )}
-                </Field>
-            </div>
+                <div>
+                  <Field name="lastname">
+                    {({ field }) => (
+                      <div>
+                        <TextField {...field} variant="outlined" size="small" label="Apellido" fullWidth />
+                        <ErrorMessage name="lastname" component="div" style={{ color: 'red' }} />
+                      </div>
+                    )}
+                  </Field>
+                </div>
 
-            <div>
-            <Field name="password">
-                  {({ field }) => (
-                    <div>
-                      <TextField {...field} variant="outlined" size="small" label="Contraseña" type="password" fullWidth/>
-                      <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
-                    </div>
-                  )}
-                </Field>
-            </div>
+                <div>
+                  <Field name="password">
+                    {({ field }) => (
+                      <div>
+                        <TextField {...field} variant="outlined" size="small" label="Contraseña" type="password" fullWidth />
+                        <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
+                      </div>
+                    )}
+                  </Field>
+                </div>
 
-            <Button variant="contained" type="submit">Registrarse</Button>
-            
-          </Form>
-        )}
-      </Formik>
-    </div>
+                <Button variant="contained" type="submit">Registrarse</Button>
+
+              </Form>
+            )}
+          </Formik>
+        }
+      </div>
     </Container>
   )
 }
 
-export default FormUser
+export default FormUser;
