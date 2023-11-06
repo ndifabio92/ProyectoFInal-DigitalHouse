@@ -1,11 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Button, Container, TextField } from "@mui/material";
-import * as Yup from 'yup';
 import styles from './styles.module.css';
-
+import { validationSchemaUser as validationSchema } from "../../../validations/ValidationSchemaUser"
+import Swal from 'sweetalert2';
 
 const FormUser = () => {
-
 
   const initialValues = {
     username: '',
@@ -15,14 +14,6 @@ const FormUser = () => {
     roles: ["USER"]
   };
 
-  const validationSchema = Yup.object().shape({
-    username: Yup.string().required('El username es requerido'),
-    name: Yup.string().required('El nombre es requerido'),
-    lastname: Yup.string().required('El apellido es requerido'),
-    password: Yup.string().required('La contraseña es requerida').min(6, 'La contraseña debe tener al menos 6 caracteres'),
-  });
-
-  
 
   const onSubmit = async (values, { resetForm }) => {
     try {
@@ -36,10 +27,16 @@ const FormUser = () => {
 console.log(values);
 
       if (response.ok) {
-        console.log('Usuario creado exitosamente');
         resetForm();
-      
-      } 
+        Swal.fire({
+          title: 'Usuario creado exitosamente',
+          icon: 'warning',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Confirmar',
+      }).then(() => {
+        console.log('Usuario creado exitosamente');
+    }) 
+  } 
       
       else {
         console.error('Fallo al crear el usuario');
@@ -67,7 +64,7 @@ console.log(values);
               <Field name="username">
                   {({ field }) => (
                     <div>
-                      <TextField {...field} variant="outlined" size="small" label="Username" fullWidth/>
+                      <TextField {...field} variant="outlined" size="small" label="Username (email)" fullWidth/>
                       <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
                     </div>
                   )}
