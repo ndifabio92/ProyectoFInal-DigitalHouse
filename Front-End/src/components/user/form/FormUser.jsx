@@ -24,7 +24,11 @@ const FormUser = () => {
         },
         body: JSON.stringify(values),
       });
-console.log(values);
+      
+const data = await response.json()
+console.log(data);
+
+
 
       if (response.ok) {
         resetForm();
