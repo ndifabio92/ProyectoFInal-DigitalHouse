@@ -8,5 +8,6 @@ export const ENDPOINTS = {
     SPORT: 'sport',
     CITY: 'city',
     CATEGORY: 'category',
-    USER_CREATE: 'user/signup'
+    USER_CREATE: 'user/signup',
+    USER_SIGN_IN: 'user/signin'
 }
