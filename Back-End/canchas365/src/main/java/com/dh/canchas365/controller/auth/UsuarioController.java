@@ -40,6 +40,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/crear")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> crearUsuario(@Valid @RequestBody CrearUsuarioDTO crearUsuarioDTO){
 
         Set<Rol> roles = crearUsuarioDTO.getRoles().stream()
