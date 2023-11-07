@@ -7,6 +7,7 @@ import com.dh.canchas365.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class CategoryController extends CustomFieldException {
     @Autowired
     private CategoryService service;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Category category, BindingResult bindingResult){
         try{
@@ -38,6 +40,7 @@ public class CategoryController extends CustomFieldException {
         return service.getAll();
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id){
         try {
@@ -52,6 +55,7 @@ public class CategoryController extends CustomFieldException {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Category category, @PathVariable Long id, BindingResult bindingResult){
         try {
@@ -70,6 +74,7 @@ public class CategoryController extends CustomFieldException {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {

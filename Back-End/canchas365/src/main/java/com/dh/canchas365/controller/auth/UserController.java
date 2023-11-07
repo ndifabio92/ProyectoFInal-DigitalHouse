@@ -83,7 +83,6 @@ public class UserController extends CustomFieldException {
         }
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/signin")
     public ResponseEntity<?> getUsuario(@RequestBody LoginAttemp loginAttemp){
         try {
