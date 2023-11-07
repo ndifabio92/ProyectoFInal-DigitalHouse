@@ -2,7 +2,7 @@ import Container from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useForm } from '../../../hooks/useForm';
 import SelectInput from '../../selectinput/SelectInput';
-import Datepicker from '../../datepicker/datepicker';
+import Datepicker from '../../datepicker/Datepicker';
 
 
 const SearchBar = () => {

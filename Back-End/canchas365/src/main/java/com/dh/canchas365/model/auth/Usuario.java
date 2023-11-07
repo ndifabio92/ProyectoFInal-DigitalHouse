@@ -4,6 +4,7 @@ import com.dh.canchas365.model.auth.Rol;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "usuario")
+@Table(name = "user")
 public class Usuario implements Serializable {
 
     @Id
@@ -26,15 +27,20 @@ public class Usuario implements Serializable {
     private Long id;
 
     @Email
-    @NotBlank
-    @Size(max = 80)
-    private String email;
-
-    @NotBlank
-    @Size(max = 30)
+    @NotEmpty(message = "El nombre de usuario es obligatorio")
+    @Column(length = 80, nullable = false, unique = true)
     private String username;
 
-    @NotBlank
+    @Column(length = 40, nullable = false)
+    @NotEmpty(message = "El nombre es obligatoria")
+    private String name;
+
+    @Column(length = 40, nullable = false)
+    @NotEmpty(message = "El apellido es obligatoria")
+    private String lastname;
+
+    @Column(length = 200, nullable = false)
+    @NotEmpty(message = "La contraseña es obligatoria")
     private String password;
 
     /*@OneToOne (cascade = CascadeType.ALL)
@@ -42,6 +48,6 @@ public class Usuario implements Serializable {
     private Operador operador;*/
 
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = Rol.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @JoinTable(name = "user_rol", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_rol"))
     private Set<Rol> roles;
 }

@@ -1,8 +1,12 @@
 export const ENDPOINTS = {
     CLUB: 'club',
     PLAYINGFIELD: 'playingField',
-    ADDRESS: 'adress',
+    ADDRESS: 'address',
     RECOMMENDED: 'club/recommended',
     RANDOM: 'club/random',
-    IMAGES:'image/club'
+    IMAGES: 'image/club',
+    SPORT: 'sport',
+    CITY: 'city',
+    CATEGORY: 'category',
+    USER_CREATE: 'user/signup'
 }

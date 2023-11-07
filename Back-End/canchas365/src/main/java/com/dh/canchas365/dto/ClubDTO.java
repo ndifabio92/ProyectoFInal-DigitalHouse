@@ -24,4 +24,6 @@ public class ClubDTO {
 
     private AddressDTO address;
 
+    private CategoryDto category;
+
 }

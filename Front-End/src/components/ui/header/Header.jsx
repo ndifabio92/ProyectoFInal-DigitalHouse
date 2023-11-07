@@ -9,11 +9,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate} from 'react-router-dom'
 
 
 const pages = ['Crear cuenta', 'Iniciar sesión'];
 
 const Header = () => {
+
+  const navigate = useNavigate()
   
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -21,7 +24,15 @@ const Header = () => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (page) => {
+    if(page === 'Crear cuenta' ){
+      navigate("/signup")
+    } 
+    if(page === 'Iniciar sesión' ){
+      navigate("/signin")
+    } 
+
+    
     setAnchorElNav(null);
   };
 
@@ -69,7 +80,7 @@ const Header = () => {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={ () => handleCloseNavMenu(page) }
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -108,7 +119,8 @@ const Header = () => {
             >
               {
                 pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  
+                  <MenuItem key={page} onClick={ () => handleCloseNavMenu(page) }>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))

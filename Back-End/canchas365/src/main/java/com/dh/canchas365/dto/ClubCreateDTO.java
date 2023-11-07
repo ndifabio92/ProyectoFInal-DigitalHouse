@@ -27,5 +27,7 @@ public class ClubCreateDTO {
 
     private AddressDTO address;
 
+    private CategoryDto category;
+
     private Set<ImageDTO> images;
 }

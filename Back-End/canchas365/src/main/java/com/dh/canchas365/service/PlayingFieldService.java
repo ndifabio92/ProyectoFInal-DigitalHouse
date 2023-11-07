@@ -1,14 +1,13 @@
 package com.dh.canchas365.service;
 
-import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
+import com.dh.canchas365.model.Category;
 import com.dh.canchas365.model.Club;
 import com.dh.canchas365.model.PlayingField;
-import com.dh.canchas365.model.Sport;
 import com.dh.canchas365.repository.ClubRepository;
 import com.dh.canchas365.repository.PlayingFieldRepository;
-import com.dh.canchas365.repository.SportRepository;
+import com.dh.canchas365.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class PlayingFieldService {
     private ClubRepository clubRepository;
 
     @Autowired
-    private SportRepository sportRepository;
+    private CategoryRepository categoryRepository;
 
     public PlayingFieldDTO create(PlayingFieldDTO dto) throws ResourceNotFoundException {
         PlayingField playingField = new PlayingField();
@@ -41,15 +40,15 @@ public class PlayingFieldService {
             throw new ResourceNotFoundException("No existe un club con el id "+dto.getIdClub());
         }
 
-        Optional<Sport> optionalSport = sportRepository.findById(dto.getSport().getId());
+        Optional<Category> optionalSport = categoryRepository.findById(dto.getCategory().getId());
         if(optionalSport.isPresent()){
-            playingField.setSport(optionalSport.get());
+            playingField.setCategory(optionalSport.get());
         }
         else{
-            throw new ResourceNotFoundException("No existe un deporte con el id "+dto.getSport().getId());
+            throw new ResourceNotFoundException("No existe un deporte con el id "+dto.getCategory().getId());
         }
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(playingFieldRepository.save(playingField),PlayingFieldDTO.class);
+        return mapper.map(playingFieldRepository.save(playingField), PlayingFieldDTO.class);
     }
 
     public PlayingField updatePlayingField(PlayingField playingField){

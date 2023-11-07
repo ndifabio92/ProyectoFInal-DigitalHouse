@@ -20,7 +20,7 @@ public class ImagesService {
         ModelMapper mapper = new ModelMapper();
         List<ImageDTO> imageDTOS = new ArrayList<>();
         for (Images im: imagesRepository.getImagesByClub(id)){
-            imageDTOS.add(mapper.map(im,ImageDTO.class));
+            imageDTOS.add(mapper.map(im, ImageDTO.class));
         }
         return imageDTOS;
     }
