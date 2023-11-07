@@ -1,23 +1,22 @@
 import { Button, Container, FormControlLabel, MenuItem, Switch, TextField} from "@mui/material";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
-import { useEffect } from 'react';
-import useFetchDataApi from '../../../hooks/useFetchDataApi'
-import Loading from '../../loading/Loading'
+import useFetchDataApi from "../../../hooks/useFetchDataApi";
 import { METHODS } from "../../../constants/methods";
+import Loading from "../../loading/Loading";
+
 
 const FormAdmin = () => {
 
-    const { data: categories, isLoading: isLoadingCategories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+    const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
-    const { data: cities, isLoading: isLoadingCities} = useFetchApi(`${ENDPOINTS.CITY}/list`);
+    const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}/list`);
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
-
 
     const initialValues = {
         name: '', phone_number: '', recommended: false,
@@ -34,161 +33,184 @@ const FormAdmin = () => {
         images: []
     }
 
-    useEffect(() => {
-        if (error) {
-          Swal.fire({
-            title: 'Fallo la creacion',
-            icon: 'error',
-          });
+    const isComplete = (values) => {
+        if (
+            values.name != '' &&
+            values.category.id != '' &&
+            values.phone_number != '' &&
+            values.address.street != '' &&
+            values.address.number != '' &&
+            values.address.city.id != ''
+        ){
+            return true 
         }
-        if (data) {
-          Swal.fire({
-            title: 'Usuario creado exitosamente',
-            icon: 'success',
-          });
+        else{
+            return false
         }
-      }, [data, error])
+    };
 
+    const formik = useFormik({
+        initialValues,
+        validationSchema
+    });
+
+    
+    const submitForm = async (values) => {
+
+        await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)
+
+                if (error){
+                    Swal.fire({
+                        title: error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(error)
+                    }
+                    )
+                }
+                else{
+                    Swal.fire({
+                        title: 'Club agregado con éxito',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
+                } 
+        
+    }
 
     return (
         
         <Container maxWidth="md">
 
-            {(isLoading || isLoadingCategories || isLoadingCities) ? <Loading /> :
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={async (values) => await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)}
-                >
-                    {() => (
-                    
-                        <Form  className={`${styles.form}` }>
+        {(isLoading || isLoadingCategories || isLoadingCities) ? <Loading /> :
+            
+            <form onSubmit={(e) => { 
+                e.preventDefault();
+                if(isComplete(formik.values)){
+                    submitForm(formik.values)
+                }
+                else{
+                    Swal.fire({
+                        title: 'Debe completar todos los campos del formulario',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }) 
+                }
+            }}  className={`${styles.form}` }>
+           
+                {
+                    formik.touched.name && formik.errors.name && (
+                        <span style={{ color: 'red' }}>{formik.errors.name}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Nombre" type="text" name="name" className="input-background"
+                    value={formik.values.name}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+
+
+                {
+                    formik.touched.category && formik.errors.category && (
+                        <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
+                    value={formik.values.category.id}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur}>
+                    {categories?.map((category) => (
+                        <MenuItem key={category.id} value={category.id}>
+                            {category.title}
+                        </MenuItem>
+                    ))}
+                </TextField>
+
+
+                {
+                    formik.touched.phone_number && formik.errors.phone_number && (
+                        <span style={{ color: 'red' }}>{formik.errors.phone_number}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Telefono" type="text" name="phone_number" className="input-background"
+                    value={formik.values.phone_number}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
-                                <Field name="name">
-                                {({ field }) => (
-                                    <div>
-                                        <TextField {...field} variant="outlined" size="small" label="Nombre" type="text" name="name" fullWidth className="input-background"/>
-                                        <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
-                                    </div>
-                                )}
-                                </Field>
-                        
-                          
-                                <Field name="category.id">
-                                    {({ field }) => (
-                                        <div>
-                                            <TextField {...field} variant="outlined" size="small" label="Categoría" select name="category.id" fullWidth className="input-background">
-                                                {categories?.map((category) => (
-                                                    <MenuItem key={category.id} value={category.id}>
-                                                        {category.title}
-                                                    </MenuItem>
-                                                ))}
-                                            </TextField>
-                                            <ErrorMessage name="category.id" component="div" style={{ color: 'red' }} />
-                                        </div>
-                                    )}
-                                </Field>
-                         
+              
+                {
+                    formik.touched.address?.street && formik.errors.address?.street && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Calle" type="text" name="address.street" className="input-background" 
+                    value={formik.values.address?.street}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+
+                {
+                    formik.touched.address?.number && formik.errors.address?.number && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.number}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Numero" type="number" name="address.number" className="input-background" 
+                    value={formik.values.address?.number}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+
+                {
+                    formik.touched.address?.floor && formik.errors.address?.floor && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.floor}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Piso" type="number" name="address.floor" className="input-background" 
+                    value={formik.values.address?.floor}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+
+                {
+                    formik.touched.address?.apartment && formik.errors.address?.apartment && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
+                    )
+                }
+                <TextField variant="outlined" size="small" label="Apartamento" type="text" name="address.apartment" className="input-background" 
+                    value={formik.values.address?.apartment}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                
+
+                {
+                    formik.touched.address?.city && formik.errors.address?.city && (
+                        <span style={{ color: 'red' }}>{formik.errors.address?.city?.id}</span>
+                    )
+                }
+                 <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
+                    value={formik.values.address?.city?.id}
+                    onChange={formik.handleChange} onBlur={formik.handleBlur}>
+                    {cities?.map((city) => (
+                        <MenuItem key={city.id} value={city.id}>
+                            {city.name}
+                        </MenuItem>
+                    ))}
+                </TextField>
 
 
-                         
-                                <Field name="phone_number">
-                                {({ field }) => (
-                                    <div>
-                                        <TextField {...field} variant="outlined" size="small" label="Telefono" type="text" name="phone_number" fullWidth />
-                                        <ErrorMessage name="phone_number" component="div" style={{ color: 'red' }} />
-                                    </div>
-                                )}
-                                </Field>
-                       
-                            
-                        
-                                <Field name="address.street">
-                                {({ field }) => (
-                                    <div>
-                                        <TextField {...field} variant="outlined" size="small" label="Calle" type="text" name="address.street" fullWidth />
-                                        <ErrorMessage name="address.street" component="div" style={{ color: 'red' }} />
-                                    </div>
-                                )}
-                                </Field>
-                         
-        
-                         
-                                <Field name="address.number">
-                                {({ field }) => (
-                                    <div>
-                                        <TextField {...field} variant="outlined" size="small" label="Número" type="number" name="address.number" fullWidth/>
-                                        <ErrorMessage name="address.number" component="div" style={{ color: 'red' }} />
-                                    </div>
-                                )}
-                                </Field>
-                          
+                {
+                    formik.touched.recommended && formik.errors.recommended && (
+                        <span style={{ color: 'red' }}>{formik.errors.recommended}</span>
+                    )
+                }
+                    <FormControlLabel labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background"
+                        checked={formik.values.recommended}
+                        onChange={formik.handleChange} onBlur={formik.handleBlur} />}
+                    />
 
-                     
-                                <Field name="address.floor">
-                                {({ field }) => (
-                                    <div>
-                                        <TextField {...field} variant="outlined" size="small" label="Piso" type="number" name="address.floor" fullWidth />
-                                        <ErrorMessage name="address.floor" component="div" style={{ color: 'red' }} />
-                                    </div>
-                                )}
-                                </Field>
-                      
+                {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
-                      
-                                <Field name="address.apartment">
-                                {({ field }) => (
-                                    <div>
-                                        <TextField {...field} variant="outlined" size="small" label="Piso" type="text" name="address.apartment" fullWidth />
-                                        <ErrorMessage name="address.apartment" component="div" style={{ color: 'red' }} />
-                                    </div>
-                                )}
-                                </Field>
-                       
-                      
-                                <Field name="address.city.id">
-                                    {({ field }) => (
-                                        <div>
-                                            <TextField {...field} variant="outlined" size="small" label="Ciudad" select name="address.city.id" fullWidth >
-                                                {cities?.map((city) => (
-                                                    <MenuItem key={city.id} value={city.id}>
-                                                        {city.name}
-                                                    </MenuItem>
-                                                ))}
-                                            </TextField>
-                                            <ErrorMessage name="address.city.id" component="div" style={{ color: 'red' }} />
-                                        </div>
-                                    )}
-                                </Field>
-                          
-
-                            
-                                <Field name="recommended">
-                                    {({ field }) => (
-                                        <div>
-                                            <FormControlLabel {...field} labelPlacement="start" label="Recomendado" control={<Switch label="Recomandado" name="recommended" className="input-background"/>}/>
-                                            <ErrorMessage name="recommended" component="div" style={{ color: 'red' }} />
-                                        </div>
-                                    )}
-                                </Field>
-                        
-
-                            {/* 
-                                <Field name="address.city.id">
-                                    {({ field }) => (
-                                        <div>
-                                            <TextField {...field} variant="outlined" size="small" type="file" inputProps={{ multiple: true }} name="files" /> 
-                                        </div>
-                                    )}
-                                </Field>
-                            */}
-
-                            <Button variant="contained" type="submit">Agregar Club</Button>
-                    
-                        </Form>
-                    )}
-                </Formik>
-            }
+                <Button variant="contained" type="submit">Agregar Club</Button>
+            </form>
+        }
         </Container>
     )
 }

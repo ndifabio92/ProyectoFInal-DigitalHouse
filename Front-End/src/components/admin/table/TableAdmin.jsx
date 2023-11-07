@@ -11,10 +11,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
-import { ENDPOINTS } from '../../../constants/endpoints';
+import {ENDPOINTS} from '../../../constants/endpoints'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { METHODS } from '../../../constants/methods';
+import {METHODS}  from '../../../constants/methods'
 import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
@@ -36,24 +36,8 @@ const TableAdmin = () => {
         }
     }, [data]);
 
-    useEffect(() => {
-        if (deleteError) {
-          Swal.fire({
-            title: 'Error al eliminar el Club',
-            icon: 'error',
-          });
-        }
-        if (deleteData) {
-          Swal.fire({
-            title: 'Club eliminado con éxito',
-            icon: 'success',
-          });
-        }
-      }, [deleteData, deleteError])
-
-
-    
-    const handleDelete = (id) => {
+    const handleDelete =  (id) => {
+        console.log(id)
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
             icon: 'warning',
@@ -62,15 +46,24 @@ const TableAdmin = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirmar',
             cancelButtonText: 'Cancelar'
-        }).then((result) => {
+        }).then( async (result) => {
+            console.log(result.isConfirmed)
             if (result.isConfirmed) {
-                async () => await fetchData(ENDPOINTS.CLUB, METHODS.DELETE, id)
-                if (deleteData) {
-                    console.log('Club eliminado con éxito');
-                    setClubs(clubs.filter((club) => club.id !== id));
+                await fetchData(ENDPOINTS.CLUB, METHODS.DELETE, id)
+                if (deleteError) {
+                    console.error('Error al eliminar el club:', error)
+                    Swal.fire({
+                        title: 'Error al eliminar el Club',
+                        icon: 'error',
+                      });
                 } 
                 else {
-                    console.error('Error al eliminar el club:', error);
+                    console.log('Club eliminado con éxito');
+                    Swal.fire({
+                        title: 'Club eliminado con éxito',
+                        icon: 'success',
+                      });
+                    setClubs(clubs.filter((club) => club.id !== id));
                 }
             }      
         })
