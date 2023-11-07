@@ -14,14 +14,17 @@ import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { METHODS } from '../../../constants/methods';
+import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
 
 const TableAdmin = () => {
 
     
-
     const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
+
+    const { data: deleteData, isLoading: deleteIsloading, error: deleteError, fetchData } = useFetchDataApi();
 
     const navigate = useNavigate();
 
@@ -32,6 +35,22 @@ const TableAdmin = () => {
             setClubs(data)
         }
     }, [data]);
+
+    useEffect(() => {
+        if (deleteError) {
+          Swal.fire({
+            title: 'Error al eliminar el Club',
+            icon: 'error',
+          });
+        }
+        if (deleteData) {
+          Swal.fire({
+            title: 'Club eliminado con éxito',
+            icon: 'success',
+          });
+        }
+      }, [deleteData, deleteError])
+
 
     
     const handleDelete = (id) => {
@@ -45,29 +64,15 @@ const TableAdmin = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                try {
-                    const response = fetch(`http://localhost:8080/club/${id}`, {
-                    method: 'DELETE',
-                    });
-                    if (response) {
-                        console.log('Club eliminado con éxito');
-                        setClubs(clubs.filter((club) => club.id !== id));
-                    
-                    } else {
-                        console.error('Error al eliminar el club:', error);
-                    }
-
-                    Swal.fire(
-                        'Eliminado',
-                        '',
-                        'success'
-                    )
-
-                } catch (error) {
-                    console.error('Error al realizar la solicitud DELETE:', error);
+                async () => await fetchData(ENDPOINTS.CLUB, METHODS.DELETE, id)
+                if (deleteData) {
+                    console.log('Club eliminado con éxito');
+                    setClubs(clubs.filter((club) => club.id !== id));
+                } 
+                else {
+                    console.error('Error al eliminar el club:', error);
                 }
-                
-            }
+            }      
         })
     }
    
@@ -81,7 +86,7 @@ const TableAdmin = () => {
     return (
         <Box sx={{ width: "100%" }}>
             {
-                isLoading ? <Loading /> :
+                isLoading || deleteIsloading ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
                         <TableContainer component={Paper}>
                             {clubs &&
@@ -99,7 +104,7 @@ const TableAdmin = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {clubs.map((row) => (
+                                        {clubs?.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
