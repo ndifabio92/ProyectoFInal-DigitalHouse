@@ -13,12 +13,16 @@ import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import { useState, useEffect } from 'react';
+import {METHODS}  from '../../../constants/methods'
+import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
 
 const TablePlayfields = ({idClub}) => {
 
     const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`);
+
+    const { data: deleteData, isLoading: deleteIsloading, error: deleteError, fetchData } = useFetchDataApi();
 
     const [canchas, setCanchas] = useState([])
 
@@ -30,6 +34,7 @@ const TablePlayfields = ({idClub}) => {
 
     
     const handleDelete = (id) => {
+
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
             icon: 'warning',
@@ -38,29 +43,29 @@ const TablePlayfields = ({idClub}) => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirmar',
             cancelButtonText: 'Cancelar'
-        }).then((result) => {
+        }).then(async (result) => {
+
             if (result.isConfirmed) {
-                try {
-                    const response = fetch(`http://localhost:8080/playingField/${id}`, {
-                    method: 'DELETE',
-                    });
-                    if (response) {
-                        console.log('Club eliminado con éxito');
-                        setCanchas(canchas.filter((cancha) => cancha.id !== id));
+                await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.DELETE, id)
+    
+                    if (deleteError) {
+                        console.error('Error al eliminar la cancha:', error);
+                        Swal.fire({
+                            title: 'Error al eliminar la Cancha',
+                            icon: 'error',
+                          });
+                       
+                       
                     
-                    } else {
-                        console.error('Error al eliminar el club:', error);
+                    } else { 
+                        console.log('Cancha eliminada con éxito');
+                        Swal.fire({
+                            title: 'Cancha eliminada con éxito',
+                            icon: 'success',
+                        });
+                        setCanchas(canchas.filter((cancha) => cancha.id !== id));
                     }
-
-                    Swal.fire(
-                        'Eliminado',
-                        '',
-                        'success'
-                    )
-
-                } catch (error) {
-                    console.error('Error al realizar la solicitud DELETE:', error);
-                }
+     
                 
             }
         })
@@ -74,7 +79,7 @@ const TablePlayfields = ({idClub}) => {
     return (
         <Box sx={{ width: "100%" }}>
             {
-                isLoading ? <Loading /> :
+               (isLoading || deleteIsloading) ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
                         <TableContainer component={Paper}>
                             {canchas &&

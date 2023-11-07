@@ -5,12 +5,16 @@ import styles from './styles.module.css';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
+import useFetchDataApi from "../../../hooks/useFetchDataApi";
+import { METHODS } from "../../../constants/methods";
+import Loading from "../../loading/Loading";
 
 
 const FormPlayfields = ({idClub}) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
+    const { data, isLoading, error, fetchData } = useFetchDataApi();
 
     const initialValues = {
         description: '', idClub: parseInt(idClub), 
@@ -36,19 +40,19 @@ const FormPlayfields = ({idClub}) => {
 
     const submitForm = async (values) => {
 
-        console.log(values)
+        await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.POST, values)
 
-            try {
-                const response = await fetch('http://localhost:8080/playingField', {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(values),
-                })
-                const data = await response.json()
+                if (error) {
+                    Swal.fire({
+                        title: error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(error)
+                    })
 
-                if (response.ok) {
+                } else {
                     Swal.fire({
                         title: 'Cancha agregada con éxito',
                         icon: 'warning',
@@ -57,25 +61,15 @@ const FormPlayfields = ({idClub}) => {
                     }).then(() => {
                        console.log("La Solicitur Post se envio correctamente")
                     }) 
-                } else {
-                    Swal.fire({
-                        title: data.error,
-                        icon: 'warning',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Confirmar',
-                    }).then(() => {
-                       console.log(data.error)
-                    })
                 }
-            } catch (error) {
-                console.log(error)
-            }
-        
+         
     }
 
     return (
         
         <Container maxWidth="md">
+
+        {(isLoading || isLoadingCategories) ? <Loading /> :
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
@@ -119,7 +113,7 @@ const FormPlayfields = ({idClub}) => {
 
                 <Button variant="contained" type="submit">Agregar Cancha</Button>
             </form>
-            
+        }   
         </Container>
     )
 }

@@ -37,7 +37,7 @@ const TableAdmin = () => {
     }, [data]);
 
     const handleDelete =  (id) => {
-        console.log(id)
+    
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
             icon: 'warning',
@@ -47,7 +47,7 @@ const TableAdmin = () => {
             confirmButtonText: 'Confirmar',
             cancelButtonText: 'Cancelar'
         }).then( async (result) => {
-            console.log(result.isConfirmed)
+        
             if (result.isConfirmed) {
                 await fetchData(ENDPOINTS.CLUB, METHODS.DELETE, id)
                 if (deleteError) {
