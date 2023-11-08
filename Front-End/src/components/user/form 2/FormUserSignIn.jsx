@@ -35,16 +35,13 @@ const FormUserSignIn = () => {
         title: "No existe el usuario",
         icon: "error",
       });
-      console.log(error);
     }
     if (data) {
-      console.log(data);
       storeData(data);
       Swal.fire({
         title: "Bienvenido/a!",
         icon: "success",
       });
-      sessionStorage.setItem("saludo", "hola");
     }
   }, [data, error]);
 

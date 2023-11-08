@@ -1,4 +1,4 @@
-import  { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
 const DataContext = createContext();
 
@@ -8,8 +8,8 @@ export const DataProvider = ({ children }) => {
   const [storedData, setStoredData] = useState(null);
 
   const storeData = (data) => {
-    // Guardar 'data' en el localStorage
-    localStorage.setItem('storedData', JSON.stringify(data));
+    // Guardar 'data.token' en el localStorage
+    localStorage.setItem("token", JSON.stringify(data));
     setStoredData(data);
   };
 
@@ -18,5 +18,7 @@ export const DataProvider = ({ children }) => {
     storeData,
   };
 
-  return <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>;
+  return (
+    <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
+  );
 };
