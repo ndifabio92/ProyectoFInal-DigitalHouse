@@ -56,18 +56,14 @@ public class CategoryController extends CustomFieldException {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Category category, @PathVariable Long id, BindingResult bindingResult){
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody Category category, BindingResult bindingResult){
         try {
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
-            Optional<Category> optional = service.findById(id);
-            if(optional.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).body(service.update(category,id));
-            } else {
-                return customResponseError("El id ingresado no existe", HttpStatus.NOT_FOUND);
-            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(service.update(category));
         }
         catch (Exception ex) {
             return customResponseError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
