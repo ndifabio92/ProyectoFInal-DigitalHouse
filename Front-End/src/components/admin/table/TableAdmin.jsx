@@ -19,7 +19,7 @@ import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
 
-const TableAdmin = () => {
+const TableAdmin = (handleChange) => {
 
     
     const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
@@ -69,10 +69,6 @@ const TableAdmin = () => {
         })
     }
    
-
-    const handleChange = (id) => {
-
-    }
 
     const handleView = (id) => navigate(`/admin/club/${id}`);
 
@@ -126,7 +122,7 @@ const TableAdmin = () => {
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(row.id)}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(1,row,'update')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

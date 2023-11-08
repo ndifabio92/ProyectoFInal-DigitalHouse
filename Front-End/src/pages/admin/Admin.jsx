@@ -29,9 +29,17 @@ const Admin = () => {
 
     const [value, setValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
+    const [club, setClub] = useState({});
+
+    const [action, setAction] = useState('create');
+
+    const handleChange = (newValue, club, action) => {
         setValue(newValue);
+        setClub (club)
+        setAction(action)
     };
+
+    
 
     return (
         <>
@@ -56,10 +64,10 @@ const Admin = () => {
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <TableAdmin  />
+                    <TableAdmin handleChange={handleChange} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormAdmin  />
+                    <FormAdmin action={action} club={club} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                     Item Three

@@ -10,7 +10,7 @@ import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 
 
-const FormAdmin = () => {
+const FormAdmin = (action, club) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
@@ -18,20 +18,67 @@ const FormAdmin = () => {
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = {
-        name: '', phone_number: '', recommended: false,
-        address: {
-            street: '',
-            number: '',
-            floor: '',
-            apartment: '',
-            city: {
-                id:'',
-            }, 
-        },
-        category: {id:''}, 
-        images: []
+    const initialValues = () =>{
+        if (action == 'update'){
+            return (
+            {
+                name: club.name, 
+                phone_number: club.phone_number, 
+                recommended: club.recommended,
+                address: {
+                    street: club.address.street,
+                    number: club.address.number,
+                    floor: club.address.floor,
+                    apartment: club.address.apartment,
+                    city: {
+                        id:club.address.city.id,
+                    }
+                },
+                category: {id:club.category.id}, 
+                images: club.images
+            }
+        )}
+
+        else return (
+            {
+            name: '', 
+            phone_number: '', 
+            recommended: false,
+            address: {
+                street: '',
+                number: '',
+                floor: '',
+                apartment: '',
+                city: {
+                    id:'',
+                }, 
+            },
+            category: {id:''}, 
+            images: []
+            }
+        )
     }
+
+    ////////////// continuar con esto y corregir labels
+
+    const labels = () => {
+        if(action == 'update'){
+            return ( 
+                {description: playfield.description,  
+                category: playfield.category.title}
+            )
+        }
+        else{
+            return ( 
+                {description: 'Descripción',  
+                category: 'Categoría'
+                }
+            )
+        }
+    }
+
+/////////////////////////////////////////////
+
 
     const isComplete = (values) => {
         if (
@@ -55,7 +102,7 @@ const FormAdmin = () => {
     });
 
     
-    const submitForm = async (values) => {
+    const submitFormCreate = async (values) => {
 
         await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)
 
@@ -83,6 +130,34 @@ const FormAdmin = () => {
         
     }
 
+    const submitFormUpdate = async (values) => {
+
+        await fetchData(ENDPOINTS.CLUB, METHODS.PUT, values)
+
+                if (error){
+                    Swal.fire({
+                        title: error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(error)
+                    }
+                    )
+                }
+                else{
+                    Swal.fire({
+                        title: 'Club modificado con éxito',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
+                } 
+        
+    }
+
     return (
         
         <Container maxWidth="md">
@@ -91,8 +166,11 @@ const FormAdmin = () => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(isComplete(formik.values)){
-                    submitForm(formik.values)
+                if(action == 'create' && isComplete(formik.values)){
+                    submitFormCreate(formik.values)
+                }
+                else if (action == 'update'){
+                    submitFormUpdate(formik.values)
                 }
                 else{
                     Swal.fire({

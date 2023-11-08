@@ -31,7 +31,7 @@ function CustomTabPanel(props) {
 
 const Playfields = () => {
 
-    const[playfield, setPlayfield] = useState('');
+    const[playfield, setPlayfield] = useState({});
 
     const [action, setAction] = useState('create');
 
