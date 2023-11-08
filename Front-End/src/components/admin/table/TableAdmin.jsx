@@ -19,8 +19,7 @@ import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
 
-const TableAdmin = (handleChange) => {
-
+const TableAdmin = ({ handleUpdate }) => {
     
     const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
 
@@ -35,6 +34,10 @@ const TableAdmin = (handleChange) => {
             setClubs(data)
         }
     }, [data]);
+
+    const modificar = (club, action) => {
+        handleUpdate(1, club, action)
+    }
 
     const handleDelete =  (id) => {
     
@@ -93,7 +96,7 @@ const TableAdmin = (handleChange) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {clubs?.map((row) => (
+                                        {clubs.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -122,7 +125,7 @@ const TableAdmin = (handleChange) => {
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(1,row,'update')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => modificar(row,'update')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

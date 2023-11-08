@@ -45,7 +45,7 @@ const Playfields = () => {
         navigate('/admin');
       };
 
-    const handleChange = (newValue, playfield, action ) => {
+    const handleChange = (event, newValue, playfield, action ) => {
         setValue(newValue)
         setPlayfield(playfield)
         setAction(action)

@@ -10,7 +10,7 @@ import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 
 
-const FormAdmin = (action, club) => {
+const FormAdmin = ({action, club}) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
@@ -59,25 +59,37 @@ const FormAdmin = (action, club) => {
         )
     }
 
-    ////////////// continuar con esto y corregir labels
 
     const labels = () => {
         if(action == 'update'){
             return ( 
-                {description: playfield.description,  
-                category: playfield.category.title}
+                {
+                    name: club.name, 
+                    phone_number: club.phone_number, 
+                    street: club.address.street,
+                    number: club.address.number,
+                    floor: club.address.floor,
+                    apartment: club.address.apartment,
+                    city: club.address.city.name,
+                    category: club.category.title
+                }
             )
         }
         else{
             return ( 
-                {description: 'Descripción',  
-                category: 'Categoría'
+                {
+                    name: 'Nombre', 
+                    phone_number: 'Teléfono' , 
+                    street: 'Calle',
+                    number: 'Número',
+                    floor: 'Piso',
+                    apartment: 'Departamento',
+                    city: 'Ciudad',
+                    category: 'Categoria'
                 }
             )
         }
     }
-
-/////////////////////////////////////////////
 
 
     const isComplete = (values) => {
@@ -187,7 +199,7 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.name}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Nombre" type="text" name="name" className="input-background"
+                <TextField variant="outlined" size="small" label= {labels.name} type="text" name="name" className="input-background"
                     value={formik.values.name}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
 
@@ -197,8 +209,8 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
-                    value={formik.values.category.id}
+                <TextField variant="outlined" size="small" label={labels.category} select name="category.id" className="input-background" 
+                    value={formik.values.category?.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {categories?.map((category) => (
                         <MenuItem key={category.id} value={category.id}>
@@ -213,7 +225,7 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.phone_number}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Telefono" type="text" name="phone_number" className="input-background"
+                <TextField variant="outlined" size="small" label={labels.phone_number} type="text" name="phone_number" className="input-background"
                     value={formik.values.phone_number}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -223,7 +235,7 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Calle" type="text" name="address.street" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.street} type="text" name="address.street" className="input-background" 
                     value={formik.values.address?.street}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -233,7 +245,7 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.number}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Numero" type="number" name="address.number" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.number} type="number" name="address.number" className="input-background" 
                     value={formik.values.address?.number}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -243,7 +255,7 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.floor}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Piso" type="number" name="address.floor" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.floor} type="number" name="address.floor" className="input-background" 
                     value={formik.values.address?.floor}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -253,7 +265,7 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Apartamento" type="text" name="address.apartment" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.apartment} type="text" name="address.apartment" className="input-background" 
                     value={formik.values.address?.apartment}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -263,7 +275,7 @@ const FormAdmin = (action, club) => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.city?.id}</span>
                     )
                 }
-                 <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
+                 <TextField variant="outlined" size="small" label={labels.city} select name="address.city.id" className="input-background" 
                     value={formik.values.address?.city?.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {cities?.map((city) => (
