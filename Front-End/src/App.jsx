@@ -1,13 +1,15 @@
 import './App.css';
+import { DataProvider } from './components/user/form 2/Context';
 import { Navigation } from './routes/Navigation';
-import { UserProvider } from "../../Front-End/src/components/user/form 2/UserContext"
+
 
 const App = () => {
   return (
-    <UserProvider> 
+      <DataProvider>
+
       <Navigation /> 
     
-    </UserProvider>
+      </DataProvider>
   );
 };
 
