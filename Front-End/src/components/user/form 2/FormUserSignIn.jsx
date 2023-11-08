@@ -1,89 +1,91 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Button, Container, TextField } from "@mui/material";
-import styles from './styles.module.css';
-import { validationSchemaUser as validationSchema } from "../../../validations/ValidationSchemaUser"
-import Swal from 'sweetalert2';
-import useFetchApi from '../../../hooks/useFetchDataApi';
-import { ENDPOINTS } from '../../../constants/endpoints';
-import { METHODS } from '../../../constants/methods';
-import Loading from '../../loading/Loading';
-import { useEffect } from 'react';
+import { useFormik } from "formik";
+import Swal from "sweetalert2";
+import Loading from "../../loading/Loading";
+import useFetchDataApi from "../../../hooks/useFetchDataApi";
+import { validationSchemaUser } from "../../../validations/ValidationSchemaUser";
+import styles from "./styles.module.css";
+import { useEffect } from "react";
+import { ENDPOINTS } from "../../../constants/endpoints";
+import { METHODS } from "../../../constants/methods";
 
 const FormUserSignIn = () => {
-  const { data, isLoading, error, fetchData } = useFetchApi();
+  const { data, isLoading, error, fetchData } = useFetchDataApi();
 
   const initialValues = {
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchemaUser,
+    onSubmit: (values) => {
+      fetchData(ENDPOINTS.USER_SIGN_IN, METHODS.POST, values);
+    },
+  });
 
   useEffect(() => {
     if (error) {
       Swal.fire({
-        title: 'No existe el usuario',
-        icon: 'error',
+        title: "No existe el usuario",
+        icon: "error",
       });
+      console.log(error);
     }
     if (data) {
       Swal.fire({
-        title: 'Bienvenido' ,
-        icon: 'success',
+        title: "Bienvenido/a!",
+        icon: "success",
       });
+      sessionStorage.setItem("saludo", "hola");
     }
-  }, [data, error])
-
-  
-
+  }, [data, error]);
 
   return (
     <Container maxWidth="md">
-      <div>
-        <h1>Inicio Sesión</h1>
-        {isLoading ? <Loading /> :
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={async (values) => await fetchData(ENDPOINTS.USER_SIGN_IN, METHODS.GET, values)}
-          >
-            {() => (
-              <Form className={`${styles.form}`}>
+      <h1>Iniciar sesión</h1>
 
-                
-                  <Field name="username">
-                    {({ field }) => (
-                      <div>
-                        <TextField {...field} variant="outlined" size="small" label="Username (email)" fullWidth 
-                        autoComplete="username"/>
-                        <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
-                      </div>
-                    )}
-                  </Field>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <form onSubmit={formik.handleSubmit} className={`${styles.form}`}>
+          <TextField
+            variant="outlined"
+            size="small"
+            label="Username (email)"
+            type="email"
+            name="username"
+            className="input-background"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.username && formik.errors.username && (
+            <span style={{ color: "red" }}>{formik.errors.username}</span>
+          )}
+          <TextField
+            variant="outlined"
+            size="small"
+            label="Password"
+            type="password"
+            name="password"
+            className="input-background"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <span style={{ color: "red" }}>{formik.errors.password}</span>
+          )}
 
-
-                <div>
-                  <Field name="password">
-                    {({ field }) => (
-                      <div>
-                        <TextField {...field} variant="outlined" size="small" label="Contraseña" type="password" fullWidth
-                        autoComplete="current-password" />
-                        <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
-                      </div>
-                    )}
-                  </Field>
-                </div>
-
-                <Button variant="contained" type="submit">Ingresar</Button>
-
-              </Form>
-            )}
-          </Formik>
-        }
-      </div>
+          <Button variant="contained" type="submit">
+            Iniciar sesión
+          </Button>
+        </form>
+      )}
     </Container>
-  )
-}
+  );
+};
 
-export default FormUserSignIn
-
-
-
+export default FormUserSignIn;
