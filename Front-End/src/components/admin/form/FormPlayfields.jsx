@@ -10,16 +10,46 @@ import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 
 
-const FormPlayfields = ({idClub}) => {
+const FormPlayfields = ({idClub, action, playfield }) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = {
-        description: '', idClub: parseInt(idClub), 
-        category: {id:''}, 
+    const initialValues = () => {
+        if(action == 'update'){
+            return ( 
+                {id:playfield.id,
+                description: playfield.description, 
+                idClub: playfield.idClub, 
+                category: playfield.category.id}
+            )
+        }
+        else{
+            return ( 
+                {description: '', 
+                idClub: parseInt(idClub), 
+                category: {id:''}}
+            )
+        }
     }
+
+    const labels = () => {
+        if(action == 'update'){
+            return ( 
+                {description: playfield.description,  
+                category: playfield.category.title}
+            )
+        }
+        else{
+            return ( 
+                {description: 'Descripción',  
+                category: 'Categoría'
+                }
+            )
+        }
+    }
+   
 
     const isComplete = (values) => {
         if (
@@ -38,7 +68,7 @@ const FormPlayfields = ({idClub}) => {
         validationSchema,
     });
 
-    const submitForm = async (values) => {
+    const submitFormCreate = async (values) => {
 
         await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.POST, values)
 
@@ -65,6 +95,34 @@ const FormPlayfields = ({idClub}) => {
          
     }
 
+    
+    const submitFormUpdate = async (playfield) => {
+
+        await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.PUT, playfield)
+
+                if (error) {
+                    Swal.fire({
+                        title: error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(error)
+                    })
+
+                } else {
+                    Swal.fire({
+                        title: 'Cancha modificada con éxito',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
+                }
+         
+    }
+
     return (
         
         <Container maxWidth="md">
@@ -73,8 +131,11 @@ const FormPlayfields = ({idClub}) => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(isComplete(formik.values)){
-                    submitForm(formik.values)
+                if(action == 'create' && isComplete(formik.values)){
+                    submitFormCreate(formik.values)
+                }
+                else if (action == 'update'){
+                    submitFormUpdate(formik.values)
                 }
                 else{
                     Swal.fire({
@@ -91,7 +152,7 @@ const FormPlayfields = ({idClub}) => {
                         <span style={{ color: 'red' }}>{formik.errors.description}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Nombre" type="text" name="description" className="input-background"
+                <TextField variant="outlined" size="small" label={labels.description} type="text" name="description" className="input-background"
                     value={formik.values.description}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
 
@@ -101,7 +162,7 @@ const FormPlayfields = ({idClub}) => {
                         <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.category} select name="category.id" className="input-background" 
                     value={formik.values.category.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {categories?.map((category) => (

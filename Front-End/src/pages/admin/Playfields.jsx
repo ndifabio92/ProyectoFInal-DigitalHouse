@@ -31,6 +31,10 @@ function CustomTabPanel(props) {
 
 const Playfields = () => {
 
+    const[playfield, setPlayfield] = useState('');
+
+    const [action, setAction] = useState('create');
+
     const {id} = useParams();
 
     const [value, setValue] = useState(0);
@@ -41,8 +45,10 @@ const Playfields = () => {
         navigate('/admin');
       };
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleChange = (newValue, playfield, action ) => {
+        setValue(newValue)
+        setPlayfield(playfield)
+        setAction(action)
     };
 
     return (
@@ -77,10 +83,10 @@ const Playfields = () => {
                 </Box>
                 
                 <CustomTabPanel value={value} index={0}>
-                    <TablePlayfields idClub={id} />
+                    <TablePlayfields idClub={id} handleChange={handleChange}  />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormPlayfields idClub={id} />
+                    <FormPlayfields idClub={id} action={action} playfield={playfield} />
                 </CustomTabPanel>
 
             </Container>

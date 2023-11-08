@@ -17,8 +17,7 @@ import {METHODS}  from '../../../constants/methods'
 import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
-
-const TablePlayfields = ({idClub}) => {
+const TablePlayfields = ({idClub, handleChange}) => {
 
     const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`);
 
@@ -72,10 +71,6 @@ const TablePlayfields = ({idClub}) => {
     }
    
 
-    const handleChange = (id) => {
-
-    }
-
     return (
         <Box sx={{ width: "100%" }}>
             {
@@ -109,7 +104,7 @@ const TablePlayfields = ({idClub}) => {
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(row.id)}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(1,row, 'update')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
