@@ -3,12 +3,13 @@ import { useFormik } from "formik";
 import Swal from "sweetalert2";
 import Loading from "../../loading/Loading";
 import useFetchDataApi from "../../../hooks/useFetchDataApi";
-import { validationSchemaUser } from "../../../validations/ValidationSchemaUser";
+import { validationSchemaUserSignIn as validationSchema } from "../../../validations/ValidationSchemaUserSignIn";
 import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { ENDPOINTS } from "../../../constants/endpoints";
 import { METHODS } from "../../../constants/methods";
 import { useDataContext } from "./Context";
+import { useNavigate } from "react-router-dom";
 
 const FormUserSignIn = () => {
   const { data, isLoading, error, fetchData } = useFetchDataApi();
@@ -20,14 +21,14 @@ const FormUserSignIn = () => {
 
   const formik = useFormik({
     initialValues,
-    validationSchemaUser,
+    validationSchema,
     onSubmit: (values) => {
       fetchData(ENDPOINTS.USER_SIGN_IN, METHODS.POST, values);
-      
     },
   });
 
   const { storeData } = useDataContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -42,6 +43,7 @@ const FormUserSignIn = () => {
         title: "Bienvenido/a!",
         icon: "success",
       });
+      navigate("/");
     }
   }, [data, error]);
 
