@@ -54,6 +54,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/user/signin").permitAll();
                     auth.requestMatchers("/user/signup").permitAll();
+
+                    auth.requestMatchers("/category/**","GET").permitAll();
+                    auth.requestMatchers("/city","GET").permitAll();
+                    auth.requestMatchers("/club/**","GET").permitAll();
+                    auth.requestMatchers("/playingField/**","GET").permitAll();
+                    auth.requestMatchers("/image","GET").permitAll();
+
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
                     // permito crear roles para crear los roles iniciales.. luego comentar
                     //auth.requestMatchers("/rol/create").permitAll();
