@@ -45,11 +45,16 @@ const Playfields = () => {
         navigate('/admin');
       };
 
-    const handleChange = (event, newValue, playfield, action ) => {
+    const handleChange = (event, newValue) => {
+        setValue(newValue)
+    };
+
+    const handleUpdate = (newValue, playfield, action) => {
+
         setValue(newValue)
         setPlayfield(playfield)
         setAction(action)
-    };
+
 
     return (
         <>
@@ -83,7 +88,7 @@ const Playfields = () => {
                 </Box>
                 
                 <CustomTabPanel value={value} index={0}>
-                    <TablePlayfields idClub={id} handleChange={handleChange}  />
+                    <TablePlayfields idClub={id} handleUpdate={handleUpdate}  />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <FormPlayfields idClub={id} action={action} playfield={playfield} />
