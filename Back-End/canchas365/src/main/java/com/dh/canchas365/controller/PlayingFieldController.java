@@ -23,8 +23,8 @@ public class PlayingFieldController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @Operation(summary = "Creacion de Cancha", description = "Creacion de Cancha")
-    @SecurityRequirement(name = "Bearer Authentication")
+//    @Operation(summary = "Creacion de Cancha", description = "Creacion de Cancha")
+//    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<?> createPlayingField(@RequestBody PlayingFieldDTO dto){
         try {
             return new ResponseEntity<PlayingFieldDTO>(playingFieldService.create(dto), HttpStatus.CREATED);
