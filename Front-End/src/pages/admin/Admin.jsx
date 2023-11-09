@@ -29,9 +29,21 @@ const Admin = () => {
 
     const [value, setValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
+    const [club, setClub] = useState({});
+
+    const [action, setAction] = useState('AGREGAR CLUB');
+
+    const handleChange = (event, newValue ) => {
         setValue(newValue);
     };
+
+    const handleUpdate = (newValue, club, action) => {
+        setClub (club)
+        setAction(action)
+        setValue(newValue);
+    };
+
+    
 
     return (
         <>
@@ -51,15 +63,15 @@ const Admin = () => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Listado de Clubes" />
-                        <Tab label="Agregar Club" />
+                        <Tab label={action} />
                         <Tab label="Item Three" />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <TableAdmin  />
+                    <TableAdmin handleUpdate={handleUpdate}/>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormAdmin  />
+                    <FormAdmin action={action} club={club} handleUpdate={handleUpdate} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                     Item Three

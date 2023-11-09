@@ -1,5 +1,6 @@
 package com.dh.canchas365.service;
 
+import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.Category;
@@ -24,6 +25,9 @@ public class PlayingFieldService {
 
     @Autowired
     private ClubRepository clubRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -52,6 +56,10 @@ public class PlayingFieldService {
     }
 
     public PlayingField updatePlayingField(PlayingField playingField){
+        Optional<Category> category = categoryService.findById(playingField.getCategory().getId());
+        Optional<Club> club = clubRepository.findById(playingField.getClub().getId());
+        playingField.setCategory(category.get());
+        playingField.setClub(club.get());
         return playingFieldRepository.save(playingField);
     }
 
