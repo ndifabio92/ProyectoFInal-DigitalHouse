@@ -8,6 +8,7 @@ import Detail from "../pages/product/Detail";
 import NotFound from "../pages/notFound/NotFound";
 import Playfields from "../pages/admin/Playfields";
 import UserSignIn from "../pages/user/UserSignIn";
+import UserProfile from "../pages/user/UserProfile";
 
 export const Navigation = () => {
   return (
@@ -20,6 +21,7 @@ export const Navigation = () => {
         <Route exact path="/admin/club/:id" element={<Playfields />} />
         <Route exact path="/signup" element={<User />} />
         <Route exact path="/signin" element={<UserSignIn />} />
+        <Route exact path="/userprofile" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

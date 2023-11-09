@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,7 +20,7 @@ const settings = ["Perfil", "Cerrar sesión"];
 const Header = () => {
   const logo = "./logoNaranjaNeg.png";
 
-  const { storedData } = useDataContext();
+  const { storedData, setStoredData } = useDataContext();
 
   const navigate = useNavigate();
 
@@ -37,7 +37,6 @@ const Header = () => {
     if (page === "Iniciar sesión") {
       navigate("/signin");
     }
-
     setAnchorElNav(null);
   };
 
@@ -49,14 +48,12 @@ const Header = () => {
   };
 
   const handleCloseUserMenu = (setting) => {
-    
-    if(setting == "Perfil"){
-      console.log("Aca redirigir a la pagina de usuario")
+    if (setting === "Perfil") {
+      navigate("/userprofile");
     }
-    if(setting == "Cerrar sesión"){
-      console.log("aca borrar local storage")
+    if (setting === "Cerrar sesión") {
+      navigate("/admin");
     }
-    
     setAnchorElUser(null);
   };
 
