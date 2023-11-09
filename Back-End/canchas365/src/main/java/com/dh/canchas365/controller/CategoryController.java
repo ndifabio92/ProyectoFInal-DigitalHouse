@@ -22,7 +22,7 @@ public class CategoryController extends CustomFieldException {
     @Autowired
     private CategoryService service;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Category category, BindingResult bindingResult){
         try{
@@ -55,7 +55,7 @@ public class CategoryController extends CustomFieldException {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Category category, BindingResult bindingResult){
         try {
@@ -70,14 +70,14 @@ public class CategoryController extends CustomFieldException {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             Optional<Category> optional = service.findById(id);
             if(optional.isPresent()) {
                 service.delete(id);
-                return customResponseError("Categoria Eliminada exitosamente", HttpStatus.OK);
+                return ResponseEntity.status(HttpStatus.OK).body("Categoria Eliminada exitosamente");
             } else {
                 return customResponseError("El id ingresado no existe", HttpStatus.NOT_FOUND);
             }

@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping()
 public class UserController extends CustomFieldException {
 
     @Autowired
@@ -43,7 +43,7 @@ public class UserController extends CustomFieldException {
         return "Hello world SEGURO";
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/user/signup")
     public ResponseEntity<?> create(@Valid @RequestBody CrearUsuarioDTO crearUsuarioDto, BindingResult bindingResult){
         try {
             if(bindingResult.hasErrors()) {
@@ -96,7 +96,7 @@ public class UserController extends CustomFieldException {
         }
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> getUsuario(@RequestBody LoginAttemp loginAttemp){
         try {
             Optional optional = usuarioRepository.findByUsername(loginAttemp.getUsername());
