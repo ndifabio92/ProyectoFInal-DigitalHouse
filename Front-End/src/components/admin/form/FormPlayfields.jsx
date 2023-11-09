@@ -79,7 +79,8 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
                        console.log("La Solicitur Post se envio correctamente")
                     }) 
                 }
-         
+        
+        handleUpdate(0,{},'AGREGAR CANCHA') 
     }
 
     
@@ -87,9 +88,9 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
 
         await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.PUT, playfield)
 
-                if (error.message) {
+                if (error) {
                     Swal.fire({
-                        title: error.message,
+                        title: error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
@@ -119,10 +120,10 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(action == 'MODIFICAR CANCHA' && isComplete(formik.values)){
+                if(action == 'AGREGAR CANCHA' && isComplete(formik.values)){
                     submitFormCreate(formik.values)
                 }
-                else if (action == 'AGREGAR CANCHA'){
+                else if (action == 'MODIFICAR CANCHA'){
                     submitFormUpdate(formik.values)
                 }
                 else{
@@ -161,6 +162,7 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
                 </TextField>
 
                 <Button variant="contained" type="submit">{action}</Button>
+               
             </form>
         }   
         </Container>

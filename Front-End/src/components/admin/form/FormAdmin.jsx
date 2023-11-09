@@ -121,6 +121,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     }) 
                 } 
         
+        handleUpdate(0, {}, 'AGREGAR CLUB')
     }
 
     const submitFormUpdate = async (values) => {
@@ -284,6 +285,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
                 <Button variant="contained" type="submit">{action}</Button>
+    
             </form>
         }
         </Container>
