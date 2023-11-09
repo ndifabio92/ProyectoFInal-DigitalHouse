@@ -16,39 +16,26 @@ const FormPlayfields = ({idClub, action, playfield }) => {
     
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = () => {
-        if(action == 'update'){
-            return ( 
-                {id:playfield.id,
-                description: playfield.description, 
-                idClub: playfield.idClub, 
-                category: playfield.category.id}
-            )
+    const initialValues = action == 'update' ? {
+            
+        id:playfield.id,
+        description: playfield.description, 
+        club: {id:playfield.idClub}, 
+        category: {id: playfield.category.id}
+        }: {
+        description: '', 
+        idClub: parseInt(idClub), 
+        category: {id:''}
         }
-        else{
-            return ( 
-                {description: '', 
-                idClub: parseInt(idClub), 
-                category: {id:''}}
-            )
+    
+    const labels = action == 'update' ?{
+        description: playfield.description,  
+        category: playfield.category.title
+        }: {
+        description: 'Descripción',  
+        category: 'Categoría'
         }
-    }
-
-    const labels = () => {
-        if(action == 'update'){
-            return ( 
-                {description: playfield.description,  
-                category: playfield.category.title}
-            )
-        }
-        else{
-            return ( 
-                {description: 'Descripción',  
-                category: 'Categoría'
-                }
-            )
-        }
-    }
+            
    
 
     const isComplete = (values) => {
