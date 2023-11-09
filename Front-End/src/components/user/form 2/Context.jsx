@@ -16,6 +16,7 @@ export const DataProvider = ({ children }) => {
   const contextValue = {
     storedData,
     storeData,
+    setStoredData
   };
 
   return (

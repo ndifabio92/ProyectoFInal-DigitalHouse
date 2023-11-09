@@ -13,6 +13,8 @@ import { Tooltip } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useDataContext } from "../../user/form 2/Context";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const pages = ["Crear cuenta", "Iniciar sesión"];
 const settings = ["Perfil", "Cerrar sesión"];
@@ -20,7 +22,7 @@ const settings = ["Perfil", "Cerrar sesión"];
 const Header = () => {
   const logo = "./logoNaranjaNeg.png";
 
-  const { storedData} = useDataContext();
+  const { storedData, setStoredData } = useDataContext();
 
   const navigate = useNavigate();
 
@@ -40,6 +42,16 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Chau!",
+      icon: "warning",
+    });
+    setStoredData(null);
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   //Manejo del menu del user
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -49,10 +61,11 @@ const Header = () => {
 
   const handleCloseUserMenu = (setting) => {
     if (setting === "Perfil") {
+      console.log(storedData);
       navigate("/userprofile");
     }
     if (setting === "Cerrar sesión") {
-      navigate("/admin");
+      handleLogout();
     }
     setAnchorElUser(null);
   };
@@ -73,7 +86,6 @@ const Header = () => {
             variant="h4"
             noWrap
             component="a"
-            href="/"
             sx={{
               display: "flex",
               color: "inherit",
@@ -81,7 +93,9 @@ const Header = () => {
               alignItems: "end",
             }}
           >
-            <img src={logo} style={{ height: "100px" }} />
+            <Link to="/">
+              <img src={logo} style={{ height: "100px" }} />
+            </Link>
 
             <div style={{ display: "block" }}>
               <h1>
@@ -125,9 +139,12 @@ const Header = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleCloseUserMenu(setting)}
+                  >
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
                 ))}
               </Menu>
             </Box>

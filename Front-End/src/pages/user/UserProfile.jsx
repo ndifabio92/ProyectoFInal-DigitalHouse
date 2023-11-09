@@ -1,8 +1,6 @@
 import { Container, Paper, Typography } from "@mui/material";
 import { useDataContext } from "../../components/user/form 2/Context";
 
-
-
 const UserProfile = () => {
   const {storedData} = useDataContext();
 
@@ -21,7 +19,7 @@ const UserProfile = () => {
           padding: "20px", // Ajuste del padding en dispositivos móviles
         }}
       >
-        <h1>Perfil del usuario</h1>
+        <h2>Hola {storedData.name}!</h2>
 
         <Paper
         elevation={3} // Puedes ajustar el nivel de elevación según tu preferencia
@@ -31,10 +29,10 @@ const UserProfile = () => {
         }}
       >
         <Typography variant="h5" sx={{ color: "#1F2E7B", fontWeight: 'bold' }}>
-          Información Personal
+          Información personal
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Numero de cliente: {storedData.id}
+          Número de cliente: {storedData.id}
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
           Nombre: {storedData.name}
@@ -48,7 +46,7 @@ const UserProfile = () => {
       </Paper>
 
         <div>
-          <h2>Favoritos</h2>
+          <h2>Tus favoritos</h2>
         </div>
 
       </Container>
