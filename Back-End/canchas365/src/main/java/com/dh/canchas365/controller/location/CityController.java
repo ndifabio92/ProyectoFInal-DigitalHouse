@@ -24,7 +24,7 @@ public class CityController {
 
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public List<CityDTO> getAllCities(){
         return cityService.getAllCities();
     }

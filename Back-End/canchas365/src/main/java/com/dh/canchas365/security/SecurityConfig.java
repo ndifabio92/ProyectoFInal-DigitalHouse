@@ -30,7 +30,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private static final String[] SWAGGER_PATHS = {"/swagger-ui.html", "/v3/api-docs/**", "/v3/api-docs.yaml","/swagger-ui/**", "/webjars/swagger-ui/**"};
-
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     @Autowired
     JwtUtils jwtUtils;
 
@@ -53,8 +53,14 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/user/signin").permitAll();
-                    auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers("/user/signup").permitAll();
+
+                    auth.requestMatchers("/category/**","GET").permitAll();
+                    auth.requestMatchers("/city","GET").permitAll();
+                    auth.requestMatchers("/club/**","GET").permitAll();
+                    auth.requestMatchers("/playingField/**","GET").permitAll();
+                    auth.requestMatchers("/image","GET").permitAll();
+
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
                     // permito crear roles para crear los roles iniciales.. luego comentar
                     //auth.requestMatchers("/rol/create").permitAll();

@@ -7,12 +7,12 @@ import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.model.emun.ERol;
 import com.dh.canchas365.model.auth.Rol;
 import com.dh.canchas365.model.auth.Usuario;
+import com.dh.canchas365.repository.auth.RolRepository;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +27,8 @@ public class UserController extends CustomFieldException {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private RolRepository rolRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -48,15 +50,26 @@ public class UserController extends CustomFieldException {
                 return validate(bindingResult);
             }
             Set<Rol> roles = crearUsuarioDto.getRoles().stream()
-                    .map(role -> Rol.builder().name(ERol.valueOf(role)).build())
+                    .map(roleName -> {
+                        ERol roleEnum = ERol.valueOf(roleName);
+                        Optional<Rol> existingRol = Optional.ofNullable(rolRepository.findByName(roleEnum));
+
+                        if (existingRol.isPresent()) {
+                            return existingRol.get();
+                        } else {
+                            Rol newRol = new Rol();
+                            newRol.setName(roleEnum);
+                            return rolRepository.save(newRol);
+                        }
+                    })
                     .collect(Collectors.toSet());
+
 
             Usuario usuario = Usuario.builder()
                     .name(crearUsuarioDto.getName())
                     .lastname(crearUsuarioDto.getLastname())
                     .username(crearUsuarioDto.getUsername())
                     .password(passwordEncoder.encode(crearUsuarioDto.getPassword()))
-                    //.operador(operadorService.getOperadorById(crearUsuarioDto.getOperador()))
                     .roles(roles)
                     .build();
 
@@ -74,7 +87,7 @@ public class UserController extends CustomFieldException {
             Optional<?> optional = usuarioRepository.findById(id);
             if(optional.isPresent()) {
                 usuarioRepository.deleteById(id);
-                return customResponseError("Categoria Eliminada exitosamente", HttpStatus.OK);
+                return customResponseError("Usuario eliminado exitosamente", HttpStatus.OK);
             } else {
                 return customResponseError("El id ingresado no existe", HttpStatus.NOT_FOUND);
             }
@@ -83,7 +96,6 @@ public class UserController extends CustomFieldException {
         }
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/signin")
     public ResponseEntity<?> getUsuario(@RequestBody LoginAttemp loginAttemp){
         try {
@@ -98,7 +110,6 @@ public class UserController extends CustomFieldException {
                 usuarioDto.setName(usuario.getName());
                 usuarioDto.setLastname(usuario.getLastname());
                 //usuarioDto.setOperador(usuario.getOperador());
-//            usuarioDto.setUsername(usuario.getUsername());
                 return ResponseEntity.ok(usuarioDto);
             }
             return null;
