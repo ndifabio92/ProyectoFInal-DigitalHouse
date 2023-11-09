@@ -52,7 +52,7 @@ public class CategoryController extends CustomFieldException {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody Category category, @PathVariable Long id, BindingResult bindingResult){
         try {
             if(bindingResult.hasErrors()) {
