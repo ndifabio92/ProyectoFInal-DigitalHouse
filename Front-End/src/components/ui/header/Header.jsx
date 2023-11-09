@@ -85,7 +85,7 @@ const Header = () => {
           <Typography
             variant="h4"
             noWrap
-            component="a"
+            //component="a"
             sx={{
               display: "flex",
               color: "inherit",
