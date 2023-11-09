@@ -11,17 +11,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
-import { ENDPOINTS } from '../../../constants/endpoints';
+import {ENDPOINTS} from '../../../constants/endpoints'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {METHODS}  from '../../../constants/methods'
+import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
 
-const TableAdmin = () => {
-
+const TableAdmin = ({ handleUpdate }) => {
     
-
     const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
+
+    const { data: deleteData, isLoading: deleteIsloading, error: deleteError, fetchData } = useFetchDataApi();
 
     const navigate = useNavigate();
 
@@ -33,8 +35,12 @@ const TableAdmin = () => {
         }
     }, [data]);
 
+    const modificar = (club, action) => {
+        handleUpdate(1, club, action)
+    }
+
+    const handleDelete =  (id) => {
     
-    const handleDelete = (id) => {
         Swal.fire({
             title: 'Esta seguro que quiere confirmar la accion?',
             icon: 'warning',
@@ -43,45 +49,36 @@ const TableAdmin = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirmar',
             cancelButtonText: 'Cancelar'
-        }).then((result) => {
+        }).then( async (result) => {
+        
             if (result.isConfirmed) {
-                try {
-                    const response = fetch(`http://localhost:8080/club/${id}`, {
-                    method: 'DELETE',
-                    });
-                    if (response) {
-                        console.log('Club eliminado con éxito');
-                        setClubs(clubs.filter((club) => club.id !== id));
-                    
-                    } else {
-                        console.error('Error al eliminar el club:', error);
-                    }
-
-                    Swal.fire(
-                        'Eliminado',
-                        '',
-                        'success'
-                    )
-
-                } catch (error) {
-                    console.error('Error al realizar la solicitud DELETE:', error);
+                await fetchData(ENDPOINTS.CLUB, METHODS.DELETE, id)
+                if (deleteError) {
+                    console.error('Error al eliminar el club:', error)
+                    Swal.fire({
+                        title: 'Error al eliminar el Club',
+                        icon: 'error',
+                      });
+                } 
+                else {
+                    console.log('Club eliminado con éxito');
+                    Swal.fire({
+                        title: 'Club eliminado con éxito',
+                        icon: 'success',
+                      });
+                    setClubs(clubs.filter((club) => club.id !== id));
                 }
-                
-            }
+            }      
         })
     }
    
-
-    const handleChange = (id) => {
-
-    }
 
     const handleView = (id) => navigate(`/admin/club/${id}`);
 
     return (
         <Box sx={{ width: "100%" }}>
             {
-                isLoading ? <Loading /> :
+                isLoading || deleteIsloading ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
                         <TableContainer component={Paper}>
                             {clubs &&
@@ -99,7 +96,7 @@ const TableAdmin = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {clubs.map((row) => (
+                                        {clubs?.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -128,7 +125,7 @@ const TableAdmin = () => {
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleChange(row.id)}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => modificar(row,'MODIFICAR CLUB')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
