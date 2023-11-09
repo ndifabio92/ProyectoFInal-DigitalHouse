@@ -96,7 +96,7 @@ const TableAdmin = ({ handleUpdate }) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {clubs.map((row) => (
+                                        {clubs?.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

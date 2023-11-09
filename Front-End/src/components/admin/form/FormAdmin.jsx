@@ -18,78 +18,59 @@ const FormAdmin = ({action, club}) => {
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = () =>{
-        if (action == 'update'){
-            return (
-            {
-                name: club.name, 
-                phone_number: club.phone_number, 
-                recommended: club.recommended,
-                address: {
-                    street: club.address.street,
-                    number: club.address.number,
-                    floor: club.address.floor,
-                    apartment: club.address.apartment,
-                    city: {
-                        id:club.address.city.id,
-                    }
-                },
-                category: {id:club.category.id}, 
-                images: club.images
+    const initialValues = action === 'update' ? {
+        id:club.id,
+        name: club.name, 
+        phone_number: club.phone_number, 
+        recommended: club.recommended,
+        address: {
+            street: club.address.street,
+            number: club.address.number,
+            floor: club.address.floor,
+            apartment: club.address.apartment,
+            city: {
+                id: club.address.city.id
             }
-        )}
-
-        else return (
-            {
-            name: '', 
-            phone_number: '', 
-            recommended: false,
-            address: {
-                street: '',
-                number: '',
-                floor: '',
-                apartment: '',
-                city: {
-                    id:'',
-                }, 
-            },
-            category: {id:''}, 
-            images: []
-            }
-        )
-    }
+        },
+        category: { id: club.category.id }, 
+        images: club.images
+    } : {
+        name: '', 
+        phone_number: '', 
+        recommended: false,
+        address: {
+            street: '',
+            number: '',
+            floor: '',
+            apartment: '',
+            city: {
+                id: '',
+            }, 
+        },
+        category: { id: '' }, 
+        images: []
+    };
 
 
-    const labels = () => {
-        if(action == 'update'){
-            return ( 
-                {
-                    name: club.name, 
-                    phone_number: club.phone_number, 
-                    street: club.address.street,
-                    number: club.address.number,
-                    floor: club.address.floor,
-                    apartment: club.address.apartment,
-                    city: club.address.city.name,
-                    category: club.category.title
-                }
-            )
-        }
-        else{
-            return ( 
-                {
-                    name: 'Nombre', 
-                    phone_number: 'Teléfono' , 
-                    street: 'Calle',
-                    number: 'Número',
-                    floor: 'Piso',
-                    apartment: 'Departamento',
-                    city: 'Ciudad',
-                    category: 'Categoria'
-                }
-            )
-        }
-    }
+    const labels = action === 'update' ? {
+        name: club.name, 
+        phone_number: club.phone_number, 
+        street: club.address.street,
+        number: club.address.number,
+        floor: club.address.floor,
+        apartment: club.address.apartment,
+        city: club.address.city.name,
+        category: club.category.title
+    } : {
+        name: 'Nombre', 
+        phone_number: 'Teléfono' , 
+        street: 'Calle',
+        number: 'Número',
+        floor: 'Piso',
+        apartment: 'Departamento',
+        city: 'Ciudad',
+        category: 'Categoría'
+    };
 
 
     const isComplete = (values) => {
@@ -173,6 +154,9 @@ const FormAdmin = ({action, club}) => {
     return (
         
         <Container maxWidth="md">
+        {
+        console.log(club)
+        }
 
         {(isLoading || isLoadingCategories || isLoadingCities) ? <Loading /> :
             

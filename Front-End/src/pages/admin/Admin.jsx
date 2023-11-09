@@ -38,7 +38,6 @@ const Admin = () => {
     };
 
     const handleUpdate = (newValue, club, action) => {
-
         setClub (club)
         setAction(action)
         setValue(newValue);

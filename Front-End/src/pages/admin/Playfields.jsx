@@ -54,7 +54,7 @@ const Playfields = () => {
         setValue(newValue)
         setPlayfield(playfield)
         setAction(action)
-
+    }
 
     return (
         <>
@@ -112,4 +112,4 @@ const Playfields = () => {
     )
 }
 
-export default Playfields;
+export default Playfields
