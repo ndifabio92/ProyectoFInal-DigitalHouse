@@ -4,6 +4,8 @@ import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.PlayingField;
 import com.dh.canchas365.service.PlayingFieldService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ public class PlayingFieldController {
     private PlayingFieldService playingFieldService;
 
     @PostMapping
+    @Operation(summary = "Creacion de Cancha", description = "Creacion de Cancha")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<?> createPlayingField(@RequestBody PlayingFieldDTO dto){
         try {
             return new ResponseEntity<PlayingFieldDTO>(playingFieldService.create(dto), HttpStatus.CREATED);

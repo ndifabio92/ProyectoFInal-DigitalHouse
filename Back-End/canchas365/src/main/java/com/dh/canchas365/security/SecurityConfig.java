@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/user/signin").permitAll();
+                    auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers("/user/signup").permitAll();
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
                     // permito crear roles para crear los roles iniciales.. luego comentar
