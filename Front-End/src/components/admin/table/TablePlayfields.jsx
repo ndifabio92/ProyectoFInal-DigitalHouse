@@ -104,7 +104,7 @@ const TablePlayfields = ({idClub, handleUpdate}) => {
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleUpdate(1,row, 'update')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleUpdate(1,row, 'MODIFICAR CANCHA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

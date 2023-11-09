@@ -33,7 +33,7 @@ const Playfields = () => {
 
     const[playfield, setPlayfield] = useState({});
 
-    const [action, setAction] = useState('create');
+    const [action, setAction] = useState('AGREGAR CANCHA');
 
     const {id} = useParams();
 
@@ -58,8 +58,6 @@ const Playfields = () => {
 
     return (
         <>
-
-    
             <Container maxWidth="xxl"
                 sx={{
                     backgroundColor: '#FFFFFF',
@@ -83,7 +81,7 @@ const Playfields = () => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Listado de Canchas" />
-                        <Tab label="Agregar Cancha" />
+                        <Tab label={action} />
                     </Tabs>
                 </Box>
                 

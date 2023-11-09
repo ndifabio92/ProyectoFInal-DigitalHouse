@@ -125,7 +125,7 @@ const TableAdmin = ({ handleUpdate }) => {
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => modificar(row,'update')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => modificar(row,'MODIFICAR CLUB')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

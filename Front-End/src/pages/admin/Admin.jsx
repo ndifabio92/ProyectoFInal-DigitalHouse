@@ -31,7 +31,7 @@ const Admin = () => {
 
     const [club, setClub] = useState({});
 
-    const [action, setAction] = useState('create');
+    const [action, setAction] = useState('AGREGAR CLUB');
 
     const handleChange = (event, newValue ) => {
         setValue(newValue);
@@ -63,7 +63,7 @@ const Admin = () => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Listado de Clubes" />
-                        <Tab label="Agregar Club" />
+                        <Tab label={action} />
                         <Tab label="Item Three" />
                     </Tabs>
                 </Box>

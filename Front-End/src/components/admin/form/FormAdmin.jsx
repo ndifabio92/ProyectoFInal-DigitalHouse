@@ -18,7 +18,7 @@ const FormAdmin = ({action, club}) => {
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = action === 'update' ? {
+    const initialValues = action === 'MODIFICAR CLUB' ? {
         id:club.id,
         name: club.name, 
         phone_number: club.phone_number, 
@@ -52,7 +52,7 @@ const FormAdmin = ({action, club}) => {
     };
 
 
-    const labels = action === 'update' ? {
+    const labels = action === 'MODIFICAR CLUB' ? {
         name: club.name, 
         phone_number: club.phone_number, 
         street: club.address.street,
@@ -162,10 +162,10 @@ const FormAdmin = ({action, club}) => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(action == 'create' && isComplete(formik.values)){
+                if(action == 'AGREGAR CLUB' && isComplete(formik.values)){
                     submitFormCreate(formik.values)
                 }
-                else if (action == 'update'){
+                else if (action == 'MODIFICAR CLUB'){
                     submitFormUpdate(formik.values)
                 }
                 else{
@@ -282,7 +282,7 @@ const FormAdmin = ({action, club}) => {
 
                 {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
-                <Button variant="contained" type="submit">Agregar Club</Button>
+                <Button variant="contained" type="submit">{action}</Button>
             </form>
         }
         </Container>

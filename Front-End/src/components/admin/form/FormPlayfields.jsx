@@ -16,7 +16,7 @@ const FormPlayfields = ({idClub, action, playfield }) => {
     
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = action == 'update' ? {
+    const initialValues = action == 'MODIFICAR CANCHA' ? {
             
         id:playfield.id,
         description: playfield.description, 
@@ -28,7 +28,7 @@ const FormPlayfields = ({idClub, action, playfield }) => {
         category: {id:''}
         }
     
-    const labels = action == 'update' ?{
+    const labels = action == 'MODIFICAR CANCHA' ?{
         description: playfield.description,  
         category: playfield.category.title
         }: {
@@ -118,10 +118,10 @@ const FormPlayfields = ({idClub, action, playfield }) => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(action == 'create' && isComplete(formik.values)){
+                if(action == 'MODIFICAR CANCHA' && isComplete(formik.values)){
                     submitFormCreate(formik.values)
                 }
-                else if (action == 'update'){
+                else if (action == 'AGREGAR CANCHA'){
                     submitFormUpdate(formik.values)
                 }
                 else{
@@ -159,7 +159,7 @@ const FormPlayfields = ({idClub, action, playfield }) => {
                     ))}
                 </TextField>
 
-                <Button variant="contained" type="submit">Agregar Cancha</Button>
+                <Button variant="contained" type="submit">{action}</Button>
             </form>
         }   
         </Container>
