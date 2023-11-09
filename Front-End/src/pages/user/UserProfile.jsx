@@ -1,8 +1,13 @@
 import { Container } from "@mui/material";
+import { useDataContext } from "../../components/user/form 2/Context";
+
+
 
 const UserProfile = () => {
+  const {storedData} = useDataContext();
+
   return (
-    <div>
+    
       <Container
         maxWidth="xxl"
         sx={{
@@ -16,9 +21,23 @@ const UserProfile = () => {
           padding: "20px", // Ajuste del padding en dispositivos móviles
         }}
       >
-        <h2>Perfil del usuario</h2>
+        <h1>Perfil del usuario</h1>
+
+        <div>
+        <h2>Información Personal</h2>
+        
+        <p>Numero de cliente: {storedData.id}</p>
+        <p>Nombre: {storedData.name}</p>
+        <p>Apellido: {storedData.lastname}</p>
+        <p>Username: {storedData.username}</p>
+        </div>
+
+        <div>
+          <h2>Favoritos</h2>
+        </div>
+
       </Container>
-    </div>
+    
   );
 };
 
