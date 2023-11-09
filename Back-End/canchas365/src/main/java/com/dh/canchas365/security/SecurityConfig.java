@@ -52,7 +52,8 @@ public class SecurityConfig {
                 .csrf(config -> config.disable())
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers("/user/signin").permitAll();
+                    auth.requestMatchers("/user/signup").permitAll();
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
                     // permito crear roles para crear los roles iniciales.. luego comentar
                     //auth.requestMatchers("/rol/create").permitAll();
