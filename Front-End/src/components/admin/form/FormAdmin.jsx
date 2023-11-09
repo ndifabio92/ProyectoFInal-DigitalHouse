@@ -10,7 +10,7 @@ import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 
 
-const FormAdmin = ({action, club}) => {
+const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
@@ -148,7 +148,8 @@ const FormAdmin = ({action, club}) => {
                        console.log("La Solicitur Post se envio correctamente")
                     }) 
                 } 
-        
+
+        handleUpdate(0, {}, 'AGREGAR CLUB')
     }
 
     return (

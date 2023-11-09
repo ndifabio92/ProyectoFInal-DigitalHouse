@@ -10,7 +10,7 @@ import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 
 
-const FormPlayfields = ({idClub, action, playfield }) => {
+const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
@@ -87,9 +87,9 @@ const FormPlayfields = ({idClub, action, playfield }) => {
 
         await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.PUT, playfield)
 
-                if (error) {
+                if (error.message) {
                     Swal.fire({
-                        title: error,
+                        title: error.message,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
@@ -107,7 +107,8 @@ const FormPlayfields = ({idClub, action, playfield }) => {
                        console.log("La Solicitur Post se envio correctamente")
                     }) 
                 }
-         
+
+        handleUpdate(0,{},'AGREGAR CANCHA') 
     }
 
     return (

@@ -71,7 +71,7 @@ const Admin = () => {
                     <TableAdmin handleUpdate={handleUpdate}/>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormAdmin action={action} club={club} />
+                    <FormAdmin action={action} club={club} handleUpdate={handleUpdate} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                     Item Three
