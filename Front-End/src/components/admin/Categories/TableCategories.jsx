@@ -8,35 +8,33 @@ import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
 import { Box, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import {ENDPOINTS} from '../../../constants/endpoints'
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {METHODS}  from '../../../constants/methods'
+import EditIcon from '@mui/icons-material/Edit';
 import useFetchDataApi from '../../../hooks/useFetchDataApi'
+import { METHODS } from '../../../constants/methods';
 
 
 
-const TableAdmin = ({ handleUpdate }) => {
+
+const TableCategory = ({ handleUpdate }) => {
     
-    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
+    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CATEGORY}`);
 
     const { data: deleteData, isLoading: deleteIsloading, error: deleteError, fetchData } = useFetchDataApi();
 
-    const navigate = useNavigate();
-
-    const [clubs, setClubs] = useState([])
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         if (data) {
-            setClubs(data)
+            setCategories(data)
         }
     }, [data]);
 
-    const modificar = (club, action) => {
-        handleUpdate(1, club, action)
+    const modificar = (category, action) => {
+        handleUpdate(1, category, action)
     }
 
     const handleDelete =  (id) => {
@@ -52,51 +50,48 @@ const TableAdmin = ({ handleUpdate }) => {
         }).then( async (result) => {
         
             if (result.isConfirmed) {
-                await fetchData(ENDPOINTS.CLUB, METHODS.DELETE, id)
+                await fetchData(ENDPOINTS.CATEGORY, METHODS.DELETE, id)
                 if (deleteError) {
-                    console.error('Error al eliminar el club:', error)
+                    console.error('Error al eliminar la categoria:', error)
                     Swal.fire({
-                        title: 'Error al eliminar el Club',
+                        title: 'Error al eliminar la categoria',
                         icon: 'error',
                       });
                 } 
                 else {
-                    console.log('Club eliminado con éxito');
+                    console.log('Categoria eliminado con éxito');
                     Swal.fire({
-                        title: 'Club eliminado con éxito',
+                        title: 'Categoria eliminada con éxito',
                         icon: 'success',
                       });
-                    setClubs(clubs.filter((club) => club.id !== id));
+                    setCategories(categories.filter((club) => club.id !== id));
                 }
             }      
         })
     }
+
+
    
 
-    const handleView = (id) => navigate(`/admin/club/${id}`);
-
     return (
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%" }}>  
             {
                 isLoading || deleteIsloading ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
                         <TableContainer component={Paper}>
-                            {clubs &&
+                            {categories &&
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align='center'>Id</TableCell>
-                                            <TableCell align="center">Nombre</TableCell>
-                                            <TableCell align="center">Deporte</TableCell>
-                                            <TableCell align='center'>Domicilio</TableCell>
-                                            <TableCell align='center'>Ciudad</TableCell>
-                                            <TableCell align='center'>Telefono</TableCell>
-                                            <TableCell align='center'>Recomendado</TableCell>
+                                            <TableCell align="center">Título</TableCell>
+                                            <TableCell align="center">Descripcion</TableCell>
+                                            <TableCell align='center'>ImagenUrl</TableCell>
                                             <TableCell align='center'>Acciones</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {clubs?.map((row) => (
+                                        {categories?.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -105,27 +100,17 @@ const TableAdmin = ({ handleUpdate }) => {
                                                     {row.id}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.name}
+                                                    {row.title}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.category.title}
+                                                    {row.description}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.address.street + " N° " + row.address.number}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.address.city.name}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.phone_number}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.recommended ? "Si" : "No"}
+                                                    {row.url}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => modificar(row,'MODIFICAR CLUB')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CATEGORIA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
@@ -138,4 +123,4 @@ const TableAdmin = ({ handleUpdate }) => {
         </Box>
     );
 }
-export default TableAdmin
+export default TableCategory

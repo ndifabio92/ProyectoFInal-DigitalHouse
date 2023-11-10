@@ -14,6 +14,7 @@ import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import { useState, useEffect } from 'react';
 import {METHODS}  from '../../../constants/methods'
+import EditIcon from '@mui/icons-material/Edit';
 import useFetchDataApi from '../../../hooks/useFetchDataApi'
 
 
@@ -104,7 +105,7 @@ const TablePlayfields = ({idClub, handleUpdate}) => {
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleUpdate(1,row, 'MODIFICAR CANCHA')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => handleUpdate(1,row, 'MODIFICAR CANCHA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
