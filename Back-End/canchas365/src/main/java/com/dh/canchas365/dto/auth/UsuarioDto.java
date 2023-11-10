@@ -1,10 +1,13 @@
 package com.dh.canchas365.dto.auth;
 
+import com.dh.canchas365.model.auth.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,6 +24,6 @@ public class UsuarioDto {
 
     private String lastname;
 
-    //private Operador operador;
+    private Set<Rol> rol;
 
 }
