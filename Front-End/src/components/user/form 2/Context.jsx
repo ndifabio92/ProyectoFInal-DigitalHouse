@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
 
   const storeData = (data) => {
     // Guardar 'data.token' en el localStorage
-    localStorage.setItem("token", JSON.stringify(data));
+    localStorage.setItem("token", JSON.stringify(data.token));
     setStoredData(data);
   };
 
