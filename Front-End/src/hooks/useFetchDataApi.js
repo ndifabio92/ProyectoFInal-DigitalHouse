@@ -14,7 +14,7 @@ const useFetchDataApi = () => {
 
             let url = `${import.meta.env.VITE_BACKEND_API}${endpoint}`;
 
-            if (method !== METHODS.POST && payload) {
+            if (method !== METHODS.POST && method !== METHODS.PUT && payload) {
                 url += `/${payload}`;
             }
 

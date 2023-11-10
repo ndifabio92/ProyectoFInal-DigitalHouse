@@ -5,17 +5,38 @@ import styles from './styles.module.css';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
+import useFetchDataApi from "../../../hooks/useFetchDataApi";
+import { METHODS } from "../../../constants/methods";
+import Loading from "../../loading/Loading";
 
 
-const FormPlayfields = ({idClub}) => {
+const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
+    const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = {
-        description: '', idClub: parseInt(idClub), 
-        category: {id:''}, 
-    }
+    const initialValues = action == 'MODIFICAR CANCHA' ? {
+            
+        id:playfield.id,
+        description: playfield.description, 
+        club: {id:playfield.idClub}, 
+        category: {id: playfield.category.id}
+        }: {
+        description: '', 
+        idClub: parseInt(idClub), 
+        category: {id:''}
+        }
+    
+    const labels = action == 'MODIFICAR CANCHA' ?{
+        description: playfield.description,  
+        category: playfield.category.title
+        }: {
+        description: 'Descripción',  
+        category: 'Categoría'
+        }
+            
+   
 
     const isComplete = (values) => {
         if (
@@ -34,21 +55,21 @@ const FormPlayfields = ({idClub}) => {
         validationSchema,
     });
 
-    const submitForm = async (values) => {
+    const submitFormCreate = async (values) => {
 
-        console.log(values)
+        await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.POST, values)
 
-            try {
-                const response = await fetch('http://localhost:8080/playingField', {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(values),
-                })
-                const data = await response.json()
+                if (error) {
+                    Swal.fire({
+                        title: error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(error)
+                    })
 
-                if (response.ok) {
+                } else {
                     Swal.fire({
                         title: 'Cancha agregada con éxito',
                         icon: 'warning',
@@ -57,30 +78,53 @@ const FormPlayfields = ({idClub}) => {
                     }).then(() => {
                        console.log("La Solicitur Post se envio correctamente")
                     }) 
-                } else {
+                }
+        
+        handleUpdate(0,{},'AGREGAR CANCHA') 
+    }
+
+    
+    const submitFormUpdate = async (playfield) => {
+
+        await fetchData(ENDPOINTS.PLAYINGFIELD, METHODS.PUT, playfield)
+
+                if (error) {
                     Swal.fire({
-                        title: data.error,
+                        title: error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log(data.error)
+                       console.log(error)
                     })
+
+                } else {
+                    Swal.fire({
+                        title: 'Cancha modificada con éxito',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
                 }
-            } catch (error) {
-                console.log(error)
-            }
-        
+
+        handleUpdate(0,{},'AGREGAR CANCHA') 
     }
 
     return (
         
         <Container maxWidth="md">
+
+        {(isLoading || isLoadingCategories) ? <Loading /> :
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(isComplete(formik.values)){
-                    submitForm(formik.values)
+                if(action == 'AGREGAR CANCHA' && isComplete(formik.values)){
+                    submitFormCreate(formik.values)
+                }
+                else if (action == 'MODIFICAR CANCHA'){
+                    submitFormUpdate(formik.values)
                 }
                 else{
                     Swal.fire({
@@ -97,7 +141,7 @@ const FormPlayfields = ({idClub}) => {
                         <span style={{ color: 'red' }}>{formik.errors.description}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Nombre" type="text" name="description" className="input-background"
+                <TextField variant="outlined" size="small" label={labels.description} type="text" name="description" className="input-background"
                     value={formik.values.description}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
 
@@ -107,7 +151,7 @@ const FormPlayfields = ({idClub}) => {
                         <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.category} select name="category.id" className="input-background" 
                     value={formik.values.category.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {categories?.map((category) => (
@@ -117,9 +161,10 @@ const FormPlayfields = ({idClub}) => {
                     ))}
                 </TextField>
 
-                <Button variant="contained" type="submit">Agregar Cancha</Button>
+                <Button variant="contained" type="submit">{action}</Button>
+               
             </form>
-            
+        }   
         </Container>
     )
 }

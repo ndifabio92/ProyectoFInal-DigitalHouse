@@ -10,6 +10,7 @@ import com.dh.canchas365.service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ClubController extends CustomFieldException {
     @Autowired
     private ClubService clubService;
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createClub(@RequestBody ClubCreateDTO dto){
         try {
@@ -51,6 +53,7 @@ public class ClubController extends CustomFieldException {
 
     }
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<ClubDTO> updateClub(@RequestBody Club club) throws ResourceNotFoundException {
         ResponseEntity<ClubDTO> responseEntity = null;
@@ -65,6 +68,7 @@ public class ClubController extends CustomFieldException {
         return responseEntity;
     }
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ClubDTO>  deleteClub(@PathVariable("id") Long id) throws ResourceNotFoundException {
         ResponseEntity<ClubDTO> responseEntity = null;

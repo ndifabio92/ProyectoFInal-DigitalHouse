@@ -31,6 +31,10 @@ function CustomTabPanel(props) {
 
 const Playfields = () => {
 
+    const[playfield, setPlayfield] = useState({});
+
+    const [action, setAction] = useState('AGREGAR CANCHA');
+
     const {id} = useParams();
 
     const [value, setValue] = useState(0);
@@ -42,13 +46,18 @@ const Playfields = () => {
       };
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setValue(newValue)
     };
+
+    const handleUpdate = (newValue, playfield, action) => {
+
+        setValue(newValue)
+        setPlayfield(playfield)
+        setAction(action)
+    }
 
     return (
         <>
-
-    
             <Container maxWidth="xxl"
                 sx={{
                     backgroundColor: '#FFFFFF',
@@ -72,15 +81,15 @@ const Playfields = () => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Listado de Canchas" />
-                        <Tab label="Agregar Cancha" />
+                        <Tab label={action} />
                     </Tabs>
                 </Box>
                 
                 <CustomTabPanel value={value} index={0}>
-                    <TablePlayfields idClub={id} />
+                    <TablePlayfields idClub={id} handleUpdate={handleUpdate}  />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormPlayfields idClub={id} />
+                    <FormPlayfields idClub={id} action={action} playfield={playfield} handleUpdate={handleUpdate} />
                 </CustomTabPanel>
 
             </Container>
@@ -101,4 +110,4 @@ const Playfields = () => {
     )
 }
 
-export default Playfields;
+export default Playfields
