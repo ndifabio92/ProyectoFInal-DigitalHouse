@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useParams } from 'react-router-dom'
-import FormPlayfields from "../../components/admin/form/FormPlayfields";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TitleClub from '../../components/products/TitleClub'
 import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
 import { Box, Container, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import TablePlayfields from "../../components/admin/table/TablePlayfields";
+import TablePlayfields from "../../components/admin/playfields/TablePlayfields"
+import FormPlayfields from "../../components/admin/playfields/FormPlayfields";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;

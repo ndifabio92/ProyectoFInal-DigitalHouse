@@ -14,7 +14,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
-    const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}/list`);
+    const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}`);
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
@@ -235,22 +235,11 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     value={formik.values.address?.number}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
-
-                {
-                    formik.touched.address?.floor && formik.errors.address?.floor && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.floor}</span>
-                    )
-                }
                 <TextField variant="outlined" size="small" label={labels.floor} type="number" name="address.floor" className="input-background" 
                     value={formik.values.address?.floor}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
 
-                {
-                    formik.touched.address?.apartment && formik.errors.address?.apartment && (
-                        <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
-                    )
-                }
                 <TextField variant="outlined" size="small" label={labels.apartment} type="text" name="address.apartment" className="input-background" 
                     value={formik.values.address?.apartment}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
