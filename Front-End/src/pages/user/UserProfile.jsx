@@ -30,9 +30,7 @@ const UserProfile = () => {
       >
         <Typography variant="h5" sx={{ color: "#1F2E7B", fontWeight: 'bold' }}>
           Información personal
-        </Typography>
-        <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Número de cliente: {storedData.usuario.id}
+        <br />
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
           Nombre: {storedData.usuario.name}
