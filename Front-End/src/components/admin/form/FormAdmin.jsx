@@ -1,34 +1,77 @@
-import { Button, Container, FormControlLabel, MenuItem, Switch, TextField, experimental_extendTheme } from "@mui/material";
+import { Button, Container, FormControlLabel, MenuItem, Switch, TextField} from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
+import useFetchDataApi from "../../../hooks/useFetchDataApi";
+import { METHODS } from "../../../constants/methods";
+import Loading from "../../loading/Loading";
 
 
-const FormAdmin = () => {
+const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
     const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}/list`);
 
-    
+    const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = {
-        name: '', phone_number: '', recommended: false,
+    const initialValues = action === 'MODIFICAR CLUB' ? {
+        id:club.id,
+        name: club.name, 
+        phone_number: club.phone_number, 
+        recommended: club.recommended,
+        address: {
+            street: club.address.street,
+            number: club.address.number,
+            floor: club.address.floor,
+            apartment: club.address.apartment,
+            city: {
+                id: club.address.city.id
+            }
+        },
+        category: { id: club.category.id }, 
+        images: club.images
+    } : {
+        name: '', 
+        phone_number: '', 
+        recommended: false,
         address: {
             street: '',
             number: '',
             floor: '',
             apartment: '',
             city: {
-                id:'',
+                id: '',
             }, 
         },
-        category: {id:''}, 
+        category: { id: '' }, 
         images: []
-    }
+    };
+
+
+    const labels = action === 'MODIFICAR CLUB' ? {
+        name: club.name, 
+        phone_number: club.phone_number, 
+        street: club.address.street,
+        number: club.address.number,
+        floor: club.address.floor,
+        apartment: club.address.apartment,
+        city: club.address.city.name,
+        category: club.category.title
+    } : {
+        name: 'Nombre', 
+        phone_number: 'Teléfono' , 
+        street: 'Calle',
+        number: 'Número',
+        floor: 'Piso',
+        apartment: 'Departamento',
+        city: 'Ciudad',
+        category: 'Categoría'
+    };
+
 
     const isComplete = (values) => {
         if (
@@ -49,23 +92,25 @@ const FormAdmin = () => {
     const formik = useFormik({
         initialValues,
         validationSchema
-        
     });
 
     
-    const submitForm = async (values) => {
+    const submitFormCreate = async (values) => {
 
-            try {
-                const response = await fetch('http://localhost:8080/club', {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(values),
-                })
-              const data = await response.json()
+        await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)
 
-                if (response.ok) {
+                if (error){
+                    Swal.fire({
+                        title: error,
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log(error)
+                    }
+                    )
+                }
+                else{
                     Swal.fire({
                         title: 'Club agregado con éxito',
                         icon: 'warning',
@@ -75,32 +120,55 @@ const FormAdmin = () => {
                        console.log("La Solicitur Post se envio correctamente")
                     }) 
                 } 
-                else {
-                 Swal.fire({
-                        title: data.error,
+        
+        handleUpdate(0, {}, 'AGREGAR CLUB')
+    }
+
+    const submitFormUpdate = async (values) => {
+
+        await fetchData(ENDPOINTS.CLUB, METHODS.PUT, values)
+
+                if (error){
+                    Swal.fire({
+                        title: error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log(data.error)
+                       console.log(error)
                     }
                     )
                 }
-                
-            } catch (error) {
-                console.log(error)
-            }
-        
+                else{
+                    Swal.fire({
+                        title: 'Club modificado con éxito',
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                    }).then(() => {
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
+                } 
+
+        handleUpdate(0, {}, 'AGREGAR CLUB')
     }
 
     return (
         
         <Container maxWidth="md">
+        {
+        console.log(club)
+        }
+
+        {(isLoading || isLoadingCategories || isLoadingCities) ? <Loading /> :
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(isComplete(formik.values)){
-                    submitForm(formik.values)
+                if(action == 'AGREGAR CLUB' && isComplete(formik.values)){
+                    submitFormCreate(formik.values)
+                }
+                else if (action == 'MODIFICAR CLUB'){
+                    submitFormUpdate(formik.values)
                 }
                 else{
                     Swal.fire({
@@ -117,7 +185,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.name}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Nombre" type="text" name="name" className="input-background"
+                <TextField variant="outlined" size="small" label= {labels.name} type="text" name="name" className="input-background"
                     value={formik.values.name}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
 
@@ -127,8 +195,8 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.category?.id}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Categoria" select name="category.id" className="input-background" 
-                    value={formik.values.category.id}
+                <TextField variant="outlined" size="small" label={labels.category} select name="category.id" className="input-background" 
+                    value={formik.values.category?.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {categories?.map((category) => (
                         <MenuItem key={category.id} value={category.id}>
@@ -143,7 +211,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.phone_number}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Telefono" type="text" name="phone_number" className="input-background"
+                <TextField variant="outlined" size="small" label={labels.phone_number} type="text" name="phone_number" className="input-background"
                     value={formik.values.phone_number}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -153,7 +221,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.street}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Calle" type="text" name="address.street" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.street} type="text" name="address.street" className="input-background" 
                     value={formik.values.address?.street}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -163,7 +231,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.number}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Numero" type="number" name="address.number" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.number} type="number" name="address.number" className="input-background" 
                     value={formik.values.address?.number}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -173,7 +241,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.floor}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Piso" type="number" name="address.floor" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.floor} type="number" name="address.floor" className="input-background" 
                     value={formik.values.address?.floor}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -183,7 +251,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.apartment}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label="Apartamento" type="text" name="address.apartment" className="input-background" 
+                <TextField variant="outlined" size="small" label={labels.apartment} type="text" name="address.apartment" className="input-background" 
                     value={formik.values.address?.apartment}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 
@@ -193,7 +261,7 @@ const FormAdmin = () => {
                         <span style={{ color: 'red' }}>{formik.errors.address?.city?.id}</span>
                     )
                 }
-                 <TextField variant="outlined" size="small" label="Ciudad" select name="address.city.id" className="input-background" 
+                 <TextField variant="outlined" size="small" label={labels.city} select name="address.city.id" className="input-background" 
                     value={formik.values.address?.city?.id}
                     onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     {cities?.map((city) => (
@@ -216,9 +284,10 @@ const FormAdmin = () => {
 
                 {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 
-                <Button variant="contained" type="submit">Agregar Club</Button>
+                <Button variant="contained" type="submit">{action}</Button>
+    
             </form>
-            
+        }
         </Container>
     )
 }

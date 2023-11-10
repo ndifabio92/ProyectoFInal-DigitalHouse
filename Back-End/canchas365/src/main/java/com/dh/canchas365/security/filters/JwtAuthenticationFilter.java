@@ -1,7 +1,10 @@
 package com.dh.canchas365.security.filters;
 
+import com.dh.canchas365.dto.auth.UsuarioDto;
 import com.dh.canchas365.model.auth.Usuario;
+import com.dh.canchas365.repository.auth.UsuarioRepository;
 import com.dh.canchas365.security.jwt.JwtUtils;
+import com.dh.canchas365.service.auth.UserDetailsServiceImpl;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +12,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,13 +24,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private JwtUtils jwtUtils;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
-    public JwtAuthenticationFilter(JwtUtils jwtUtils){
+    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService){
         this.jwtUtils = jwtUtils;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -62,6 +70,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
 
         User user = (User) authResult.getPrincipal();
+        var usuario = userDetailsService.getByUsername(user.getUsername());
+
+
         String token = jwtUtils.generateAccesToken(user.getUsername());
 
         response.addHeader("Authorization", token);
@@ -70,7 +81,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         httpResponse.put("token", token);
         httpResponse.put("Message", "Autenticacion correcta");
         //httpResponse.put("Username", user.getUsername());
-        httpResponse.put("usuario", user);
+        var userDto = new UsuarioDto();
+        userDto.setUsername(user.getUsername());
+        userDto.setName(usuario.getName());
+        userDto.setLastname(usuario.getLastname());
+        userDto.setRol(usuario.getRoles());
+
+        httpResponse.put("usuario", userDto);
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
         response.setStatus(HttpStatus.OK.value());

@@ -28,8 +28,8 @@ public class CategoryService extends CustomFieldException {
         return repository.save(category);
     }
 
-    public Category update(Category category, Long id){
-        Optional<Category> optional = findById(id);
+    public Category update(Category category){
+        Optional<Category> optional = findById(category.getId());
         var categoryUpdate = optional.get();
         categoryUpdate.setTitle(category.getTitle());
         categoryUpdate.setDescription(category.getDescription());
