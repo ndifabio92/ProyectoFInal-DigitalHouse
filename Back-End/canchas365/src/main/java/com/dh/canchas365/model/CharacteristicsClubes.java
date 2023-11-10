@@ -17,10 +17,9 @@ public class CharacteristicsClubes implements Serializable {
 
     private String name;
 
-    @Column(length = 255, nullable = false)
     private String url;
 
-    public CharacteristicsClubes(Long id, String name, String url) {
+    public CharacteristicsClubes(String id, String name, String url) {
         this.id = id;
         this.name = name;
         this.url = url;

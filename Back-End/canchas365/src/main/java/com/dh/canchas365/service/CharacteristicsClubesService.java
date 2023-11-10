@@ -29,11 +29,11 @@ public class CharacteristicsClubesService extends CustomFieldException {
     }
 
     public Characteristics update(Characteristics characteristics, String id){
+        Optional<Characteristics> optional = findById(characteristics.getId());
         var characteristicsUpdate = optional.get(id);
         characteristcsUpdate.setName(characteristics.getName());
         characteristicsUpdate.setUrl(characteristics.getUrl());
         return repository.save(characteristicsUpdate);
     }
 
-
-    }
+}
