@@ -117,7 +117,8 @@ const Header = () => {
               <Tooltip title="Ver perfil">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar sx={{ background: "#FF914D" }}>
-                    {storedData.name[0] + storedData.lastname[0]}
+                    {storedData.usuario.name[0] +
+                      storedData.usuario.lastname[0]}
                   </Avatar>
                 </IconButton>
               </Tooltip>

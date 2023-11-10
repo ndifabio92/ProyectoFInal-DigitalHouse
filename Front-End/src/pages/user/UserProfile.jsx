@@ -19,7 +19,7 @@ const UserProfile = () => {
           padding: "20px", // Ajuste del padding en dispositivos móviles
         }}
       >
-        <h2>Hola {storedData.name}!</h2>
+        <h2>Hola {storedData.usuario.name}!</h2>
 
         <Paper
         elevation={3} // Puedes ajustar el nivel de elevación según tu preferencia
@@ -32,16 +32,16 @@ const UserProfile = () => {
           Información personal
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Número de cliente: {storedData.id}
+          Número de cliente: {storedData.usuario.id}
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Nombre: {storedData.name}
+          Nombre: {storedData.usuario.name}
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Apellido: {storedData.lastname}
+          Apellido: {storedData.usuario.lastname}
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Username: {storedData.username}
+          Username: {storedData.usuario.username}
         </Typography>
       </Paper>
 

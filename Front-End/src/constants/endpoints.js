@@ -9,5 +9,5 @@ export const ENDPOINTS = {
     CITY: 'city',
     CATEGORY: 'category',
     USER_CREATE: 'user/signup',
-    USER_SIGN_IN: 'user/signin'
+    USER_SIGN_IN: 'login'
 }
