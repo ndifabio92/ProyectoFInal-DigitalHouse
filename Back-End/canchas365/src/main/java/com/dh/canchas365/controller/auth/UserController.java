@@ -9,7 +9,9 @@ import com.dh.canchas365.model.auth.Rol;
 import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.repository.auth.RolRepository;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
+import com.dh.canchas365.service.auth.UserService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,6 +35,9 @@ public class UserController extends CustomFieldException {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/hello")
     public String hello(){
@@ -117,5 +123,17 @@ public class UserController extends CustomFieldException {
         catch (Exception ex) {
             return customResponseError("No existe usuario con el username "+loginAttemp.getUsername(),HttpStatus.BAD_REQUEST);
         }
+    }
+
+    //    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/user")
+    public List<UsuarioDto> getAll() {
+        return userService.getAll().stream().toList();
+    }
+
+    //    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/user/{id}/update-roles")
+    public ResponseEntity<?> updateRoles(@RequestParam Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateRoles(id));
     }
 }
