@@ -49,12 +49,12 @@ const TableUsers = () => {
     const update = async (id) => {
         await fetchData(`${ENDPOINTS.USER}/${id}/update-roles?id=${id}`, METHODS.PUT)
     }
-        
-    
+
+
     const handleChange = (id) => (event) => {
         setChecked(event.target.checked)
         update(id)
-      };
+    };
 
 
     return (
