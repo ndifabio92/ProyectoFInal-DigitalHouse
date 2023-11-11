@@ -47,4 +47,8 @@ public class Club implements Serializable {
     @JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false )
     private Category category;
 
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Characteristics characteristics;
+
 }

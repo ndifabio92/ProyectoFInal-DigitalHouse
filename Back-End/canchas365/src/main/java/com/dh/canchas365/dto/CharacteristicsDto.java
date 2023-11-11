@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class CharacteristicsClubesDto {
+public class CharacteristicsDto {
     private string id;
     private string name;
     private string url;

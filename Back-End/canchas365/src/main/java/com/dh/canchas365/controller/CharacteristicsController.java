@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/CharacteristicsClubes")
+@RequestMapping("/characteristics")
 public class CharacteristicsController extends CustomFieldException {
 
     @Autowired
-    private CharacteristicsController service;
+    private CharacteristicsClubesService service;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Characteristics characteristics , BindingResult bindingResult){
@@ -53,9 +53,9 @@ public class CharacteristicsController extends CustomFieldException {
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
-            Optional<Category> optional = service.findById(id);
+            Optional<Characteristics> optional = service.findById(id);
             if(optional.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).body(service.update(category,id));
+                return ResponseEntity.status(HttpStatus.OK).body(service.update(characteristics,id));
         }
     }
 }

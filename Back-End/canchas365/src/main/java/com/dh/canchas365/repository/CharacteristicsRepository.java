@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CharacteristicsRepository extends JpaRepository<CharacteristicsClubes, id> {
+public interface CharacteristicsRepository extends JpaRepository<Characteristics, Long> {
 }
 

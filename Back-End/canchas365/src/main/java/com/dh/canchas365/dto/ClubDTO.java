@@ -26,4 +26,6 @@ public class ClubDTO {
 
     private CategoryDto category;
 
+    private CharacteristicsDto characteristics;
+
 }

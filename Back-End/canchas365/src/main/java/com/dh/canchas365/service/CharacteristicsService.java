@@ -14,26 +14,26 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CharacteristicsClubesService extends CustomFieldException {
+public class CharacteristicsService extends CustomFieldException {
     @Autowired
     private CharacteristicsRepository repository;
 
-    @Autowired
-    private ClubRepository clubRepository;
-
-    public List<CharacteristicsClubes> getAll(){
+    public List<CharacteristicsService> getAll(){
         return repository.findAll();
     }
     public Characteristics create(Characteristics characteristics){
         return repository.save(characteristics);
     }
 
-    public Characteristics update(Characteristics characteristics, String id){
+    public Characteristics update(Characteristics characteristics, Long id){
         Optional<Characteristics> optional = findById(characteristics.getId());
         var characteristicsUpdate = optional.get(id);
         characteristcsUpdate.setName(characteristics.getName());
         characteristicsUpdate.setUrl(characteristics.getUrl());
         return repository.save(characteristicsUpdate);
+    }
+    public Optional<Characteristics> findById(Long id){
+        return repository.findById(id);
     }
 
 }

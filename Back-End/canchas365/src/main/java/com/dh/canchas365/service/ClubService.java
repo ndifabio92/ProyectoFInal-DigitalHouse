@@ -37,6 +37,9 @@ public class ClubService {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CharacteristicsService characteristicsService;
+
     @Transactional
     public Club createClub(ClubCreateDTO dto) throws ResourceDuplicateException {
         Club clubToSave = new Club();
@@ -139,5 +142,18 @@ public class ClubService {
             clubesDTO.add(mapper.map(club, ClubDTO.class));
         }
         return clubesDTO;
+    }
+
+    @Transactional
+    public ClubDTO updateClub(Club club){
+
+        Optional<Characteristics> characteristics = characteristicsService.findById(club.getCharacteristics().getId());
+        club.setCharacteristics(characteristics.get());
+        Club clubSaved = clubRepository.save(club);
+
+        ModelMapper mapper = new ModelMapper();
+        ClubDTO clubDTO = mapper.map(clubSaved, ClubDTO.class);
+
+        return clubDTO;
     }
 }

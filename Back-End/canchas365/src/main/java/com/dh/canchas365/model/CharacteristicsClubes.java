@@ -6,24 +6,18 @@ import lombok.*;
 
 import java.io.Serializable;
 @Entity
-@Table(name = "CharacteristicsClubes")
+@Table(name = "Characteristics")
 @Getter
 @Setter
 @NoArgsConstructor
 public class CharacteristicsClubes implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-
+    private Long id;
+    @Column(length = 45, nullable = false, unique = true)
     private String name;
-
+    @Column(length = 255, nullable = false)
     private String url;
-
-    public CharacteristicsClubes(String id, String name, String url) {
-        this.id = id;
-        this.name = name;
-        this.url = url;
-    }
 }
 
     
