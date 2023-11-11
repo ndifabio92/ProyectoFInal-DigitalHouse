@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,6 +29,6 @@ public class ClubDTO {
 
     private CategoryDto category;
 
-    private List<CharacteristicDto> characteristics;
+    private List<CharacteristicDto> characteristics = new ArrayList<>();
 
 }

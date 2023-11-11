@@ -105,12 +105,23 @@ public class ClubService {
     @Transactional
     public ClubDTO updateClub(Club club){
 
-        Optional<Category> category = categoryService.findById(club.getCategory().getId());
-        club.setCategory(category.get());
-        Club clubSaved = clubRepository.save(club);
+        var characteristicsList = new ArrayList<Characteristic>();
 
+        Category category = categoryService.findById(club.getCategory().getId()).orElse(null);
+        club.setCategory(category);
+        for(Characteristic characteristic : club.getCharacteristic()) {
+            var item = characteristicService.findById(characteristic.getId()).orElse(null);
+            characteristicsList.add(item);
+        }
+        club.setCharacteristic(characteristicsList);
+
+        Club clubSaved = clubRepository.save(club);
         ModelMapper mapper = new ModelMapper();
         ClubDTO clubDTO = mapper.map(clubSaved, ClubDTO.class);
+        clubDTO.setCharacteristics(new ArrayList<>());
+        for (Characteristic characteristic : club.getCharacteristic()) {
+            clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
+        }
 
         return clubDTO;
     }
@@ -119,33 +130,42 @@ public class ClubService {
         List<Club> clubes =clubRepository.findAll();
         ModelMapper mapper = new ModelMapper();
         List<ClubDTO> clubesDTO = new ArrayList<>();
-        var characteristicDto = new ArrayList<>();
 
-        for(Club club: clubes){
-            clubesDTO.add(mapper.map(club, ClubDTO.class));
+
+        for (Club club : clubes) {
+            ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+            clubDTO.setCharacteristics(new ArrayList<>());
+
+            for (Characteristic characteristic : club.getCharacteristic()) {
+                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
+            }
+
+            clubesDTO.add(clubDTO);
         }
 
-//        for(Characteristic c: clubes.getC.)){
-//            clubesDTO.add(mapper.map(club, ClubDTO.class));
-//        }
-//        clubesDTO.get().setCharacteristics();
         return clubesDTO;
     }
 
     public void deleteClub(Long id){
-
         clubRepository.deleteById(id);
-
     }
 
     public ClubDTO findById(Long id){
-        Optional<Club> clubOptional = clubRepository.findById(id);
-        ModelMapper mapper = new ModelMapper();
-        ClubDTO clubDTO = null;
-        if(clubOptional.isPresent()) {
-            clubDTO = mapper.map(clubOptional.get(), ClubDTO.class);
+        Club club = clubRepository.findById(id).orElse(null);
+
+        if(club != null) {
+            ModelMapper mapper = new ModelMapper();
+
+            ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+            clubDTO.setCharacteristics(new ArrayList<>());
+            clubDTO = mapper.map(club, ClubDTO.class);
+            for (Characteristic characteristic : club.getCharacteristic()) {
+                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
+            }
+            return clubDTO;
+        } else {
+            return null;
         }
-        return clubDTO;
     }
 
     public List<ClubDTO> getClubsRecommended(){
