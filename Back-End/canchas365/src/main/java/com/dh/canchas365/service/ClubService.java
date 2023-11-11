@@ -1,10 +1,12 @@
 package com.dh.canchas365.service;
 
+import com.dh.canchas365.dto.CharacteristicDto;
 import com.dh.canchas365.dto.ClubCreateDTO;
 import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.dto.images.ImageDTO;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.model.Category;
+import com.dh.canchas365.model.Characteristic;
 import com.dh.canchas365.model.Club;
 import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Address;
@@ -42,6 +44,8 @@ public class ClubService {
 
     @Transactional
     public Club createClub(ClubCreateDTO dto) throws ResourceDuplicateException {
+        var characteristicsList = new ArrayList<Characteristic>();
+
         Club clubToSave = new Club();
         clubToSave.setName(dto.getName());
         clubToSave.setPhone_number(dto.getPhone_number());
@@ -69,7 +73,20 @@ public class ClubService {
                 throw new RuntimeException(e);
             }
         }
+        for(CharacteristicDto characteristic: dto.getCharacteristics()) {
+            var optional = characteristicService.findById(characteristic.getId()).orElse(null);
+            if(optional == null) {
+                try {
+                    throw new Exception("El Id de caracteristica no existe");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            characteristicsList.add(optional);
+        }
+
         clubToSave.setCategory(optionalCategory.get());
+        clubToSave.setCharacteristic(characteristicsList);
 
         Club clubSaved = clubRepository.save(clubToSave);
 
@@ -101,10 +118,17 @@ public class ClubService {
     public List<ClubDTO> getAllClubs(){
         List<Club> clubes =clubRepository.findAll();
         ModelMapper mapper = new ModelMapper();
-        List<ClubDTO> clubesDTO = new ArrayList<ClubDTO>();
+        List<ClubDTO> clubesDTO = new ArrayList<>();
+        var characteristicDto = new ArrayList<>();
+
         for(Club club: clubes){
             clubesDTO.add(mapper.map(club, ClubDTO.class));
         }
+
+//        for(Characteristic c: clubes.getC.)){
+//            clubesDTO.add(mapper.map(club, ClubDTO.class));
+//        }
+//        clubesDTO.get().setCharacteristics();
         return clubesDTO;
     }
 

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,6 +28,6 @@ public class ClubDTO {
 
     private CategoryDto category;
 
-    private CharacteristicDto characteristics;
+    private List<CharacteristicDto> characteristics;
 
 }
