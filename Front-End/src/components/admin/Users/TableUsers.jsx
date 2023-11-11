@@ -28,7 +28,7 @@ const TableUsers = () => {
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        if (data) {
+        if (data || updateUser ) {
             setUsers(data)
         }
     }, [data]);
