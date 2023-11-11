@@ -8,7 +8,6 @@ export const DataProvider = ({ children }) => {
   const [storedData, setStoredData] = useState(null);
 
   const storeData = (data) => {
-    // Guardar 'data.token' en el localStorage
     localStorage.setItem("token", JSON.stringify(data.token));
     setStoredData(data);
   };

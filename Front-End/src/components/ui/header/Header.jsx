@@ -60,9 +60,19 @@ const Header = () => {
   };
 
   const handleCloseUserMenu = (setting) => {
-    if (setting === "Perfil") {
+    if (
+      setting === "Perfil" &&
+      storedData.usuario.rol[0].name.includes("USER")
+    ) {
       console.log(storedData);
       navigate("/userprofile");
+    }
+    if (
+      setting === "Perfil" &&
+      storedData.usuario.rol[0].name.includes("ADMIN")
+    ) {
+      console.log(storedData);
+      navigate("/admin");
     }
     if (setting === "Cerrar sesión") {
       handleLogout();

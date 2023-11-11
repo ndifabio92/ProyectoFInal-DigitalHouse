@@ -39,11 +39,16 @@ const FormUserSignIn = () => {
     }
     if (data) {
       storeData(data);
+      console.log(data);
       Swal.fire({
         title: "Bienvenido/a!",
         icon: "success",
       });
-      navigate("/");
+      if(data.usuario.rol[0].name.includes('ADMIN')){
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     }
   }, [data, error]);
 

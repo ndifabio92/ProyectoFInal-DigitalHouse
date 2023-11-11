@@ -25,7 +25,7 @@ const FormUser = () => {
   useEffect(() => {
     if (error) {
       Swal.fire({
-        title: "Fallo la creacion",
+        title: "Falló la creación",
         icon: "error",
       });
     }
