@@ -9,20 +9,50 @@ import NotFound from "../pages/notFound/NotFound";
 import Playfields from "../pages/admin/Playfields";
 import UserSignIn from "../pages/user/UserSignIn";
 import UserProfile from "../pages/user/UserProfile";
+import { RequireAuth } from "../components/user/requireAuth";
+import { useDataContext } from "../components/user/form 2/Context";
 
 export const Navigation = () => {
+
+  const {isLogged, setIsLogged} = useDataContext();
+
   return (
     <>
       <Header />
       <Routes>
+
         <Route exact path="/" element={<Home />} />
+
         <Route exact path="/club/:id" element={<Detail />} />
-        <Route exact path="/admin" element={<Admin />} />
+
+        <Route
+          exact
+          path="/admin"
+          element={
+            <RequireAuth isLogged={isLogged}>
+              <Admin />
+            </RequireAuth>
+          }
+        />
+
         <Route exact path="/admin/club/:id" element={<Playfields />} />
+
         <Route exact path="/signup" element={<User />} />
-        <Route exact path="/signin" element={<UserSignIn />} />
-        <Route exact path="/userprofile" element={<UserProfile />} />
+
+        <Route exact path="/signin" element={<UserSignIn isLogged={isLogged} setIsLogged={setIsLogged}/>} />
+
+        <Route
+          exact
+          path="/userprofile"
+          element={
+            <RequireAuth isLogged={isLogged}>
+              <UserProfile />
+            </RequireAuth>
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
+
       </Routes>
       <Footer />
     </>

@@ -27,7 +27,7 @@ const FormUserSignIn = () => {
     },
   });
 
-  const { storeData } = useDataContext();
+  const { storeData, setIsLogged } = useDataContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,15 +36,17 @@ const FormUserSignIn = () => {
         title: "Los datos ingresados son incorrectos",
         icon: "error",
       });
+      formik.resetForm();
     }
     if (data) {
       storeData(data);
+      setIsLogged(true);
       console.log(data);
       Swal.fire({
         title: "Bienvenido/a!",
         icon: "success",
       });
-      if(data.usuario.rol[0].name.includes('ADMIN')){
+      if (data.usuario.rol[0].name.includes("ADMIN")) {
         navigate("/admin");
       } else {
         navigate("/");

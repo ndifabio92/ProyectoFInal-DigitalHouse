@@ -22,7 +22,7 @@ const settings = ["Perfil", "Cerrar sesión"];
 const Header = () => {
   const logo = "./logoNaranjaNeg.png";
 
-  const { storedData, setStoredData } = useDataContext();
+  const { storedData, setStoredData, setIsLogged } = useDataContext();
 
   const navigate = useNavigate();
 
@@ -48,6 +48,7 @@ const Header = () => {
       icon: "warning",
     });
     setStoredData(null);
+    setIsLogged(false);
     localStorage.removeItem("token");
     navigate("/");
   };
