@@ -9,9 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class CharacteristicsDto {
-    private string id;
-    private string name;
-    private string url;
+public class CharacteristicDto {
+    private Long id;
+    private String name;
+    private String url;
 }

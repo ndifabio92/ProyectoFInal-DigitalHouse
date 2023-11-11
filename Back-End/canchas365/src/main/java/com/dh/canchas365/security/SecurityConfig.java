@@ -59,6 +59,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/city","GET").permitAll();
                     auth.requestMatchers("/club/**","GET").permitAll();
                     auth.requestMatchers("/playingField/**","GET").permitAll();
+                    auth.requestMatchers("/characteristic/**","GET").permitAll();
                     auth.requestMatchers("/image","GET").permitAll();
 
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
