@@ -56,7 +56,7 @@ public class SecurityConfig {
                 .csrf(config -> config.disable())
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/login", "POST").permitAll();
+                    auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers("/user/signup").permitAll();
 
                     auth.requestMatchers("/category/**","GET").permitAll();
