@@ -32,11 +32,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return new User(usuario.getUsername(), usuario.getPassword(), true, true, true, true, authorities);
     }
-
-    public Usuario getByUsername(String username) {
-        Optional<Usuario> usuario = usuarioRepository.findByUsername(username);
-        return usuario.get();
-    }
-
-
 }
