@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import AdminCategories from '../../components/admin/Categories/AdminCategories'
 import AdminClubes from '../../components/admin/Clubs/AdminClubs'
-import AdminUsers from "../../components/admin/Users/AdminUsersjsx";
+import AdminUsers from "../../components/admin/Users/AdminUsers.jsx";
 
 
 
