@@ -10,6 +10,7 @@ import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.repository.auth.RolRepository;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
 import com.dh.canchas365.service.auth.UserService;
+import com.dh.canchas365.service.mail.EmailService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class UserController extends CustomFieldException {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/hello")
     public String hello(){
@@ -80,6 +84,8 @@ public class UserController extends CustomFieldException {
                     .build();
 
             usuarioRepository.save(usuario);
+            var message = emailService.buildMessage(usuario);
+            emailService.sendEmail(usuario.getUsername(),"Confirmacion de creacion de cuenta",message);
 
             return ResponseEntity.ok(usuario);
         } catch (Exception ex) {
@@ -134,6 +140,10 @@ public class UserController extends CustomFieldException {
     //    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/user/{id}/update-roles")
     public ResponseEntity<?> updateRoles(@RequestParam Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateRoles(id));
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.updateRoles(id));
+        } catch (Exception ex) {
+            return customResponseError("No se puedo actualizar el rol",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
