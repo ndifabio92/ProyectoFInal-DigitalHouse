@@ -36,9 +36,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Autowired
     private UserService userService;
 
-    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService){
+    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService, UserService userService){
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
+        this.userService = userService;
     }
 
     @Override
