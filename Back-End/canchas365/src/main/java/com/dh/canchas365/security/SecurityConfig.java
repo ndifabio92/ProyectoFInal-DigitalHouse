@@ -4,6 +4,7 @@ import com.dh.canchas365.security.filters.JwtAuthenticationFilter;
 import com.dh.canchas365.security.filters.JwtAuthorizationFilter;
 import com.dh.canchas365.security.jwt.JwtUtils;
 import com.dh.canchas365.service.auth.UserDetailsServiceImpl;
+import com.dh.canchas365.service.auth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,10 +41,13 @@ public class SecurityConfig {
     @Autowired
     JwtAuthorizationFilter jwtAuthorizationFilter;
 
+    @Autowired
+    UserService userService;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
 
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, userDetailsService);
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, userDetailsService, userService);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
        // jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
