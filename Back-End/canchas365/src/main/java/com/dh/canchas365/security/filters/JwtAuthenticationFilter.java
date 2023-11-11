@@ -5,6 +5,7 @@ import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
 import com.dh.canchas365.security.jwt.JwtUtils;
 import com.dh.canchas365.service.auth.UserDetailsServiceImpl;
+import com.dh.canchas365.service.auth.UserService;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,9 +33,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService){
+    @Autowired
+    private UserService userService;
+
+    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService, UserService userService){
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
+        this.userService = userService;
     }
 
     @Override
@@ -70,7 +75,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
 
         User user = (User) authResult.getPrincipal();
-        var usuario = userDetailsService.getByUsername(user.getUsername());
+        var usuario = userService.getByUsername(user.getUsername());
 
 
         String token = jwtUtils.generateAccesToken(user.getUsername());
