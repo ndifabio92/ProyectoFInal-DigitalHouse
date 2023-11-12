@@ -10,8 +10,6 @@ import { Box } from '@mui/material';
 import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints'
 import { useState, useEffect } from 'react';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { METHODS } from '../../../constants/methods';
 import useFetchDataApi from '../../../hooks/useFetchDataApi';
@@ -43,11 +41,6 @@ const TableUsers = () => {
 
 
     const [checked, setChecked] = useState(false);
-
-    // const update = async (id) => {
-    // await fetchData(`${ENDPOINTS.USER}/${id}/update-roles?id=${id}`, METHODS.PUT)
-    // }
-
 
     const handleChange = (id) => async (event) => {
         setChecked(event.target.checked)
