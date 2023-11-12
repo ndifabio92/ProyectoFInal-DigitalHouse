@@ -1,4 +1,4 @@
-import FormUser from '../../components/user/form/FormUser'
+import FormUser from '../../components/user/signup/FormUser';
 import { Container } from "@mui/material";
 
 const User = () => {

@@ -28,6 +28,7 @@ const useFetchDataApi = () => {
             if (method !== METHODS.GET && payload) {
                 options.body = JSON.stringify(payload);
             }
+
             const response = await fetch(url, options);
             const jsonData = await response.json();
 

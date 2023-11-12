@@ -10,5 +10,6 @@ export const ENDPOINTS = {
     CATEGORY: 'category',
     CHARACTERISTIC: 'characteristic', 
     USER:'user',
-    USER_CREATE: 'user/signup'
+    USER_CREATE: 'user/signup',
+    USER_SIGN_IN: 'login'
 }
