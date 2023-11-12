@@ -67,7 +67,7 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
         } else {
             Swal.fire({
                 title: 'Caracteristica agregada con éxito',
-                icon: 'warning',
+                icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
@@ -96,7 +96,7 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
         } else {
             Swal.fire({
                 title: 'Característica modificada con éxito',
-                icon: 'warning',
+                icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {

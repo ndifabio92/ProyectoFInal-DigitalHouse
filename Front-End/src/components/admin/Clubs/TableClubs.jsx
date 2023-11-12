@@ -90,9 +90,8 @@ const TableAdmin = ({ handleUpdate }) => {
                                             <TableCell align="center">Nombre</TableCell>
                                             <TableCell align="center">Deporte</TableCell>
                                             <TableCell align='center'>Domicilio</TableCell>
-                                            <TableCell align='center'>Ciudad</TableCell>
-                                            <TableCell align='center'>Telefono</TableCell>
                                             <TableCell align='center'>Recomendado</TableCell>
+                                            <TableCell align='center'>Características</TableCell>
                                             <TableCell align='center'>Acciones</TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -112,16 +111,15 @@ const TableAdmin = ({ handleUpdate }) => {
                                                     {row.category.title}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.address.street + " N° " + row.address.number}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.address.city.name}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.phone_number}
+                                                    <p> {row.address.street + " N° " + row.address.number}</p>
+                                                    <p>{row.address.city.name }</p>
+                                                    <p> {row.phone_number}</p>
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.recommended ? "Si" : "No"}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align='center'>
+                                                    {row.characteristics.map((char)=>(<p key={char.id}> {char.name} </p>))}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>

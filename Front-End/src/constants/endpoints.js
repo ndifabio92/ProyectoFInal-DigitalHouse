@@ -8,7 +8,7 @@ export const ENDPOINTS = {
     SPORT: 'sport',
     CITY: 'city',
     CATEGORY: 'category',
-    CHARACTERISTIC: 'characteristic',
+    CHARACTERISTIC: 'characteristic', 
     USER:'user',
     USER_CREATE: 'user/signup'
 }

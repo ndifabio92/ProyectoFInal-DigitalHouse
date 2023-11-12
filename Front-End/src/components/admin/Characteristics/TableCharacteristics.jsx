@@ -50,7 +50,7 @@ const TableCharacteristic = ({ handleUpdate }) => {
         }).then( async (result) => {
         
             if (result.isConfirmed) {
-                await fetchData(ENDPOINTS.CATEGORY, METHODS.DELETE, id)
+                await fetchData(ENDPOINTS.CHARACTERISTIC, METHODS.DELETE, id)
                 if (deleteError) {
                     console.error('Error al eliminar la característica:', error)
                     Swal.fire({

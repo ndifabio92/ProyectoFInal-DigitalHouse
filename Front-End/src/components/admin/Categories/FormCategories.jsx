@@ -73,7 +73,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
         } else {
             Swal.fire({
                 title: 'Categoria agregada con éxito',
-                icon: 'warning',
+                icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
@@ -102,7 +102,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
         } else {
             Swal.fire({
                 title: 'Categoria modificada con éxito',
-                icon: 'warning',
+                icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
