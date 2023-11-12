@@ -58,7 +58,7 @@ public class UserService {
         }
         usuario.setRoles(roles);
         repository.save(usuario);
-        
+
         usuarioDto.setId(usuario.getId());
         usuarioDto.setUsername(usuario.getUsername());
         usuarioDto.setName(usuario.getName());
