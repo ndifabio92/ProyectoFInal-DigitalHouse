@@ -12,9 +12,10 @@ import Button from "@mui/material/Button";
 import { Tooltip } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
-import { useDataContext } from "../../user/form 2/Context";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../auth/context";
+import { logout } from "../../../shared/logout";
 
 const pages = ["Crear cuenta", "Iniciar sesión"];
 const settings = ["Perfil", "Cerrar sesión"];
@@ -22,8 +23,7 @@ const settings = ["Perfil", "Cerrar sesión"];
 const Header = () => {
   const logo = "./logoNaranjaNeg.png";
 
-  const { storedData, setStoredData, setIsLogged } = useDataContext();
-
+  const { userData } = AuthContext();
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -47,9 +47,7 @@ const Header = () => {
       title: "Chau!",
       icon: "warning",
     });
-    setStoredData(null);
-    setIsLogged(false);
-    localStorage.removeItem("token");
+    logout();
     navigate("/");
   };
 
@@ -63,16 +61,16 @@ const Header = () => {
   const handleCloseUserMenu = (setting) => {
     if (
       setting === "Perfil" &&
-      storedData.usuario.rol[0].name.includes("USER")
+      userData.rol?.some(x => x.name === "USER")
     ) {
-      console.log(storedData);
+      console.log(userData);
       navigate("/userprofile");
     }
     if (
       setting === "Perfil" &&
-      storedData.usuario.rol[0].name.includes("ADMIN")
+      userData.rol?.some(x => x.name === "ADMIN")
     ) {
-      console.log(storedData);
+      console.log(userData);
       navigate("/admin");
     }
     if (setting === "Cerrar sesión") {
@@ -116,7 +114,7 @@ const Header = () => {
             </div>
           </Typography>
 
-          {storedData ? (
+          {userData ? (
             <Box
               sx={{
                 marginLeft: "auto",
@@ -128,8 +126,7 @@ const Header = () => {
               <Tooltip title="Ver perfil">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar sx={{ background: "#FF914D" }}>
-                    {storedData.usuario.name[0] +
-                      storedData.usuario.lastname[0]}
+                    {userData?.name[0].toUpperCase() + userData?.lastname[0].toUpperCase()}
                   </Avatar>
                 </IconButton>
               </Tooltip>

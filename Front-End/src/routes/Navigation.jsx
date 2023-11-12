@@ -9,12 +9,11 @@ import NotFound from "../pages/notFound/NotFound";
 import Playfields from "../pages/admin/Playfields";
 import UserSignIn from "../pages/user/UserSignIn";
 import UserProfile from "../pages/user/UserProfile";
-import { RequireAuth } from "../components/user/requireAuth";
-import { useDataContext } from "../components/user/form 2/Context";
+import { AdminRoute } from "./AdminRoute";
+import { UserRoute } from "./UserRoute";
+
 
 export const Navigation = () => {
-
-  const {isLogged, setIsLogged} = useDataContext();
 
   return (
     <>
@@ -29,25 +28,26 @@ export const Navigation = () => {
           exact
           path="/admin"
           element={
-            <RequireAuth isLogged={isLogged}>
+            <AdminRoute>
               <Admin />
-            </RequireAuth>
+            </AdminRoute>
           }
         />
 
-        <Route exact path="/admin/club/:id" element={<Playfields />} />
+
+        <Route exact path="/admin/club/:id" element={<AdminRoute><Playfields /></AdminRoute>} />
 
         <Route exact path="/signup" element={<User />} />
 
-        <Route exact path="/signin" element={<UserSignIn isLogged={isLogged} setIsLogged={setIsLogged}/>} />
+        <Route exact path="/signin" element={<UserSignIn />} />
 
         <Route
           exact
           path="/userprofile"
           element={
-            <RequireAuth isLogged={isLogged}>
+            <UserRoute>
               <UserProfile />
-            </RequireAuth>
+            </UserRoute>
           }
         />
 

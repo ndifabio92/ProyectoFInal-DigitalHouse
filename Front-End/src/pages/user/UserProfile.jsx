@@ -1,27 +1,27 @@
 import { Container, Paper, Typography } from "@mui/material";
-import { useDataContext } from "../../components/user/form 2/Context";
+import { AuthContext } from "../../auth/context";
 
 const UserProfile = () => {
-  const {storedData} = useDataContext();
+  const { userData } = AuthContext();
 
   return (
-    
-      <Container
-        maxWidth="xxl"
-        sx={{
-          backgroundColor: "#FFFFFF",
-          color: "#1F2E7B",
-          display: "flex",
-          flexDirection: "column",
-          textAlign: "center",
-          gap: "10px",
-          mt: { xs: "50px", sm: "150px" }, // Ajuste del margen en dispositivos móviles
-          padding: "20px", // Ajuste del padding en dispositivos móviles
-        }}
-      >
-        <h2>Hola {storedData.usuario.name}!</h2>
 
-        <Paper
+    <Container
+      maxWidth="xxl"
+      sx={{
+        backgroundColor: "#FFFFFF",
+        color: "#1F2E7B",
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "center",
+        gap: "10px",
+        mt: { xs: "50px", sm: "150px" }, // Ajuste del margen en dispositivos móviles
+        padding: "20px", // Ajuste del padding en dispositivos móviles
+      }}
+    >
+      <h2>Hola {userData.name}!</h2>
+
+      <Paper
         elevation={3} // Puedes ajustar el nivel de elevación según tu preferencia
         sx={{
           p: 2,
@@ -30,25 +30,25 @@ const UserProfile = () => {
       >
         <Typography variant="h5" sx={{ color: "#1F2E7B", fontWeight: 'bold' }}>
           Información personal
-        <br />
+          <br />
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Nombre: {storedData.usuario.name}
+          Nombre: {userData.name}
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Apellido: {storedData.usuario.lastname}
+          Apellido: {userData.lastname}
         </Typography>
         <Typography variant="body1" sx={{ color: "#1F2E7B" }}>
-          Username: {storedData.usuario.username}
+          Username: {userData.username}
         </Typography>
       </Paper>
 
-        <div>
-          <h2>Tus favoritos</h2>
-        </div>
+      <div>
+        <h2>Tus favoritos</h2>
+      </div>
 
-      </Container>
-    
+    </Container>
+
   );
 };
 

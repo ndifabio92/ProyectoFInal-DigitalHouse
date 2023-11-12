@@ -8,8 +8,8 @@ import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { ENDPOINTS } from "../../../constants/endpoints";
 import { METHODS } from "../../../constants/methods";
-import { useDataContext } from "./Context";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../auth/context";
 
 const FormUserSignIn = () => {
   const { data, isLoading, error, fetchData } = useFetchDataApi();
@@ -27,7 +27,7 @@ const FormUserSignIn = () => {
     },
   });
 
-  const { storeData, setIsLogged } = useDataContext();
+  const { saveData, setIsLogged } = AuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const FormUserSignIn = () => {
       formik.resetForm();
     }
     if (data) {
-      storeData(data);
+      saveData(data);
       setIsLogged(true);
       console.log(data);
       Swal.fire({

@@ -1,15 +1,14 @@
-import './App.css';
-import { DataProvider } from './components/user/form 2/Context';
+
+import { DataProvider } from './auth/context';
 import { Navigation } from './routes/Navigation';
+import './App.css';
 
 const App = () => {
 
   return (
-      <DataProvider>
-
-      <Navigation /> 
-    
-      </DataProvider>
+    <DataProvider>
+      <Navigation />
+    </DataProvider>
   );
 };
 
