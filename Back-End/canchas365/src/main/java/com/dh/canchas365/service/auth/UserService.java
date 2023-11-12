@@ -35,6 +35,7 @@ public class UserService {
             usuarioDto.setName(usuario.getName());
             usuarioDto.setLastname(usuario.getLastname());
             usuarioDto.setRol(usuario.getRoles());
+            usuarioDto.setIsAdmin(usuario.getRoles().stream().anyMatch(rol -> rol.getName() == ERol.ADMIN));
             usuarioDtos.add(usuarioDto);
         });
 
@@ -42,21 +43,22 @@ public class UserService {
     }
 
     public UsuarioDto updateRoles(Long id) {
-        var usuario = repository.findById(id).get();
+        var usuario = repository.findById(id).orElse(null);
         boolean isAdmin = usuario.getRoles().stream().anyMatch(rol -> rol.getName() == ERol.ADMIN);
         Set<Rol> roles = new HashSet<>(usuario.getRoles());
+        UsuarioDto usuarioDto = new UsuarioDto();
 
         if (isAdmin) {
             roles.removeIf(rol -> rol.getName() == ERol.ADMIN);
-
+            usuarioDto.setIsAdmin(false);
         } else {
             Rol rolAdmin = rolRepository.findByName(ERol.ADMIN);
-           roles.add(rolAdmin);
+            roles.add(rolAdmin);
+            usuarioDto.setIsAdmin(true);
         }
         usuario.setRoles(roles);
         repository.save(usuario);
 
-        UsuarioDto usuarioDto = new UsuarioDto();
         usuarioDto.setId(usuario.getId());
         usuarioDto.setUsername(usuario.getUsername());
         usuarioDto.setName(usuario.getName());
