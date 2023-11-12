@@ -27,7 +27,7 @@ const FormUserSignIn = () => {
     },
   });
 
-  const { saveData, setIsLogged } = AuthContext();
+  const { saveData } = AuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,8 +40,6 @@ const FormUserSignIn = () => {
     }
     if (data) {
       saveData(data);
-      setIsLogged(true);
-      console.log(data);
       Swal.fire({
         title: "Bienvenido/a!",
         icon: "success",

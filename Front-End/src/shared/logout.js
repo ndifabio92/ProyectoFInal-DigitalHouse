@@ -1,8 +1,6 @@
-import { AuthContext } from "../auth/context"
 
-export const logout = () => {
+export const logout = ({setUserData, setIsLogged}) => {
 
-    const { setUserData, setIsLogged } = AuthContext();
     setUserData(null);
     setIsLogged(false);
     localStorage.removeItem("token");

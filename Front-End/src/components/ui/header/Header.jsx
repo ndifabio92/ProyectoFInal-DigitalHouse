@@ -23,7 +23,7 @@ const settings = ["Perfil", "Cerrar sesión"];
 const Header = () => {
   const logo = "./logoNaranjaNeg.png";
 
-  const { userData } = AuthContext();
+  const { userData , setUserData, setIsLogged} = AuthContext();
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -42,12 +42,12 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
-  const handleLogout = () => {
+  const handleLogout = (setUserData, setIsLogged) => {
     Swal.fire({
-      title: "Chau!",
+      title: "¡Hasta luego! Esperamos verte pronto 😊",
       icon: "warning",
     });
-    logout();
+    logout(setUserData, setIsLogged);
     navigate("/");
   };
 
@@ -63,18 +63,18 @@ const Header = () => {
       setting === "Perfil" &&
       userData.rol?.some(x => x.name === "USER")
     ) {
-      console.log(userData);
+      //console.log(userData);
       navigate("/userprofile");
     }
     if (
       setting === "Perfil" &&
       userData.rol?.some(x => x.name === "ADMIN")
     ) {
-      console.log(userData);
+      //console.log(userData);
       navigate("/admin");
     }
     if (setting === "Cerrar sesión") {
-      handleLogout();
+      handleLogout({setUserData, setIsLogged});
     }
     setAnchorElUser(null);
   };
@@ -94,7 +94,6 @@ const Header = () => {
           <Typography
             variant="h4"
             noWrap
-            //component="a"
             sx={{
               display: "flex",
               color: "inherit",

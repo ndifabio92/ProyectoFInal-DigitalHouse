@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
     const [isLogged, setIsLogged] = useState(false)
 
     useEffect(() => {
-        console.log(userData)
+        //console.log(userData)
         const storedUserData = localStorage.getItem("user");
         if (storedUserData) {
             setUserData(JSON.parse(storedUserData));

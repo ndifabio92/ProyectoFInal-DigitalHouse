@@ -12,14 +12,11 @@ import UserProfile from "../pages/user/UserProfile";
 import { AdminRoute } from "./AdminRoute";
 import { UserRoute } from "./UserRoute";
 
-
 export const Navigation = () => {
-
   return (
     <>
       <Header />
       <Routes>
-
         <Route exact path="/" element={<Home />} />
 
         <Route exact path="/club/:id" element={<Detail />} />
@@ -34,8 +31,15 @@ export const Navigation = () => {
           }
         />
 
-
-        <Route exact path="/admin/club/:id" element={<AdminRoute><Playfields /></AdminRoute>} />
+        <Route
+          exact
+          path="/admin/club/:id"
+          element={
+            <AdminRoute>
+              <Playfields />
+            </AdminRoute>
+          }
+        />
 
         <Route exact path="/signup" element={<User />} />
 
@@ -52,7 +56,6 @@ export const Navigation = () => {
         />
 
         <Route path="*" element={<NotFound />} />
-
       </Routes>
       <Footer />
     </>
