@@ -20,7 +20,7 @@ public class CategoryController extends CustomFieldException {
     @Autowired
     private CategoryService service;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Category category, BindingResult bindingResult){
         try{

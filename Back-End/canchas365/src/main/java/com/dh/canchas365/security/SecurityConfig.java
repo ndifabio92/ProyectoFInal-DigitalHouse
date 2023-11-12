@@ -73,8 +73,8 @@ public class SecurityConfig {
                     // permito crear usuario para crear el usuario maestro.. luego comentar
                     //auth.requestMatchers("/usuarios/crear").permitAll();
                     // comento esta linea que me quite el secrity a toda la API
-                    auth.anyRequest().authenticated();
-//                    auth.anyRequest().permitAll();
+//                    auth.anyRequest().authenticated();
+                    auth.anyRequest().permitAll();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
