@@ -6,9 +6,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 import Loading from '../../loading/Loading';
-import {ENDPOINTS} from '../../../constants/endpoints'
+import { ENDPOINTS } from '../../../constants/endpoints'
 import { useState, useEffect } from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -20,47 +20,45 @@ import useFetchDataApi from '../../../hooks/useFetchDataApi';
 
 
 const TableUsers = () => {
-    
-    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.USER}`); 
 
-    const { data:updateUser, isLoading: updateUserIsLoading , error:updateUserError, fetchData } = useFetchDataApi();
+    const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.USER}`);
 
-    const [users, setUsers] = useState([])
+    const { data: updateUser, isLoading: updateUserIsLoading, error: updateUserError, fetchData } = useFetchDataApi();
+
+    const [users, setUsers] = useState([]);
+
+
 
     useEffect(() => {
-        if (data || updateUser ) {
+        if (data) {
             setUsers(data)
         }
-    }, [data]);
+        if (updateUser) {
+            setUsers(
+                data.map(user => user.id === updateUser.id ? { ...user, ...updateUser } : user)
+            )
+        }
+
+    }, [data, updateUser]);
 
 
     const [checked, setChecked] = useState(false);
 
-    const isAdmin = (id) => {
-        const user = data.find(user => user.id === id);
-      
-        if (user && user.rol.some(role => role.name === 'ADMIN')) {
-          return true;
-        }
-      
-        return false;
-      };
-
-    const update = async (id) => {
-        await fetchData(`${ENDPOINTS.USER}/${id}/update-roles?id=${id}`, METHODS.PUT)
-    }
+    // const update = async (id) => {
+    // await fetchData(`${ENDPOINTS.USER}/${id}/update-roles?id=${id}`, METHODS.PUT)
+    // }
 
 
-    const handleChange = (id) => (event) => {
+    const handleChange = (id) => async (event) => {
         setChecked(event.target.checked)
-        update(id)
+        await fetchData(`${ENDPOINTS.USER}/${id}/update-roles?id=${id}`, METHODS.PUT)
     };
 
 
     return (
         <Box sx={{ width: "100%" }}>
             {
-                (isLoading || updateUserIsLoading)  ? <Loading /> :
+                (isLoading || updateUserIsLoading) ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
                         <TableContainer component={Paper}>
                             {users &&
@@ -72,7 +70,7 @@ const TableUsers = () => {
                                             <TableCell align="center">Nombre</TableCell>
                                             <TableCell align="center">Apellido</TableCell>
                                             <TableCell align='center'>Roles</TableCell>
-                                            <TableCell align='center'>Aciones</TableCell>
+                                            <TableCell align='center'>Administrador</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -94,18 +92,18 @@ const TableUsers = () => {
                                                     {row.lastname}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.rol?.map((rol) =>(
-                                                         <p key={rol.id}> {rol.name} </p> 
-                                                        ))
+                                                    {row.rol?.map((rol) => (
+                                                        <p key={rol.id}> {rol.name} </p>
+                                                    ))
                                                     }
                                                 </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>                                           
+                                                <TableCell component="th" scope="row" align='center'>
                                                     <Switch
-                                                        checked={isAdmin(row.id)}
+                                                        checked={row.isAdmin}
                                                         onChange={handleChange(row.id)}
                                                         inputProps={{ 'aria-label': 'controlled' }}
-                                                    />                  
-                                                    
+                                                    />
+
                                                 </TableCell>
                                             </TableRow>
                                         ))}
