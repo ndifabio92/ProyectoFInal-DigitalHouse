@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { Container, Box } from "@mui/material";
+import FormCategories from "./FormCharacteristics";
+import TableCategories from "./TableCharacteristics";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import AdminCategories from '../../components/admin/Categories/AdminCategories'
-import AdminClubes from '../../components/admin/Clubs/AdminClubs'
-import AdminUsers from "../../components/admin/Users/AdminUsers.jsx";
-import AdminCharacteristics from "../../components/admin/Characteristics/AdminCharacteristics.jsx";
-
-
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -29,17 +25,25 @@ function CustomTabPanel(props) {
     )
 }
 
-const Admin = () => {
+const AdminCharacteristics = () => {
 
     const [value, setValue] = useState(0);
+
+    const [characteristic, setCharacteristic] = useState({});
+
+    const [action, setAction] = useState('AGREGAR CARACTERISTICA');
 
     const handleChange = (event, newValue ) => {
         setValue(newValue);
     };
 
+    const handleUpdate = (newValue, characteristic, action) => {
+        setCharacteristic (characteristic)
+        setAction(action)
+        setValue(newValue);
+    };
 
     return (
-        <>
             <Container maxWidth="xxl"
                 sx={{
                     backgroundColor: '#FFFFFF',
@@ -50,45 +54,24 @@ const Admin = () => {
                     textAlign: 'center',
                     gap: '10px',
                     flexWrap: 'wrap',
-                    mt: '150px',
-                    padding: '40px'
+                    padding: '20px'
                 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Clubes" />
-                        <Tab label="Categorias" />
-                        <Tab label="Caracteristicas" />
-                        <Tab label="Usuarios" />
+                        <Tab label="Listado de Características" />
+                        <Tab label={action} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <AdminClubes />
+                    <TableCategories handleUpdate={handleUpdate}/>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <AdminCategories />
+                    <FormCategories action={action} characteristic={characteristic} handleUpdate={handleUpdate} />
                 </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                    <AdminCharacteristics />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={3}>
-                    <AdminUsers />
-                </CustomTabPanel>
+               
             </Container>
-            <Box
-                sx={{
-                    display: { xs: 'block', sm: 'none' },
-                    color: 'red',
-                    padding: '30px',
-                    textAlign: 'center',
-                    fontSize: '15px',
-                    marginY: '150px'
-                }}
-            >
-                <p>Pagina no disponible desde el tipo de dispositivo desde el que desea acceder</p>
-            </Box>
 
-        </>
     )
 }
 
-export default Admin;
+export default AdminCharacteristics;
