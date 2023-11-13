@@ -11,5 +11,6 @@ export const ENDPOINTS = {
     CATEGORY: 'category',
     USER: 'user',
     USER_CREATE: 'user/signup',
-    USER_SIGN_IN: 'login'
+    USER_SIGN_IN: 'login',
+    EMAIL_CONFIRM: 'email/sendMessage'
 }

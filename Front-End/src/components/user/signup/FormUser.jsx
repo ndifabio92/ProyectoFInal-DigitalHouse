@@ -10,6 +10,7 @@ import Loading from "../../loading/Loading";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const FormUser = () => {
   const { data, isLoading, error, fetchData } = useFetchDataApi();
   const navigate = useNavigate();
@@ -30,11 +31,39 @@ const FormUser = () => {
       });
     }
     if (data) {
+      console.log(data);
       Swal.fire({
         title: "Usuario creado exitosamente",
+        text: "Te enviamos la confirmación por correo, antes de cerrar esta ventana, revisá tu bandeja de entrada. Si no lo recibiste, hace click en el botón Reenviar correo de confirmación.",
         icon: "success",
+        showCancelButton: true,
+        confirmButtonText: "Ok",
+        cancelButtonText: "Reenviar correo de confirmación",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/signin");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          (async () => {
+            try {
+              const values = {
+                toUser: data.username,
+                subject: "Confirmación de creación de cuenta - Segundo envío",
+                message: `Hola ${data.name} ${data.lastname}, su cuenta ha sido asociada al correo ${data.username} y ha sido creada de forma exitosa. Para ir al inicio de sesión, por favor haga clic en el siguiente enlace: http://localhost:5173/`,
+              };
+              await fetchData(ENDPOINTS.EMAIL_CONFIRM, METHODS.POST, values);
+              
+              Swal.fire({
+                title: "Correo de confirmación enviado",
+                text: "Hemos enviado nuevamente el correo de confirmación.",
+                icon: "info",
+              });
+            } catch (error) {
+              console.error("Error al enviar el correo de confirmación:", error);
+              throw error;
+            }
+          })();
+        }
       });
-      navigate("/signin");
     }
   }, [data, error]);
 
