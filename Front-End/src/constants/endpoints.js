@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
     CLUB: 'club',
+    CHARACTERISTIC: 'characteristic',
     PLAYINGFIELD: 'playingField',
     ADDRESS: 'address',
     RECOMMENDED: 'club/recommended',
