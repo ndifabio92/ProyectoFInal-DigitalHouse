@@ -51,6 +51,6 @@ public class Club implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = Characteristic.class )
     @JoinTable(name = "club_characteristic", joinColumns = @JoinColumn(name = "id_club"), inverseJoinColumns = @JoinColumn(name = "id_characteristic"))
-    private List<Characteristic> characteristic;
+    private List<Characteristic> characteristics;
 
 }
