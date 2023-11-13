@@ -20,7 +20,7 @@ public class CategoryController extends CustomFieldException {
     @Autowired
     private CategoryService service;
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Category category, BindingResult bindingResult){
         try{
@@ -53,7 +53,7 @@ public class CategoryController extends CustomFieldException {
         }
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Category category, BindingResult bindingResult){
         try {
@@ -68,7 +68,7 @@ public class CategoryController extends CustomFieldException {
         }
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {

@@ -6,6 +6,7 @@ const useFetchApi = (endpoint, method = METHODS.GET, payload = '') => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const token = localStorage.getItem('token')?.replace(/"/g, '');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,16 +24,22 @@ const useFetchApi = (endpoint, method = METHODS.GET, payload = '') => {
                     method,
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
                     }
                 }
 
                 if (method !== METHODS.GET && payload) {
                     options.body = JSON.stringify(payload);
                 }
+
                 const response = await fetch(url, options);
                 const jsonData = await response.json();
 
-                setData(jsonData);
+                if (jsonData?.error) {
+                    setError(jsonData);
+                } else {
+                    setData(jsonData);
+                }
                 setIsLoading(false);
             } catch (error) {
                 setError('Error al obtener los datos JSON:', error);
