@@ -157,11 +157,7 @@ public class ClubService {
             ModelMapper mapper = new ModelMapper();
 
             ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
-            clubDTO.setCharacteristics(new ArrayList<>());
             clubDTO = mapper.map(club, ClubDTO.class);
-            for (Characteristic characteristic : club.getCharacteristics()) {
-                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
-            }
             return clubDTO;
         } else {
             return null;
