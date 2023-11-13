@@ -4,9 +4,12 @@ import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.PlayingField;
 import com.dh.canchas365.service.PlayingFieldService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +21,10 @@ public class PlayingFieldController {
     @Autowired
     private PlayingFieldService playingFieldService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
+//    @Operation(summary = "Creacion de Cancha", description = "Creacion de Cancha")
+//    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<?> createPlayingField(@RequestBody PlayingFieldDTO dto){
         try {
             return new ResponseEntity<PlayingFieldDTO>(playingFieldService.create(dto), HttpStatus.CREATED);
@@ -27,13 +33,13 @@ public class PlayingFieldController {
         }
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public List<PlayingFieldDTO> getAllPlayingFields(){
         return playingFieldService.getAllPlayingFields();
     }
 
-    @GetMapping("/{idPlayingField}")
-    public ResponseEntity<PlayingFieldDTO> getPlayingFieldById(@PathVariable("idPlayingField") Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<PlayingFieldDTO> getPlayingFieldById(@PathVariable("id") Long id){
         ResponseEntity<PlayingFieldDTO> response =  null;
         PlayingFieldDTO playingField = playingFieldService.findById(id);
         if(playingField == null){
@@ -43,6 +49,7 @@ public class PlayingFieldController {
         return response;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<PlayingField> updatePlayingField(@RequestBody PlayingField playingField) throws ResourceNotFoundException {
         ResponseEntity<PlayingField> responseEntity = null;
@@ -57,8 +64,9 @@ public class PlayingFieldController {
         return responseEntity;
     }
 
-    @DeleteMapping("/{idPlayingField}")
-    public ResponseEntity<PlayingFieldDTO> deletePlayingField(@PathVariable("idPlayingField") Long id) throws ResourceNotFoundException {
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PlayingFieldDTO> deletePlayingField(@PathVariable("id") Long id) throws ResourceNotFoundException {
         ResponseEntity<PlayingFieldDTO> responseEntity = null;
         PlayingFieldDTO playingFieldDTO = playingFieldService.findById(id);
         if( playingFieldDTO == null){
@@ -73,8 +81,8 @@ public class PlayingFieldController {
         return responseEntity;
     }
 
-    @GetMapping("/club/{idClub}")
-    public List<PlayingFieldDTO> getPlayingFieldByClub(@PathVariable("idClub") Long id){
+    @GetMapping("/club/{id}")
+    public List<PlayingFieldDTO> getPlayingFieldByClub(@PathVariable("id") Long id){
         return playingFieldService.getPlayingFieldByClub(id);
     }
 }

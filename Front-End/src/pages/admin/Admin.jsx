@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Container, Box } from "@mui/material";
-import FormAdmin from "../../components/admin/form/FormAdmin";
-import TableAdmin from "../../components/admin/table/TableAdmin";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import AdminCategories from '../../components/admin/Categories/AdminCategories'
+import AdminClubes from '../../components/admin/Clubs/AdminClubs'
+import AdminUsers from "../../components/admin/Users/AdminUsers.jsx";
+import AdminCharacteristics from "../../components/admin/Characteristics/AdminCharacteristics.jsx";
+
+
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -29,21 +33,10 @@ const Admin = () => {
 
     const [value, setValue] = useState(0);
 
-    const [club, setClub] = useState({});
-
-    const [action, setAction] = useState('AGREGAR CLUB');
-
     const handleChange = (event, newValue ) => {
         setValue(newValue);
     };
 
-    const handleUpdate = (newValue, club, action) => {
-        setClub (club)
-        setAction(action)
-        setValue(newValue);
-    };
-
-    
 
     return (
         <>
@@ -62,19 +55,23 @@ const Admin = () => {
                 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Listado de Clubes" />
-                        <Tab label={action} />
-                        <Tab label="Item Three" />
+                        <Tab label="Clubes" />
+                        <Tab label="Categorias" />
+                        <Tab label="Caracteristicas" />
+                        <Tab label="Usuarios" />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <TableAdmin handleUpdate={handleUpdate}/>
+                    <AdminClubes />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <FormAdmin action={action} club={club} handleUpdate={handleUpdate} />
+                    <AdminCategories />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
-                    Item Three
+                    <AdminCharacteristics />
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={3}>
+                    <AdminUsers />
                 </CustomTabPanel>
             </Container>
             <Box

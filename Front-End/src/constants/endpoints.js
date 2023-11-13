@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
     CLUB: 'club',
+    CHARACTERISTIC: 'characteristic',
     PLAYINGFIELD: 'playingField',
     ADDRESS: 'address',
     RECOMMENDED: 'club/recommended',
@@ -8,5 +9,8 @@ export const ENDPOINTS = {
     SPORT: 'sport',
     CITY: 'city',
     CATEGORY: 'category',
-    USER_CREATE: 'user/signup'
+    USER:'user',
+    USER_CREATE: 'user/signup',
+    USER_SIGN_IN: 'login',
+    EMAIL_CONFIRM: 'email/sendMessage'
 }

@@ -24,4 +24,9 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
 
     @Query(value = "select * from club where id_category = :id", nativeQuery = true)
     Optional<Club> clubCategoryInUse(@Param("id") Long category);
+
+    @Query(value = "SELECT c.id, c.name, c.phone_number, c.recommended, c.id_address, c.id_category FROM club_characteristic cc " +
+            "JOIN club c ON cc.id_club = c.id " +
+            "WHERE cc.id_characteristic = :id_characteristic", nativeQuery = true)
+    Optional<Club> clubCaracteristicInUse(@Param("id_characteristic") Long characteristic);
 }

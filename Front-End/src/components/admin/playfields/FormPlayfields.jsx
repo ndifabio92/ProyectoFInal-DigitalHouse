@@ -72,7 +72,7 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
                 } else {
                     Swal.fire({
                         title: 'Cancha agregada con éxito',
-                        icon: 'warning',
+                        icon: 'success',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
@@ -101,7 +101,7 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
                 } else {
                     Swal.fire({
                         title: 'Cancha modificada con éxito',
-                        icon: 'warning',
+                        icon: 'success',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {

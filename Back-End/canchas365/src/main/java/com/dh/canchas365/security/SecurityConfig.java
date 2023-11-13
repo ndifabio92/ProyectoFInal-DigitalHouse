@@ -4,6 +4,7 @@ import com.dh.canchas365.security.filters.JwtAuthenticationFilter;
 import com.dh.canchas365.security.filters.JwtAuthorizationFilter;
 import com.dh.canchas365.security.jwt.JwtUtils;
 import com.dh.canchas365.service.auth.UserDetailsServiceImpl;
+import com.dh.canchas365.service.auth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    private static final String[] SWAGGER_PATHS = {"/swagger-ui.html", "/v3/api-docs/**", "/v3/api-docs.yaml","/swagger-ui/**", "/webjars/swagger-ui/**"};
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     @Autowired
     JwtUtils jwtUtils;
 
@@ -38,10 +41,13 @@ public class SecurityConfig {
     @Autowired
     JwtAuthorizationFilter jwtAuthorizationFilter;
 
+    @Autowired
+    UserService userService;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
 
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils, userDetailsService, userService);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
        // jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
@@ -51,13 +57,24 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers("/user/signup").permitAll();
+
+                    auth.requestMatchers("/category/**","GET").permitAll();
+                    auth.requestMatchers("/city","GET").permitAll();
+                    auth.requestMatchers("/club/**","GET").permitAll();
+                    auth.requestMatchers("/playingField/**","GET").permitAll();
+                    auth.requestMatchers("/characteristic/**","GET").permitAll();
+                    auth.requestMatchers("/image/**","GET").permitAll();
+                    auth.requestMatchers("/email/**","POST").permitAll();
+
+                    auth.requestMatchers(SWAGGER_PATHS).permitAll();
                     // permito crear roles para crear los roles iniciales.. luego comentar
                     //auth.requestMatchers("/rol/create").permitAll();
                     // permito crear usuario para crear el usuario maestro.. luego comentar
                     //auth.requestMatchers("/usuarios/crear").permitAll();
                     // comento esta linea que me quite el secrity a toda la API
-                    //auth.anyRequest().authenticated();
-                    auth.anyRequest().permitAll();
+                    auth.anyRequest().authenticated();
+//                    auth.anyRequest().permitAll();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

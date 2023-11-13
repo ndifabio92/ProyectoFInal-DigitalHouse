@@ -1,5 +1,6 @@
 package com.dh.canchas365.model;
 
+import com.dh.canchas365.model.auth.Rol;
 import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Address;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -46,5 +48,9 @@ public class Club implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false )
     private Category category;
+
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Characteristic.class )
+    @JoinTable(name = "club_characteristic", joinColumns = @JoinColumn(name = "id_club"), inverseJoinColumns = @JoinColumn(name = "id_characteristic"))
+    private List<Characteristic> characteristics;
 
 }

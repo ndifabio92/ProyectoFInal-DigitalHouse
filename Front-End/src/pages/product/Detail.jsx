@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
-import { Box, Container, IconButton } from "@mui/material";
+import { Box, Container, IconButton} from "@mui/material";
 import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
 import Images from "../../components/products/Images";
 import useFetchApi from "../../hooks/useFetchApi";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { METHODS } from '../../constants/methods';
+import Characteristic from '../../components/characteristics/Characteristics'
+import Loading from "../../components/loading/Loading";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -17,10 +19,13 @@ const Detail = () => {
   const { id } = useParams();
 
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
+ 
 
   return (
+    <> 
+    {(isLoading) ? <Loading /> :
     <Container
-      maxWidth="xl"
+     maxWidth="xl"
       sx={{
         mt: "100px",
         mb: "40px",
@@ -29,6 +34,8 @@ const Detail = () => {
         backgroundColor: "#EDEBEE",
       }}
     >
+    
+     
       <Box
         sx={{
           display: "flex",
@@ -69,8 +76,12 @@ const Detail = () => {
         <p> Provincia: {data?.address?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
       </Box>
+      <Characteristic club={data} />
       <Images id={id} />
+    
     </Container>
+      }
+    </>
   );
 };
 
