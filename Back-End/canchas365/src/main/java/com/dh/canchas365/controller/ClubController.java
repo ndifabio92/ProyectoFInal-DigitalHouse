@@ -23,7 +23,7 @@ public class ClubController extends CustomFieldException {
     @Autowired
     private ClubService clubService;
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createClub(@RequestBody ClubCreateDTO dto){
         try {
@@ -53,7 +53,7 @@ public class ClubController extends CustomFieldException {
 
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<ClubDTO> updateClub(@RequestBody Club club) throws ResourceNotFoundException {
         ResponseEntity<ClubDTO> responseEntity = null;
@@ -68,7 +68,7 @@ public class ClubController extends CustomFieldException {
         return responseEntity;
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ClubDTO>  deleteClub(@PathVariable("id") Long id) throws ResourceNotFoundException {
         ResponseEntity<ClubDTO> responseEntity = null;

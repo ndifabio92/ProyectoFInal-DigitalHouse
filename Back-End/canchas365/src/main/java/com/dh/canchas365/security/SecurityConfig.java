@@ -64,7 +64,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/club/**","GET").permitAll();
                     auth.requestMatchers("/playingField/**","GET").permitAll();
                     auth.requestMatchers("/characteristic/**","GET").permitAll();
-                    auth.requestMatchers("/image","GET").permitAll();
+                    auth.requestMatchers("/image/**","GET").permitAll();
                     auth.requestMatchers("/email/**","POST").permitAll();
 
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
@@ -73,8 +73,8 @@ public class SecurityConfig {
                     // permito crear usuario para crear el usuario maestro.. luego comentar
                     //auth.requestMatchers("/usuarios/crear").permitAll();
                     // comento esta linea que me quite el secrity a toda la API
-//                    auth.anyRequest().authenticated();
-                    auth.anyRequest().permitAll();
+                    auth.anyRequest().authenticated();
+//                    auth.anyRequest().permitAll();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

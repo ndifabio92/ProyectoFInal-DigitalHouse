@@ -6,6 +6,7 @@ const useFetchDataApi = () => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const token = localStorage.getItem('token')?.replace(/"/g, '');
 
     const fetchData = async (endpoint, method = METHODS.GET, payload = '') => {
         try {
@@ -22,6 +23,7 @@ const useFetchDataApi = () => {
                 method,
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 }
             }
 

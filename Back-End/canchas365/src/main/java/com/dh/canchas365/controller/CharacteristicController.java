@@ -6,6 +6,7 @@ import com.dh.canchas365.service.CharacteristicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class CharacteristicController extends CustomFieldException {
     @Autowired
     private CharacteristicService service;
 
-    //    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Characteristic characteristic , BindingResult bindingResult){
         try{
@@ -50,7 +51,7 @@ public class CharacteristicController extends CustomFieldException {
         }
     }
 
-    //    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Characteristic characteristic, BindingResult bindingResult) {
         try {
@@ -63,7 +64,7 @@ public class CharacteristicController extends CustomFieldException {
         }
     }
 
-    //    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {

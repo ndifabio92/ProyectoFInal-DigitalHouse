@@ -21,7 +21,7 @@ public class PlayingFieldController {
     @Autowired
     private PlayingFieldService playingFieldService;
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
 //    @Operation(summary = "Creacion de Cancha", description = "Creacion de Cancha")
 //    @SecurityRequirement(name = "Bearer Authentication")
@@ -49,7 +49,7 @@ public class PlayingFieldController {
         return response;
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<PlayingField> updatePlayingField(@RequestBody PlayingField playingField) throws ResourceNotFoundException {
         ResponseEntity<PlayingField> responseEntity = null;
@@ -64,7 +64,7 @@ public class PlayingFieldController {
         return responseEntity;
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<PlayingFieldDTO> deletePlayingField(@PathVariable("id") Long id) throws ResourceNotFoundException {
         ResponseEntity<PlayingFieldDTO> responseEntity = null;
