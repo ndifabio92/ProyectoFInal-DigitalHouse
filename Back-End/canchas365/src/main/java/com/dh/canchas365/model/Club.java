@@ -49,8 +49,8 @@ public class Club implements Serializable {
     @JoinColumn(name = "id_category", referencedColumnName = "id", nullable = false )
     private Category category;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Characteristic.class, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Characteristic.class )
     @JoinTable(name = "club_characteristic", joinColumns = @JoinColumn(name = "id_club"), inverseJoinColumns = @JoinColumn(name = "id_characteristic"))
-    private List<Characteristic> characteristic;
+    private List<Characteristic> characteristics;
 
 }

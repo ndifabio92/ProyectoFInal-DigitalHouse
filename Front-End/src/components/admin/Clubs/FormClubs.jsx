@@ -1,4 +1,4 @@
-import { Button, Container, FormControlLabel, MenuItem, Switch, TextField} from "@mui/material";
+import { Button, Container, FormControlLabel, MenuItem, Checkbox, Switch, TextField} from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
@@ -10,10 +10,13 @@ import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 
 
+
 const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
+    const { data: characteristics, isLoading: isLoadingCharacteristics, error: characteristicsError } = useFetchApi(`${ENDPOINTS.CHARACTERISTIC}`);
+
     const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}`);
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
@@ -33,6 +36,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
             }
         },
         category: { id: club.category.id }, 
+        characteristics: club.characteristics.map(char => ({ id: char.id })), 
         images: club.images
     } : {
         name: '', 
@@ -48,6 +52,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
             }, 
         },
         category: { id: '' }, 
+        characteristics: [], 
         images: []
     };
 
@@ -61,6 +66,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
         apartment: club.address.apartment,
         city: club.address.city.name,
         category: club.category.title
+        
     } : {
         name: 'Nombre', 
         phone_number: 'Teléfono' , 
@@ -70,6 +76,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
         apartment: 'Departamento',
         city: 'Ciudad',
         category: 'Categoría'
+
     };
 
 
@@ -94,6 +101,23 @@ const FormAdmin = ({action, club, handleUpdate}) => {
         validationSchema
     });
 
+
+    const handleCheckboxChange = (event) => {
+        const charId = parseInt(event.target.name);
+        const isChecked = event.target.checked;
+    
+        if (isChecked) {
+            formik.setValues(prevValues => ({
+                ...prevValues,
+                characteristics: [...prevValues.characteristics, { id: charId }],
+            }));
+        } else {
+            formik.setValues(prevValues => ({
+                ...prevValues,
+                characteristics: prevValues.characteristics.filter(char => char.id !== charId),
+            }));
+        }
+    };
     
     const submitFormCreate = async (values) => {
 
@@ -113,7 +137,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 else{
                     Swal.fire({
                         title: 'Club agregado con éxito',
-                        icon: 'warning',
+                        icon: 'success',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
@@ -142,7 +166,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 else{
                     Swal.fire({
                         title: 'Club modificado con éxito',
-                        icon: 'warning',
+                        icon: 'success',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
@@ -156,11 +180,8 @@ const FormAdmin = ({action, club, handleUpdate}) => {
     return (
         
         <Container maxWidth="md">
-        {
-        console.log(club)
-        }
 
-        {(isLoading || isLoadingCategories || isLoadingCities) ? <Loading /> :
+        {(isLoading || isLoadingCategories || isLoadingCities || isLoadingCharacteristics) ? <Loading /> :
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
@@ -270,6 +291,25 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         checked={formik.values.recommended}
                         onChange={formik.handleChange} onBlur={formik.handleBlur} />}
                     />
+                    
+
+                {
+                    characteristics?.map((characteristic) => (
+                        <FormControlLabel
+                            key={characteristic.id}
+                            control={
+                                <Checkbox
+                                    name={characteristic.id}
+                                    checked={formik.values.characteristics.some(char => char.id === characteristic.id)}
+                                    onChange={handleCheckboxChange}
+                                    value={formik.values.characteristic?.id}
+                                    onBlur={formik.handleBlur}
+                                />
+                            }
+                            label={characteristic?.name}
+                        />
+                    ))
+                }
 
                 {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
 

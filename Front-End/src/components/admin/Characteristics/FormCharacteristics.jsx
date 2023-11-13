@@ -4,44 +4,38 @@ import { validationSchemaForm as validationSchema } from "../../../validations/V
 import styles from './styles.module.css';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
-
 import useFetchDataApi from "../../../hooks/useFetchDataApi";
 import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 
 
-const FormCategory = ({action, category, handleUpdate}) => {
+const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
    
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = action == 'MODIFICAR CATEGORIA' ? {
-        id:category.id,
-        title:category.title,
-        description:category.description, 
-        url: category.url
+    const initialValues = action == 'MODIFICAR CARACTERISTICA' ? {
+        id:characteristic.id,
+        name:characteristic.name,
+        url: characteristic.url
         }: {
             id: '', 
-            title:'',
-            description:'' , 
+            name:'',
             url:'' 
         }
     
-    const labels = action == 'MODIFICAR CATEGORIA' ?{
-        title:category.title,
-        description:category.description, 
-        url: category.url
+    const labels = action == 'MODIFICAR CARACTERISTICA' ?{
+        name:characteristic.name,
+        url: characteristic.url
         }: {
-            title:'TITULO',
-            description:'DESCRIPCION' , 
-            url:'URL FOTO'
+            name:'CARACTERISTICA',
+            url:'ICONO'
         }
             
    
 
     const isComplete = (values) => {
         if (
-            values.title != '' &&
-            values.description != '' &&
+            values.name != '' &&
             values.url != '' 
         ){
             return true 
@@ -58,7 +52,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
 
     const submitFormCreate = async (values) => {
 
-        await fetchData(ENDPOINTS.CATEGORY, METHODS.POST, values)
+        await fetchData(ENDPOINTS.CHARACTERISTIC, METHODS.POST, values)
 
         if (error) {
             Swal.fire({
@@ -72,7 +66,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
 
         } else {
             Swal.fire({
-                title: 'Categoria agregada con éxito',
+                title: 'Caracteristica agregada con éxito',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
@@ -81,13 +75,13 @@ const FormCategory = ({action, category, handleUpdate}) => {
             }) 
         }
         
-        handleUpdate(0, {}, 'AGREGAR CATEGORIA')
+        handleUpdate(0, {}, 'AGREGAR CARACTERISTICA')
     }
 
     
-    const submitFormUpdate = async (category) => {
+    const submitFormUpdate = async (characteristic) => {
 
-        await fetchData(ENDPOINTS.CATEGORY, METHODS.PUT, category)
+        await fetchData(ENDPOINTS.CHARACTERISTIC, METHODS.PUT, characteristic)
 
         if (error) {
             Swal.fire({
@@ -101,7 +95,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
 
         } else {
             Swal.fire({
-                title: 'Categoria modificada con éxito',
+                title: 'Característica modificada con éxito',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
@@ -110,7 +104,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
             })                 
         }
 
-        handleUpdate(0, {}, 'AGREGAR CATEGORIA')
+        handleUpdate(0, {}, 'AGREGAR CARACTERISTICA')
     }
 
     return (
@@ -121,10 +115,10 @@ const FormCategory = ({action, category, handleUpdate}) => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(action == 'AGREGAR CATEGORIA' && isComplete(formik.values)){
+                if(action == 'AGREGAR CARACTERISTICA' && isComplete(formik.values)){
                     submitFormCreate(formik.values)
                 }
-                else if (action == 'MODIFICAR CATEGORIA'){
+                else if (action == 'MODIFICAR CARACTERISTICA'){
                     submitFormUpdate(formik.values)
                 }
                 else{
@@ -142,18 +136,8 @@ const FormCategory = ({action, category, handleUpdate}) => {
                         <span style={{ color: 'red' }}>{formik.errors.description}</span>
                     )
                 }
-                <TextField variant="outlined" size="small" label={labels.title} type="text" name="title" className="input-background"
-                    value={formik.values.title}
-                    onChange={formik.handleChange} onBlur={formik.handleBlur} />
-
-                    
-                {
-                    formik.touched.description && formik.errors.description && (
-                        <span style={{ color: 'red' }}>{formik.errors.description}</span>
-                    )
-                }
-                <TextField variant="outlined" size="small" label={labels.description} type="text" name="description" className="input-background"
-                    value={formik.values.description}
+                <TextField variant="outlined" size="small" label={labels.name} type="text" name="name" className="input-background"
+                    value={formik.values.name}
                     onChange={formik.handleChange} onBlur={formik.handleBlur} />
 
                 {
@@ -173,4 +157,4 @@ const FormCategory = ({action, category, handleUpdate}) => {
     )
 }
 
-export default FormCategory
+export default FormCharacteristics

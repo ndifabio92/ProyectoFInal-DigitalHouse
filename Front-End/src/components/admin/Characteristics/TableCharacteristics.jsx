@@ -8,36 +8,33 @@ import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
 import { Box, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
-import EditIcon from '@mui/icons-material/Edit';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import {ENDPOINTS} from '../../../constants/endpoints'
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {METHODS}  from '../../../constants/methods'
+import EditIcon from '@mui/icons-material/Edit';
 import useFetchDataApi from '../../../hooks/useFetchDataApi'
+import { METHODS } from '../../../constants/methods';
 
 
 
-const TableAdmin = ({ handleUpdate }) => {
+
+const TableCharacteristic = ({ handleUpdate }) => {
     
-    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CLUB}`);
+    const { data, isLoading, error} = useFetchApi(`${ENDPOINTS.CHARACTERISTIC}`);
 
     const { data: deleteData, isLoading: deleteIsloading, error: deleteError, fetchData } = useFetchDataApi();
 
-    const navigate = useNavigate();
-
-    const [clubs, setClubs] = useState([])
+    const [characteristics, setCharacteristics] = useState([])
 
     useEffect(() => {
         if (data) {
-            setClubs(data)
+            setCharacteristics(data)
         }
     }, [data]);
 
-    const modificar = (club, action) => {
-        handleUpdate(1, club, action)
+    const modificar = (characteristic, action) => {
+        handleUpdate(1, characteristic, action)
     }
 
     const handleDelete =  (id) => {
@@ -53,50 +50,47 @@ const TableAdmin = ({ handleUpdate }) => {
         }).then( async (result) => {
         
             if (result.isConfirmed) {
-                await fetchData(ENDPOINTS.CLUB, METHODS.DELETE, id)
+                await fetchData(ENDPOINTS.CHARACTERISTIC, METHODS.DELETE, id)
                 if (deleteError) {
-                    console.error('Error al eliminar el club:', error)
+                    console.error('Error al eliminar la característica:', error)
                     Swal.fire({
-                        title: 'Error al eliminar el Club',
+                        title: 'Error al eliminar la característica',
                         icon: 'error',
                       });
                 } 
                 else {
-                    console.log('Club eliminado con éxito');
+                    console.log('Característica eliminado con éxito');
                     Swal.fire({
-                        title: 'Club eliminado con éxito',
+                        title: 'Característica eliminada con éxito',
                         icon: 'success',
                       });
-                    setClubs(clubs.filter((club) => club.id !== id));
+                      setCharacteristics(characteristics.filter((club) => club.id !== id));
                 }
             }      
         })
     }
+
+
    
 
-    const handleView = (id) => navigate(`/admin/club/${id}`);
-
     return (
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%" }}>  
             {
                 isLoading || deleteIsloading ? <Loading /> :
                     <Paper sx={{ width: "100%", mb: 2 }}>
                         <TableContainer component={Paper}>
-                            {clubs &&
+                            {characteristics &&
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align='center'>Id</TableCell>
-                                            <TableCell align="center">Nombre</TableCell>
-                                            <TableCell align="center">Deporte</TableCell>
-                                            <TableCell align='center'>Domicilio</TableCell>
-                                            <TableCell align='center'>Recomendado</TableCell>
-                                            <TableCell align='center'>Características</TableCell>
+                                            <TableCell align="center">Caraterística</TableCell>
+                                            <TableCell align='center'>ImagenUrl</TableCell>
                                             <TableCell align='center'>Acciones</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {clubs?.map((row) => (
+                                        {characteristics?.map((row) => (
                                             <TableRow
                                                 key={row.id}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -108,23 +102,11 @@ const TableAdmin = ({ handleUpdate }) => {
                                                     {row.name}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {row.category.title}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    <p> {row.address.street + " N° " + row.address.number}</p>
-                                                    <p>{row.address.city.name }</p>
-                                                    <p> {row.phone_number}</p>
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.recommended ? "Si" : "No"}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" align='center'>
-                                                    {row.characteristics.map((char)=>(<p key={char.id}> {char.name} </p>))}
+                                                    {row.url}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CLUB')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CARACTERISTICA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
@@ -137,4 +119,4 @@ const TableAdmin = ({ handleUpdate }) => {
         </Box>
     );
 }
-export default TableAdmin
+export default TableCharacteristic

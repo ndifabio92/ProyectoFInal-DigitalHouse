@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
-import { Box, Container, IconButton, Grid } from "@mui/material";
+import { Box, Container, IconButton} from "@mui/material";
 import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
-import Typography from '@mui/material/Typography';
 import Images from "../../components/products/Images";
 import useFetchApi from "../../hooks/useFetchApi";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { METHODS } from '../../constants/methods';
+import Characteristic from '../../components/characteristics/Characteristics'
+import Loading from "../../components/loading/Loading";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -18,11 +19,13 @@ const Detail = () => {
   const { id } = useParams();
 
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
-  const { data: characteristicsData } = useFetchApi(`${ENDPOINTS.CHARACTERISTIC}`,METHODS.GET);
+ 
 
   return (
+    <> 
+    {(isLoading) ? <Loading /> :
     <Container
-      maxWidth="xl"
+     maxWidth="xl"
       sx={{
         mt: "100px",
         mb: "40px",
@@ -31,6 +34,8 @@ const Detail = () => {
         backgroundColor: "#EDEBEE",
       }}
     >
+    
+     
       <Box
         sx={{
           display: "flex",
@@ -71,40 +76,12 @@ const Detail = () => {
         <p> Provincia: {data?.address?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
       </Box>
+      <Characteristic club={data} />
       <Images id={id} />
-      {characteristicsData && (
-        <Box
-          sx={{
-            display:'flex',
-            flexWrap: 'wrap',
-            flexDirection: 'column',
-            alignContent: 'center',
-            justifyContent: 'center',
-            color: "#011A5B",
-            backgroundColor: "#FFFFFF",
-            textAlign: "left",
-            padding: "40px 80px 40px 80px",
-            mt: "20px", 
-          }}
-        >
-          <Typography variant="h5" sx={{ mb: 2 }}>Características del Club:</Typography>
-          <Grid container spacing={2}>
-            {data?.characteristics?.map((characteristic) => (
-              <Grid item xs={6} sm={4} md={3} key={characteristic.id}>
-                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                  <img
-                    src={characteristic.url}
-                    alt={characteristic.name}
-                    style={{ width: "50px", height: "50px", marginRight: "10px" }}
-                  />
-                  <Typography>{characteristic.name}</Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
+    
     </Container>
+      }
+    </>
   );
 };
 

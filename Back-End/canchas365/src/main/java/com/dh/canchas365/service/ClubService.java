@@ -86,7 +86,7 @@ public class ClubService {
         }
 
         clubToSave.setCategory(optionalCategory.get());
-        clubToSave.setCharacteristic(characteristicsList);
+        clubToSave.setCharacteristics(characteristicsList);
 
         Club clubSaved = clubRepository.save(clubToSave);
 
@@ -109,17 +109,17 @@ public class ClubService {
 
         Category category = categoryService.findById(club.getCategory().getId()).orElse(null);
         club.setCategory(category);
-        for(Characteristic characteristic : club.getCharacteristic()) {
+        for(Characteristic characteristic : club.getCharacteristics()) {
             var item = characteristicService.findById(characteristic.getId()).orElse(null);
             characteristicsList.add(item);
         }
-        club.setCharacteristic(characteristicsList);
+        club.setCharacteristics(characteristicsList);
 
         Club clubSaved = clubRepository.save(club);
         ModelMapper mapper = new ModelMapper();
         ClubDTO clubDTO = mapper.map(clubSaved, ClubDTO.class);
         clubDTO.setCharacteristics(new ArrayList<>());
-        for (Characteristic characteristic : club.getCharacteristic()) {
+        for (Characteristic characteristic : club.getCharacteristics()) {
             clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
         }
 
@@ -136,7 +136,7 @@ public class ClubService {
             ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
             clubDTO.setCharacteristics(new ArrayList<>());
 
-            for (Characteristic characteristic : club.getCharacteristic()) {
+            for (Characteristic characteristic : club.getCharacteristics()) {
                 clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
             }
 
@@ -157,11 +157,7 @@ public class ClubService {
             ModelMapper mapper = new ModelMapper();
 
             ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
-            clubDTO.setCharacteristics(new ArrayList<>());
             clubDTO = mapper.map(club, ClubDTO.class);
-            for (Characteristic characteristic : club.getCharacteristic()) {
-                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
-            }
             return clubDTO;
         } else {
             return null;
