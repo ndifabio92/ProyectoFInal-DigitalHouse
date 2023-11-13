@@ -37,7 +37,7 @@ public class CharacteristicService extends CustomFieldException {
     public void delete(Long id) {
         Optional<Club> optional = clubRepository.clubCaracteristicInUse(id);
         if(optional.isPresent()) {
-            throw  new IllegalArgumentException("La categoria esta siendo usada");
+            throw  new IllegalArgumentException("La caracteristica esta siendo usada");
         }
         repository.deleteById(id);
     }
