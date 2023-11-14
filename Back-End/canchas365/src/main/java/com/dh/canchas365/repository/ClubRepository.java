@@ -1,5 +1,6 @@
 package com.dh.canchas365.repository;
 
+import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.model.Club;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

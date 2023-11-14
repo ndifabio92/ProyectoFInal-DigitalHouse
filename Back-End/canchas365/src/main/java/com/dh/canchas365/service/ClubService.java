@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ClubService {
@@ -181,6 +182,33 @@ public class ClubService {
         for(Club club: clubes){
             clubesDTO.add(mapper.map(club, ClubDTO.class));
         }
+        return clubesDTO;
+    }
+
+    public List<ClubDTO> getByCategories(List<Category> categories) {
+        List<Club> clubList =clubRepository.findAll();
+        ModelMapper mapper = new ModelMapper();
+        List<ClubDTO> clubesDTO = new ArrayList<>();
+
+        List<Long> categoryIds = categories.stream()
+                .map(Category::getId)
+                .collect(Collectors.toList());
+
+        List<Club> filteredClubs = clubList.stream()
+                .filter(club -> categoryIds.contains(club.getCategory().getId()))
+                .collect(Collectors.toList());
+
+        for (Club club : filteredClubs) {
+            ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+            clubDTO.setCharacteristics(new ArrayList<>());
+
+            for (Characteristic characteristic : club.getCharacteristics()) {
+                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
+            }
+
+            clubesDTO.add(clubDTO);
+        }
+
         return clubesDTO;
     }
 }
