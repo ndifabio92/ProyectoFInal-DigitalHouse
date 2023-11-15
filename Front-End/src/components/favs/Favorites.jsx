@@ -8,7 +8,7 @@ import { ENDPOINTS } from '../../constants/endpoints';
 
 const Favorites = () => {
 
-//Cambiar este endpoint por el que sea de favoritos
+//Cambiar este endpoint por el que sea de favoritos y mandarle como parametro el id de usuario
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.RANDOM}`);
 
   return (

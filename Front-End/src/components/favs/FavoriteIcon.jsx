@@ -3,7 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useState } from "react";
 
-const Favorite = ({id}) => {
+const FavoriteIcon = ({id}) => {
 
   const [favorites, setFavorites] = useState(null);
 
@@ -28,4 +28,4 @@ const Favorite = ({id}) => {
   );
 };
 
-export default Favorite;
+export default FavoriteIcon;
