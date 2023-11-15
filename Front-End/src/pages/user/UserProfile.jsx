@@ -1,5 +1,6 @@
 import { Container, Paper, Typography } from "@mui/material";
 import { AuthContext } from "../../auth/context";
+import Favorites from "../../components/favs/Favorites";
 
 const UserProfile = () => {
   const { userData } = AuthContext();
@@ -45,6 +46,7 @@ const UserProfile = () => {
 
       <div>
         <h2>Tus favoritos</h2>
+        <Favorites/>
       </div>
 
     </Container>
