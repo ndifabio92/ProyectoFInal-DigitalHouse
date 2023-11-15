@@ -3,7 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useState } from "react";
 
-const FavoriteIcon = ({id}) => {
+const Favorite = ({id, disabled}) => {
 
   const [favorites, setFavorites] = useState(null);
 
@@ -19,13 +19,18 @@ const FavoriteIcon = ({id}) => {
       sx={{
         "--IconButton-size": "45px",
       }}
-      onClick={handleToggleFavorito} 
+      onClick={handleToggleFavorito}
       color={favorites ? 'secondary' : 'default'}
     >
-
-        {favorites ? <FavoriteIcon/> : <FavoriteBorderIcon />}
+      <span style={{ padding: '12px', display: 'inline-block' }}>
+        {favorites ? (
+          <FavoriteIcon style={{ fontSize: '24px' }} />  
+        ) : (
+          <FavoriteBorderIcon style={{ fontSize: '24px' }} />  
+        )}
+      </span>
     </IconButton>
   );
 };
 
-export default FavoriteIcon;
+export default Favorite;

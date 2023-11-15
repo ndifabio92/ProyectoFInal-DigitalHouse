@@ -27,7 +27,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                 onClick={handleClick}
                 sx={{
                     width: 170,
-                    height: 280,
+                    height: "100%",
                     border: 'none',
                     backgroundColor: '#EDEBEE',
                     display: 'flex',
@@ -58,6 +58,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                     border: 'none',
                     color: '#1F2E7B',
                     padding: '10px',
+                    
                 }}>
                     
                     <Typography variant="p" component="p">
