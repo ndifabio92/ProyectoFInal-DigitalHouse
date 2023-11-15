@@ -32,5 +32,5 @@ public class ClubCreateDTO {
 
     private Set<ImageDTO> images;
 
-    private List<CharacteristicDto> characteristics;
+    private Set<CharacteristicDto> characteristics;
 }
