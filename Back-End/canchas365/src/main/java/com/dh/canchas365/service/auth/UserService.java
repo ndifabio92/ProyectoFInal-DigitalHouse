@@ -1,11 +1,16 @@
 package com.dh.canchas365.service.auth;
 
+import com.dh.canchas365.dto.CharacteristicDto;
+import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.dto.auth.UsuarioDto;
+import com.dh.canchas365.model.Characteristic;
+import com.dh.canchas365.model.Club;
 import com.dh.canchas365.model.auth.Rol;
 import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.model.emun.ERol;
 import com.dh.canchas365.repository.auth.RolRepository;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,5 +71,44 @@ public class UserService {
         usuarioDto.setRol(usuario.getRoles());
 
         return usuarioDto;
+    }
+
+    public Set<ClubDTO> getFavorites(Long id) {
+        ModelMapper mapper = new ModelMapper();
+        Set<ClubDTO> clubesDTO = new HashSet<>();
+
+        var user = repository.findById(id).orElse(null);
+
+        for (Club club : user.getFavorites()) {
+            ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+            clubesDTO.add(clubDTO);
+        }
+
+        return clubesDTO;
+    };
+
+    public void addFavoriteUser(Long id, ClubDTO favorite) {
+        ModelMapper mapper = new ModelMapper();
+
+        var user = repository.findById(id).orElse(null);
+        if (user != null) {
+            Set<Club> currentFavorites = user.getFavorites();
+
+            Club club = mapper.map(favorite, Club.class);;
+
+            Club existingClub = currentFavorites.stream()
+                    .filter(c -> c.getId().equals(club.getId()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (existingClub == null) {
+                currentFavorites.add(club);
+            } else {
+                currentFavorites.remove(existingClub);
+            }
+
+            user.setFavorites(currentFavorites);
+            repository.save(user);
+        }
     }
 }

@@ -119,7 +119,7 @@ public class ClubService {
         Club clubSaved = clubRepository.save(club);
         ModelMapper mapper = new ModelMapper();
         ClubDTO clubDTO = mapper.map(clubSaved, ClubDTO.class);
-        clubDTO.setCharacteristics(new ArrayList<>());
+        clubDTO.setCharacteristics(new HashSet<>());
         for (Characteristic characteristic : club.getCharacteristics()) {
             clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
         }
@@ -132,10 +132,9 @@ public class ClubService {
         ModelMapper mapper = new ModelMapper();
         List<ClubDTO> clubesDTO = new ArrayList<>();
 
-
         for (Club club : clubes) {
             ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
-            clubDTO.setCharacteristics(new ArrayList<>());
+            clubDTO.setCharacteristics(new HashSet<>());
 
             for (Characteristic characteristic : club.getCharacteristics()) {
                 clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
@@ -200,7 +199,7 @@ public class ClubService {
 
         for (Club club : filteredClubs) {
             ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
-            clubDTO.setCharacteristics(new ArrayList<>());
+            clubDTO.setCharacteristics(new HashSet<>());
 
             for (Characteristic characteristic : club.getCharacteristics()) {
                 clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
