@@ -27,8 +27,8 @@ const CardProducts = ({ name, tel, city, id }) => {
             <CardActionArea
                 onClick={handleClick}
                 sx={{
-                    width: 170,
-                    height: 280,
+                    width: 220,
+                    height: 300,
                     border: 'none',
                     backgroundColor: '#EDEBEE',
                     display: 'flex',
@@ -58,6 +58,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                 <CardContent sx={{
                     border: 'none',
                     color: '#1F2E7B',
+                    height:'50px', 
                     padding: '10px',
                 }}>
                     

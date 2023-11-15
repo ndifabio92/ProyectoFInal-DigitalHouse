@@ -27,8 +27,7 @@ const Categories = () => {
   return (
 
         <Toolbar disableGutters  sx={{
-          padding: '20px',
-          marginY: '20px',
+          paddingTop: '10px',
           marginX: '0px',
           backgroundColor: '#FF914D',
           color:'#011A5B',
@@ -36,11 +35,11 @@ const Categories = () => {
           }}
         >
 
-          <Box maxWidth="xl"
+          <Box 
             sx={{
               flexGrow: 1,
               display: { xs: 'none', md: 'flex' },
-              mx: '50px',
+              mx: '0px',
               justifyContent: 'center',
               alignContent:'space-between',
             }}

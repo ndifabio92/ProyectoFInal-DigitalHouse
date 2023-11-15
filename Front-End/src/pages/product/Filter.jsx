@@ -66,7 +66,11 @@ const Filter = () => {
         color: '#1F2E7B',
         backgroundColor: '#FFFFFF',
         textAlign: 'center',
-        padding: '120px',
+        padding: '40px',
+        mt: '120px',
+        mb: '40px',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {
@@ -86,11 +90,13 @@ const Filter = () => {
               <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
           </IconButton>
 
+          <h2>RESULTADOS DE TU BUSQUEDA</h2>
+
           <Container
             sx={{
               display:'flex',
               flexDirection:'row',
-
+              alignItems:'center'
               }}
           >
             <Box
@@ -101,6 +107,7 @@ const Filter = () => {
                 my:'50px',
                 }}
             >
+              <h3>REFINA TU BUSQUEDA</h3>
             {
                     categories?.map((category) => (
                         <FormControlLabel
@@ -118,18 +125,17 @@ const Filter = () => {
                 }
             </Box>
 
-        
             <Box sx={{
               mx: 'auto',
-              my:'50px',
+              my:'100px',
               backgroundColor: '#FFFFFF',
               color: '#1F2E7B',
               display: 'flex',
-              justifyContent: 'space-around',
               textAlign: 'center',
-              gap: '10px',
+              gap: '40px',
               flexWrap: 'wrap'
             }}>
+              
               
               { clubs && data?.map((club) => (
                   <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />

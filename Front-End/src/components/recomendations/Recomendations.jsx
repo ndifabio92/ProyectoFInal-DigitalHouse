@@ -21,8 +21,8 @@ const Recomendations = () => {
     <Container maxWidth="xl"
       sx={{
         mx: 'auto',
-        backgroundColor: '#FFFFFF',
         flexGrow: 1,
+        backgroundColor: '#FFFFFF',
         textAlign: 'center',
         justifyContent: 'center',
         display: 'flex',

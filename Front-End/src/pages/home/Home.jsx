@@ -6,10 +6,11 @@ import Products from '../../components/products/Products';
 
 const Home = () => {
   return (
-    <Container maxWidth="lg"
+    <Container 
+    maxWidth="xl"
       sx={{
         padding: '0',
-        mt: '100px',
+        mt: '120px',
         mb: '40px',
         display: 'flex',
         flexDirection: 'column',

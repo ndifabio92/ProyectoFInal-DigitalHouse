@@ -14,22 +14,20 @@ const Products = () => {
     <Container maxWidth="xl"
       sx={{
         color: '#1F2E7B',
-        backgroundColor: '#FFFFFF',
         textAlign: 'center',
         padding: '100px',
+        backgroundColor: '#FFFFFF',
       }}
     >
       {
         isLoading ? <Loading />
           :
           <Box sx={{
-            mx: 'auto',
-            backgroundColor: '#FFFFFF',
             color: '#1F2E7B',
             display: 'flex',
             justifyContent: 'space-around',
             textAlign: 'center',
-            gap: '10px',
+            gap: '30px',
             flexWrap: 'wrap'
           }}>
 
