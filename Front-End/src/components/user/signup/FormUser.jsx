@@ -26,7 +26,7 @@ const FormUser = () => {
   useEffect(() => {
     if (error) {
       Swal.fire({
-        title: "Falló la creación",
+        title: "Falló la creación por que el usuario ya existe",
         icon: "error",
       });
     }
