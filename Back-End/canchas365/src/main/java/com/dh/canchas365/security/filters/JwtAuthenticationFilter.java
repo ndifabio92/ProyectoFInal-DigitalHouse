@@ -2,6 +2,7 @@ package com.dh.canchas365.security.filters;
 
 import com.dh.canchas365.dto.auth.UsuarioDto;
 import com.dh.canchas365.model.auth.Usuario;
+import com.dh.canchas365.model.emun.ERol;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
 import com.dh.canchas365.security.jwt.JwtUtils;
 import com.dh.canchas365.service.auth.UserDetailsServiceImpl;
@@ -87,10 +88,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         httpResponse.put("Message", "Autenticacion correcta");
         //httpResponse.put("Username", user.getUsername());
         var userDto = new UsuarioDto();
+        userDto.setId(usuario.getId());
         userDto.setUsername(user.getUsername());
         userDto.setName(usuario.getName());
         userDto.setLastname(usuario.getLastname());
         userDto.setRol(usuario.getRoles());
+        userDto.setIsAdmin(usuario.getRoles().stream().anyMatch(rol -> rol.getName() == ERol.ADMIN));
 
         httpResponse.put("usuario", userDto);
 
