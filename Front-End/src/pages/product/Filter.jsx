@@ -27,9 +27,11 @@ const Filter = () => {
   
   const [ids, setIds] = useState([{ id: parseInt(id) }]);
 
+
   const clubs = async () => {
     try {
       const result = await fetchData(ENDPOINTS.CLUB_BY_CATEGORY, METHODS.POST, ids);
+      return data?.length;
     } catch (error) {
       console.log(error)
     }
@@ -55,10 +57,7 @@ const Filter = () => {
         return [...prevIds, { id: categoryId }];
       }
     });
-
   };
- 
-
 
   return (
     <Container maxWidth="xl"
@@ -69,13 +68,12 @@ const Filter = () => {
         padding: '40px',
         mt: '120px',
         mb: '40px',
+        mx:'auto',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      {
-        (isLoading || isLoadingCategories) ? <Loading />
-          :
+      
         <> 
           <IconButton
           aria-label="Volver"
@@ -96,7 +94,7 @@ const Filter = () => {
             sx={{
               display:'flex',
               flexDirection:'row',
-              alignItems:'center'
+              gap:'30px',
               }}
           >
             <Box
@@ -104,25 +102,29 @@ const Filter = () => {
                 display:'flex',
                 flexDirection:'column',
                 alignItems:'flex-start',
-                my:'50px',
                 }}
             >
               <h3>REFINA TU BUSQUEDA</h3>
-            {
-                    categories?.map((category) => (
-                        <FormControlLabel
-                            key={category.id}
-                            control={
-                                <Checkbox
-                                    checked={isChecked(category.id)}
-                                    onChange={()=>handleChange(category.id)}
-                                /> 
-                            }
-                            label={category?.title}
-                        />
+              
+              <h5>DEPORTES</h5>
+
+              {
+                categories?.map((category) => (
+                  
+                  <FormControlLabel
+                    key={category.id}
+                    control={
+                      <Checkbox
+                        checked={isChecked(category.id)}
+                        onChange={()=>handleChange(category.id)}
+                      /> 
+                    }
+                    label={`${category.title}`}
+                  />
                       
-                    ))
-                }
+                ))
+              }
+
             </Box>
 
             <Box sx={{
@@ -136,8 +138,10 @@ const Filter = () => {
               flexWrap: 'wrap'
             }}>
               
+              {
+                (isLoading || isLoadingCategories) ? <Loading /> :
               
-              { clubs && data?.map((club) => (
+                clubs && data?.map((club) => (
                   <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />
                 ))
               }
@@ -145,7 +149,7 @@ const Filter = () => {
 
           </Container>
         </>
-      }
+      
 
     </Container>
 

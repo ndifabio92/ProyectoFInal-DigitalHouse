@@ -18,6 +18,7 @@ const Recomendations = () => {
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.RECOMMENDED);
 
   return (
+    
     <Container maxWidth="xl"
       sx={{
         mx: 'auto',
