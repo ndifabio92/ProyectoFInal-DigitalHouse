@@ -23,11 +23,37 @@ const Filter = () => {
 
   const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-  const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+  const { data: clubsData, isLoading: isLoadingClubsData, error: clubsErrorData } = useFetchApi(`${ENDPOINTS.CLUB}`);
   
   const [ids, setIds] = useState([{ id: parseInt(id) }]);
 
+  const makeNewCategories = (clubs) => {
+    var categories = {};
 
+    clubs.forEach(function(club) {
+    let categoryId = club.category.id;
+    let categoryTitle = club.category.title;
+
+    if (categories[categoryId]) {
+      categories[categoryId].cant++;
+    } else {
+      categories[categoryId] = {
+        id: categoryId,
+        title: categoryTitle,
+        cant: 1
+      };
+    }
+  });
+
+  let result = Object.values(categories);
+
+  return result;
+
+  }
+
+       
+ const newCategories = clubsData && makeNewCategories(clubsData) 
+    
   const clubs = async () => {
     try {
       const result = await fetchData(ENDPOINTS.CLUB_BY_CATEGORY, METHODS.POST, ids);
@@ -109,7 +135,7 @@ const Filter = () => {
               <h5>DEPORTES</h5>
 
               {
-                categories?.map((category) => (
+                newCategories?.map((category) => (
                   
                   <FormControlLabel
                     key={category.id}
@@ -119,7 +145,7 @@ const Filter = () => {
                         onChange={()=>handleChange(category.id)}
                       /> 
                     }
-                    label={`${category.title}`}
+                    label={`${category.title} (${category.cant})`}
                   />
                       
                 ))
@@ -139,7 +165,7 @@ const Filter = () => {
             }}>
               
               {
-                (isLoading || isLoadingCategories) ? <Loading /> :
+                (isLoading) ? <Loading /> :
               
                 clubs && data?.map((club) => (
                   <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />
