@@ -5,11 +5,11 @@ import useFetchApi from '../../hooks/useFetchApi';
 import Loading from '../loading/Loading';
 import { ENDPOINTS } from '../../constants/endpoints';
 
-
-const Favorites = () => {
+const Favorites = ({userId}) => {
 
 //Cambiar este endpoint por el que sea de favoritos y mandarle como parametro el id de usuario
-  const { data, isLoading } = useFetchApi(`${ENDPOINTS.RANDOM}`);
+  //const { data, isLoading } = useFetchApi(`${ENDPOINTS.RANDOM}`);
+  const { data, isLoading } = useFetchApi(`${ENDPOINTS.USER/{userId}/ENDPOINTS.FAVORITES}`);
 
   return (
     <Container maxWidth="xl"

@@ -12,5 +12,6 @@ export const ENDPOINTS = {
     USER:'user',
     USER_CREATE: 'user/signup',
     USER_SIGN_IN: 'login',
-    EMAIL_CONFIRM: 'email/sendMessage'
+    EMAIL_CONFIRM: 'email/sendMessage',
+    FAVORITES: 'favorites'
 }

@@ -7,7 +7,7 @@ import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ENDPOINTS } from '../../constants/endpoints';
 import useFetchApi from '../../hooks/useFetchApi';
-import FavoriteIcon from '../favs/FavoriteIcon';
+import FavoriteButton from '../favs/FavoriteButton';
 
 
 const CardProducts = ({ name, tel, city, id }) => {
@@ -69,7 +69,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                     </Typography>
 
 
-                    <FavoriteIcon/>
+                    <FavoriteButton clubId={id}/>
 
 
                 </CardContent>
