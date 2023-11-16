@@ -19,11 +19,11 @@ const FavoriteButton = ({ clubId, disabled }) => {
 
   const handleToggleFavorito = (club) => {
     fetchData(
-      `${ENDPOINTS.USER/{userId}/ENDPOINTS.FAVORITES}`,
+      `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`,
       METHODS.POST,
       club
     );
-    console.log(`Se agrega este club a favoritos ${club}`);
+    console.log(`Se agrega este club a favoritos ${club.id}`);
     setFavorites(club);
     //console.log(`La cancha con id ${id} se agregó a favoritos`)
   };
