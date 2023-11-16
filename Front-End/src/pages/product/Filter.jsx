@@ -12,6 +12,11 @@ import { useParams } from "react-router-dom";
 import { METHODS } from '../../constants/methods';
 import { useEffect, useState } from 'react';
 import { FormControlLabel, Checkbox} from "@mui/material";
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 
 
@@ -27,13 +32,13 @@ const Filter = () => {
   
   const [ids, setIds] = useState([{ id: parseInt(id) }]);
 
+  const [total, setTotal] = useState(data?.length);
+
   const makeNewCategories = (clubs) => {
     var categories = {};
-
     clubs.forEach(function(club) {
     let categoryId = club.category.id;
     let categoryTitle = club.category.title;
-
     if (categories[categoryId]) {
       categories[categoryId].cant++;
     } else {
@@ -51,13 +56,11 @@ const Filter = () => {
 
   }
 
-       
  const newCategories = clubsData && makeNewCategories(clubsData) 
     
   const clubs = async () => {
     try {
       const result = await fetchData(ENDPOINTS.CLUB_BY_CATEGORY, METHODS.POST, ids);
-      return data?.length;
     } catch (error) {
       console.log(error)
     }
@@ -66,6 +69,10 @@ const Filter = () => {
   useEffect(() => {
     clubs();
   }, [ids]);
+
+  useEffect(() => {
+    setTotal(data?.length);
+  }, [data]);
 
   const goBack = () => {
     navigate("/");
@@ -95,43 +102,37 @@ const Filter = () => {
         mt: '120px',
         mb: '40px',
         mx:'auto',
-        display: 'flex',
-        flexDirection: 'column',
       }}
     >
-      
-        <> 
           <IconButton
-          aria-label="Volver"
-          color="#FFFFFF"
-          size="large"
-          onClick={goBack}
-          sx={{
-            position: 'absolute',
-            right: 10,
+            aria-label="Volver"
+            color="#FFFFFF"
+            size="large"
+            onClick={goBack}
+            sx={{
+              position: 'absolute',
+              right: 10,
             }}
           >
-              <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
+            <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
           </IconButton>
-
-          <h2>RESULTADOS DE TU BUSQUEDA</h2>
-
+          
           <Container
             sx={{
               display:'flex',
-              flexDirection:'row',
-              gap:'30px',
+              flexDirection:{ xs: 'column', md: 'row' },
+              flexWrap:'nowrap',
+              gap:'50px',
               }}
           >
             <Box
               sx={{
-                display:'flex',
                 flexDirection:'column',
                 alignItems:'flex-start',
+                width:'400px',
+                display: { xs: 'none', md: 'flex' },
                 }}
             >
-              <h3>REFINA TU BUSQUEDA</h3>
-              
               <h5>DEPORTES</h5>
 
               {
@@ -150,31 +151,69 @@ const Filter = () => {
                       
                 ))
               }
-
             </Box>
+            <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'flex', md: 'none' },
+              justifyContent: 'flex-start',
+            }}
+          >
+           
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel>DEPORTES</InputLabel>
+              <Select
+                labelId="categorias"
+                input={<OutlinedInput label="Buscar por Deporte" />}
+              >
+                {newCategories?.map((category) => (
+                  <MenuItem key={category.id}>
+                    <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={isChecked(category.id)}
+                        onChange={()=>handleChange(category.id)}
+                        /> 
+                      }
+                      label={`${category.title} (${category.cant})`}
+                    />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-            <Box sx={{
-              mx: 'auto',
-              my:'100px',
-              backgroundColor: '#FFFFFF',
-              color: '#1F2E7B',
-              display: 'flex',
-              textAlign: 'center',
-              gap: '40px',
-              flexWrap: 'wrap'
-            }}>
-              
-              {
+          </Box>
+
+
+
+            {
                 (isLoading) ? <Loading /> :
-              
-                clubs && data?.map((club) => (
-                  <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />
-                ))
-              }
-            </Box>
-
+            <div> 
+              <h2>RESULTADOS DE TU BUSQUEDA</h2>
+              <h3>{`${total} clubes encontrados`}</h3>
+              <Box sx={{
+                mx: 'auto',
+                my:'40px',
+                backgroundColor: '#FFFFFF',
+                color: '#1F2E7B',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent:'center',
+                textAlign: 'center',
+                gap: '40px',
+                flexWrap: 'wrap'
+              }}>
+                  {
+                  clubs && data?.map((club) => (
+                    <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />
+                  ))
+                  }
+                
+              </Box>
+            </div>
+            }
           </Container>
-        </>
+        
       
 
     </Container>
