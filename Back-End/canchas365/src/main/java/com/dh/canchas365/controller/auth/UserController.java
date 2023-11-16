@@ -149,7 +149,7 @@ public class UserController extends CustomFieldException {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user/{id}/favorites")
-    public ResponseEntity<?> getFavorites(@RequestParam Long id) {
+    public ResponseEntity<?> getFavorites(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userService.getFavorites(id));
         } catch (Exception ex) {
