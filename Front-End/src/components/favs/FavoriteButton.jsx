@@ -8,29 +8,30 @@ import useFetchApi from "../../hooks/useFetchApi";
 import useFetchDataApi from "../../hooks/useFetchDataApi";
 import { AuthContext } from "../../auth/context";
 
-const FavoriteButton = ({ clubId, disabled }) => {
-  const [favorites, setFavorites] = useState(null);
+const FavoriteButton = ({ clubId }) => {
 
+  const [favorites, setFavorites] = useState(null);
+  
   const { userData } = AuthContext();
   const userId = userData.id;
 
-  const club = useFetchApi(`${ENDPOINTS.CLUB}/${clubId}`);
   const { fetchData } = useFetchDataApi();
+  const club = useFetchApi(`${ENDPOINTS.CLUB}/${clubId}`);
+  console.log(club)
 
-  const handleToggleFavorito = (club) => {
+  const handleToggleFavorito = () => {
+
     fetchData(
       `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`,
       METHODS.POST,
-      club
+      club.data
     );
-    console.log(`Se agrega este club a favoritos ${club.id}`);
-    setFavorites(club);
-    //console.log(`La cancha con id ${id} se agregó a favoritos`)
+    console.log(`Se agrega este club a favoritos ${clubId}`);
+    setFavorites(club.data);
   };
 
   return (
     <IconButton
-      disabled={disabled}
       variant="plain"
       sx={{
         "--IconButton-size": "45px",
