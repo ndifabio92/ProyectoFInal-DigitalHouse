@@ -9,6 +9,7 @@ export const ENDPOINTS = {
     SPORT: 'sport',
     CITY: 'city',
     CATEGORY: 'category',
+    CLUB_BY_CATEGORY: 'club/by-categories',
     USER:'user',
     USER_CREATE: 'user/signup',
     USER_SIGN_IN: 'login',

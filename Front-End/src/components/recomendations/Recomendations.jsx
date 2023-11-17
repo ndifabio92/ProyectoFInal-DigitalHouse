@@ -18,11 +18,12 @@ const Recomendations = () => {
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.RECOMMENDED);
 
   return (
+    
     <Container maxWidth="xl"
       sx={{
         mx: 'auto',
-        backgroundColor: '#FFFFFF',
         flexGrow: 1,
+        backgroundColor: '#FFFFFF',
         textAlign: 'center',
         justifyContent: 'center',
         display: 'flex',
