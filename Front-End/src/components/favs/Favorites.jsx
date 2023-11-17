@@ -8,6 +8,8 @@ import { ENDPOINTS } from "../../constants/endpoints";
 const Favorites = ({ userId }) => {
 
   const { data, isLoading } = useFetchApi(`${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`);
+ 
+  //console.log(userId)
 
   return (
 
