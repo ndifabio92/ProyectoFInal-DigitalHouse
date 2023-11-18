@@ -20,7 +20,7 @@ const CardProducts = ({ name, tel, city, id }) => {
         <Card>
 
             <CardActionArea
-                onClick={handleClick}
+                
                 sx={{
                     width: 220,
                     height: 300,
@@ -33,6 +33,7 @@ const CardProducts = ({ name, tel, city, id }) => {
 
             >
                 <Typography variant="p" component="p" 
+                    onClick={handleClick}
                     sx={{
                         height:'30px', 
                         padding:'10px',
@@ -64,6 +65,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                         {tel}
                     </Typography>
                 </CardContent>
+                <FavoriteButton clubId={id}/>
             </CardActionArea>
 
         </Card>
