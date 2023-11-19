@@ -42,7 +42,7 @@ const TableCategory = ({ handleUpdate }) => {
         Swal.fire({
             title: `Esta por eliminar la categoria ${title}.`, 
             icon: 'warning',
-            text: 'En caso que la misma este siendo utilizada, no podra eliminarse ¿Esta seguro de confirmar la accion?',
+            text: 'En caso que la misma este siendo utilizada, se eliminaran todos los clubes que la tengan asignada ¿Esta seguro de confirmar la accion?',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
