@@ -37,7 +37,12 @@ const FavoriteButton = ({ clubId }) => {
       );
       console.log(`Se agrega/quita este club a favoritos ${clubId}`);
       setFavorites(true);
-      navigate("/userprofile");
+      
+      if (window.location.pathname === "/userprofile") {
+        window.location.reload();
+      } else {
+        navigate("/userprofile");
+      }
 
     } catch (error) {
       console.error("Error al manejar favoritos:", error);
