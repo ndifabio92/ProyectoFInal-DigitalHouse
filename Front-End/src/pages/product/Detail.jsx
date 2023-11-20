@@ -76,8 +76,8 @@ const Detail = () => {
         <p> Provincia: {data?.address?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
       </Box>
-      <Characteristic club={data} />
       <Images id={id} />
+      <Characteristic club={data} />
     
     </Container>
       }

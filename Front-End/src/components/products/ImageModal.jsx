@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import { Container } from '@mui/material';
 
 
 
@@ -33,13 +34,19 @@ const ImageModal = ({ images }) => {
   }, [open]);
 
   return (
-    <>
+    <Container maxWidth="xl" 
+      sx={{
+      margin: '0px',
+      backgroundColor: '#FFFFFF',
+    }}>
 
       <Box sx={{
         textAlign: 'left',
-        margin: '10px',
+        paddingRight:'200px',
+        paddingBottom:'50px',
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        backgroundColor: '#FFFFFF'
       }}>
         <Button
           variant="contained"
@@ -59,7 +66,7 @@ const ImageModal = ({ images }) => {
         scroll={'paper'}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
-        sx={{ margin: '50px' }}
+        sx={{ margin: '50px'}}
         fullScreen={true}
       >
         <IconButton
@@ -67,15 +74,15 @@ const ImageModal = ({ images }) => {
           onClick={handleClose}
           sx={{
             position: 'absolute',
-            right: 10,
-            top: 8,
+            right: 23,
+            top: 15,
             color: (theme) => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
         </IconButton>
 
-        <DialogContent dividers={scroll === 'paper'} sx={{ padding: '30px' }}>
+        <DialogContent dividers={scroll === 'paper'} sx={{ padding: '50px' }}>
           <Box
             id="scroll-dialog-description"
             ref={descriptionElementRef}
@@ -97,7 +104,7 @@ const ImageModal = ({ images }) => {
           </Box>
         </DialogContent>
       </Dialog>
-    </>
+    </Container>
   );
 }
 

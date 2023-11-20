@@ -1,4 +1,4 @@
-import { Container, Grid} from '@mui/material';
+import { Container, Box} from '@mui/material';
 import ImageModal from './ImageModal';
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
@@ -21,34 +21,34 @@ const Images = ({id}) => {
       <Container maxWidth="xl"
         sx={{
           mx: 'auto',
-          padding: '40px',
+          marginY:'0px',
           backgroundColor: '#FFFFFF',
-          display:'center'
+          display:'flex',
+          padding: '50px',
+          gap:'0px',
+          justifyContent:'center',
+          alignItems:'center',
+          flexWrap: 'wrap',
         }}
       >
-        <Grid container spacing={1}
-          sx={{
-            mx: 'auto',
-            padding: '100px',
-            backgroundColor: '#FFFFFF',
-            display:'center'
+        <Box sx={{
+          width: '400px', height: '400px'
+        }} >
+          <img src={imagenPrinc[0]?.url} alt="" style={{ objectFit: 'cover', width: '400px', height: '400px' }} />
+        </Box>
+
+          <Box  
+            sx={{height:'400px', 
+            width: '400px',
+            display:'flex',
+            flexWrap: 'wrap',
+            
           }}>
-
-          <Grid item xs={12} md={6}>
-            <img src={imagenPrinc[0]?.url} alt="" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={1}>
               {imagenes?.map((image) => (
-
-                <Grid key={image.id} item xs={6} md={6}>
-                  <img src={image.url} alt="" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
-                </Grid>
+                <img key={image.id} src={image.url} alt="" style={{ objectFit: 'cover', width: '200px', height: '200px' }} />
               ))}
-            </Grid>
-          </Grid>
-        </Grid>
+          </Box>
+        
       </Container>
       <ImageModal images={data} />
     </>
