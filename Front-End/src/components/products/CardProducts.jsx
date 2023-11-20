@@ -9,6 +9,7 @@ import useFetchApi from "../../hooks/useFetchApi";
 import FavoriteButton from "../favs/FavoriteButton";
 
 const CardProducts = ({ name, tel, city, id }) => {
+    
   const { data } = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                 
                 sx={{
                     width: 220,
-                    height: 300,
+                    height: 400,
                     border: 'none',
                     backgroundColor: '#EDEBEE',
                     display: 'flex',
