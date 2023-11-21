@@ -68,6 +68,8 @@ public class SecurityConfig {
                     auth.requestMatchers("/email/**","POST").permitAll();
                     auth.requestMatchers("/club/by-categories","POST").permitAll();
 
+                    auth.requestMatchers("/image/**","POST").permitAll();
+
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
                     // permito crear roles para crear los roles iniciales.. luego comentar
                     //auth.requestMatchers("/rol/create").permitAll();
