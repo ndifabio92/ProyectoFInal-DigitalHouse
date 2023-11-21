@@ -8,13 +8,15 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import useFetchApi from "../../hooks/useFetchApi";
 import FavoriteButton from "../favs/FavoriteButton";
 
-const CardProducts = ({ name, tel, city, id }) => {
+const CardProducts = ({props}) => {
 
-  const { data } = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
+  
+
+  const { data } = useFetchApi(`${ENDPOINTS.IMAGES}/${props.id}`)
 
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${id}`);
+  const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${props.id}`);
 
   return (
     <Card>
@@ -42,7 +44,7 @@ const CardProducts = ({ name, tel, city, id }) => {
             color: "#1F2E7B",
           }}
         >
-          {name}
+          {props.name}
         </Typography>
         <CardMedia
           component="img"
@@ -60,13 +62,17 @@ const CardProducts = ({ name, tel, city, id }) => {
           }}
         >
           <Typography variant="p" component="p">
-            {city}
+            {props.city}
           </Typography>
           <Typography variant="p" component="p">
-            {tel}
+            {props.tel}
           </Typography>
         </CardContent>
-        <FavoriteButton clubId={id} />
+        <FavoriteButton 
+          clubId={props.id} 
+          favoritos = {props.favoritos}
+          setFavoritos = {props.setFavoritos}
+        />
       </CardActionArea>
     </Card>
   );

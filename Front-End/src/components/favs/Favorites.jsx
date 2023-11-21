@@ -4,10 +4,21 @@ import Box from "@mui/material/Box";
 import useFetchApi from "../../hooks/useFetchApi";
 import Loading from "../loading/Loading";
 import { ENDPOINTS } from "../../constants/endpoints";
+import { useState, useEffect} from "react";
 
 const Favorites = ({ userId }) => {
 
   const { data, isLoading } = useFetchApi(`${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`);
+
+  const [favoritos, setFavoritos] = useState(data)
+
+  useEffect(() => {
+    if (data) {
+        setFavoritos(data)
+    }
+  }, [data]);
+
+
 
   return (
 
@@ -35,9 +46,11 @@ const Favorites = ({ userId }) => {
             flexWrap: "wrap",
           }}
         >
-          {data?.map((club) => (
+          {favoritos?.map((club) => (
             <CardProducts
               key={club.id}
+              favoritos = {favoritos}
+              setFavoritos = {setFavoritos}
               name={club.name}
               tel={club.phone_number}
               city={

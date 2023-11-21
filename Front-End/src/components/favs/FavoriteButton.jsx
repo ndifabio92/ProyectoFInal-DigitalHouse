@@ -10,13 +10,17 @@ import { AuthContext } from "../../auth/context";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const FavoriteButton = ({ clubId }) => {
+const FavoriteButton = ({ props }) => {
+
+  // la idea es recorrer props.favoritos y fijarse si idClub esta incluido dentro de los favoritos, si lo esta setear isFav en true y si no en false
+
   const [isFav, setIsFav] = useState(false);
 
   const navigate = useNavigate();
 
   const { fetchData } = useFetchDataApi();
-  const clubResult = useFetchApi(`${ENDPOINTS.CLUB}/${clubId}`);
+
+  const clubResult = useFetchApi(`${ENDPOINTS.CLUB}/${props.clubId}`);
 
   const { userData } = AuthContext();
 
@@ -48,7 +52,13 @@ const FavoriteButton = ({ clubId }) => {
             clubResult.data
           );
 
-          setIsFav(true);
+          if(isFav){
+            setIsFav(false)
+            props.setFavoritos( props.favoritos.filter((club) => club.id !== props.clubId))
+          }
+          else {
+            setIsFav(true)
+          }
 
           if (window.location.pathname === "/userprofile") {
             Swal.fire({
@@ -79,14 +89,16 @@ const FavoriteButton = ({ clubId }) => {
       onClick={handleToggleFavorito}
     >
       <span style={{ padding: "12px", display: "inline-block" }}>
-        {isFav ? (
+        {
+        isFav ? (
           <FavoriteIcon
             style={{ fontSize: "24px", color: "FF914D" }}
             variant="solid"
           />
         ) : (
           <FavoriteBorderIcon style={{ fontSize: "24px" }} variant="outlined" />
-        )}
+        )
+        }
       </span>
     </IconButton>
   );
