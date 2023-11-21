@@ -8,6 +8,9 @@ import useFetchApi from '../../../hooks/useFetchApi';
 import useFetchDataApi from "../../../hooks/useFetchDataApi";
 import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
+import { useState } from "react";
+import axios from 'axios';
+
 
 
 
@@ -20,6 +23,8 @@ const FormAdmin = ({action, club, handleUpdate}) => {
     const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}`);
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
+
+    const [photos, setPhotos]= useState([])
 
     const initialValues = action === 'MODIFICAR CLUB' ? {
         id:club.id,
@@ -118,6 +123,38 @@ const FormAdmin = ({action, club, handleUpdate}) => {
             }));
         }
     };
+
+    const handleFilesChange = (event) => {
+        const newPhotos = event.target.files;
+        setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+    }
+
+
+    const sendFiles = async (idClub, photos) => {
+
+        photos.forEach(photo => {
+            uploadImage(photo, idClub)
+        });
+    }
+
+    const uploadImage = async (file, idClub) => {
+        try {
+              const formData = new FormData();
+              formData.append("file", file);
+      
+              await axios.post(`/image/${idClub}/upload`, formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                }
+              });
+            } catch (error) {
+              console.error("Error uploading image:", error);
+            }
+        };
+    }
+
+    
+
     
     const submitFormCreate = async (values) => {
 
@@ -135,14 +172,19 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     )
                 }
                 else{
-                    Swal.fire({
-                        title: 'Club agregado con éxito',
-                        icon: 'success',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Confirmar',
-                    }).then(() => {
-                       console.log("La Solicitur Post se envio correctamente")
-                    }) 
+                    const idClub = data.id
+                    sendFilesAws(idClub, photos)
+                    .then(() => {
+                        Swal.fire({
+                            title: 'Club agregado con éxito',
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Confirmar',
+                        })
+                    }).then(() => { console.log("La Solicitur Post se envio correctamente") }) 
+                        
+
+
                 } 
         
         handleUpdate(0, {}, 'AGREGAR CLUB')
@@ -310,9 +352,11 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         />
                     ))
                 }
-
-                {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
-
+                
+                { 
+                <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={handleFilesChange} name="files" /> 
+                }
+                
                 <Button variant="contained" type="submit">{action}</Button>
     
             </form>
