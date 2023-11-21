@@ -8,8 +8,12 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { METHODS } from '../../constants/methods';
 import Characteristic from '../../components/characteristics/Characteristics'
 import Loading from "../../components/loading/Loading";
+import { useForm } from "../../hooks/useForm";
+import DateTimepicker from "../../components/datepicker/DateTimepicker";
+
 
 const Detail = () => {
+
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -20,6 +24,10 @@ const Detail = () => {
 
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
  
+  const { values, handleChange } = useForm({
+    date: '',
+    time: ''
+  });
 
   return (
     <> 
@@ -35,7 +43,6 @@ const Detail = () => {
       }}
     >
     
-     
       <Box
         sx={{
           display: "flex",
@@ -46,6 +53,7 @@ const Detail = () => {
           fontSize: "30px",
           fontWeight: "bold",
           paddingLeft: "20px",
+          flexWrap:'wrap'
         }}
       >
         <h4>{data?.name}</h4>
@@ -58,23 +66,46 @@ const Detail = () => {
           <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
         </IconButton>
       </Box>
-      <Box
-        maxWidth="xs"
-        sx={{
-          color: "#011A5B",
+      <Box sx={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap:'wrap',
+          justifyContent: "space-between",
           backgroundColor: "#FFFFFF",
-          textAlign: "left",
-          padding: "10px",
-          paddingLeft: "150px",
-        }}
-      >
-        <p>
-          {" "}
-          Domicilio: {data?.address?.street + " N° " + data?.address?.number}
-        </p>
-        <p> Ciudad: {data?.address?.city?.name}</p>
-        <p> Provincia: {data?.address?.city?.state?.name}</p>
-        <p> Teléfono: {data?.phone_number}</p>
+          fontSize: "20px",
+          fontWeight: "bold",
+          paddingX: "100px",
+        }}> 
+        <Box
+          maxWidth="xs"
+          sx={{
+            color: "#011A5B",
+            backgroundColor: "#FFFFFF",
+            textAlign: "left",
+            padding: "10px",
+          }}
+        >
+          <p>
+            {" "}
+            Domicilio: {data?.address?.street + " N° " + data?.address?.number}
+          </p>
+          <p> Ciudad: {data?.address?.city?.name}</p>
+          <p> Provincia: {data?.address?.city?.state?.name}</p>
+          <p> Teléfono: {data?.phone_number}</p>
+        </Box>
+        <Box   
+          sx={{
+            color: "#011A5B",
+            backgroundColor: "#FFFFFF",
+            textAlign: "left",
+            display:'flex',
+            flexWrap:'wrap',
+            gap:'20px',
+            padding: "10px",
+          }}> 
+          <DateTimepicker/>
+         
+        </Box>
       </Box>
       <Images id={id} />
       <Characteristic club={data} />

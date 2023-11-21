@@ -6,8 +6,6 @@ import { ENDPOINTS } from '../../constants/endpoints';
 
 const Images = ({id}) => {
 
-  console.log(id)
-
   const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
   const imagenPrinc = data? data.slice(0,1) : []
