@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -28,4 +29,12 @@ public class Images implements Serializable {
     @JoinColumn(name = "id_club", nullable = false)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Club club;
+
+    public Optional<String> getImageUrl(){
+        return Optional.ofNullable(url);
+    }
+
+    public void setImageUrl(String imageUrl){
+        this.url = imageUrl;
+    }
 }
