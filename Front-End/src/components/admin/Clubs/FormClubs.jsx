@@ -10,20 +10,20 @@ import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 import { useState } from "react";
 import axios from 'axios'
+import ListImages from "./ListImages";
+
 
 
 
 const FormAdmin = ({action, club, handleUpdate}) => {
 
-    const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+    const { data: categories, isLoading: isLoadingCategories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
-    const { data: characteristics, isLoading: isLoadingCharacteristics, error: characteristicsError } = useFetchApi(`${ENDPOINTS.CHARACTERISTIC}`);
+    const { data: characteristics, isLoading: isLoadingCharacteristics} = useFetchApi(`${ENDPOINTS.CHARACTERISTIC}`);
 
-    const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}`);
+    const { data: cities, isLoading: isLoadingCities } = useFetchApi(`${ENDPOINTS.CITY}`);
 
-    const { data, isLoading, error, fetchData } = useFetchDataApi();
-
-    const token = localStorage.getItem('token')?.replace(/"/g, '');
+    const { isLoading, fetchData } = useFetchDataApi();
 
     const [images, setImages] = useState([])
 
@@ -172,7 +172,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log("La Solicitud Post se envio correctamente")
+                       console.log("Club agregado con éxito")
                     }).then(() => {
                         uploadImages(resp.id , images)
                     })  
@@ -183,16 +183,16 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const submitFormUpdate = async (values) => {
 
-        await fetchData(ENDPOINTS.CLUB, METHODS.PUT, values)
+        const resp = await fetchData(ENDPOINTS.CLUB, METHODS.PUT, values)
 
-                if (error){
+                if (resp.error){
                     Swal.fire({
-                        title: error,
+                        title: resp.error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log(error)
+                       console.log(resp.error)
                     }
                     )
                 }
@@ -203,8 +203,10 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log("La Solicitur Post se envio correctamente")
-                    }) 
+                       console.log("Club modificado con éxito")
+                    }).then(() => {
+                        uploadImages(resp.id , images)
+                    })   
                 } 
 
         handleUpdate(0, {}, 'AGREGAR CLUB')
@@ -345,6 +347,8 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 }
 
                 { <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={handleFilesChange} name="files" /> }
+
+                <ListImages images={images} setImages={setImages}/>
 
                 <Button variant="contained" type="submit">{action}</Button>
     
