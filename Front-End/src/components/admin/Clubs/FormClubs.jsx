@@ -332,7 +332,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 {
                     characteristics?.map((characteristic) => (
                         <FormControlLabel
-                            key={characteristic.id}
+                            key={characteristic.name}
                             control={
                                 <Checkbox
                                     name={characteristic.id}
