@@ -23,6 +23,8 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
+    const [images, setImages] = useState([])
+
     const initialValues = action === 'MODIFICAR CLUB' ? {
         id:club.id,
         name: club.name, 
@@ -122,23 +124,29 @@ const FormAdmin = ({action, club, handleUpdate}) => {
     };
 
     const handleFilesChange = async (event) => {
-      //  probar de las 2 formas  
        const image = event.target.files[0];
-       // const image = event.target.files;
-
-        await uploadImage(99, image);
+       setImages((images)=>[...images, image])
     }
 
-    const uploadImage = async ( idClub , file) => {
+    const upload = async (idClub, file) => {
         try {
             const formData = new FormData()
             formData.append("file", file)
             await axios.post(`${import.meta.env.VITE_BACKEND_API}image/${idClub}/upload`, formData, {headers: {
                 "Content-Type": "multipart/form-data"
-              }});
+            }});
         } catch (error) {
-              console.error("Error uploading image:", error)
+           console.error("Error uploading image:", error)
         }
+    }  
+
+
+    const uploadImages =  ( idClub , images) => {
+        images.forEach(image => {
+                upload(idClub, image)
+            }
+        );
+ 
     }
     
     const submitFormCreate = async (values) => {
@@ -164,7 +172,9 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
                        console.log("La Solicitud Post se envio correctamente")
-                    }) 
+                    }).then(() => {
+                        uploadImages( 99 , images)
+                    })  
                 } 
         
         handleUpdate(0, {}, 'AGREGAR CLUB')
