@@ -22,7 +22,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const [photos, setPhotos] = useState(null)
+    const [photos, setPhotos] = useState([])
 
     const initialValues = action === 'MODIFICAR CLUB' ? {
         id:club.id,
@@ -131,19 +131,18 @@ const FormAdmin = ({action, club, handleUpdate}) => {
     const sendFiles = async (idClub, photos) => {
         
         for (const photo of photos) {
-            await uploadImage(photo, idClub);
-          }
-        
+            await uploadImage(idClub, photo);
+        }
         
     }
 
-    const uploadImage = async (file, idClub) => {
+    const uploadImage = async ( idClub , file) => {
         try {
             const formData = new FormData()
             formData.append("file", file)
-      
-            await fetch (`${import.meta.env.VITE_BACKEND_API}image/${idClub}/upload`, formData, {
+            await fetch (`${import.meta.env.VITE_BACKEND_API}image/${idClub}/upload`, {
                 method: 'POST',
+                body:formData,
                 headers: {
                   "Content-Type": "multipart/form-data"
                 }
@@ -169,8 +168,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     )
                 }
                 else{
-
-                    sendFiles( 100 /* aca tengo que poner el idClub*/, photos )
+                    sendFiles( 99 , photos )
                     .then(() => {
                         Swal.fire({
                             title: 'Club agregado con éxito',
@@ -179,7 +177,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                             confirmButtonText: 'Confirmar',
                         })
                     }).then(() => {
-                       console.log("La Solicitur Post se envio correctamente")
+                       console.log("La Solicitud Post se envio correctamente")
                     }) 
                 } 
         
