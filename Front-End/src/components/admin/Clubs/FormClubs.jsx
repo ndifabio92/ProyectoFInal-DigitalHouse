@@ -9,6 +9,7 @@ import useFetchDataApi from "../../../hooks/useFetchDataApi";
 import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 import { useState } from "react";
+import axios from 'axios'
 
 
 
@@ -21,8 +22,6 @@ const FormAdmin = ({action, club, handleUpdate}) => {
     const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}`);
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
-
-    const [photos, setPhotos] = useState([])
 
     const initialValues = action === 'MODIFICAR CLUB' ? {
         id:club.id,
@@ -122,31 +121,21 @@ const FormAdmin = ({action, club, handleUpdate}) => {
         }
     };
 
-    const handleFilesChange = (event) => {
-        const newPhotos = event.target.files;
-        setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
-        console.log(photos)
-    }
+    const handleFilesChange = async (event) => {
+      //  probar de las 2 formas  
+       const image = event.target.files[0];
+       // const image = event.target.files;
 
-    const sendFiles = async (idClub, photos) => {
-        
-        for (const photo of photos) {
-            await uploadImage(idClub, photo);
-        }
-        
+        await uploadImage(99, image);
     }
 
     const uploadImage = async ( idClub , file) => {
         try {
             const formData = new FormData()
             formData.append("file", file)
-            await fetch (`${import.meta.env.VITE_BACKEND_API}image/${idClub}/upload`, {
-                method: 'POST',
-                body:formData,
-                headers: {
-                  "Content-Type": "multipart/form-data"
-                }
-            });
+            await axios.post(`${import.meta.env.VITE_BACKEND_API}image/${idClub}/upload`, formData, {headers: {
+                "Content-Type": "multipart/form-data"
+              }});
         } catch (error) {
               console.error("Error uploading image:", error)
         }
@@ -168,14 +157,11 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     )
                 }
                 else{
-                    sendFiles( 99 , photos )
-                    .then(() => {
-                        Swal.fire({
-                            title: 'Club agregado con éxito',
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Confirmar',
-                        })
+                    Swal.fire({
+                        title: 'Club agregado con éxito',
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
                     }).then(() => {
                        console.log("La Solicitud Post se envio correctamente")
                     }) 
