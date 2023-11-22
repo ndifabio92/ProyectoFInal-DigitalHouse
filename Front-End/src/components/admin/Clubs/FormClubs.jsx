@@ -9,8 +9,6 @@ import useFetchDataApi from "../../../hooks/useFetchDataApi";
 import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 import { useState } from "react";
-import axios from 'axios';
-
 
 
 
@@ -24,7 +22,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const [photos, setPhotos]= useState([])
+    const [photos, setPhotos] = useState(null)
 
     const initialValues = action === 'MODIFICAR CLUB' ? {
         id:club.id,
@@ -127,34 +125,33 @@ const FormAdmin = ({action, club, handleUpdate}) => {
     const handleFilesChange = (event) => {
         const newPhotos = event.target.files;
         setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+        console.log(photos)
     }
 
-
     const sendFiles = async (idClub, photos) => {
-
-        photos.forEach(photo => {
-            uploadImage(photo, idClub)
-        });
+        
+        for (const photo of photos) {
+            await uploadImage(photo, idClub);
+          }
+        
+        
     }
 
     const uploadImage = async (file, idClub) => {
         try {
-              const formData = new FormData();
-              formData.append("file", file);
+            const formData = new FormData()
+            formData.append("file", file)
       
-              await axios.post(`/image/${idClub}/upload`, formData, {
+            await fetch (`${import.meta.env.VITE_BACKEND_API}image/${idClub}/upload`, formData, {
+                method: 'POST',
                 headers: {
                   "Content-Type": "multipart/form-data"
                 }
-              });
-            } catch (error) {
-              console.error("Error uploading image:", error);
-            }
-        };
+            });
+        } catch (error) {
+              console.error("Error uploading image:", error)
+        }
     }
-
-    
-
     
     const submitFormCreate = async (values) => {
 
@@ -172,8 +169,8 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     )
                 }
                 else{
-                    const idClub = data.id
-                    sendFilesAws(idClub, photos)
+
+                    sendFiles( 100 /* aca tengo que poner el idClub*/, photos )
                     .then(() => {
                         Swal.fire({
                             title: 'Club agregado con éxito',
@@ -181,10 +178,9 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                             confirmButtonColor: '#3085d6',
                             confirmButtonText: 'Confirmar',
                         })
-                    }).then(() => { console.log("La Solicitur Post se envio correctamente") }) 
-                        
-
-
+                    }).then(() => {
+                       console.log("La Solicitur Post se envio correctamente")
+                    }) 
                 } 
         
         handleUpdate(0, {}, 'AGREGAR CLUB')
@@ -352,11 +348,9 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         />
                     ))
                 }
-                
-                { 
-                <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={handleFilesChange} name="files" /> 
-                }
-                
+
+                { <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={handleFilesChange} name="files" /> }
+
                 <Button variant="contained" type="submit">{action}</Button>
     
             </form>

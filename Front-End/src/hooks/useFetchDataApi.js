@@ -12,6 +12,7 @@ const useFetchDataApi = () => {
         try {
             setIsLoading(true)
             setError(null)
+            setData(null)
 
             let url = `${import.meta.env.VITE_BACKEND_API}${endpoint}`;
 
