@@ -23,6 +23,8 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
+    const token = localStorage.getItem('token')?.replace(/"/g, '');
+
     const [images, setImages] = useState([])
 
     const initialValues = action === 'MODIFICAR CLUB' ? {
@@ -140,7 +142,6 @@ const FormAdmin = ({action, club, handleUpdate}) => {
         }
     }  
 
-
     const uploadImages =  ( idClub , images) => {
         images.forEach(image => {
                 upload(idClub, image)
@@ -151,16 +152,16 @@ const FormAdmin = ({action, club, handleUpdate}) => {
     
     const submitFormCreate = async (values) => {
 
-        await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)
+        const resp = await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)
 
-                if (error){
+                if (resp.error){
                     Swal.fire({
-                        title: error,
+                        title: resp.error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log(error)
+                       console.log(resp.error)
                     }
                     )
                 }
@@ -173,7 +174,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     }).then(() => {
                        console.log("La Solicitud Post se envio correctamente")
                     }).then(() => {
-                        uploadImages( 99 , images)
+                        uploadImages(resp.id , images)
                     })  
                 } 
         
