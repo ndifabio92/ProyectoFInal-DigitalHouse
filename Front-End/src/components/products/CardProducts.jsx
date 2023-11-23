@@ -15,7 +15,7 @@ const CardProducts = ({ name, tel, city, id }) => {
 
     const navigate = useNavigate();
 
-    const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${id}`);
+    const handleClick = () => navigate(`/${ENDPOINTS.CLUB}/${id}`);
 
     const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
