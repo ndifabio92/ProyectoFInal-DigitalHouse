@@ -32,4 +32,6 @@ public class ClubDTO {
 
     private Set<CharacteristicDto> characteristics;
 
+    private List<PlayingFieldDTO> playingFields;
+
 }

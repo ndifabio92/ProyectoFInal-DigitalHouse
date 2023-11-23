@@ -2,6 +2,7 @@ package com.dh.canchas365.controller;
 
 import com.dh.canchas365.dto.ClubCreateDTO;
 import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.dto.SearchDto;
 import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
@@ -98,5 +99,10 @@ public class ClubController extends CustomFieldException {
     @PostMapping("/by-categories")
     public List<ClubDTO> getByCategories(@RequestBody List<Category> categories) {
         return clubService.getByCategories(categories);
+    }
+
+    @PostMapping("/search")
+    public List<ClubDTO> search(@RequestBody SearchDto filters) {
+        return clubService.search(filters);
     }
 }
