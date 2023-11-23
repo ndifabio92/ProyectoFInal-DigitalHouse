@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
-import useFetchDataApi from "../../../hooks/useFetchDataApi";
+import useFetchDataImages from "../../../hooks/useFetchDataImages";
 import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 import { useState } from "react";
@@ -23,7 +23,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const { data: cities, isLoading: isLoadingCities } = useFetchApi(`${ENDPOINTS.CITY}`);
 
-    const { isLoading, fetchData } = useFetchDataApi();
+    const { isLoading, fetchData } = useFetchDataImages();
 
     const [images, setImages] = useState([])
 
