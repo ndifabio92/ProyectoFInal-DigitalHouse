@@ -1,16 +1,13 @@
 package com.dh.canchas365.service;
 
-import com.dh.canchas365.dto.CharacteristicDto;
-import com.dh.canchas365.dto.ClubCreateDTO;
-import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.dto.*;
 import com.dh.canchas365.dto.images.ImageDTO;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
-import com.dh.canchas365.model.Category;
-import com.dh.canchas365.model.Characteristic;
-import com.dh.canchas365.model.Club;
+import com.dh.canchas365.model.*;
 import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Address;
 import com.dh.canchas365.repository.ClubRepository;
+import com.dh.canchas365.repository.ReservationRepository;
 import com.dh.canchas365.repository.images.ImagesRepository;
 import com.dh.canchas365.repository.location.AddressRepository;
 import com.dh.canchas365.service.location.AdressService;
@@ -19,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,6 +40,12 @@ public class ClubService {
 
     @Autowired
     private CharacteristicService characteristicService;
+
+    @Autowired
+    private PlayingFieldService playingFieldService;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Transactional
     public Club createClub(ClubCreateDTO dto) throws ResourceDuplicateException {
@@ -206,6 +210,43 @@ public class ClubService {
             }
 
             clubesDTO.add(clubDTO);
+        }
+
+        return clubesDTO;
+    }
+
+    public List<ClubDTO> search(SearchDto filters) {
+        ModelMapper mapper = new ModelMapper();
+        List<ClubDTO> clubesDTO = new ArrayList<>();
+        List<PlayingField> playingFieldsList = new ArrayList<>();
+
+        List<Club> clubSearch = clubRepository.clubSearch(filters.getCategory().getId(), filters.getCity().getId()).orElse(null);
+        List<Reservation> reservationAll = reservationRepository.findAll();
+
+        for (Reservation reservation : reservationAll) {
+            if (filters.getDatetime().isEqual(reservation.getStartDatetime()) ||
+                    (filters.getDatetime().isAfter(reservation.getStartDatetime()) && filters.getDatetime().isBefore(reservation.getEndDatetime()))) {
+                playingFieldsList.add(reservation.getPlayingField());
+            }
+        }
+
+        if (clubSearch != null) {
+            for (Club club : clubSearch) {
+                Iterator<PlayingField> iterator = playingFieldsList.iterator();
+                while (iterator.hasNext()) {
+                    PlayingField playingField = iterator.next();
+                    if (playingField.getClub().equals(club)) {
+                        iterator.remove();
+                    }
+                }
+            }
+
+            for (Club club : clubSearch) {
+                ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+                List<PlayingFieldDTO> playingFieldsDTO = playingFieldService.getPlayingFieldByClub(club.getId());
+                clubDTO.setPlayingFields(playingFieldsDTO);
+                clubesDTO.add(clubDTO);
+            }
         }
 
         return clubesDTO;
