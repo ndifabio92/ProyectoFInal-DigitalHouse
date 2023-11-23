@@ -13,21 +13,34 @@ import Swal from "sweetalert2";
 const FavoriteButton = ({ clubId }) => {
   const [isFav, setIsFav] = useState(false);
 
-  const navigate = useNavigate();
+  //const { favorites, saveFavorites } = AuthContext();
+  // const buscarFavorito = (favorites, clubId) => {
+  //   if(favorites.some(fav => fav.id === clubId))
+  //   setIsFav(true)
+  // }
 
+  const { userData, favorites, updateFavorites } = AuthContext();
   const { fetchData } = useFetchDataApi();
   const clubResult = useFetchApi(`${ENDPOINTS.CLUB}/${clubId}`);
 
-  const { userData } = AuthContext();
+  const navigate = useNavigate();
+
+  //const favLocalStorage = localStorage.getItem("favoritos");
+
+  //const buscarFavorito = (clubId) => {
+  //if(localStorage.getItem("favoritos").some(fav => fav.id === clubId))
+  // if(favLocalStorage.some(fav => fav.id === clubId)){
+  //   setIsFav(true)
+  // }
+  //};
+  //buscarFavorito(clubId);
 
   const handleToggleFavorito = async () => {
-
     try {
-      
       if (!clubResult) {
         console.warn("Datos del club no disponibles");
         return;
-      } 
+      }
       console.log(clubResult);
 
       if (!localStorage.getItem("user")) {
@@ -37,34 +50,61 @@ const FavoriteButton = ({ clubId }) => {
         }).then(() => {
           navigate("/signin");
         });
-      } 
-      
+      }
+
       const userId = userData.id;
       console.log(userId);
 
-          await fetchData(
-            `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`,
-            METHODS.POST,
-            clubResult.data
-          );
+      //Se hace el POST a la base de datos
+      await fetchData(
+        `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`,
+        METHODS.POST,
+        clubResult.data
+      );
 
-          setIsFav(true);
+      //A continuacion, ademas del POST hay que agregar o quitar el favorito al/del context
+      //con una llamada a updateFavorites
 
-          if (window.location.pathname === "/userprofile") {
-            Swal.fire({
-              title: "Favoritos actualizados",
-              icon: "success",
-            }).then(() => {
-              window.location.reload();
-            });
-          } else {
-            navigate("/userprofile");
-            Swal.fire({
-              title: "Favoritos actualizados",
-              icon: "success",
-            });
-          }
-        
+      // if(favLocalStorage.some(fav => fav.id === clubId)){
+      //   setIsFav(false)
+      // } else {
+      //   setIsFav(true)
+      // }
+
+      updateFavorites(clubResult);
+      console.log(favorites)
+
+      if (favorites.some((fav) => fav.id === clubId)) {
+        setIsFav(true);
+        Swal.fire({
+          title: "Favoritos agregado",
+          icon: "success",
+        })
+      } else {
+        setIsFav(false);
+        Swal.fire({
+          title: "Favoritos borrado",
+          icon: "warn",
+        })
+      }
+
+
+      // if (window.location.pathname === "/userprofile") {
+      //   Swal.fire({
+      //     title: "Favoritos actualizados",
+      //     icon: "success",
+      //   }).then(() => {
+      //     window.location.reload();
+      //   });
+      // } else {
+      //   navigate("/userprofile");
+      //   Swal.fire({
+      //     title: "Favoritos actualizados",
+      //     icon: "success",
+      //   });
+      // }
+
+
     } catch (error) {
       console.error("Error al manejar favoritos:", error);
     }
@@ -75,6 +115,9 @@ const FavoriteButton = ({ clubId }) => {
       variant="plain"
       sx={{
         "--IconButton-size": "45px",
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
       }}
       onClick={handleToggleFavorito}
     >

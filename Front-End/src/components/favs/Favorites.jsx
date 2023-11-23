@@ -4,13 +4,28 @@ import Box from "@mui/material/Box";
 import useFetchApi from "../../hooks/useFetchApi";
 import Loading from "../loading/Loading";
 import { ENDPOINTS } from "../../constants/endpoints";
+import { AuthContext } from "../../auth/context";
+import { useEffect } from "react";
 
 const Favorites = ({ userId }) => {
 
-  const { data, isLoading } = useFetchApi(`${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`);
+//   const { data, isLoading } = useFetchApi(
+//     `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`
+//   );
+
+  const { favorites, saveFavorites, isLoading } = AuthContext();
+  saveFavorites(userId);
+
+  let favsParseados = JSON.parse(favorites);
+  console.log(favsParseados)
+
+useEffect(()=>{
+    console.log("Actualizando favoritos");
+    //window.location.reload();
+}, [favorites])
+
 
   return (
-
     <Container
       maxWidth="xl"
       sx={{
@@ -35,7 +50,7 @@ const Favorites = ({ userId }) => {
             flexWrap: "wrap",
           }}
         >
-          {data?.map((club) => (
+          {favsParseados?.map((club) => (
             <CardProducts
               key={club.id}
               name={club.name}
@@ -53,7 +68,6 @@ const Favorites = ({ userId }) => {
         </Box>
       )}
     </Container>
-
   );
 };
 
