@@ -8,18 +8,11 @@ const Images = ({id}) => {
 
   const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
-  console.log(data)
-
   const imagesURL = data?.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`}))
-
-  console.log(imagesURL)
-  
 
   const imagenPrinc = imagesURL? imagesURL.slice(0,1) : []
 
   const imagenes = imagesURL? imagesURL.slice(1,5) : []
-
-  console.log(imagenPrinc[0]?.url)
 
 
   return (

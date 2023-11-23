@@ -13,12 +13,15 @@ import useFetchApi from '../../hooks/useFetchApi';
 
 const CardProducts = ({ name, tel, city, id }) => {
 
-    const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
-
     const navigate = useNavigate();
 
     const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${id}`);
 
+    const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
+
+    const imagesURL = data?.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`}))
+
+    const imagenPrinc = imagesURL? imagesURL[0] : []
 
     return (
         
@@ -51,7 +54,7 @@ const CardProducts = ({ name, tel, city, id }) => {
                 <CardMedia
                     component="img"
                     height={100}
-                    image={data? data[0]?.url : ''}
+                    image={imagenPrinc.url}
                     sx={{ margin: '20px' }}
                 />
 
