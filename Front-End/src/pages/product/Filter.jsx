@@ -34,6 +34,8 @@ const Filter = () => {
 
   const [total, setTotal] = useState(data?.length);
 
+  const [clubsArray, SetClubsArray] = useState([])
+
   const makeNewCategories = (clubs) => {
     var categories = {};
     clubs.forEach(function(club) {
@@ -59,20 +61,22 @@ const Filter = () => {
  const newCategories = clubsData && makeNewCategories(clubsData) 
     
   const clubs = async () => {
-    try {
-      const result = await fetchData(ENDPOINTS.CLUB_BY_CATEGORY, METHODS.POST, ids);
-    } catch (error) {
-      console.log(error)
-    }
+
+    const resp = await fetchData(ENDPOINTS.CLUB_BY_CATEGORY, METHODS.POST, ids);
+    
+    SetClubsArray(resp)
+  
   };
+
+  console.log(clubs.response)
 
   useEffect(() => {
     clubs();
   }, [ids]);
 
   useEffect(() => {
-    setTotal(data?.length);
-  }, [data]);
+    setTotal(clubsArray?.length);
+  }, [clubsArray]);
 
   const goBack = () => {
     navigate("/");
@@ -204,7 +208,7 @@ const Filter = () => {
                 flexWrap: 'wrap'
               }}>
                   {
-                  clubs && data?.map((club) => (
+                  clubsArray.map((club) => (
                     <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />
                   ))
                   }
