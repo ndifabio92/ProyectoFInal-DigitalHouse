@@ -17,14 +17,11 @@ const Favorites = ({ userId }) => {
   );
 
   useEffect(() => {
-    // Verifica si data no es null antes de actualizar el estado
+ 
     if (data !== null) {
       setFavoritos(data);
-
-      // Crea un array de IDs de favoritos
       const idFavoritos = data.map((club) => club.id);
 
-      // Guarda los IDs de favoritos usando la función saveFavorites
       saveFavorites(idFavoritos);
     }
   }, [data]);

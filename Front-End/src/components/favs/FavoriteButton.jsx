@@ -12,7 +12,6 @@ import { useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 
 const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
-
   const [isFav, setIsFav] = useState(false);
 
   const { userData, favorites, updateFavorites } = AuthContext();
@@ -58,18 +57,16 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
       await fetchData(
         `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`,
         METHODS.POST,
-        //clubResult.data No hace falta mandar el club completo, funciona solo con el id
-        //`{id:${clubId}}`
         clubResult.data
       );
-      console.log(clubResult.data)
+      console.log(clubResult.data);
 
       //A continuacion, ademas del POST hay que agregar o quitar el favorito al/del context
       //con una llamada a updateFavorites
       updateFavorites(clubId);
 
       //Ahora tengo que eliminar con filter el id de club del estado favoritos del componente Favorites.jsx
-      const newFavorites = favoritos.filter((club) => club.id === clubId);
+      const newFavorites = favoritos.filter((club) => club.id != clubId);
       setFavoritos(newFavorites);
 
     } catch (error) {
@@ -104,42 +101,4 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
 
 export default FavoriteButton;
 
-//const favLocalStorage = localStorage.getItem("favoritos");
 
-//const buscarFavorito = (clubId) => {
-//if(localStorage.getItem("favoritos").some(fav => fav.id === clubId))
-// if(favLocalStorage.some(fav => fav.id === clubId)){
-//   setIsFav(true)
-// }
-//};
-//buscarFavorito(clubId);
-
-// if (favorites.some((fav) => fav.id === clubId)) {
-//   setIsFav(true);
-//   Swal.fire({
-//     title: "Favoritos agregado",
-//     icon: "success",
-//   });
-// } else {
-//   setIsFav(false);
-//   Swal.fire({
-//     title: "Favoritos borrado",
-//     icon: "warn",
-//   });
-// }
-
-//Esta es la solucion de la branch marcar-favorito
-// if (window.location.pathname === "/userprofile") {
-//   Swal.fire({
-//     title: "Favoritos actualizados",
-//     icon: "success",
-//   }).then(() => {
-//     window.location.reload();
-//   });
-// } else {
-//   navigate("/userprofile");
-//   Swal.fire({
-//     title: "Favoritos actualizados",
-//     icon: "success",
-//   });
-// }
