@@ -8,10 +8,10 @@ import { AuthContext } from "../../auth/context";
 import { useState } from "react";
 
 const Favorites = ({ userId }) => {
-  
+
   const [favoritos, setFavoritos] = useState([]);
 
-  const { saveFavorites } = AuthContext();
+  const { saveFavorites, favorites } = AuthContext();
 
   const { data, isLoading } = useFetchApi(
     `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`
@@ -51,7 +51,7 @@ const Favorites = ({ userId }) => {
             flexWrap: "wrap",
           }}
         >
-          {favoritos?.map((club) => (
+          {favorites?.map((club) => (
             <CardProducts
               key={club.id}
               name={club.name}

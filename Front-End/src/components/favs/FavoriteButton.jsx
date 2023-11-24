@@ -9,9 +9,9 @@ import { AuthContext } from "../../auth/context";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import useFetchApi from "../../hooks/useFetchApi";
 
 const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
-  
   const [isFav, setIsFav] = useState(false);
 
   const { userData, favorites, updateFavorites } = AuthContext();
@@ -20,7 +20,7 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
 
   const navigate = useNavigate();
 
-  //const clubResult = useFetchApi(`${ENDPOINTS.CLUB}/${clubId}`);
+  const clubResult = useFetchApi(`${ENDPOINTS.CLUB}/${clubId}`);
 
   //Aca busco en el contexto si existe el clubId que estoy pasando como props
   useEffect(() => {
@@ -58,8 +58,12 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
         `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`,
         METHODS.POST,
         //clubResult.data No hace falta mandar el club completo, funciona solo con el id
-        clubId
+        //`{id:${clubId}}`
+        //Ver como pasarle el id solo, hay que pasarlo como objeto
+        clubResult.data
       );
+
+      console.log(clubResult.data)
 
       //A continuacion, ademas del POST hay que agregar o quitar el favorito al/del context
       //con una llamada a updateFavorites
@@ -68,6 +72,7 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
       //Ahora tengo que eliminar con filter el id de club del estado favoritos del componente Favorites.jsx
       const newFavorites = favoritos.filter((club) => club.id === clubId);
       setFavoritos(newFavorites);
+      
     } catch (error) {
       console.error("Error al manejar favoritos:", error);
     }
