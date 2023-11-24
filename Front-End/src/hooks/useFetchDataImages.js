@@ -7,11 +7,13 @@ const useFetchDataApi = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const token = localStorage.getItem('token')?.replace(/"/g, '');
-
+    
     const fetchData = async (endpoint, method = METHODS.GET, payload = '') => {
+        
         try {
             setIsLoading(true)
             setError(null)
+            setData(null)
 
             let url = `${import.meta.env.VITE_BACKEND_API}${endpoint}`;
 
@@ -34,19 +36,27 @@ const useFetchDataApi = () => {
             const response = await fetch(url, options);
             const jsonData = await response.json();
 
+
             if (jsonData?.error) {
-                setError(jsonData);
+                setError(jsonData)
             } else {
-                setData(jsonData);
+                setData(jsonData.id);
             }
 
-            setIsLoading(false);
+            return jsonData
+
         } catch (error) {
             setError('Error al obtener los datos JSON:', error);
+            return error
+        }
+        finally {
             setIsLoading(false);
         }
+
+        
     };
-    return { data, isLoading, error, fetchData };
+  
+    return { data, isLoading, error, fetchData};
 };
 
 export default useFetchDataApi;

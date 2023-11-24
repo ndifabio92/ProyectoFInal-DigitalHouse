@@ -70,7 +70,7 @@ const Detail = () => {
       >
         <p>
           {" "}
-          Domicilio: {data?.address?.street + " N° " + data?.address?.number}
+          Domicilio: {`${data?.address?.street} N° ${data?.address?.number}`}
         </p>
         <p> Ciudad: {data?.address?.city?.name}</p>
         <p> Provincia: {data?.address?.city?.state?.name}</p>

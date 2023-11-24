@@ -9,15 +9,33 @@ import useFetchApi from "../../hooks/useFetchApi";
 import FavoriteButton from "../favs/FavoriteButton";
 
 const CardProducts = ({ name, tel, city, id, favoritos, setFavoritos }) => {
-  const { data } = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
-
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`${ENDPOINTS.CLUB}/${id}`);
+  const handleClick = () => navigate(`/${ENDPOINTS.CLUB}/${id}`);
+
+  const { data } = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
+
+  const imagesURL = data?.map((image) => ({
+    id: `${image.id}`,
+    url: `${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`,
+  }));
+
+  const imagenPrinc = imagesURL ? imagesURL[0] : [];
 
   return (
-    <Card>
+    <Card
+      sx={{
+        width: 220,
+        height: 400,
+        border: "none",
+        backgroundColor: "#EDEBEE",
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+      }}
+    >
       <CardActionArea
+        onClick={handleClick}
         sx={{
           width: 220,
           height: 400,
@@ -31,7 +49,6 @@ const CardProducts = ({ name, tel, city, id, favoritos, setFavoritos }) => {
         <Typography
           variant="p"
           component="p"
-          onClick={handleClick}
           sx={{
             height: "30px",
             padding: "10px",
@@ -46,7 +63,7 @@ const CardProducts = ({ name, tel, city, id, favoritos, setFavoritos }) => {
         <CardMedia
           component="img"
           height={100}
-          image={data ? data[0]?.url : ""}
+          image={imagenPrinc.url}
           sx={{ margin: "20px" }}
         />
 
@@ -65,12 +82,13 @@ const CardProducts = ({ name, tel, city, id, favoritos, setFavoritos }) => {
             {tel}
           </Typography>
         </CardContent>
-        <FavoriteButton
-          clubId={id}
-          favoritos={favoritos}
-          setFavoritos={setFavoritos}
-        />
       </CardActionArea>
+
+      <FavoriteButton
+        clubId={id}
+        favoritos={favoritos}
+        setFavoritos={setFavoritos}
+      />
     </Card>
   );
 };
