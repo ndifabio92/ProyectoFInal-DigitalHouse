@@ -5,26 +5,29 @@ import useFetchApi from "../../hooks/useFetchApi";
 import Loading from "../loading/Loading";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { AuthContext } from "../../auth/context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Favorites = ({ userId }) => {
-
   const [favoritos, setFavoritos] = useState([]);
 
-  const { saveFavorites, favorites } = AuthContext();
+  const { saveFavorites } = AuthContext();
 
   const { data, isLoading } = useFetchApi(
     `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`
   );
 
-  if (data) {
-    setFavoritos(data);
-    const idFavoritos = [];
-    favoritos.forEach((club) => {
-      idFavoritos.push(club.id);
-    });
-    saveFavorites(idFavoritos);
-  }
+  useEffect(() => {
+    // Verifica si data no es null antes de actualizar el estado
+    if (data !== null) {
+      setFavoritos(data);
+
+      // Crea un array de IDs de favoritos
+      const idFavoritos = data.map((club) => club.id);
+
+      // Guarda los IDs de favoritos usando la función saveFavorites
+      saveFavorites(idFavoritos);
+    }
+  }, [data]);
 
   return (
     <Container
@@ -51,7 +54,7 @@ const Favorites = ({ userId }) => {
             flexWrap: "wrap",
           }}
         >
-          {favorites?.map((club) => (
+          {favoritos?.map((club) => (
             <CardProducts
               key={club.id}
               name={club.name}

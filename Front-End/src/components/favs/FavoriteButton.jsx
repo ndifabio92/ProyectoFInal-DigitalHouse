@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 
 const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
+
   const [isFav, setIsFav] = useState(false);
 
   const { userData, favorites, updateFavorites } = AuthContext();
@@ -34,11 +35,11 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
 
   const handleToggleFavorito = async () => {
     try {
-      // if (!clubResult) {
-      //   console.warn("Datos del club no disponibles");
-      //   return;
-      // }
-      // console.log(clubResult);
+      if (!clubResult) {
+        console.warn("Datos del club no disponibles");
+        return;
+      }
+      console.log(clubResult);
 
       //Chequeo que el user este logueado
       if (!localStorage.getItem("user")) {
@@ -59,10 +60,8 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
         METHODS.POST,
         //clubResult.data No hace falta mandar el club completo, funciona solo con el id
         //`{id:${clubId}}`
-        //Ver como pasarle el id solo, hay que pasarlo como objeto
         clubResult.data
       );
-
       console.log(clubResult.data)
 
       //A continuacion, ademas del POST hay que agregar o quitar el favorito al/del context
@@ -72,7 +71,7 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
       //Ahora tengo que eliminar con filter el id de club del estado favoritos del componente Favorites.jsx
       const newFavorites = favoritos.filter((club) => club.id === clubId);
       setFavoritos(newFavorites);
-      
+
     } catch (error) {
       console.error("Error al manejar favoritos:", error);
     }

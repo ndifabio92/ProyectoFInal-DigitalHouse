@@ -25,7 +25,8 @@ export const DataProvider = ({ children }) => {
     };
 
     const saveFavorites = (idFavoritos) => {
-        favorites.push(idFavoritos);
+        const newFavorites = [...favorites, idFavoritos]
+        setFavorites(newFavorites);
     }
 
     const updateFavorites = (clubId) => {
