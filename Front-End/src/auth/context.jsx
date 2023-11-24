@@ -1,7 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import useFetchApi from "../hooks/useFetchApi";
-import { ENDPOINTS}  from "../constants/endpoints";
-
 
 const DataContext = createContext();
 
@@ -11,10 +8,8 @@ export const DataProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
     const [isLogged, setIsLogged] = useState(false);
     const [favorites, setFavorites] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        //console.log(userData)
         const storedUserData = localStorage.getItem("user");
         if (storedUserData) {
             setUserData(JSON.parse(storedUserData));
@@ -29,17 +24,16 @@ export const DataProvider = ({ children }) => {
         setIsLogged(true);
     };
 
-    const saveFavorites = (userId) => {
-        const { data, isLoading } = useFetchApi(`${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`);
-        setFavorites(JSON.stringify(data));
-        setIsLoading(isLoading);
+    const saveFavorites = (idFavoritos) => {
+        favorites.push(idFavoritos);
     }
 
-    const updateFavorites = (club) => {
-        if(!favorites.some(fav => fav.id === club.id)){
-            setFavorites(favorites.push(club))
+    const updateFavorites = (clubId) => {
+        if(!favorites.some(club => club.id === clubId)){
+            const newFavorites = [...favorites, clubId];
+            setFavorites(newFavorites);
         } else {
-            setFavorites(favorites.filter(fav => fav.id != club.id))
+            setFavorites(favorites.filter(club => club.id != clubId))
         }
     }
 
@@ -52,7 +46,6 @@ export const DataProvider = ({ children }) => {
         favorites,
         saveFavorites, 
         updateFavorites,
-        isLoading
     };
 
 

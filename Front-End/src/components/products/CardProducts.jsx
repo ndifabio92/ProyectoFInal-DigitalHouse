@@ -8,8 +8,7 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import useFetchApi from "../../hooks/useFetchApi";
 import FavoriteButton from "../favs/FavoriteButton";
 
-const CardProducts = ({ name, tel, city, id }) => {
-
+const CardProducts = ({ name, tel, city, id, favoritos, setFavoritos }) => {
   const { data } = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
   const navigate = useNavigate();
@@ -66,7 +65,11 @@ const CardProducts = ({ name, tel, city, id }) => {
             {tel}
           </Typography>
         </CardContent>
-        <FavoriteButton clubId={id} />
+        <FavoriteButton
+          clubId={id}
+          favoritos={favoritos}
+          setFavoritos={setFavoritos}
+        />
       </CardActionArea>
     </Card>
   );

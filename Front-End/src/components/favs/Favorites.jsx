@@ -5,25 +5,26 @@ import useFetchApi from "../../hooks/useFetchApi";
 import Loading from "../loading/Loading";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { AuthContext } from "../../auth/context";
-import { useEffect } from "react";
+import { useState } from "react";
 
 const Favorites = ({ userId }) => {
+  
+  const [favoritos, setFavoritos] = useState([]);
 
-//   const { data, isLoading } = useFetchApi(
-//     `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`
-//   );
+  const { saveFavorites } = AuthContext();
 
-  const { favorites, saveFavorites, isLoading } = AuthContext();
-  saveFavorites(userId);
+  const { data, isLoading } = useFetchApi(
+    `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`
+  );
 
-  let favsParseados = JSON.parse(favorites);
-  console.log(favsParseados)
-
-useEffect(()=>{
-    console.log("Actualizando favoritos");
-    //window.location.reload();
-}, [favorites])
-
+  if (data) {
+    setFavoritos(data);
+    const idFavoritos = [];
+    favoritos.forEach((club) => {
+      idFavoritos.push(club.id);
+    });
+    saveFavorites(idFavoritos);
+  }
 
   return (
     <Container
@@ -50,7 +51,7 @@ useEffect(()=>{
             flexWrap: "wrap",
           }}
         >
-          {favsParseados?.map((club) => (
+          {favoritos?.map((club) => (
             <CardProducts
               key={club.id}
               name={club.name}
@@ -63,6 +64,8 @@ useEffect(()=>{
                 club.address.city.name
               }
               id={club.id}
+              favoritos={favoritos}
+              setFavoritos={setFavoritos}
             />
           ))}
         </Box>
