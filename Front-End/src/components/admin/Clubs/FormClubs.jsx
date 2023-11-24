@@ -5,21 +5,27 @@ import styles from './styles.module.css';
 import Swal from 'sweetalert2';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
-import useFetchDataApi from "../../../hooks/useFetchDataApi";
+import useFetchDataImages from "../../../hooks/useFetchDataImages";
 import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
+import { useState } from "react";
+import axios from 'axios'
+import ListImages from "./ListImages";
+
 
 
 
 const FormAdmin = ({action, club, handleUpdate}) => {
 
-    const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+    const { data: categories, isLoading: isLoadingCategories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
     
-    const { data: characteristics, isLoading: isLoadingCharacteristics, error: characteristicsError } = useFetchApi(`${ENDPOINTS.CHARACTERISTIC}`);
+    const { data: characteristics, isLoading: isLoadingCharacteristics} = useFetchApi(`${ENDPOINTS.CHARACTERISTIC}`);
 
-    const { data: cities, isLoading: isLoadingCities, error: citiesError } = useFetchApi(`${ENDPOINTS.CITY}`);
+    const { data: cities, isLoading: isLoadingCities } = useFetchApi(`${ENDPOINTS.CITY}`);
 
-    const { data, isLoading, error, fetchData } = useFetchDataApi();
+    const { isLoading, fetchData } = useFetchDataImages();
+
+    const [images, setImages] = useState([])
 
     const initialValues = action === 'MODIFICAR CLUB' ? {
         id:club.id,
@@ -118,19 +124,44 @@ const FormAdmin = ({action, club, handleUpdate}) => {
             }));
         }
     };
+
+    const handleFilesChange = async (event) => {
+       const image = event.target.files[0];
+       setImages((images)=>[...images, image])
+    }
+
+    const upload = async (idClub, file) => {
+        try {
+            const formData = new FormData()
+            formData.append("file", file)
+            await axios.post(`${import.meta.env.VITE_BACKEND_API}image/${idClub}/upload`, formData, {headers: {
+                "Content-Type": "multipart/form-data"
+            }});
+        } catch (error) {
+           console.error("Error uploading image:", error)
+        }
+    }  
+
+    const uploadImages =  ( idClub , images) => {
+        images.forEach(image => {
+                upload(idClub, image)
+            }
+        );
+ 
+    }
     
     const submitFormCreate = async (values) => {
 
-        await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)
+        const resp = await fetchData(ENDPOINTS.CLUB, METHODS.POST, values)
 
-                if (error){
+                if (resp.error){
                     Swal.fire({
-                        title: error,
+                        title: resp.error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log(error)
+                       console.log(resp.error)
                     }
                     )
                 }
@@ -141,8 +172,10 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log("La Solicitur Post se envio correctamente")
-                    }) 
+                       console.log("Club agregado con éxito")
+                    }).then(() => {
+                        uploadImages(resp.id , images)
+                    })  
                 } 
         
         handleUpdate(0, {}, 'AGREGAR CLUB')
@@ -150,16 +183,16 @@ const FormAdmin = ({action, club, handleUpdate}) => {
 
     const submitFormUpdate = async (values) => {
 
-        await fetchData(ENDPOINTS.CLUB, METHODS.PUT, values)
+        const resp = await fetchData(ENDPOINTS.CLUB, METHODS.PUT, values)
 
-                if (error){
+                if (resp.error){
                     Swal.fire({
-                        title: error,
+                        title: resp.error,
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log(error)
+                       console.log(resp.error)
                     }
                     )
                 }
@@ -170,8 +203,10 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log("La Solicitur Post se envio correctamente")
-                    }) 
+                       console.log("Club modificado con éxito")
+                    }).then(() => {
+                        uploadImages(resp.id , images)
+                    })   
                 } 
 
         handleUpdate(0, {}, 'AGREGAR CLUB')
@@ -296,7 +331,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 {
                     characteristics?.map((characteristic) => (
                         <FormControlLabel
-                            key={characteristic.id}
+                            key={characteristic.name}
                             control={
                                 <Checkbox
                                     name={characteristic.id}
@@ -311,7 +346,9 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                     ))
                 }
 
-                {/* <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={formik.handleChange} name="files" /> */}
+                { <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={handleFilesChange} name="files" /> }
+
+                <ListImages images={images} setImages={setImages}/>
 
                 <Button variant="contained" type="submit">{action}</Button>
     
