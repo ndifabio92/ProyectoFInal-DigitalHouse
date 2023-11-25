@@ -38,6 +38,7 @@ const ImageModal = ({ images }) => {
       <Box sx={{
         textAlign: 'left',
         margin: '10px',
+        marginRight:'150px',
         display: 'flex',
         justifyContent: 'flex-end'
       }}>
