@@ -59,12 +59,11 @@ const Availability = (props) => {
 
         const newPeriod = [];
         while (currentDate <= endDate) {
-            console.log(startDate)
-            console.log(endDate)
             newPeriod.push(new Date(currentDate));
             currentDate.setDate(currentDate.getDate() + 1);
         }
         setPeriod(newPeriod);
+        console.log(period)
     };
 
 
@@ -125,8 +124,7 @@ const Availability = (props) => {
                                 <TableAvailability
                                     playingfields={playingfields}
                                     reservations={reservations.filter(
-                                    (reservation) => new Date(reservation.startDatetime).toLocaleDateString() === date.toLocaleDateString()
-                                    ) }
+                                    (reservation) => new Date(reservation.startDatetime).toLocaleDateString() === date.toLocaleDateString() ) }
                                 />
                             </CustomTabPanel>
                         ))}
