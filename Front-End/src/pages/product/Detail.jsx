@@ -20,7 +20,6 @@ const Detail = () => {
   const { id } = useParams();
 
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
- 
 
   return (
     <> 
@@ -29,6 +28,7 @@ const Detail = () => {
      maxWidth="xl"
       sx={{
         mt: "120px",
+        mb: "40px",
         color: "#011A5B",
         backgroundColor: "#FFFFFF",
       }}
@@ -78,7 +78,7 @@ const Detail = () => {
       </Box>
       <Images id={id} />
       <Characteristic club={data} />
-      <Availability/>
+      <Availability idClub={id}/>
       
     </Container>
       }
