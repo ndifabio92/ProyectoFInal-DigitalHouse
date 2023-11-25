@@ -1,6 +1,5 @@
 package com.dh.canchas365.model;
 
-import com.dh.canchas365.model.images.Images;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -8,8 +7,6 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
