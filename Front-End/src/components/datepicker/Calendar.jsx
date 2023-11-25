@@ -11,9 +11,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const Calendar = (props) => { 
 
-    const { label, day, setStartdate, setEnddate, type} = props;
+    const { label, day, setStartdate, setEnddate} = props;
 
-    const [date, setDate] = useState(dayjs(props.day));
+    const [date, setDate] = useState(day);
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -27,7 +27,7 @@ const Calendar = (props) => {
               value={date}
               onChange={(selectedDate) => {
                 setDate(selectedDate)
-                type == 'start'? setStartdate(date) : setEnddate(date)
+                label == 'Fecha desde'? setStartdate(dayjs(date)) : setEnddate(dayjs(date))
               }}
             />
           </DemoContainer>

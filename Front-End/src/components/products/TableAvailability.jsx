@@ -25,7 +25,7 @@ const TableAvailability = (props) => {
     return(
         <Container >
             
-            <Box sx={{width: '100%', marginTop:'50px' }}>
+            <Box sx={{width: '100%', marginTop:'20px' }}>
                 <Paper sx={{ width: "100%", mb: 2 }}>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -34,7 +34,7 @@ const TableAvailability = (props) => {
                                     <TableCell align='center'/>
                                     
                                     {[...Array(14)].map((_, index) => (
-                                                <TableCell key={index} align="center">{`${index + 10}:00`} - {`${index + 11}:00`}</TableCell>
+                                                <TableCell key={index}>{`${index + 10}:00`} - {`${index + 11}:00`}</TableCell>
                                                 ))}
                                          
                                 </TableRow>
@@ -51,7 +51,6 @@ const TableAvailability = (props) => {
                                                 {[...Array(15)].map((_, index) => (
                                                 <TableCell 
                                                     key={index} 
-                                                    align="center" 
                                                     sx={{
                                                     backgroundColor: isReserved(row.id, index + 10)
                                                         ? '#D94D46' //rojo
