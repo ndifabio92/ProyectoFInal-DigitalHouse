@@ -38,10 +38,6 @@ public class CategoryService extends CustomFieldException {
     }
 
     public void delete(Long id) {
-        Optional<Club> optional = clubRepository.clubCategoryInUse(id);
-        if(optional.isPresent()) {
-            throw  new IllegalArgumentException("La categoria esta siendo usada");
-        }
         repository.deleteById(id);
     }
 

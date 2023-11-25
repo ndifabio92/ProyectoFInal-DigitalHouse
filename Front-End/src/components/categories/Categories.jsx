@@ -56,7 +56,7 @@ const Categories = () => {
                   alignContent:'space-around',
                   justifyContent: 'center',}}
               >
-                <img src={category.url} alt={category.title} />
+                <img src={category.url} alt={category.title} width={'60px'} />
                 <h3> {category.title} </h3>
                 
               </Button>
