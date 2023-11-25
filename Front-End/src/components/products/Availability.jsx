@@ -53,7 +53,7 @@ const Availability = (props) => {
     const handleChange = (event, newValue ) => {
         setValue(newValue);
     };
-
+/*
     const uploadPeriod = () => {
         
         let currentDate = dayjs.utc(startDate);
@@ -76,14 +76,14 @@ const Availability = (props) => {
        // console.log('periodo final: ' + period)
     };
 
-
+*/
     useEffect(() => {
         
           
           console.log('')
           console.log(startDate)
           console.log(endDate)
-          uploadPeriod();
+     //     uploadPeriod();
         
     }, [startDate, endDate]);
   

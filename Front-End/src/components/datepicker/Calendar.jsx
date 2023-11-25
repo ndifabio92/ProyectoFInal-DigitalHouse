@@ -26,8 +26,13 @@ const Calendar = (props) => {
               sx={{ width: 300 }}
               value={date}
               onChange={(selectedDate) => {
-                setDate(selectedDate)
-                label == 'Fecha desde'? setStartdate(dayjs(date)) : setEnddate(dayjs(date))
+                // Utiliza la función de devolución de llamada de setDate para asegurarte de que estás utilizando el valor más reciente
+                setDate((prevDate) => {
+                  // Actualiza el estado con el nuevo valor
+                  const newDate = selectedDate || day; // Si selectedDate es nulo, utiliza el valor original de day
+                  label === 'Fecha desde' ? setStartdate(dayjs(newDate)) : setEnddate(dayjs(newDate));
+                  return newDate;
+                });
               }}
             />
           </DemoContainer>
