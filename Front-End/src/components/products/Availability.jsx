@@ -53,37 +53,32 @@ const Availability = (props) => {
     const handleChange = (event, newValue ) => {
         setValue(newValue);
     };
-/*
+
     const uploadPeriod = () => {
-        
-        let currentDate = dayjs.utc(startDate);
+
+        let newEndDate = dayjs(endDate)
+        let currentDate = dayjs(startDate);
+        currentDate = currentDate.add(-10, 'minute')
         const newPeriod = [];
 
-        while (currentDate <= endDate) {
-            
-            console.log('periodo: ' + period)
-            console.log('currentDate: ' + currentDate)
-            console.log('endDate: ' + endDate)
+        while (currentDate <= newEndDate) {
             
             newPeriod.push(currentDate)
-           // console.log('periodo con currentDate: ' + period)
-           currentDate = currentDate.add(1, 'day')
-           // console.log('currentDate aumentada en 1: ' + currentDate)
-           // console.log(currentDate <= endDate)
+            currentDate = currentDate.add(1, 'day')
+           
         }
         setPeriod(newPeriod);
-
-       // console.log('periodo final: ' + period)
+       
     };
 
-*/
+
     useEffect(() => {
         
           
           console.log('')
           console.log(startDate)
           console.log(endDate)
-     //     uploadPeriod();
+          uploadPeriod();
         
     }, [startDate, endDate]);
   
