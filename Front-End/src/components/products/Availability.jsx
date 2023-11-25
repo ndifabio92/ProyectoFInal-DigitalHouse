@@ -11,11 +11,16 @@ import dayjs from 'dayjs';
 
 // cuando tenga la consulta de reservas le hago la funcionalidad
 const reservations = [
-    {"id": 1, "playingField": {"id": 1}, "startDatetime": "SAT, 25 NOV 2023 13:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 10:00:00 GMT-0300"},
-    {"id": 2, "playingField": {"id": 1}, "startDatetime": "SAN, 26 NOV 2023 10:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 11:00:00 GMT-0300"},
-    {"id": 3, "playingField": {"id": 2}, "startDatetime": "SAT, 25 NOV 2023 11:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 12:00:00 GMT-0300"},
-    {"id": 4, "playingField": {"id": 2}, "startDatetime": "SAN, 26 NOV 2023 12:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 13:00:00 GMT-0300"},
-    {"id": 5, "playingField": {"id": 3}, "startDatetime": "SAT, 25 NOV 2023 13:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 14:00:00 GMT-0300"}
+    {"id": 1, "playingField": {"id": 1}, "startDatetime": "MON, 27 NOV 2023 13:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 10:00:00 GMT-0300"},
+    {"id": 2, "playingField": {"id": 1}, "startDatetime": "MON, 27 NOV 2023 10:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 11:00:00 GMT-0300"},
+    {"id": 3, "playingField": {"id": 2}, "startDatetime": "MON, 27 NOV 2023 11:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 12:00:00 GMT-0300"},
+    {"id": 4, "playingField": {"id": 2}, "startDatetime": "MON, 27 NOV 2023 12:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 13:00:00 GMT-0300"},
+    {"id": 5, "playingField": {"id": 3}, "startDatetime": "TUE, 28 NOV 2023 13:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 14:00:00 GMT-0300"},
+    {"id": 1, "playingField": {"id": 1}, "startDatetime": "TUE, 28 NOV 2023 18:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 10:00:00 GMT-0300"},
+    {"id": 2, "playingField": {"id": 1}, "startDatetime": "TUE, 28 NOV 2023 15:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 11:00:00 GMT-0300"},
+    {"id": 3, "playingField": {"id": 2}, "startDatetime": "TUE, 28 NOV 2023 16:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 12:00:00 GMT-0300"},
+    {"id": 4, "playingField": {"id": 2}, "startDatetime": "TUE, 28 NOV 2023 10:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 13:00:00 GMT-0300"},
+    {"id": 5, "playingField": {"id": 3}, "startDatetime": "TUE, 28 NOV 2023 11:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 14:00:00 GMT-0300"}
     ]
 
   function CustomTabPanel(props) {
@@ -58,7 +63,7 @@ const Availability = (props) => {
 
         let newEndDate = dayjs(endDate)
         let currentDate = dayjs(startDate);
-        currentDate = currentDate.add(-10, 'minute')
+        currentDate = currentDate.add(-1, 'minute')
         const newPeriod = [];
 
         while (currentDate <= newEndDate) {

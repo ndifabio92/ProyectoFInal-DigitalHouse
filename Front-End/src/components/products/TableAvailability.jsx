@@ -23,10 +23,10 @@ const TableAvailability = (props) => {
     };
 
     return(
-        <Container >
+        <Container  >
             
-            <Box sx={{width: '100%', marginTop:'20px' }}>
-                <Paper sx={{ width: "100%", mb: 2 }}>
+            <Box sx={{ marginTop:'20px' }}>
+                <Paper sx={{ mb: 2 }}>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
