@@ -31,3 +31,17 @@ Run the Docker container
 ```docker
 docker run --rm -d -p 8080:8080/tcp frontend:latest
 ```
+
+## Docker Compose (Front && Back)
+
+# Start
+
+```docker
+docker compose up
+```
+
+# End
+
+```docker
+docker compose down
+```
