@@ -16,7 +16,7 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping
+    @PostMapping("/searchByClub")
     public List<ReservationDto> searchReservationByDateAndClub(@RequestBody SearchReservationDTO searchReservationDTO){
         return reservationService.searchReservationByClub(searchReservationDTO);
     }
