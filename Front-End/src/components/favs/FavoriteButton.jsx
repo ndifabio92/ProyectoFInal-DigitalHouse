@@ -12,9 +12,9 @@ import { useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 
 const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
-  const [isFav, setIsFav] = useState(false);
+  const [isFav, setIsFav] = useState();
 
-  const { userData, favorites, updateFavorites } = AuthContext();
+  const { userData, favorites, updateFavorites} = AuthContext();
 
   const { fetchData } = useFetchDataApi();
 
@@ -30,7 +30,7 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
     } else {
       setIsFav(false);
     }
-  }, [favorites]);
+  }, [favorites, isFav]);
 
   const handleToggleFavorito = async () => {
     try {

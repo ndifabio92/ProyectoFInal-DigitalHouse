@@ -46,7 +46,7 @@ export const DataProvider = ({ children }) => {
         setIsLogged, 
         favorites,
         saveFavorites, 
-        updateFavorites,
+        updateFavorites
     };
 
 
