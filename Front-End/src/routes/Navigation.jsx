@@ -12,6 +12,7 @@ import UserProfile from "../pages/user/UserProfile";
 import { AdminRoute } from "./AdminRoute";
 import { UserRoute } from "./UserRoute";
 import Filter from '../pages/product/Filter';
+import ClubSearch from "../pages/clubSearch/ClubSearch";
 
 export const Navigation = () => {
   return (
@@ -23,6 +24,8 @@ export const Navigation = () => {
         <Route exact path="/club/:id" element={<Detail />} />
 
         <Route exact path="/category/:id" element={<Filter />} />
+
+        <Route exact path="/club/search" element={<ClubSearch />} />
 
         <Route
           exact
