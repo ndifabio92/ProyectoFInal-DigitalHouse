@@ -7,7 +7,9 @@ const ImagesCarousel = ({id}) =>{
 
     const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
-    const newData = data? data.slice(0,4) : []
+    const imagesURL = data?.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`}))
+
+    const newData = imagesURL? imagesURL.slice(0,4) : []
 
     return(
         

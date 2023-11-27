@@ -2,9 +2,11 @@ package com.dh.canchas365.controller;
 
 import com.dh.canchas365.dto.ClubCreateDTO;
 import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.dto.SearchDto;
 import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
+import com.dh.canchas365.model.Category;
 import com.dh.canchas365.model.Club;
 import com.dh.canchas365.service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +94,15 @@ public class ClubController extends CustomFieldException {
     @GetMapping("/random")
     public List<ClubDTO> getRandomClubs(){
         return clubService.getRandomClubs();
+    }
+
+    @PostMapping("/by-categories")
+    public List<ClubDTO> getByCategories(@RequestBody List<Category> categories) {
+        return clubService.getByCategories(categories);
+    }
+
+    @PostMapping("/search")
+    public List<ClubDTO> search(@RequestBody SearchDto filters) {
+        return clubService.search(filters);
     }
 }

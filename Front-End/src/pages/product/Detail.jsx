@@ -8,6 +8,7 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { METHODS } from '../../constants/methods';
 import Characteristic from '../../components/characteristics/Characteristics'
 import Loading from "../../components/loading/Loading";
+import Availability from "../../components/products/Availability";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const Detail = () => {
   const { id } = useParams();
 
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
- 
 
   return (
     <> 
@@ -27,11 +27,10 @@ const Detail = () => {
     <Container
      maxWidth="xl"
       sx={{
-        mt: "100px",
+        mt: "120px",
         mb: "40px",
-        padding: "10px",
         color: "#011A5B",
-        backgroundColor: "#EDEBEE",
+        backgroundColor: "#FFFFFF",
       }}
     >
     
@@ -46,6 +45,7 @@ const Detail = () => {
           fontSize: "30px",
           fontWeight: "bold",
           paddingLeft: "20px",
+          margin: '0px'
         }}
       >
         <h4>{data?.name}</h4>
@@ -70,15 +70,16 @@ const Detail = () => {
       >
         <p>
           {" "}
-          Domicilio: {data?.address?.street + " N° " + data?.address?.number}
+          Domicilio: {`${data?.address?.street} N° ${data?.address?.number}`}
         </p>
         <p> Ciudad: {data?.address?.city?.name}</p>
         <p> Provincia: {data?.address?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
       </Box>
-      <Characteristic club={data} />
       <Images id={id} />
-    
+      <Characteristic club={data} />
+      <Availability idClub={id}/>
+      
     </Container>
       }
     </>

@@ -66,6 +66,11 @@ public class SecurityConfig {
                     auth.requestMatchers("/characteristic/**","GET").permitAll();
                     auth.requestMatchers("/image/**","GET").permitAll();
                     auth.requestMatchers("/email/**","POST").permitAll();
+                    auth.requestMatchers("/club/by-categories","POST").permitAll();
+                    auth.requestMatchers("/club/search","POST").permitAll();
+                    auth.requestMatchers("/reservation/searchByClub","POST").permitAll();
+
+                    auth.requestMatchers("/image/**","POST").permitAll();
 
                     auth.requestMatchers(SWAGGER_PATHS).permitAll();
                     // permito crear roles para crear los roles iniciales.. luego comentar

@@ -1,5 +1,6 @@
 package com.dh.canchas365.controller.auth;
 
+import com.dh.canchas365.dto.ClubDTO;
 import com.dh.canchas365.dto.auth.CrearUsuarioDTO;
 import com.dh.canchas365.dto.auth.LoginAttemp;
 import com.dh.canchas365.dto.auth.UsuarioDto;
@@ -12,7 +13,6 @@ import com.dh.canchas365.repository.auth.UsuarioRepository;
 import com.dh.canchas365.service.auth.UserService;
 import com.dh.canchas365.service.mail.EmailService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -122,7 +122,6 @@ public class UserController extends CustomFieldException {
                 usuarioDto.setUsername(usuario.getUsername());
                 usuarioDto.setName(usuario.getName());
                 usuarioDto.setLastname(usuario.getLastname());
-                //usuarioDto.setOperador(usuario.getOperador());
                 return ResponseEntity.ok(usuarioDto);
             }
             return null;
@@ -147,4 +146,26 @@ public class UserController extends CustomFieldException {
             return customResponseError("No se puedo actualizar el rol",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/user/{id}/favorites")
+    public ResponseEntity<?> getFavorites(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getFavorites(id));
+        } catch (Exception ex) {
+            return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/user/{id}/favorites")
+    public ResponseEntity<?> addFavoriteUser(@PathVariable Long id, @RequestBody ClubDTO favorite) {
+        try {
+            userService.addFavoriteUser(id, favorite);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception ex) {
+            return customResponseError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

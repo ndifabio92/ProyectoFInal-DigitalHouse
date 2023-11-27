@@ -28,15 +28,16 @@ const SearchBar = () => {
   });
 
   return (
-    <Container maxWidth="xxl"
+    <Container 
+
       sx={{
         color: '#FF914D',
-        backgroundColor: '#FFFFFF',
         display: 'flex',
+        backgroundColor: '#FFFFFF',
         flexWrap: 'wrap',
-        gap: '20px',
+        gap: '40px',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent:'center',
         padding: '50px'
       }}
     >

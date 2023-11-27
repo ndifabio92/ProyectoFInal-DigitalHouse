@@ -37,11 +37,12 @@ const TableCharacteristic = ({ handleUpdate }) => {
         handleUpdate(1, characteristic, action)
     }
 
-    const handleDelete =  (id) => {
+    const handleDelete =  (id, name) => {
     
         Swal.fire({
-            title: 'Esta seguro que quiere confirmar la accion?',
+            title: `Esta por eliminar la categoria ${name}.`, 
             icon: 'warning',
+            text: 'En caso que la misma este siendo utilizada, no podra eliminarse ¿Esta seguro de confirmar la accion?',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -105,7 +106,7 @@ const TableCharacteristic = ({ handleUpdate }) => {
                                                     {row.url}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
+                                                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id, row.name)}>Eliminar</Button>
                                                     <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CARACTERISTICA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>

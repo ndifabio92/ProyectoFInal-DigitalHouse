@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,6 +30,8 @@ public class ClubDTO {
 
     private CategoryDto category;
 
-    private List<CharacteristicDto> characteristics = new ArrayList<>();
+    private Set<CharacteristicDto> characteristics;
+
+    private List<PlayingFieldDTO> playingFields;
 
 }

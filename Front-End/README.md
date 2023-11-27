@@ -17,7 +17,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
 Build the Docker Image
 
 ```docker
-docker build --pull --rm -f "Dockerfile" -t frontend:latest "."
+docker build --pull --rm -f Dockerfile -t frontend:latest .
 ```
 
 Run the Docker container

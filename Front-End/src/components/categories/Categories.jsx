@@ -7,50 +7,57 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import SportsTennisIcon from '@mui/icons-material/SportsTennis';
-import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
-import PoolIcon from '@mui/icons-material/Pool';
+import useFetchApi from '../../hooks/useFetchApi';
+import {ENDPOINTS} from '../../constants/endpoints'
+import { useNavigate } from 'react-router-dom';
 
 
-const categories = [{ id: 1, deporte: 'FUTBOL 5', icon:SportsSoccerIcon}, { id: 2, deporte: 'FUTBOL 7',icon:SportsSoccerIcon },{ id: 3, deporte: 'FUTBOL 9', icon:SportsSoccerIcon },{ id: 4, deporte: 'FUTBOL 11', icon:SportsSoccerIcon }, { id: 5, deporte: 'TENIS', icon: SportsTennisIcon}, { id: 6, deporte: 'PADEL', icon: SportsBaseballIcon }, { id: 7, deporte: 'NATACION', icon: PoolIcon}];
 
 const Categories = () => {
+
+  const { data: categories, isLoading, error} = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    
+    navigate(`/category/${id}`);
+  };
 
   return (
 
         <Toolbar disableGutters  sx={{
-          padding: '10px',
-          marginY: '0px',
+          paddingTop: '10px',
           marginX: '0px',
           backgroundColor: '#FF914D',
           color:'#011A5B',
-          height: '100px',
+          height: '120px',
           }}
         >
 
-          <Box maxWidth="xl"
+          <Box 
             sx={{
               flexGrow: 1,
               display: { xs: 'none', md: 'flex' },
-              mx: '50px',
+              mx: '0px',
               justifyContent: 'center',
               alignContent:'space-between',
             }}
           >
-            {categories.map((category) => (
+            {categories?.map((category) => (
               <Button
+                onClick={()=>{handleClick(category.id)}}
                 key={category.id}
                 sx={{ 
-                  my: 2, 
+                  margin:'20px', 
                   color: '#011A5B', 
                   display: 'flex', 
                   flexDirection: 'column',
                   alignContent:'space-around',
                   justifyContent: 'center',}}
               >
-                <Box component={category.icon} sx={{marginTop:'20px'}}/>
-                <h3> {category.deporte} </h3>
+                <img src={category.url} alt={category.title} width={'60px'} />
+                <h3> {category.title} </h3>
                 
               </Button>
             ))}
@@ -70,12 +77,14 @@ const Categories = () => {
                 labelId="categorias"
                 input={<OutlinedInput label="Buscar por categorias" />}
               >
-                {categories.map((categoria) => (
+                {categories?.map((category) => (
                   <MenuItem
-                    key={categoria.id}
-                    value={categoria.deporte}
+                    key={category.id}
+                    value={category.title}
                   >
-                    <a> {categoria.deporte} </a>
+                   < Button onClick={()=>{handleClick(category.id)}} >
+                    {category.title} 
+                    </Button>
                   </MenuItem>
                 ))}
               </Select>

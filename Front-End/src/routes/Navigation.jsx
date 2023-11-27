@@ -11,6 +11,7 @@ import UserSignIn from "../pages/user/UserSignIn";
 import UserProfile from "../pages/user/UserProfile";
 import { AdminRoute } from "./AdminRoute";
 import { UserRoute } from "./UserRoute";
+import Filter from '../pages/product/Filter';
 
 export const Navigation = () => {
   return (
@@ -20,6 +21,8 @@ export const Navigation = () => {
         <Route exact path="/" element={<Home />} />
 
         <Route exact path="/club/:id" element={<Detail />} />
+
+        <Route exact path="/category/:id" element={<Filter />} />
 
         <Route
           exact
