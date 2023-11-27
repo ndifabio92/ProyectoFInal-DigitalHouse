@@ -8,20 +8,11 @@ import { ENDPOINTS } from '../../constants/endpoints'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import dayjs from 'dayjs';
+import useFetchDataApi from '../../hooks/useFetchDataApi'
+import { METHODS } from '../../constants/methods'
 
 // cuando tenga la consulta de reservas le hago la funcionalidad
-const reservations = [
-    {"id": 1, "playingField": {"id": 1}, "startDatetime": "MON, 27 NOV 2023 13:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 10:00:00 GMT-0300"},
-    {"id": 2, "playingField": {"id": 1}, "startDatetime": "MON, 27 NOV 2023 10:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 11:00:00 GMT-0300"},
-    {"id": 3, "playingField": {"id": 2}, "startDatetime": "MON, 27 NOV 2023 11:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 12:00:00 GMT-0300"},
-    {"id": 4, "playingField": {"id": 2}, "startDatetime": "MON, 27 NOV 2023 12:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 13:00:00 GMT-0300"},
-    {"id": 5, "playingField": {"id": 3}, "startDatetime": "TUE, 28 NOV 2023 13:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 14:00:00 GMT-0300"},
-    {"id": 1, "playingField": {"id": 1}, "startDatetime": "TUE, 28 NOV 2023 18:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 10:00:00 GMT-0300"},
-    {"id": 2, "playingField": {"id": 1}, "startDatetime": "TUE, 28 NOV 2023 15:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 11:00:00 GMT-0300"},
-    {"id": 3, "playingField": {"id": 2}, "startDatetime": "TUE, 28 NOV 2023 16:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 12:00:00 GMT-0300"},
-    {"id": 4, "playingField": {"id": 2}, "startDatetime": "TUE, 28 NOV 2023 10:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 13:00:00 GMT-0300"},
-    {"id": 5, "playingField": {"id": 3}, "startDatetime": "TUE, 28 NOV 2023 11:00:00 GMT-0300", "endDatetime": "Sun Nov 25 2023 14:00:00 GMT-0300"}
-    ]
+
 
   function CustomTabPanel(props) {
         const { children, value, index, ...other } = props
@@ -53,11 +44,29 @@ const Availability = (props) => {
     const [endDate, setEnddate] = useState(today)
     const {data: playingfields, isLoading, error} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`)
     const [period, setPeriod] = useState([today])
+    const { data: reservations, isLoading:reservationsIsLoading, error: reservationsError, fetchData } = useFetchDataApi();
+
 
     const [value, setValue] = useState(0)
     const handleChange = (event, newValue ) => {
         setValue(newValue);
     };
+
+    const serchReservations = async () => {
+
+        const dateFrom = dayjs(startDate).format('YYYY-MM-DD 00:00:01')
+        const dateTo = dayjs(endDate).format('YYYY-MM-DD 23:59:59')
+
+        const values = {
+            "idClub": parseInt(idClub),
+            "dateFrom": dateFrom,
+            "dateTo": dateTo
+          }
+
+
+       await fetchData (ENDPOINTS.RESERVATIONS_BY_CLUB, METHODS.POST, values)
+    }
+        
 
     const uploadPeriod = () => {
 
@@ -79,10 +88,7 @@ const Availability = (props) => {
 
     useEffect(() => {
         
-          
-          console.log('')
-          console.log(startDate)
-          console.log(endDate)
+          serchReservations()
           uploadPeriod();
         
     }, [startDate, endDate]);
