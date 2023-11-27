@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
 import { Box, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
