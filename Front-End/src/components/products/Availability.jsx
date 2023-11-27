@@ -65,14 +65,11 @@ const Availability = (props) => {
             "dateTo": dateTo
           }
 
-
        await fetchData (ENDPOINTS.RESERVATIONS_BY_CLUB, METHODS.POST, values)
     }
         
 
     const uploadPeriod = () => {
-
-
 
         let newEndDate = dayjs(endDate)
         let currentDate = dayjs(startDate);
@@ -91,9 +88,16 @@ const Availability = (props) => {
 
 
     useEffect(() => {
-        
+
+        if (dayjs(endDate).isBefore(dayjs(startDate), 'day')){
+            setShowMessage(true)
+        }
+        else{
+        setShowMessage(false)
           serchReservations()
           uploadPeriod();
+        }
+          
         
     }, [startDate, endDate]);
   
