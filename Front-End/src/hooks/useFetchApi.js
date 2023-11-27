@@ -16,7 +16,7 @@ const useFetchApi = (endpoint, method = METHODS.GET, payload = '') => {
 
                 let url = `${import.meta.env.VITE_BACKEND_API}${endpoint}`;
 
-                if (payload) {
+                if (payload && method !== METHODS.POST) {
                     url += `/${payload}`;
                 }
 
