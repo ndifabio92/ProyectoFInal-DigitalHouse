@@ -45,12 +45,14 @@ const Availability = (props) => {
     const {data: playingfields, isLoading, error} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`)
     const [period, setPeriod] = useState([today])
     const { data: reservations, isLoading:reservationsIsLoading, error: reservationsError, fetchData } = useFetchDataApi();
-    
+    const [showMessage, setShowMessage] = useState(false)
 
     const [value, setValue] = useState(0)
     const handleChange = (event, newValue ) => {
         setValue(newValue);
     };
+
+    const message = "EN ESTE MOMENTO NO ES POSIBLE MOSTRAR LA DISPONIBILIDAD. POR FAVOR INTENTE NUEVAMENTE MAS TARDE"
 
     const serchReservations = async () => {
 
@@ -121,6 +123,8 @@ const Availability = (props) => {
                     <Calendar label={'Fecha desde'} day={today} setStartdate={setStartdate} type={'start'} />
                     <Calendar label={'Fecha hasta'} day={today} setEnddate={setEnddate} type={'end'} />
                 </Box>
+
+                {showMessage ? <h3>{message}</h3> : 
                 <Box maxWidth="xxl"
                     sx={{
                         backgroundColor: '#FFFFFF',
@@ -154,6 +158,7 @@ const Availability = (props) => {
                         ))}
 
                 </Box>
+                }
                 
             </Container>
         }
