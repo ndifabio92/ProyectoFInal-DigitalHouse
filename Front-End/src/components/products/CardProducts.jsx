@@ -8,7 +8,7 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import useFetchApi from "../../hooks/useFetchApi";
 import FavoriteButton from "../favs/FavoriteButton";
 
-const CardProducts = ({ name, tel, city, id, favoritos, setFavoritos }) => {
+const CardProducts = ({ name, tel, city, id}) => {
   const navigate = useNavigate();
 
   const handleClick = () => navigate(`/${ENDPOINTS.CLUB}/${id}`);
@@ -86,8 +86,6 @@ const CardProducts = ({ name, tel, city, id, favoritos, setFavoritos }) => {
 
       <FavoriteButton
         clubId={id}
-        favoritos={favoritos}
-        setFavoritos={setFavoritos}
       />
     </Card>
   );

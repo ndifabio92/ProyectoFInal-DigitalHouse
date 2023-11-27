@@ -1,30 +1,11 @@
 import Container from "@mui/material/Box";
 import CardProducts from "../products/CardProducts";
 import Box from "@mui/material/Box";
-import useFetchApi from "../../hooks/useFetchApi";
-import Loading from "../loading/Loading";
-import { ENDPOINTS } from "../../constants/endpoints";
 import { AuthContext } from "../../auth/context";
-import { useEffect, useState } from "react";
 
 const Favorites = ({ userId }) => {
-  const [favoritos, setFavoritos] = useState([]);
 
-  const { saveFavorites } = AuthContext();
-
-  const { data, isLoading } = useFetchApi(
-    `${ENDPOINTS.USER}/${userId}/${ENDPOINTS.FAVORITES}`
-  );
-
-  useEffect(() => {
- 
-    if (data !== null) {
-      setFavoritos(data);
-      const idFavoritos = data.map((club) => club.id);
-
-      saveFavorites(idFavoritos);
-    }
-  }, [data]);
+  const { favorites } = AuthContext();
 
   return (
     <Container
@@ -36,9 +17,6 @@ const Favorites = ({ userId }) => {
         padding: "100px",
       }}
     >
-      {isLoading ? (
-        <Loading />
-      ) : (
         <Box
           sx={{
             mx: "auto",
@@ -51,25 +29,23 @@ const Favorites = ({ userId }) => {
             flexWrap: "wrap",
           }}
         >
-          {favoritos?.map((club) => (
-            <CardProducts
-              key={club.id}
-              name={club.name}
-              tel={club.phone_number}
-              city={
-                club.address.street +
-                " N° " +
-                club.address.number +
-                ", " +
-                club.address.city.name
-              }
-              id={club.id}
-              favoritos={favoritos}
-              setFavoritos={setFavoritos}
-            />
-          ))}
+          {favorites &&
+            favorites?.map((club) => (
+              <CardProducts
+                key={club?.id}
+                name={club?.name}
+                tel={club?.phone_number}
+                city={
+                  club?.address?.street +
+                  " N° " +
+                  club?.address?.number +
+                  ", " +
+                  club?.address?.city?.name
+                }
+                id={club?.id}
+              />
+            ))}
         </Box>
-      )}
     </Container>
   );
 };

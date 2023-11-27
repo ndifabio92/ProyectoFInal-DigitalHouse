@@ -94,6 +94,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         userDto.setLastname(usuario.getLastname());
         userDto.setRol(usuario.getRoles());
         userDto.setIsAdmin(usuario.getRoles().stream().anyMatch(rol -> rol.getName() == ERol.ADMIN));
+        userDto.setFavorites(userService.getFavorites(usuario.getId()));
 
         httpResponse.put("usuario", userDto);
 

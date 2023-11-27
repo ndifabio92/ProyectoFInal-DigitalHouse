@@ -5,52 +5,61 @@ const DataContext = createContext();
 export const AuthContext = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
-    const [userData, setUserData] = useState(null);
-    const [isLogged, setIsLogged] = useState(false);
-    const [favorites, setFavorites] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
+  const [favorites, setFavorites] = useState(null);
 
-    useEffect(() => {
-        const storedUserData = localStorage.getItem("user");
-        if (storedUserData) {
-            setUserData(JSON.parse(storedUserData));
-            setIsLogged(true);
-        }
-    }, []);
-    
-    const saveData = (data) => {
-        localStorage.setItem("user", JSON.stringify(data.usuario));
-        localStorage.setItem("token", JSON.stringify(data.token));
-        setUserData(data.usuario);
-        setIsLogged(true);
-    };
+//console.log(favorites);
 
-    const saveFavorites = (idFavoritos) => {
-        const newFavorites = [...favorites, idFavoritos]
-        setFavorites(newFavorites);
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("user");
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+      setIsLogged(true);
     }
-
-    const updateFavorites = (clubId) => {
-        if(!favorites.some(club => club.id === clubId)){
-            const newFavorites = [...favorites, clubId];
-            setFavorites(newFavorites);
-        } else {
-            setFavorites(favorites.filter(club => club.id != clubId))
-        }
+    const getFavorites = localStorage.getItem("favorites");
+    if (getFavorites) {
+      setFavorites(JSON.parse(getFavorites));
     }
+  }, []);
 
-    const contextValue = {
-        userData,
-        saveData,
-        setUserData,
-        isLogged,
-        setIsLogged, 
-        favorites,
-        saveFavorites, 
-        updateFavorites
-    };
+  const saveData = (data) => {
+    localStorage.setItem("user", JSON.stringify(data.usuario));
+    localStorage.setItem("token", JSON.stringify(data.token));
+    localStorage.setItem("favorites", JSON.stringify(data.usuario.favorites));
+    setUserData(data.usuario);
+    setFavorites(data.usuario.favorites);
+    setIsLogged(true);
+  };
 
+  const saveFavorites = (clubesFavoritos) => {
+    const newFavorites = [...favorites, clubesFavoritos];
+    setFavorites(newFavorites);
+  };
 
-    return (
-        <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
-    );
+  const updateFavorites = (clubResult) => {
+    console.log(clubResult);
+    if (!favorites.some((club) => club.id === clubResult.id)) {
+      setFavorites([...favorites, clubResult]);
+    } else {
+      setFavorites(favorites.filter((club) => club.id != clubResult.id));
+    }
+    // localStorage.removeItem("favorites");
+    // localStorage.setItem("favorites", JSON.stringify(favorites));
+  };
+
+  const contextValue = {
+    userData,
+    saveData,
+    setUserData,
+    isLogged,
+    setIsLogged,
+    favorites,
+    saveFavorites,
+    updateFavorites,
+  };
+
+  return (
+    <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
+  );
 };

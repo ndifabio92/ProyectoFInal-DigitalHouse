@@ -9,17 +9,16 @@ import { AuthContext } from "../../auth/context";
 
 const Products = () => {
 
-  const [favoritos, setFavoritos] = useState([]);
-
-  const { favorites } = AuthContext();
+  // const [favoritos, setFavoritos] = useState([]);
+  // const { favorites } = AuthContext();
 
   const { data , isLoading, error } = useFetchApi(`${ENDPOINTS.RANDOM}`);
   
-  useEffect(() => {
-    if (data !== null && localStorage.getItem("user")) {
-      setFavoritos(favorites);
-    }
-  }, [data, favorites]);
+  // useEffect(() => {
+  //   if (data !== null && localStorage.getItem("user")) {
+  //     setFavoritos(favorites);
+  //   }
+  // }, [data, favorites]);
 
   return (
     <Container
@@ -58,8 +57,6 @@ const Products = () => {
                 club.address.city.name
               }
               id={club.id}
-              favoritos={favoritos}
-              setFavoritos={setFavoritos}
             />
           ))}
         </Box>

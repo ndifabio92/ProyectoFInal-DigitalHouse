@@ -6,15 +6,17 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { METHODS } from "../../constants/methods";
 import useFetchDataApi from "../../hooks/useFetchDataApi";
 import { AuthContext } from "../../auth/context";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 
-const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
-  const [isFav, setIsFav] = useState();
+const FavoriteButton = ({ clubId }) => {
+  const { pathname } = useLocation();
 
-  const { userData, favorites, updateFavorites} = AuthContext();
+  const [isFav, setIsFav] = useState(pathname === "/userprofile");
+
+  const { userData, favorites, updateFavorites } = AuthContext();
 
   const { fetchData } = useFetchDataApi();
 
@@ -25,12 +27,12 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
   //Aca busco en el contexto si existe el clubId que estoy pasando como props
   useEffect(() => {
     console.log("Actualizando favoritos");
-    if (favorites.includes(clubId)) {
+    if (favorites?.find((club) => club.id === clubId)) {
       setIsFav(true);
     } else {
       setIsFav(false);
     }
-  }, [favorites, isFav]);
+  }, [favorites]);
 
   const handleToggleFavorito = async () => {
     try {
@@ -38,7 +40,6 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
         console.warn("Datos del club no disponibles");
         return;
       }
-      console.log(clubResult);
 
       //Chequeo que el user este logueado
       if (!localStorage.getItem("user")) {
@@ -50,6 +51,10 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
         });
       }
 
+      setIsFav(!isFav);
+      //A continuacion, ademas del POST hay que agregar o quitar el favorito al/del context
+      updateFavorites(clubResult.data);
+
       //Traigo del contexto el id del usuario para pasar al POST
       const userId = userData.id;
 
@@ -59,15 +64,7 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
         METHODS.POST,
         clubResult.data
       );
-      console.log(clubResult.data);
-
-      //A continuacion, ademas del POST hay que agregar o quitar el favorito al/del context
-      //con una llamada a updateFavorites
-      updateFavorites(clubId);
-
-      //Ahora tengo que eliminar con filter el id de club del estado favoritos del componente Favorites.jsx
-      const newFavorites = favoritos.filter((club) => club.id != clubId);
-      setFavoritos(newFavorites);
+      //console.log(clubResult.data);
 
     } catch (error) {
       console.error("Error al manejar favoritos:", error);
@@ -100,5 +97,3 @@ const FavoriteButton = ({ clubId, favoritos, setFavoritos }) => {
 };
 
 export default FavoriteButton;
-
-
