@@ -45,7 +45,7 @@ const Availability = (props) => {
     const {data: playingfields, isLoading, error} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`)
     const [period, setPeriod] = useState([today])
     const { data: reservations, isLoading:reservationsIsLoading, error: reservationsError, fetchData } = useFetchDataApi();
-
+    
 
     const [value, setValue] = useState(0)
     const handleChange = (event, newValue ) => {
@@ -70,9 +70,11 @@ const Availability = (props) => {
 
     const uploadPeriod = () => {
 
+
+
         let newEndDate = dayjs(endDate)
         let currentDate = dayjs(startDate);
-        currentDate = currentDate.add(-1, 'minute')
+        currentDate = currentDate.hour(0)
         const newPeriod = [];
 
         while (currentDate <= newEndDate) {
