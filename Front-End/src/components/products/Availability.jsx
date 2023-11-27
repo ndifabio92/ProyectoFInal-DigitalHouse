@@ -11,7 +11,6 @@ import dayjs from 'dayjs';
 import useFetchDataApi from '../../hooks/useFetchDataApi'
 import { METHODS } from '../../constants/methods'
 
-// cuando tenga la consulta de reservas le hago la funcionalidad
 
 
   function CustomTabPanel(props) {
@@ -44,8 +43,9 @@ const Availability = (props) => {
     const [endDate, setEnddate] = useState(today)
     const {data: playingfields, isLoading, error} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`)
     const [period, setPeriod] = useState([today])
-    const { data: reservations, isLoading:reservationsIsLoading, error: reservationsError, fetchData } = useFetchDataApi();
+    const { data: reservations, fetchData } = useFetchDataApi();
     const [showMessage, setShowMessage] = useState(false)
+
 
     const [value, setValue] = useState(0)
     const handleChange = (event, newValue ) => {
@@ -66,6 +66,7 @@ const Availability = (props) => {
           }
 
        await fetchData (ENDPOINTS.RESERVATIONS_BY_CLUB, METHODS.POST, values)
+
     }
         
 
@@ -153,9 +154,11 @@ const Availability = (props) => {
                             <CustomTabPanel key={index} value={value} index={index}>
                                 <TableAvailability
                                     playingfields={playingfields}
-                                    reservations={reservations.filter(
-                                        (reservation) => dayjs(reservation.startDatetime).format("YYYY-MM-DD") === dayjs(date).format("YYYY-MM-DD")
-                                    )}
+                                    reservations={(reservations && reservations.length > 0) ? 
+                                        reservations.filter((reservation) => {
+                                            // Verifica que reservation y reservation.startDatetime no sean null
+                                            return reservation && reservation.startDatetime && dayjs(reservation.startDatetime).format("YYYY-MM-DD") === dayjs(date).format("YYYY-MM-DD");
+                                        }) : []}
                                 
                                 />
                             </CustomTabPanel>
