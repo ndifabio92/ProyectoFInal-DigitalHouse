@@ -65,17 +65,18 @@ const TableAvailability = (props) => {
                                                     }}
                                                     >
                                                     <Button 
-                                                    sx={{
-                                                        height: '50px',
-                                                        backgroundColor: isReserved(row.id, index + 10)
-                                                            ? '#D94D46' //rojo
-                                                            : '#EDEBEE', //verde #48A65D
-                                                        ":hover": {
-                                                                backgroundColor: '#48A65D'
+                                                        sx={{
+                                                            height: '50px',
+                                                            backgroundColor: isReserved(row.id, index + 10)
+                                                                ? '#D94D46' //rojo
+                                                                : '#EDEBEE', //verde #48A65D
+                                                            ":hover": {
+                                                                backgroundColor: isReserved(row.id, index + 10) ? '#D94D46' : '#48A65D'
                                                             }
-                                                    }}
-                                                    title="Reservar Turno"
-                                                    onClick={(e)=>handleClick(row.id)}
+                                                        }}
+                                                        title={isReserved(row.id, index + 10) ? "Turno no disponible" : "Reservar Turno"}
+                                                        disabled={isReserved(row.id, index + 10)}
+                                                        onClick={(e)=>handleClick(row.id)}
                                                     />
                                                 </TableCell>
                                                 ))}
