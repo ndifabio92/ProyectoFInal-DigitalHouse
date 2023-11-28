@@ -156,8 +156,7 @@ const Availability = (props) => {
                                     playingfields={playingfields}
                                     reservations={(reservations && reservations.length > 0) ? 
                                         reservations.filter((reservation) => {
-                                            // Verifica que reservation y reservation.startDatetime no sean null
-                                            return reservation && reservation.startDatetime && dayjs(reservation.startDatetime).format("YYYY-MM-DD") === dayjs(date).format("YYYY-MM-DD");
+                                            return reservation && reservation.startDatetime && dayjs(reservation.startDatetime).format("YYYY-MM-DD") === dayjs(date).format("YYYY-MM-DD")
                                         }) : []}
                                 
                                 />

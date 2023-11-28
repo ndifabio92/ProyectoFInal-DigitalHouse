@@ -4,21 +4,13 @@ import Box from "@mui/material/Box";
 import useFetchApi from "../../hooks/useFetchApi";
 import Loading from "../loading/Loading";
 import { ENDPOINTS } from "../../constants/endpoints";
-import { useEffect, useState } from "react";
-import { AuthContext } from "../../auth/context";
+
 
 const Products = () => {
 
-  // const [favoritos, setFavoritos] = useState([]);
-  // const { favorites } = AuthContext();
 
   const { data , isLoading, error } = useFetchApi(`${ENDPOINTS.RANDOM}`);
   
-  // useEffect(() => {
-  //   if (data !== null && localStorage.getItem("user")) {
-  //     setFavoritos(favorites);
-  //   }
-  // }, [data, favorites]);
 
   return (
     <Container

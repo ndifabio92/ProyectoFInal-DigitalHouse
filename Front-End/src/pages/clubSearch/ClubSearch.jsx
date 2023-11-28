@@ -45,13 +45,8 @@ const ClubSearch = () => {
                             key={club.id}
                             name={club.name}
                             tel={club.phone_number}
-                            city={
-                                club.address.street +
-                                " N° " +
-                                club.address.number +
-                                ", " +
-                                club.address.city.name
-                            }
+                            city={`${club.address.street } N° ${club.address.number },  ${club.address.city.name}`}
+                                
                             id={club.id}
                         />
                     ))

@@ -1,4 +1,4 @@
-import { Container } from "@mui/material"
+import { Button, Container } from "@mui/material"
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,10 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useNavigate } from "react-router-dom";
 
 
 
 const TableAvailability = (props) => {
+
+    const navigate = useNavigate()
     
     const {playingfields, reservations} = props
 
@@ -21,6 +24,10 @@ const TableAvailability = (props) => {
                 new Date(reservation.startDatetime).getHours() === hour
         );
     };
+
+    const handleClick = (idPlayingfield) => {
+        navigate(`/reservations/:${idPlayingfield}`)
+    }
 
     return(
         <Container  >
@@ -48,14 +55,29 @@ const TableAvailability = (props) => {
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.description}
                                                 </TableCell>
-                                                {[...Array(15)].map((_, index) => (
+                                                {[...Array(14)].map((_, index) => (
                                                 <TableCell 
                                                     key={index} 
+                                                    sx={{padding:'0px',
+                                                        margin:'0px', 
+                                                        border:'none',
+                                                        
+                                                    }}
+                                                    >
+                                                    <Button 
                                                     sx={{
-                                                    backgroundColor: isReserved(row.id, index + 10)
-                                                        ? '#D94D46' //rojo
-                                                        : '#48A65D', //verde
-                                                }}/>
+                                                        height: '50px',
+                                                        backgroundColor: isReserved(row.id, index + 10)
+                                                            ? '#D94D46' //rojo
+                                                            : '#EDEBEE', //verde #48A65D
+                                                        ":hover": {
+                                                                backgroundColor: '#48A65D'
+                                                            }
+                                                    }}
+                                                    title="Reservar Turno"
+                                                    onClick={(e)=>handleClick(row.id)}
+                                                    />
+                                                </TableCell>
                                                 ))}
                                             </TableRow>
                                         ))}
@@ -63,7 +85,8 @@ const TableAvailability = (props) => {
                                 </Table>
                     </TableContainer>
                 </Paper>
-
+                <p> <span style={{ backgroundColor: '#EDEBEE', width:'10px', color: '#EDEBEE', margin:'5px' }}> ..... </span> Turnos Disponibles</p>
+                <p> <span style={{ backgroundColor: '#D94D46',width:'10px', color:'#D94D46', margin:'5px' }}> ..... </span> Turnos No Disponibles</p>                                    
             </Box>
         </Container>
         

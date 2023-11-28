@@ -13,6 +13,8 @@ import { AdminRoute } from "./AdminRoute";
 import { UserRoute } from "./UserRoute";
 import Filter from '../pages/product/Filter';
 import ClubSearch from "../pages/clubSearch/ClubSearch";
+import Reservations from "../pages/Reservations";
+
 
 export const Navigation = () => {
   return (
@@ -26,6 +28,8 @@ export const Navigation = () => {
         <Route exact path="/category/:id" element={<Filter />} />
 
         <Route exact path="/club/search" element={<ClubSearch />} />
+
+        <Route exact path="/reservations/:id" element={<Reservations />} />
 
         <Route
           exact
