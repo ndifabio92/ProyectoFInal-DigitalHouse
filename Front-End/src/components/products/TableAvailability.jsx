@@ -50,27 +50,25 @@ const TableAvailability = (props) => {
             backgroundColor: '#FFFFFF',
             color:'#011A5B',
             textAlign:'left',
-             }}> 
-            
-            <Box>
-                <Paper sx={{ mb: 2}}>
-                    <TableContainer component={Paper}>
+            padding:'0px'
+            }}> 
+                <Paper sx={{ mb: 2, padding:'0px'}}>
+                    <TableContainer component={Paper} sx={{padding:'0px'}}>
                         <Table sx={{
                                 backgroundColor:'#FFFFFF',
+                                padding:'0px',
                                 color:'#011A5B'}} 
-                                aria-label="simple table">
+                                aria-label="simple table"
+                                >
                             <TableHead>
-                                <TableRow>
-                                    <TableCell sx={{position: 'relative',
-                                                        left:'70px'}}>
-                                    10:00                            
-                                    </TableCell>
-                                    {[...Array(14)].map((_, index) => (
+                                <TableRow>                 
+                                    <TableCell/>
+                                    {[...Array(15)].map((_, index) => (
                                                 <TableCell 
                                                     key={index}
                                                     sx={{position: 'relative',
-                                                        left:'35px'}}
-                                                >{`${index + 11}:00`}</TableCell>
+                                                        right:'35px'}}
+                                                >{`${index + 10}:00`}</TableCell>
                                                 ))}
                                          
                                 </TableRow>
@@ -124,7 +122,7 @@ const TableAvailability = (props) => {
                     <p> <span style={{ backgroundColor: '#48A65D', color: '#48A65D', margin:'5px', fontSize:'15px', borderRadius:'2px' }}> ___ </span> Reservar</p> 
                 </Box>
                                                    
-            </Box>
+            
         </Container>
         
 
