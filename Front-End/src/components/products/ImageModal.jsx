@@ -49,7 +49,7 @@ const ImageModal = ({ images }) => {
           }}
           onClick={handleOpen}
         >
-          Ver Mas
+          Ver Más
         </Button>
       </Box>
 
