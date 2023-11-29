@@ -1,5 +1,5 @@
 
-:root {
+:root, .MuiContainer-root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -13,6 +13,7 @@ body {
   padding: 0px;
   place-items: center;
   min-height: 100vh;
+  background-color: #EDEBEE;
 }
 
 a{

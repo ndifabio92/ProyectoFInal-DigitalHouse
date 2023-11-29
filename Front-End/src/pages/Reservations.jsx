@@ -6,6 +6,7 @@ import useFetchApi from "../hooks/useFetchApi";
 import { ENDPOINTS } from "../constants/endpoints";
 import { METHODS } from "../constants/methods";
 import CardProducts from "../components/products/CardProducts";
+import Loading from "../components/loading/Loading";
 
 
 const Reservations = () => {
@@ -73,17 +74,15 @@ return(
                 <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
             </IconButton>
         </Box>
-
-        <Box>
-            {club? &&
-                <CardProducts 
-                    name={club?.name}
-                    tel={club?.phone_number}
-                    city={`${club?.address?.street} N° ${club?.address?.number}, ${club?.address?.city?.name}`}
-                    id={club?.id}
-                />
-            }
-        </Box>
+        {(isLoadingPlayfield||isLoadingClub)?<Loading/>:
+           <Box>
+            <h2>{club?.name}</h2>
+            <p>{club?.phone_number} </p>
+            <p> {club?.address?.street} N° {club?.address?.number}, {club?.address?.city.name} </p>
+    
+        </Box> 
+        }
+        
        
     </Container>
 )

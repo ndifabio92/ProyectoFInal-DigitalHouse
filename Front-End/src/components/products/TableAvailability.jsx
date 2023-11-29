@@ -45,18 +45,32 @@ const TableAvailability = (props) => {
     }
 
     return(
-        <Container  >
+        <Container sx={{ 
+            margin:'0px', 
+            backgroundColor: '#FFFFFF',
+            color:'#011A5B',
+            textAlign:'left',
+             }}> 
             
-            <Box sx={{ marginTop:'20px' }}>
-                <Paper sx={{ mb: 2 }}>
+            <Box>
+                <Paper sx={{ mb: 2}}>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <Table sx={{
+                                backgroundColor:'#FFFFFF',
+                                color:'#011A5B'}} 
+                                aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align='center'/>
-                                    
+                                    <TableCell sx={{position: 'relative',
+                                                        left:'70px'}}>
+                                    10:00                            
+                                    </TableCell>
                                     {[...Array(14)].map((_, index) => (
-                                                <TableCell key={index}>{`${index + 10}:00`} - {`${index + 11}:00`}</TableCell>
+                                                <TableCell 
+                                                    key={index}
+                                                    sx={{position: 'relative',
+                                                        left:'35px'}}
+                                                >{`${index + 11}:00`}</TableCell>
                                                 ))}
                                          
                                 </TableRow>
@@ -75,13 +89,11 @@ const TableAvailability = (props) => {
                                                     key={index} 
                                                     sx={{padding:'0px',
                                                         margin:'0px', 
-                                                        border:'none',
-                                                        
                                                     }}
                                                     >
                                                     <Button 
                                                         sx={{
-                                                            height: '50px',
+                                                            height: '30px',
                                                             backgroundColor: isReserved(row.id, index + 10)
                                                                 ? '#D94D46' //rojo
                                                                 : '#EDEBEE', //verde #48A65D
@@ -101,8 +113,17 @@ const TableAvailability = (props) => {
                                 </Table>
                     </TableContainer>
                 </Paper>
-                <p> <span style={{ backgroundColor: '#EDEBEE', width:'10px', color: '#EDEBEE', margin:'5px' }}> ..... </span> Turnos Disponibles</p>
-                <p> <span style={{ backgroundColor: '#D94D46',width:'10px', color:'#D94D46', margin:'5px' }}> ..... </span> Turnos No Disponibles</p>                                    
+                <Box sx={{
+                        display:'flex',
+                        alignItems:'center',
+                        justifyContent:'center',
+                        gap:'10px'
+                        }}>
+                    <p> <span style={{ backgroundColor: '#EDEBEE', color: '#EDEBEE', margin:'5px', fontSize:'15px', borderRadius:'2px' }}> ___ </span> Turnos Disponibles</p>
+                    <p> <span style={{ backgroundColor: '#D94D46', color: '#D94D46', margin:'5px', fontSize:'15px', borderRadius:'2px' }}> ___ </span> Turnos No Disponibles</p>
+                    <p> <span style={{ backgroundColor: '#48A65D', color: '#48A65D', margin:'5px', fontSize:'15px', borderRadius:'2px' }}> ___ </span> Reservar</p> 
+                </Box>
+                                                   
             </Box>
         </Container>
         

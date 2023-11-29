@@ -22,17 +22,18 @@ const Detail = () => {
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id)
 
   return (
-    <> 
+    <Container  maxWidth="xl"
+    sx={{
+      mt: "120px",
+      mb: "40px",
+      color: "#011A5B",
+      backgroundColor: "#FFFFFF",
+      padding:'0px'
+    }}>
     {(isLoading) ? <Loading /> :
-    <Container
-     maxWidth="xl"
-      sx={{
-        mt: "120px",
-        mb: "40px",
-        color: "#011A5B",
-        backgroundColor: "#FFFFFF",
-      }}
-    >
+    <>
+    
+    
     
      
       <Box
@@ -80,9 +81,9 @@ const Detail = () => {
       <Characteristic club={data} />
       <Availability idClub={id}/>
       
-    </Container>
-      }
     </>
+      }
+    </Container>
   );
 };
 
