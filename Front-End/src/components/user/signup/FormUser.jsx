@@ -33,7 +33,7 @@ const FormUser = () => {
     if (data) {
       console.log(data);
       Swal.fire({
-        title: "Usuario creado exitosamente",
+        title: "Cuenta creada exitosamente",
         text: "Te enviamos la confirmación por correo, antes de cerrar esta ventana, revisá tu bandeja de entrada. Si no lo recibiste, hace click en el botón reenviar correo de confirmación.",
         icon: "success",
         showCancelButton: true,
@@ -48,7 +48,7 @@ const FormUser = () => {
               const values = {
                 toUser: data.username,
                 subject: "Confirmación de creación de cuenta - Segundo envío",
-                message: `Hola ${data.name} ${data.lastname}, su cuenta ha sido asociada al correo ${data.username} y ha sido creada de forma exitosa. Para ir al inicio de sesión, por favor haga clic en el siguiente enlace: http://localhost:5173/`,
+                message: `Hola ${data.name} ${data.lastname}! Tu cuenta ha sido creada exitosamente y asociada al correo electrónico ${data.username}. Para iniciar sesión por favor hacé click en el siguiente enlace: http://localhost:5173/`,
               };
               await fetchData(ENDPOINTS.EMAIL_CONFIRM, METHODS.POST, values);
               

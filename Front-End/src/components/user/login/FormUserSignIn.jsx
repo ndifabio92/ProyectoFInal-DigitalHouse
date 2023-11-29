@@ -77,7 +77,7 @@ const FormUserSignIn = () => {
           <TextField
             variant="outlined"
             size="small"
-            label="Password"
+            label="Contraseña"
             type="password"
             name="password"
             className="input-background"
