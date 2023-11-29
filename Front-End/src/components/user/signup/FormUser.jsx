@@ -34,7 +34,7 @@ const FormUser = () => {
       console.log(data);
       Swal.fire({
         title: "Usuario creado exitosamente",
-        text: "Te enviamos la confirmación por correo, antes de cerrar esta ventana, revisá tu bandeja de entrada. Si no lo recibiste, hace click en el botón Reenviar correo de confirmación.",
+        text: "Te enviamos la confirmación por correo, antes de cerrar esta ventana, revisá tu bandeja de entrada. Si no lo recibiste, hace click en el botón reenviar correo de confirmación.",
         icon: "success",
         showCancelButton: true,
         confirmButtonText: "Ok",

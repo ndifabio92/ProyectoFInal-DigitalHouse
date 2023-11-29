@@ -189,7 +189,7 @@ const Filter = () => {
             {
                 (isLoading) ? <Loading /> :
             <div> 
-              <h2>RESULTADOS DE TU BUSQUEDA</h2>
+              <h2>RESULTADOS DE TU BÚSQUEDA</h2>
               <h3>{`${total} clubes encontrados`}</h3>
               <Box sx={{
                 mx: 'auto',
