@@ -24,9 +24,21 @@ const TableAvailability = (props) => {
                 new Date(reservation.startDatetime).getHours() === hour
         );
     };
+/*
+    //funcion de comprobacion de si el usuario esta logueado o no
+    
+    const isUser = () => 
+    {
 
+    }
+*/
     const handleClick = (idPlayingfield) => {
-        navigate(`/reservations/:${idPlayingfield}`)
+
+        // aca agregar la comprobacion para que si isUser es true haga el navigate
+        // si el usuario no esta logueado que redirija a login
+
+        navigate(`/reservations/:${idPlayingfield}`) 
+        
     }
 
     return(
