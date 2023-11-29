@@ -52,7 +52,7 @@ const Availability = (props) => {
         setValue(newValue);
     };
 
-    const message = "EN ESTE MOMENTO NO ES POSIBLE MOSTRAR LA DISPONIBILIDAD. POR FAVOR VERIFIQUE QUE LA FECHA DESDE NO SEA SUPERIOR A LA FECHA HASTA. EN CASO QUE LAS FECHAS SEAN CORRECTAS, POR FAVOR INTENTE NUEVAMENTE MAS TARDE"
+    const message = "En este momento no es posible mostrar la disponibilidad. Por favor verificá que la fecha Desde no sea superior a la fecha hasta. En caso que las fechas sean correctas, por favor intentá nuevamente más tarde."
 
     const serchReservations = async () => {
 
@@ -114,7 +114,7 @@ const Availability = (props) => {
                 textAlign:'center',
                 }}>
                     
-                <h2>Consultar Disponibilidad</h2>
+                <h2>Consultar disponibilidad</h2>
                 <Box sx={{
                     padding:'20px',
                     display: 'flex',

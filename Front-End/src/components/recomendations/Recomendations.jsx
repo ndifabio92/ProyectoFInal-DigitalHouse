@@ -30,7 +30,7 @@ const Recomendations = () => {
         flexDirection: 'column',
         color: '#1F2E7B',
       }}>
-      <h2>Nuestras Recomendaciones</h2>
+      <h2>Nuestras recomendaciones</h2>
 
       {
         isLoading ? <Loading />

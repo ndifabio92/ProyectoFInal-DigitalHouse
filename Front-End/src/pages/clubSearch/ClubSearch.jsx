@@ -37,7 +37,7 @@ const ClubSearch = () => {
             id='home'
         >
             <div style={{ padding: '20px', textAlign: 'center' }}>
-                <h1 style={{ margin: '20px 0', color: '#333' }}>Resultado de Busqueda</h1>
+                <h1 style={{ margin: '20px 0', color: '#333' }}>RESULTADOS DE TU BÚSQUEDA</h1>
                 {!isLoading &&
 
                     data.map((club) => (
