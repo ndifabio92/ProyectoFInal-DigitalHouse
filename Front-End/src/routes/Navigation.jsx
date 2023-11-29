@@ -29,7 +29,7 @@ export const Navigation = () => {
 
         <Route exact path="/club/search" element={<ClubSearch />} />
 
-        <Route exact path="/reservations/:id" element={<Reservations />} />
+        <Route exact path="/reservations" element={<Reservations />} />
 
         <Route
           exact

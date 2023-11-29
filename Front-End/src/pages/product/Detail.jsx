@@ -17,9 +17,9 @@ const Detail = () => {
     navigate("/");
   };
 
-  const { id } = useParams();
+  const { id } = useParams()
 
-  const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
+  const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id)
 
   return (
     <> 

@@ -153,6 +153,7 @@ const Availability = (props) => {
                         {period.map((date, index) => (
                             <CustomTabPanel key={index} value={value} index={index}>
                                 <TableAvailability
+                                    date={dayjs(date).format("YYYY-MM-DD")}
                                     playingfields={playingfields}
                                     reservations={(reservations && reservations.length > 0) ? 
                                         reservations.filter((reservation) => {
