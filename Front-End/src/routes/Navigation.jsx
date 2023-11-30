@@ -13,7 +13,7 @@ import { AdminRoute } from "./AdminRoute";
 import { UserRoute } from "./UserRoute";
 import Filter from '../pages/product/Filter';
 import ClubSearch from "../pages/clubSearch/ClubSearch";
-import Reservations from "../pages/Reservations";
+import Reservations from "../pages/reservations/Reservations";
 
 
 export const Navigation = () => {
