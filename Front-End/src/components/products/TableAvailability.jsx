@@ -15,7 +15,7 @@ const TableAvailability = (props) => {
 
     const navigate = useNavigate()
     
-    const {playingfields, reservations, date} = props
+    const {playingfields, reservations, date, idClub} = props
 
     const isReserved = (playingFieldId, hour) => {
         return reservations.some(
@@ -32,13 +32,13 @@ const TableAvailability = (props) => {
 
     }
 */
-    const handleClick = (idPlayingfield, date, time ) => {
+    const handleClick = (idClub, idPlayingfield, date, time ) => {
 
         // aca agregar la comprobacion para que si isUser es true haga el navigate
         // si el usuario no esta logueado que redirija a login
 
 
-        const queryParams = `idPlayingfield=${encodeURIComponent(idPlayingfield)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}:00:00`;
+        const queryParams = `idClub=${encodeURIComponent(idClub)}&idPlayingfield=${encodeURIComponent(idPlayingfield)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}:00:00`;
 
         navigate(`/reservations?${queryParams}`) 
 
@@ -101,7 +101,7 @@ const TableAvailability = (props) => {
                                                         }}
                                                         title={isReserved(row.id, index + 10) ? "Turno no disponible" : "Reservar Turno"}
                                                         disabled={isReserved(row.id, index + 10)}
-                                                        onClick={(e)=>handleClick(row.id, date, index + 10)}
+                                                        onClick={(e)=>handleClick(idClub, row.id, date, index + 10)}
                                                     />
                                                 </TableCell>
                                                 ))}

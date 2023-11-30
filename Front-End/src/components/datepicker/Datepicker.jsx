@@ -12,7 +12,7 @@ const today = new Date()
 const inicialDay = (today.getFullYear() + '-' + today.getMonth + '-' + today.getDay)
 
 
-const Datepicker = ({ handleChange, name }) => {
+const Datepicker = ({ handleChange, name, label, defaultValue, inicialDay }) => {
 
     const [date, setDate] = useState(dayjs(inicialDay));
     const [time, setTime] = useState('')
@@ -23,7 +23,7 @@ const Datepicker = ({ handleChange, name }) => {
                 name === 'date' ?
                     <DemoContainer components={['DatePicker']}>
                         <DatePicker
-                            label="Elige un día"
+                            label={label}
                             sx={{ width: 200 }}
                             value={date}
                             onChange={(selectDate) => {
@@ -34,9 +34,9 @@ const Datepicker = ({ handleChange, name }) => {
                     </DemoContainer>
                     : <DemoContainer components={['TimePicker']}>
                         <TimePicker
-                            label="Elige un horario"
+                            label={label}
                             sx={{ width: 200 }}
-                            value={time}
+                            defaultValue={defaultValue}
                             onChange={(selecTime) => {
                                 setTime(selecTime)
                                 handleChange({ name, value: selecTime.$d })

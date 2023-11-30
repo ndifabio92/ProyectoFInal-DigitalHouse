@@ -18,7 +18,8 @@ const Recomendations = () => {
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.RECOMMENDED);
 
   return (
-    
+    <> 
+    {isLoading ? <Loading /> :
     <Container maxWidth="xl"
       sx={{
         mx: 'auto',
@@ -32,9 +33,7 @@ const Recomendations = () => {
       }}>
       <h2>Nuestras Recomendaciones</h2>
 
-      {
-        isLoading ? <Loading />
-          :
+      
           <Carousel animation='slide' duration={800} navButtonsAlwaysVisible fullHeightHover>
             {
               data && data.map((club, index) => (
@@ -47,8 +46,10 @@ const Recomendations = () => {
               ))
             }
           </Carousel>
-      }
+      
     </Container>
+    }
+    </>
   )
 }
 export default Recomendations

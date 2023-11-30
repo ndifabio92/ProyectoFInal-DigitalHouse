@@ -33,9 +33,6 @@ const Detail = () => {
     {(isLoading) ? <Loading /> :
     <>
     
-    
-    
-     
       <Box
         sx={{
           display: "flex",

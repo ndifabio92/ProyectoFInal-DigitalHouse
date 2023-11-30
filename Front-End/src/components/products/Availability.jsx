@@ -155,6 +155,7 @@ const Availability = (props) => {
                                 <TableAvailability
                                     date={dayjs(date).format("YYYY-MM-DD")}
                                     playingfields={playingfields}
+                                    idClub={idClub}
                                     reservations={(reservations && reservations.length > 0) ? 
                                         reservations.filter((reservation) => {
                                             return reservation && reservation.startDatetime && dayjs(reservation.startDatetime).format("YYYY-MM-DD") === dayjs(date).format("YYYY-MM-DD")
