@@ -23,7 +23,7 @@ const Datepicker = ({ handleChange, name, label, defaultValue, inicialDay }) => 
                 name === 'date' ?
                     <DemoContainer components={['DatePicker']}>
                         <DatePicker
-                            label={label}
+                            label="Elegí un día"
                             sx={{ width: 200 }}
                             value={date}
                             onChange={(selectDate) => {
@@ -34,7 +34,7 @@ const Datepicker = ({ handleChange, name, label, defaultValue, inicialDay }) => 
                     </DemoContainer>
                     : <DemoContainer components={['TimePicker']}>
                         <TimePicker
-                            label={label}
+                            label="Elegí un horario"
                             sx={{ width: 200 }}
                             defaultValue={defaultValue}
                             onChange={(selecTime) => {

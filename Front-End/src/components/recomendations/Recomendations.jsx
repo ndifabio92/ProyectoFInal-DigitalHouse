@@ -31,7 +31,7 @@ const Recomendations = () => {
         flexDirection: 'column',
         color: '#1F2E7B',
       }}>
-      <h2>Nuestras Recomendaciones</h2>
+      <h2>Nuestras recomendaciones</h2>
 
       
           <Carousel animation='slide' duration={800} navButtonsAlwaysVisible fullHeightHover>

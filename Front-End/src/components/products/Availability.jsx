@@ -47,7 +47,7 @@ import useAvailability from '../../hooks/useAvailability'
             setValue(newValue);
         };
     
-        const message = "EN ESTE MOMENTO NO ES POSIBLE MOSTRAR LA DISPONIBILIDAD...";
+        const message = "En este momento no es posible mostrar la disponibilidad. Por favor verificá que la fecha Desde no sea superior a la fecha hasta. En caso que las fechas sean correctas, por favor intentá nuevamente más tarde.";
     
         return (
             <>

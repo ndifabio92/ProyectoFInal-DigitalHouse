@@ -40,9 +40,9 @@ const TableCharacteristic = ({ handleUpdate }) => {
     const handleDelete =  (id, name) => {
     
         Swal.fire({
-            title: `Esta por eliminar la categoria ${name}.`, 
+            title: `Está por eliminar la característica. ${name}.`, 
             icon: 'warning',
-            text: 'En caso que la misma este siendo utilizada, no podra eliminarse ¿Esta seguro de confirmar la accion?',
+            text: 'En caso que la misma este siendo utilizada, no podrá eliminarse. ¿Esta seguro de confirmar la acción?',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
