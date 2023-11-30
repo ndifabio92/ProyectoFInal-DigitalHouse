@@ -13,6 +13,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 
 const Reservations = () => {
@@ -34,6 +39,8 @@ const Reservations = () => {
     const { data: club, isLoading: isLoadingClub , error: errorClub } = useFetchApi(`${ENDPOINTS.CLUB}`, METHODS.GET, idClub)
 
     const { data: clubImages } = useFetchApi(`${ENDPOINTS.IMAGES}/${idClub}`);
+
+    const { data: playfields, isLoading: isLoadingPlayfields, error: errorPlayfields} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`);
 
     const imagesURL = clubImages?.map((image) => ({
         id: `${image.id}`,
@@ -109,16 +116,6 @@ const Reservations = () => {
                 justifyContent: 'space-evenly'
             }}>
 
-                {/*
-                    aca poner:
-                    - formulario de reserva con: 
-                        - select de canchas disponibles con cancha preseleccionada
-                        - datepicker con fecha preseleccionada
-                        - datepicker de hora Desde con horario preseleccionado
-                        - datepicker de hora Hasta con horario preseleccionado
-                        - Boton de Reservar que me lleve a la confirmacion de Reservas  
-            
-                */}
                 <Box sx={{
                         display:'flex',
                         flexDirection:'column',
@@ -146,7 +143,7 @@ const Reservations = () => {
                     
                 </Box>
 
-                <Box sx={{
+                <FormControl sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems:'center',
@@ -178,22 +175,42 @@ const Reservations = () => {
                                     gap:'20px',
                                 }}> 
                                 <TimeField
+                                    sx={{width:'200px', textAlign:'center'}}
                                     label="Hora de inicio"
                                     value={dayjs(startDatetime)}
                                     onChange={(newValue) => setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
                                     format="HH:00"
                                 />
                                 <TimeField
+                                    sx={{width:'200px', textAlign:'center'}}
                                     label="Hora de finalizacion"
                                     value={dayjs(endDatetime)}
                                     onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
                                     format="HH:00"
                                 />
-                                <Select></Select>
+                                <InputLabel id="Playfield">Cancha</InputLabel>
+                                <Select
+                                    sx={{width:'200px', textAlign:'center'}}
+                                    labelId="Playfield"
+                                    id="Playfield"
+                                    value={playfieldId}
+                                    label="Cancha"
+                                    onChange={(newValue) => setPlayfieldId(newValue)}
+                                >
+                                {playfields?.map((playfield) => (
+                                    <MenuItem 
+                                        value={playfield.id}
+                                        key={playfield.id}
+                                    >
+                                        {playfield.description}
+                                    </MenuItem>
+                                ))}
+                                </Select>  
                                 </Box>
                             </DemoContainer>
                     </LocalizationProvider>
-                       
+
+                              
 
                     <Button 
                         variant="contained" 
@@ -205,7 +222,7 @@ const Reservations = () => {
                     >
                         Reservar
                     </Button>
-                </Box>
+                </FormControl>
                 
 
             </Box> 
