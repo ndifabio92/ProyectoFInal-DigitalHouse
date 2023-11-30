@@ -22,6 +22,8 @@ const useAvailability = (idClub, startDate, endDate) => {
         await fetchData(ENDPOINTS.RESERVATIONS_BY_CLUB, METHODS.POST, values);
     };
 
+    
+
 
 
     const uploadPeriod = () => {

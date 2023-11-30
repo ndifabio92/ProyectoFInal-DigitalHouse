@@ -38,17 +38,27 @@ const FormReservations = ({idClub} ) => {
 
     const message = "No Disponible";
 
-    //-------------------------------
+   
 
     useEffect(() => {
         setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm')}`)
         setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(endDatetime).format('HH:mm')}`)
     }, [date]);
 
+    /*
 
-
-
-
+    const isReserved = (playingFieldId, start, end) => {
+        return reservations.some((reservation) => {
+            const startHour = new Date(reservation.startDatetime).getHours();
+            const endHour = new Date(reservation.endDatetime).getHours();
+ 
+            return (
+                reservation.playingField.id === playingFieldId &&
+                (hour >= startHour && hour < endHour)
+            );
+        });
+    };
+*/
 
 
     //--------------------------------
@@ -141,7 +151,9 @@ return (
                             value={playfield.id}
                             key={playfield.id}
                         >
-                            {playfield.description}
+                        {/*isReserved(playfield.id, startDatetime) ? "Turno no disponible" : "Reservar Turno"}
+                        disabled={isReserved(row.id, index + 10)*/}
+                        {playfield.description}
                         </MenuItem>
                     ))}
                     </Select>  

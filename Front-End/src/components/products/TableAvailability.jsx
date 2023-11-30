@@ -17,12 +17,18 @@ const TableAvailability = (props) => {
     
     const {playingfields, reservations, date, idClub} = props
 
+    
     const isReserved = (playingFieldId, hour) => {
-        return reservations.some(
-            (reservation) =>
+        return reservations.some((reservation) => {
+            const startHour = new Date(reservation.startDatetime).getHours();
+            const endHour = new Date(reservation.endDatetime).getHours();
+    
+
+            return (
                 reservation.playingField.id === playingFieldId &&
-                new Date(reservation.startDatetime).getHours() === hour
-        );
+                (hour >= startHour && hour < endHour)
+            );
+        });
     };
 /*
     //funcion de comprobacion de si el usuario esta logueado o no
