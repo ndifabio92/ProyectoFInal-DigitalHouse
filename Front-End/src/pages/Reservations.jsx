@@ -68,10 +68,8 @@ const Reservations = () => {
     const handleClick = () => {
         console.log(values.startDatetime)
         console.log(values.endDatetime)
+        console.log(values.playfield.id)
     }
-
-    console.log(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm'))
-    console.log(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm'))
 
     return(
         <Container
@@ -188,14 +186,11 @@ const Reservations = () => {
                                     onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
                                     format="HH:00"
                                 />
-                                <InputLabel id="Playfield">Cancha</InputLabel>
                                 <Select
                                     sx={{width:'200px', textAlign:'center'}}
-                                    labelId="Playfield"
                                     id="Playfield"
                                     value={playfieldId}
-                                    label="Cancha"
-                                    onChange={(newValue) => setPlayfieldId(newValue)}
+                                    onChange={(newValue) => setPlayfieldId(newValue.target.value)}
                                 >
                                 {playfields?.map((playfield) => (
                                     <MenuItem 
