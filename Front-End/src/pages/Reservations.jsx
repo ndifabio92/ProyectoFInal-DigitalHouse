@@ -6,13 +6,13 @@ import useFetchApi from "../hooks/useFetchApi";
 import { ENDPOINTS } from "../constants/endpoints";
 import { METHODS } from "../constants/methods";
 import Loading from "../components/loading/Loading";
-import Datepicker from "../components/datepicker/Datepicker";
 import Button from '@mui/material/Button';
 import dayjs from "dayjs";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
 
 
 const Reservations = () => {
@@ -25,9 +25,9 @@ const Reservations = () => {
 
     const [playfieldId, setPlayfieldId] = useState(queryParams.get('idPlayingfield')) 
 
-    const [starDatetime, setStartDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm'))
+    const [startDatetime, setStartDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm'))
 
-    const [endDatetime, setEndtDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm'))
+    const [endDatetime, setEndDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm'))
 
     const idClub = queryParams.get('idClub')
 
@@ -46,9 +46,9 @@ const Reservations = () => {
     // controlar y corregir las propiedades del objeto y el formato de los tipos de datos, en especial los de fecha y hora
     // se dejan asi solo a modo de ejemplo!!!!!!!!!!!!!!!!!!!!!!!!!!!
  
-    const { values, handleChange } = {
+    const values= {
         playfield: { id: playfieldId },
-        starDatetime: starDatetime ,
+        startDatetime: startDatetime ,
         endDatetime: endDatetime
     };
 
@@ -59,9 +59,12 @@ const Reservations = () => {
     };
 
     const handleClick = () => {
-        console.log(values.starDatetime)
+        console.log(values.startDatetime)
         console.log(values.endDatetime)
     }
+
+    console.log(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm'))
+    console.log(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm'))
 
     return(
         <Container
@@ -148,33 +151,50 @@ const Reservations = () => {
                         flexDirection: 'column',
                         alignItems:'center',
                         }}>
-                   
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'space-around',
-                        alignItems:'center',
-                        }}> 
-                  
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DatePicker']}>
+            
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer 
+                                components={['DatePicker', 'TimeField', 'TimeField']}
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    flexWrap:'wrap',
+                                    justifyContent: 'space-around',
+                                    alignItems:'center',
+                                    gap:'20px',
+                                    }}
+                            >
                                 <DateCalendar
                                     disablePast                           
                                     label='Fecha'
                                     views={['year', 'month', 'day']}
-                                    defaultValue={dayjs(date)}
-                                    onChange={(selectedDate) => {setDate(selectedDate)}}
+                                    value={dayjs(date)}
+                                    onChange={(newValue) => {setDate(dayjs(newValue).format('YYYY-MM-DD HH:mm'))}}
                                 />
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems:'center',
+                                    gap:'20px',
+                                }}> 
+                                <TimeField
+                                    label="Hora de inicio"
+                                    value={dayjs(startDatetime)}
+                                    onChange={(newValue) => setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
+                                    format="HH:00"
+                                />
+                                <TimeField
+                                    label="Hora de finalizacion"
+                                    value={dayjs(endDatetime)}
+                                    onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
+                                    format="HH:00"
+                                />
+                                <Select></Select>
+                                </Box>
                             </DemoContainer>
-                        </LocalizationProvider>
+                    </LocalizationProvider>
+                       
 
-                        <Box> 
-                            <Datepicker handleChange={handleChange} name="time" type="DatePicker" label='Hora de inicio' defaultValue={dayjs(starDatetime)}/>
-                            <Datepicker handleChange={handleChange} name="time" type="DatePicker" label='Hora de finalizacion' defaultValue={dayjs(endDatetime)}/>
-                        </Box>
-
-                    </Box>
-
-                    
                     <Button 
                         variant="contained" 
                         onClick={handleClick} 
