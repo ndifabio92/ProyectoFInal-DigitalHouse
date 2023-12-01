@@ -56,8 +56,8 @@ const Admin = () => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Clubes" />
-                        <Tab label="Categorias" />
-                        <Tab label="Caracteristicas" />
+                        <Tab label="Categorías" />
+                        <Tab label="Caracteristícas" />
                         <Tab label="Usuarios" />
                     </Tabs>
                 </Box>
@@ -84,7 +84,7 @@ const Admin = () => {
                     marginY: '150px'
                 }}
             >
-                <p>Pagina no disponible desde el tipo de dispositivo desde el que desea acceder</p>
+                <p>Página no disponible desde el tipo de dispositivo desde el que desea acceder</p>
             </Box>
 
         </>

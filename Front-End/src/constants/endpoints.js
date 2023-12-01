@@ -14,5 +14,7 @@ export const ENDPOINTS = {
     USER_CREATE: 'user/signup',
     USER_SIGN_IN: 'login',
     EMAIL_CONFIRM: 'email/sendMessage',
-    FAVORITES: 'favorites'
+    FAVORITES: 'favorites',
+    RESERVATIONS_BY_CLUB: 'reservation/searchByClub',
+    CLUB_SEARCH: 'club/search'
 }

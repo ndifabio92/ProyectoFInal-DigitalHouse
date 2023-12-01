@@ -48,7 +48,6 @@ const Images = ({id}) => {
                 <img key={image.id} src={image.url} alt="" style={{ objectFit: 'cover', width: '200px', height: '200px' }} />
               ))}
           </Box>
-        
       </Container>
       <ImageModal images={imagesURL} />
     </>

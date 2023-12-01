@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import useFetchApi from '../../../hooks/useFetchApi';
 import { Box, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
 import Loading from '../../loading/Loading';
 import { ENDPOINTS } from '../../../constants/endpoints';
@@ -36,7 +35,7 @@ const TablePlayfields = ({idClub, handleUpdate}) => {
     const handleDelete = (id) => {
 
         Swal.fire({
-            title: 'Esta seguro que quiere confirmar la accion?',
+            title: '¿Esta seguro que quiere confirmar la accion?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

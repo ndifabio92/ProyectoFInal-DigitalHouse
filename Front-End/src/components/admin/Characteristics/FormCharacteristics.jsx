@@ -66,12 +66,12 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
 
         } else {
             Swal.fire({
-                title: 'Caracteristica agregada con éxito',
+                title: 'Característica agregada con éxito',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
-                console.log("La Solicitur Post se envio correctamente")
+                console.log("La Solicitud Post se envio correctamente")
             }) 
         }
         
@@ -100,7 +100,7 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
-                console.log("La Solicitur Post se envio correctamente")
+                console.log("La Solicitud Post se envio correctamente")
             })                 
         }
 

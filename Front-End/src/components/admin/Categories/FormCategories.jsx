@@ -72,7 +72,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
 
         } else {
             Swal.fire({
-                title: 'Categoria agregada con éxito',
+                title: 'Categoría agregada con éxito',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
@@ -101,12 +101,12 @@ const FormCategory = ({action, category, handleUpdate}) => {
 
         } else {
             Swal.fire({
-                title: 'Categoria modificada con éxito',
+                title: 'Categoría modificada con éxito',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
-                console.log("La Solicitur Post se envio correctamente")
+                console.log("La Solicitud Post se envio correctamente")
             })                 
         }
 

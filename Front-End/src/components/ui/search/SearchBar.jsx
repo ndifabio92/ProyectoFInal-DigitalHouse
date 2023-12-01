@@ -1,25 +1,20 @@
 import Container from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useForm } from '../../../hooks/useForm';
+import { useNavigate } from 'react-router-dom';
 import SelectInput from '../../selectinput/SelectInput';
 import Datepicker from '../../datepicker/Datepicker';
+import { ENDPOINTS } from '../../../constants/endpoints';
+import useFetchApi from '../../../hooks/useFetchApi';
 
 
 const SearchBar = () => {
 
-  const cities = [
-    { id: 1, name: "Córdoba" },
-    { id: 2, name: "Mendoza" },
-    { id: 3, name: "Buenos Aires" },
-  ];
+  const navigate = useNavigate();
+  const { data: categories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
+  const { data: cities } = useFetchApi(`${ENDPOINTS.CITY}`);
 
-  const sports = [
-    { id: 1, name: "Fútbol" },
-    { id: 2, name: "Tenis" },
-    { id: 3, name: "Padel" },
-    { id: 4, name: "Natación" },
-  ];
-
+  console.log(categories, cities)
   const { values, handleChange } = useForm({
     city: '',
     sport: '',
@@ -27,8 +22,13 @@ const SearchBar = () => {
     time: ''
   });
 
+  const handleClick = () => {
+    const queryParams = `city=${encodeURIComponent(values.city.id)}&sport=${encodeURIComponent(values.sport.id)}&date=${encodeURIComponent(values.date)}&time=${encodeURIComponent(values.time)}`;
+    navigate(`/club/search?${queryParams}`);
+  };
+
   return (
-    <Container 
+    <Container
 
       sx={{
         color: '#FF914D',
@@ -37,17 +37,16 @@ const SearchBar = () => {
         flexWrap: 'wrap',
         gap: '40px',
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         padding: '50px'
       }}
     >
-
       <SelectInput handleChange={handleChange} options={cities} name="city" />
-      <SelectInput handleChange={handleChange} options={sports} name="sport" />
+      <SelectInput handleChange={handleChange} options={categories} name="sport" />
       <Datepicker handleChange={handleChange} name="date" type="DatePicker" />
       <Datepicker handleChange={handleChange} name="time" type="DatePicker" />
-      <Button variant="contained" type='submit'>Buscar Turno</Button>
 
+      <Button variant="contained" onClick={handleClick} type='submit'>Buscar Turno</Button>
     </Container >
 
   );

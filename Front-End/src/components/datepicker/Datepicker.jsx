@@ -11,6 +11,7 @@ import { TimePicker } from '@mui/x-date-pickers';
 const today = new Date()
 const inicialDay = (today.getFullYear() + '-' + today.getMonth + '-' + today.getDay)
 
+
 const Datepicker = ({ handleChange, name }) => {
 
     const [date, setDate] = useState(dayjs(inicialDay));
@@ -22,7 +23,7 @@ const Datepicker = ({ handleChange, name }) => {
                 name === 'date' ?
                     <DemoContainer components={['DatePicker']}>
                         <DatePicker
-                            label="Elige un día"
+                            label="Elegí un día"
                             sx={{ width: 200 }}
                             value={date}
                             onChange={(selectDate) => {
@@ -33,7 +34,7 @@ const Datepicker = ({ handleChange, name }) => {
                     </DemoContainer>
                     : <DemoContainer components={['TimePicker']}>
                         <TimePicker
-                            label="Elige un horario"
+                            label="Elegí un horario"
                             sx={{ width: 200 }}
                             value={time}
                             onChange={(selecTime) => {

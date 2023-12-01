@@ -70,7 +70,7 @@ const Categories = () => {
               justifyContent: 'flex-start',
             }}
           >
-           
+          
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel>Buscar por categorias</InputLabel>
               <Select
@@ -82,7 +82,7 @@ const Categories = () => {
                     key={category.id}
                     value={category.title}
                   >
-                   < Button onClick={()=>{handleClick(category.id)}} >
+                    < Button onClick={()=>{handleClick(category.id)}} >
                     {category.title} 
                     </Button>
                   </MenuItem>
