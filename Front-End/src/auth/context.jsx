@@ -30,6 +30,7 @@ export const DataProvider = ({ children }) => {
     setUserData(data.usuario);
     setFavorites(data.usuario.favorites);
     setIsLogged(true);
+    //setIsLoggedToReserve(true);
   };
 
   const saveFavorites = (clubesFavoritos) => {

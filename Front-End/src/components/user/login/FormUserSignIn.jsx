@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { ENDPOINTS } from "../../../constants/endpoints";
 import { METHODS } from "../../../constants/methods";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../auth/context";
 
 const FormUserSignIn = () => {
@@ -29,6 +29,9 @@ const FormUserSignIn = () => {
 
   const { saveData } = AuthContext();
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const fromReserveButton = location.state?.fromReserveButton;
 
   useEffect(() => {
     if (error) {
@@ -55,6 +58,8 @@ const FormUserSignIn = () => {
   return (
     <Container maxWidth="md">
       <h1>Iniciar sesión</h1>
+
+      {fromReserveButton && <p>Logueate para reservar tu cancha</p>}
 
       {isLoading ? (
         <Loading />
