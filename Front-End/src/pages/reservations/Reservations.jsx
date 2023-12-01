@@ -43,7 +43,7 @@ const Reservations = () => {
             paddingLeft: "10px",
             margin: '0px'
             }}>
-                <h2> Reserva tu cancha </h2>
+                <h2> Reservá tu cancha </h2>
                 <IconButton
                 aria-label="Volver"
                 color="#FFFFFF"

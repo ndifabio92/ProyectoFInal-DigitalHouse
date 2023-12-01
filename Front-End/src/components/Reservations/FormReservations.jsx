@@ -161,7 +161,7 @@ return (
                     >
                     {playfields?.map((playfield) => (
                         <MenuItem 
-                            value={isReserved(playfield.id)? '': playfield.description}
+                            value={isReserved(playfield.id)? '': playfield.id}
                             key={playfield.id}
                             disabled={isReserved(playfield.id)}
                         >
