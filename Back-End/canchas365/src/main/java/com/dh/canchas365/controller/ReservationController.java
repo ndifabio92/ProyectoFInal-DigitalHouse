@@ -89,8 +89,8 @@ public class ReservationController extends CustomFieldException {
     public List<ReservationDto> searchReservationByDateAndClub(@RequestBody SearchReservationDTO searchReservationDTO){
         return reservationService.searchReservationByClub(searchReservationDTO);
     }
-    @GetMapping("/history/{id}")
-    public List<ReservationDto> getHistorial(@PathVariable("id") Long idUsuario){
+    @GetMapping("/history/{idUsuario}")
+    public List<ReservationDto> getHistorial(@PathVariable("idUsuario") Long idUsuario){
         try {
             return reservationService.getHistory(idUsuario);
         } catch (ResourceNotFoundException e) {
