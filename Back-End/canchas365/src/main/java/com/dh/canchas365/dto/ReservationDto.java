@@ -1,6 +1,6 @@
 package com.dh.canchas365.dto;
 
-import com.dh.canchas365.model.PlayingField;
+import com.dh.canchas365.dto.auth.UsuarioReservaDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -24,6 +24,8 @@ public class ReservationDto {
     private Long id;
 
     private PlayingFieldDTO playingField;
+
+    private UsuarioReservaDto usuario;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

@@ -68,6 +68,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/email/**","POST").permitAll();
                     auth.requestMatchers("/club/by-categories","POST").permitAll();
                     auth.requestMatchers("/club/search","POST").permitAll();
+                    auth.requestMatchers("/reservation/**").permitAll();
 
                     auth.requestMatchers("/image/**","POST").permitAll();
 
