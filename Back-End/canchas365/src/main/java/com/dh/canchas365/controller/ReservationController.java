@@ -22,7 +22,7 @@ public class ReservationController extends CustomFieldException {
 
     @Autowired
     private ReservationService reservationService;
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ReservationDto reservation, BindingResult bindingResult){
         try{
@@ -68,7 +68,6 @@ public class ReservationController extends CustomFieldException {
             return customResponseError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
