@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import dayjs from "dayjs";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -19,6 +18,7 @@ import { useEffect } from 'react';
 import ModalConfirm from './ModalConfirm';
 
 
+
 const FormReservations = ({idClub} ) => {
 
     const location = useLocation();
@@ -29,9 +29,9 @@ const FormReservations = ({idClub} ) => {
 
     const [playfieldId, setPlayfieldId] = useState(queryParams.get('idPlayingfield')) 
 
-    const [startDatetime, setStartDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm'))
+    const [startDatetime, setStartDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm:ss'))
 
-    const [endDatetime, setEndDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm'))
+    const [endDatetime, setEndDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm:ss'))
 
     const { data: playfields, isLoading: isLoadingPlayfields, error: errorPlayfields} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`);
 
@@ -42,8 +42,8 @@ const FormReservations = ({idClub} ) => {
   //  const user = localStorage.getItem()
 
     useEffect(() => {
-        setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm')}`)
-        setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(endDatetime).format('HH:mm')}`)
+        setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm:ss')}`)
+        setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(endDatetime).format('HH:mm:ss')}`)
     }, [date]);
 
     useEffect(() => {
@@ -74,7 +74,7 @@ const FormReservations = ({idClub} ) => {
     ////// CAMBIAR IDUSUARIO POR EL ID REAL DEL ENTORNO QUE PASO POR PROPS COMO IDUSER //////// 
 
     const values= {
-        playfield: { id: playfieldId },
+        playingField: { id: parseInt(playfieldId) },
         usuario: {id: 9 }, 
         startDatetime: startDatetime ,
         endDatetime: endDatetime
@@ -110,7 +110,7 @@ return (
                         label='Fecha'
                         views={['year', 'month', 'day']}
                         value={dayjs(date)}
-                        onChange={(newValue) => {setDate(dayjs(newValue).format('YYYY-MM-DD HH:mm'))}}
+                        onChange={(newValue) => {setDate(dayjs(newValue).format('YYYY-MM-DD HH:mm:ss'))}}
                     />
                     <Box sx={{
                         display: 'flex',
@@ -122,14 +122,14 @@ return (
                         sx={{width:'200px', textAlign:'center'}}
                         label="Hora de inicio"
                         value={dayjs(startDatetime)}
-                        onChange={(newValue) => setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
+                        onChange={(newValue) => setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm:ss')}`)}
                         format="HH:00"
                     />
                     <TimeField
                         sx={{width:'200px', textAlign:'center'}}
                         label="Hora de finalizacion"
                         value={dayjs(endDatetime)}
-                        onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
+                        onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm:ss')}`)}
                         format="HH:00"
                     />
                     <Select
@@ -156,6 +156,7 @@ return (
 
             <ModalConfirm 
                 values = {values}
+                idClub = {idClub}
             />
        
         </FormControl>

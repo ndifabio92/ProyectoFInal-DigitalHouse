@@ -8,10 +8,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
+import useFetchDataApi from '../../hooks/useFetchDataApi';
+import { METHODS } from '../../constants/methods';
+import { ENDPOINTS } from '../../constants/endpoints';
+import Swal from 'sweetalert2';
+import { useNavigate} from "react-router-dom";
 
 
-const ModalConfirm = ({values}) => {
 
+const ModalConfirm = ({values, idClub}) => {
+
+    const navigate = useNavigate();
     
     const theme = useTheme();
 
@@ -19,19 +26,45 @@ const ModalConfirm = ({values}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-   // const { data: user, isLoading: isLoadingUser, error: errorUser} = useFetchApi(`${ENDPOINTS.}`);
+    const {fetchData} = useFetchDataApi()
 
-   const handleClick = () => {
-    setIsOpen(!isOpen)
+    const handleClick = () => {
+        setIsOpen(!isOpen)
     }
 
-   
     const confirm = async() => {
 
-      //  await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values)
+        const resp = await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values)
 
-      handleClick()
-    
+        handleClick()
+
+        if (resp.error){
+            Swal.fire({
+                title: resp.error,
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Confirmar',
+            }).then(() => {
+               console.log(resp.error)
+            }
+            )
+        }
+        else{
+            Swal.fire({
+                title: "Reserva agregada con éxito",
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Confirmar',
+            }).then(() => {
+               console.log("Reserva agregada con éxito")
+               
+            }) 
+        } 
+
+        
+
+        navigate(`/club/${idClub}`);
+
     }
     
 
