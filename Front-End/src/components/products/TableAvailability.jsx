@@ -9,25 +9,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../auth/context";
-import { useState } from "react";
-
 
 const TableAvailability = (props) => {
-
-    //const data = { message: "Para realizar una reserva por favor iniciá sesión"};
 
     const navigate = useNavigate()
     
     const {playingfields, reservations, date, idClub} = props
-
-    
+ 
     const isReserved = (playingFieldId, hour) => {
         return reservations.some((reservation) => {
             const startHour = new Date(reservation.startDatetime).getHours();
             const endHour = new Date(reservation.endDatetime).getHours();
     
-
             return (
                 reservation.playingField.id === playingFieldId &&
                 (hour >= startHour && hour < endHour)

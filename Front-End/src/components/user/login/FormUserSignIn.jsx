@@ -59,7 +59,7 @@ const FormUserSignIn = () => {
     <Container maxWidth="md">
       <h1>Iniciar sesión</h1>
 
-      {fromReserveButton && <p>Logueate para reservar tu cancha</p>}
+      {fromReserveButton && <h5 style={{ color: "#FF914D"}}>Para realizar una reserva por favor iniciá sesión</h5>}
 
       {isLoading ? (
         <Loading />
