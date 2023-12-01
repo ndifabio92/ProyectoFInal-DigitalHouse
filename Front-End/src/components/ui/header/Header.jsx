@@ -21,7 +21,7 @@ const pages = ["Crear cuenta", "Iniciar sesión"];
 const settings = ["Perfil", "Cerrar sesión"];
 
 const Header = () => {
-  const logo = "./logoNaranjaNeg.png";
+  const logo = "https://res.cloudinary.com/dreso9ye9/image/upload/v1701465116/logoNaranjaNeg_rd1s1x.png";
 
   const { userData , setUserData, setIsLogged} = AuthContext();
   const navigate = useNavigate();
