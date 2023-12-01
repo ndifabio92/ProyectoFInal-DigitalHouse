@@ -52,7 +52,7 @@ const FormReservations = ({idClub} ) => {
 
 
 
-    const isReserved = () => {
+    const isReserved = (idPlayfield) => {
 
         return reservations?.some((reservation) => {
 
@@ -65,13 +65,7 @@ const FormReservations = ({idClub} ) => {
             const endHH = parseInt(dayjs(endDatetime).format('HH')) 
             const endRH = parseInt(dayjs(reservation.endDatetime).format('HH'))
 
-         
-            console.log(day, dayR, day ==dayR)
-            console.log(startHH, startRH, startHH >= startRH)
-            console.log(endHH,endRH, endHH <= endRH)
-            
-
-            return (reservation.playingField.id === playfieldId && day === dayR && (startHH >= startRH  && endHH <= endRH)) 
+            return (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) 
         }) 
         
     };
@@ -167,11 +161,11 @@ return (
                     >
                     {playfields?.map((playfield) => (
                         <MenuItem 
-                            value={playfield.id}
+                            value={isReserved(playfield.id)? '': playfield.description}
                             key={playfield.id}
-                            disabled={isReserved()}
+                            disabled={isReserved(playfield.id)}
                         >
-                        {playfield.description}
+                        {isReserved(playfield.id)? 'Cancha no Disponible': playfield.description}
                         </MenuItem>
                     ))}
                     </Select>  
