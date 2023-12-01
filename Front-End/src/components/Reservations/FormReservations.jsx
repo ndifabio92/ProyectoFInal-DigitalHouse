@@ -45,20 +45,16 @@ const FormReservations = ({idClub} ) => {
         setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(endDatetime).format('HH:mm')}`)
     }, [date]);
 
-    /*
 
-    const isReserved = (playingFieldId, start, end) => {
-        return reservations.some((reservation) => {
-            const startHour = new Date(reservation.startDatetime).getHours();
-            const endHour = new Date(reservation.endDatetime).getHours();
- 
+    const isReserved = (playingFieldId, startDatetime, endDatetime ) => {
+        return reservations?.some((reservation) => {
             return (
                 reservation.playingField.id === playingFieldId &&
-                (hour >= startHour && hour < endHour)
+                (startDatetime.isSameOrAfter(dayjs(reservation.startDatetime) ) && endDatetime.isSameOrBefore(reservation.endDatetime) )
             );
         });
     };
-*/
+
 
 
     //--------------------------------
@@ -150,9 +146,8 @@ return (
                         <MenuItem 
                             value={playfield.id}
                             key={playfield.id}
+                         //  disabled={isReserved(playfield.id, startDatetime, endDatetime)}
                         >
-                        {/*isReserved(playfield.id, startDatetime) ? "Turno no disponible" : "Reservar Turno"}
-                        disabled={isReserved(row.id, index + 10)*/}
                         {playfield.description}
                         </MenuItem>
                     ))}
