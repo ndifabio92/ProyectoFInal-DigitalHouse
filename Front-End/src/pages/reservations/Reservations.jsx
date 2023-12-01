@@ -2,7 +2,7 @@ import { Box, Container, IconButton} from "@mui/material";
 import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
 import { useNavigate, useLocation } from "react-router-dom";
 import DataClub from "../../components/Reservations/DataClub";
-import FormReservations from "../../components/Reservations/FormREservations";
+import FormReservations from "../../components/Reservations/FormReservations";
 
 
 
@@ -54,21 +54,21 @@ const Reservations = () => {
                 </IconButton>
             </Box>
             
-                <Box sx={{
-                    color: "#011A5B",
-                    backgroundColor: "#FFFFFF",
-                    margin:'0px', 
-                    padding:'40px',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-evenly'
-                }}>
+            <Box sx={{
+                color: "#011A5B",
+                backgroundColor: "#FFFFFF",
+                margin:'0px', 
+                padding:'40px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'space-evenly'
+            }}>
 
-                    <DataClub idClub={idClub} />
+                <DataClub idClub={idClub} />
                 
-                    <FormReservations idClub={idClub} />
+                <FormReservations idClub={idClub} />
                 
-                </Box> 
+            </Box> 
             
             
         

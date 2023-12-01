@@ -16,6 +16,7 @@ import Loading from '../loading/Loading';
 import { ENDPOINTS } from '../../constants/endpoints';
 import useAvailability from '../../hooks/useAvailability';
 import { useEffect } from 'react';
+import ModalConfirm from './ModalConfirm';
 
 
 const FormReservations = ({idClub} ) => {
@@ -34,11 +35,11 @@ const FormReservations = ({idClub} ) => {
 
     const { data: playfields, isLoading: isLoadingPlayfields, error: errorPlayfields} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`);
 
-    const { reservations, period, showMessage } = useAvailability(idClub, startDatetime, endDatetime);
+    const { reservations } = useAvailability(idClub, startDatetime, endDatetime);
 
-    const message = "No Disponible";
 
-   
+
+  //  const user = localStorage.getItem()
 
     useEffect(() => {
         setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm')}`)
@@ -49,8 +50,6 @@ const FormReservations = ({idClub} ) => {
        reservations
        isReserved
     }, [startDatetime, endDatetime]);
-
-
 
     const isReserved = (idPlayfield) => {
 
@@ -70,38 +69,18 @@ const FormReservations = ({idClub} ) => {
         
     };
 
-    console.log(isReserved())
-
-
-
-    //--------------------------------
     
-    
-    //---------------------------------------------
 
-    // aca se arma el objeto para el post... ver bien como deberia quedar armado cuando este el back
-    // controlar y corregir las propiedades del objeto y el formato de los tipos de datos, en especial los de fecha y hora
-    // se dejan asi solo a modo de ejemplo!!!!!!!!!!!!!!!!!!!!!!!!!!!
- 
+    ////// CAMBIAR IDUSUARIO POR EL ID REAL DEL ENTORNO QUE PASO POR PROPS COMO IDUSER //////// 
 
     const values= {
         playfield: { id: playfieldId },
+        usuario: {id: 9 }, 
         startDatetime: startDatetime ,
         endDatetime: endDatetime
     };
 
-    //---------------------------------------------
-
-    const handleClick = () => {
-
-        // aca tengo que hacer la logica para pasar a la confirmacion de la reserva
-        //puedo hacerlo con un model
-
-        console.log(values.startDatetime)
-        console.log(values.endDatetime)
-        console.log(values.playfield.id)
-        console.log(reservations)
-    }
+    //////--------------------------------------------/////////
 
 
 return (
@@ -173,16 +152,11 @@ return (
                 </DemoContainer>
             </LocalizationProvider>
 
-            <Button 
-                variant="contained" 
-                onClick={handleClick} 
-                type='submit'
-                sx={{
-                    marginX:'auto'
-                    }}
-            >
-                Reservar
-            </Button>
+            
+
+            <ModalConfirm 
+                values = {values}
+            />
        
         </FormControl>
         }
