@@ -45,15 +45,38 @@ const FormReservations = ({idClub} ) => {
         setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(endDatetime).format('HH:mm')}`)
     }, [date]);
 
+    useEffect(() => {
+       reservations
+       isReserved
+    }, [startDatetime, endDatetime]);
 
-    const isReserved = (playingFieldId, startDatetime, endDatetime ) => {
+
+
+    const isReserved = () => {
+
         return reservations?.some((reservation) => {
-            return (
-                reservation.playingField.id === playingFieldId &&
-                (startDatetime.isSameOrAfter(dayjs(reservation.startDatetime) ) && endDatetime.isSameOrBefore(reservation.endDatetime) )
-            );
-        });
+
+            const day = `${dayjs(startDatetime).format('YYYY-MM-DD')}`
+            const dayR = `${dayjs(reservation.startDatetime).format('YYYY-MM-DD')}`
+
+            const startHH = parseInt(dayjs(startDatetime).format('HH')) 
+            const startRH = parseInt(dayjs(reservation.startDatetime).format('HH'))
+
+            const endHH = parseInt(dayjs(endDatetime).format('HH')) 
+            const endRH = parseInt(dayjs(reservation.endDatetime).format('HH'))
+
+         
+            console.log(day, dayR, day ==dayR)
+            console.log(startHH, startRH, startHH >= startRH)
+            console.log(endHH,endRH, endHH <= endRH)
+            
+
+            return (reservation.playingField.id === playfieldId && day === dayR && (startHH >= startRH  && endHH <= endRH)) 
+        }) 
+        
     };
+
+    console.log(isReserved())
 
 
 
@@ -146,7 +169,7 @@ return (
                         <MenuItem 
                             value={playfield.id}
                             key={playfield.id}
-                         //  disabled={isReserved(playfield.id, startDatetime, endDatetime)}
+                            disabled={isReserved()}
                         >
                         {playfield.description}
                         </MenuItem>
