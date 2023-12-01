@@ -2,6 +2,7 @@ package com.dh.canchas365.repository;
 
 import com.dh.canchas365.model.PlayingField;
 import com.dh.canchas365.model.Reservation;
+import com.dh.canchas365.model.auth.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,5 +25,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Optional<List<Reservation>> findByDateTimeAndClub(LocalDateTime dateFrom,
                                                       LocalDateTime dateTo,
                                                       PlayingField playingField);
+
+    @Query(value = "SELECT r FROM Reservation r " +
+            "WHERE startDatetime < ?1 AND usuario = ?2")
+    Optional<List<Reservation>> findHistorial(LocalDateTime today, Usuario idUsuario);
 
 }
