@@ -14,11 +14,12 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import Swal from 'sweetalert2';
 import { useNavigate} from "react-router-dom";
 import { AuthContext } from "../../auth/context";
+import Loading from '../loading/Loading'
 
 
 const ModalConfirm = ({values, idClub}) => {
 
-    const {  } = AuthContext();
+    const { userData } = AuthContext();
 
     const navigate = useNavigate();
     
@@ -28,7 +29,7 @@ const ModalConfirm = ({values, idClub}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const {fetchData} = useFetchDataApi()
+    const {fetchData, isLoading, error} = useFetchDataApi()
 
     const handleClick = () => {
         setIsOpen(!isOpen)
@@ -36,18 +37,16 @@ const ModalConfirm = ({values, idClub}) => {
 
     const confirm = async() => {
 
-        const resp = await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values)
+        await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values)
 
-        handleClick()
-
-        if (resp.error){
+        if (error){
             Swal.fire({
-                title: resp.error,
+                title: error,
                 icon: 'warning',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
-               console.log(resp.error)
+               console.log(error)
             }
             )
         }
@@ -59,19 +58,21 @@ const ModalConfirm = ({values, idClub}) => {
                 confirmButtonText: 'Confirmar',
             }).then(() => {
                console.log("Reserva agregada con éxito")
-               
-            }) 
+            }).then(
+                navigate(`/club/${idClub}`)
+            )
         } 
 
         
 
-        navigate(`/club/${idClub}`);
+        
 
     }
     
 
     return(
-
+        <> 
+        { (isLoading)? <Loading/> :
         <React.Fragment>
             <Button 
                 variant="contained" 
@@ -83,6 +84,7 @@ const ModalConfirm = ({values, idClub}) => {
             >
                 Reservar
             </Button>
+            
             <Dialog
                 fullScreen={fullScreen}
                 open={isOpen}
@@ -107,10 +109,10 @@ const ModalConfirm = ({values, idClub}) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            
         </React.Fragment>
-
-
-
+        }
+        </>
     )
 }
 

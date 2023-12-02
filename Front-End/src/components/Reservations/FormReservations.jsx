@@ -16,6 +16,7 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import useAvailability from '../../hooks/useAvailability';
 import { useEffect } from 'react';
 import ModalConfirm from './ModalConfirm';
+import { AuthContext } from "../../auth/context";
 
 
 
@@ -38,6 +39,7 @@ const FormReservations = ({idClub} ) => {
     const { reservations } = useAvailability(idClub, startDatetime, endDatetime);
 
 
+    const { userData } = AuthContext();
 
   //  const user = localStorage.getItem()
 
@@ -51,6 +53,7 @@ const FormReservations = ({idClub} ) => {
        isReserved
     }, [startDatetime, endDatetime]);
 
+
     const isReserved = (idPlayfield) => {
 
         return reservations?.some((reservation) => {
@@ -63,24 +66,31 @@ const FormReservations = ({idClub} ) => {
 
             const endHH = parseInt(dayjs(endDatetime).format('HH')) 
             const endRH = parseInt(dayjs(reservation.endDatetime).format('HH'))
+            const today = new Date()
 
-            return (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) 
+
+            if ( 
+                (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) || 
+                (queryParams.get('date') == dayjs(today).format("YYYY-MM-DD") && today.getHours() >= startHH ) || 
+                (startHH > endHH)
+            ){
+                return true
+            }
+            else{ return false}
+
+
+            
         }) 
         
     };
 
     
-
-    ////// CAMBIAR IDUSUARIO POR EL ID REAL DEL ENTORNO QUE PASO POR PROPS COMO IDUSER //////// 
-
     const values= {
         playingField: { id: parseInt(playfieldId) },
-        usuario: {id: 9 }, 
+        usuario: {id: userData.id }, 
         startDatetime: startDatetime ,
         endDatetime: endDatetime
     };
-
-    //////--------------------------------------------/////////
 
 
 return (
