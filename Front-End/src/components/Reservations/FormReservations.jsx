@@ -124,7 +124,7 @@ return (
                     />
                     <TimeField
                         sx={{width:'200px', textAlign:'center'}}
-                        label="Hora de finalizacion"
+                        label="Hora de finalización"
                         value={dayjs(endDatetime)}
                         onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm:ss')}`)}
                         format="HH:00"
@@ -154,6 +154,7 @@ return (
             <ModalConfirm 
                 values = {values}
                 idClub = {idClub}
+                date={date}
             />
        
         </FormControl>
