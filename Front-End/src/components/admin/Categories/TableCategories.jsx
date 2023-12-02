@@ -40,9 +40,9 @@ const TableCategory = ({ handleUpdate }) => {
     const handleDelete =  (id, title) => {
     
         Swal.fire({
-            title: `Esta por eliminar la categoría ${title}.`, 
+            title: `Estás por eliminar la categoría ${title}.`, 
             icon: 'warning',
-            text: 'En caso que la misma este siendo utilizada, se eliminarán todos los clubes que la tengan asignada. ¿Está seguro de confirmar la  siguiente acción?',
+            text: 'En caso que la misma esté siendo utilizada, se eliminarán todos los clubes que la tengan asignada. ¿Estás seguro de confirmar la  siguiente acción?',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -111,7 +111,7 @@ const TableCategory = ({ handleUpdate }) => {
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id, row.title)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CATEGORIA')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CATEGORÍA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

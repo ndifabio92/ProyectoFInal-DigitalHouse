@@ -157,9 +157,9 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 if (resp.error){
                     Swal.fire({
                         title: resp.error,
-                        icon: 'warning',
+                        icon: 'error',
                         confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Confirmar',
+                        confirmButtonText: 'OK',
                     }).then(() => {
                        console.log(resp.error)
                     }
@@ -228,7 +228,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 }
                 else{
                     Swal.fire({
-                        title: 'Debe completar todos los campos del formulario',
+                        title: 'Tenés que completar todos los campos del formulario',
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',

@@ -43,7 +43,7 @@ const TableAdmin = ({ handleUpdate }) => {
     const handleDelete =  (id) => {
     
         Swal.fire({
-            title: 'Esta seguro que quiere confirmar la accion?',
+            title: 'Estás seguro que querés confirmar la acción?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
