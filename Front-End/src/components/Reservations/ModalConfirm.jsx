@@ -13,10 +13,12 @@ import { METHODS } from '../../constants/methods';
 import { ENDPOINTS } from '../../constants/endpoints';
 import Swal from 'sweetalert2';
 import { useNavigate} from "react-router-dom";
-
+import { AuthContext } from "../../auth/context";
 
 
 const ModalConfirm = ({values, idClub}) => {
+
+    const {  } = AuthContext();
 
     const navigate = useNavigate();
     
