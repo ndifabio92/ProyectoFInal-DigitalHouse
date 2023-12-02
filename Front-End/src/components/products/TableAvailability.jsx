@@ -23,7 +23,6 @@ const TableAvailability = (props) => {
             const startHour = new Date(reservation.startDatetime).getHours();
             const endHour = new Date(reservation.endDatetime).getHours();
             const today = new Date()
-            console.log(today)
             
 
                 if(

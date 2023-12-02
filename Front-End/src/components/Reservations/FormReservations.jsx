@@ -66,8 +66,19 @@ const FormReservations = ({idClub} ) => {
 
             const endHH = parseInt(dayjs(endDatetime).format('HH')) 
             const endRH = parseInt(dayjs(reservation.endDatetime).format('HH'))
+            const today = new Date()
 
-            return (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) 
+
+            if ( 
+                (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) || 
+                (queryParams.get('date') == dayjs(today).format("YYYY-MM-DD") && today.getHours() >= startHH )
+            ){
+                return true
+            }
+            else{ return false}
+
+
+            
         }) 
         
     };
