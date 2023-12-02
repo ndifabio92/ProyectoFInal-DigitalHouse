@@ -53,6 +53,7 @@ const FormReservations = ({idClub} ) => {
        isReserved
     }, [startDatetime, endDatetime]);
 
+
     const isReserved = (idPlayfield) => {
 
         return reservations?.some((reservation) => {
