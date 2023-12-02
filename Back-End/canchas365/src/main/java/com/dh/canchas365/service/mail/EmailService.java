@@ -2,6 +2,7 @@ package com.dh.canchas365.service.mail;
 
 import com.dh.canchas365.dto.auth.UsuarioDto;
 import com.dh.canchas365.exceptions.CustomFieldException;
+import com.dh.canchas365.model.Reservation;
 import com.dh.canchas365.model.auth.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +45,16 @@ public class EmailService extends CustomFieldException implements IEmailService{
         return String.format(
                 "Hola %s %s su cuenta ha sido asociada al mail %s ha sido creada de forma exitosa, para ir al login por favor haga click en el siguiente enlace %s",
                 usuario.getName(), usuario.getLastname(), usuario.getUsername(), appUrl
+        );
+    }
+
+    public String buildMessageReservation(Reservation reservation) {
+        return String.format(
+                "Hola %s %s,  su reserva en la cancha %s para el dia %s se realizó de forma exitosa.",
+
+
+
+                reservation.getUsuario().getName(), reservation.getUsuario().getLastname(), reservation.getPlayingField(), reservation.getStartDatetime()
         );
     }
 

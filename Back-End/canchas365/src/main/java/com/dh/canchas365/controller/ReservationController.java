@@ -5,7 +5,10 @@ import com.dh.canchas365.dto.SearchReservationDTO;
 import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.Reservation;
+import com.dh.canchas365.model.auth.Usuario;
+import com.dh.canchas365.repository.ReservationRepository;
 import com.dh.canchas365.service.ReservationService;
+import com.dh.canchas365.service.mail.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,13 @@ public class ReservationController extends CustomFieldException {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    ReservationRepository reservationRepository;
+
+
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ReservationDto reservation, BindingResult bindingResult){
         try{
@@ -30,6 +40,7 @@ public class ReservationController extends CustomFieldException {
                 return validate(bindingResult);
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.create(reservation));
+
         } catch (Exception ex) {
             return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -62,6 +73,14 @@ public class ReservationController extends CustomFieldException {
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
+
+
+
+        reservationRepository.save(reservation);
+            var message = emailService.buildMessageReservation(reservation);
+            emailService.sendEmail(reservation.getUsuario().getUsername(), "Confirmacion de turno",message);
+
+
 
             return ResponseEntity.status(HttpStatus.OK).body(reservationService.update(reservation));
         }
