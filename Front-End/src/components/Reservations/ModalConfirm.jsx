@@ -14,6 +14,9 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/context";
+import useFetchApi from "../../hooks/useFetchApi";
+import { Typography } from "@mui/material";
+
 
 const ModalConfirm = ({ values, idClub, date }) => {
   const { userData } = AuthContext();
@@ -28,33 +31,34 @@ const ModalConfirm = ({ values, idClub, date }) => {
 
   const { fetchData } = useFetchDataApi();
 
+  const { data: club } = useFetchApi(`${ENDPOINTS.CLUB}`, METHODS.GET, idClub)
+  const { data: playingField } = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}`, METHODS.GET, values.playingField.id)
+
+   //Formateo fecha
+   const fechaOriginal = date;
+   const fecha = new Date(fechaOriginal);
+   const dia = fecha.getDate().toString().padStart(2, "0");
+   const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+   const anio = fecha.getFullYear();
+   const fechaFormateada = `${dia}-${mes}-${anio}`;
+ 
+   //Formateo hora inicio
+   const horaInicioOriginal = values.startDatetime;
+   const horaInicio = new Date(horaInicioOriginal);
+   const horasIni = horaInicio.getHours().toString().padStart(2, "0");
+   const minutosIni = horaInicio.getMinutes().toString().padStart(2, "0");
+   const horaInicioFormateada = `${horasIni}:${minutosIni}`;
+ 
+   //Formateo hora finalización
+   const horaFinOriginal = values.endDatetime;
+   const horaFin = new Date(horaFinOriginal);
+   const horasFin = horaFin.getHours().toString().padStart(2, "0");
+   const minutosFin = horaFin.getMinutes().toString().padStart(2, "0");
+   const horaFinFormateada = `${horasFin}:${minutosFin}`;
+
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
-
-  //Formateo fecha
-  const fechaOriginal = date;
-  const fecha = new Date(fechaOriginal);
-  const dia = fecha.getDate().toString().padStart(2, "0");
-  const mes = (fecha.getMonth() + 1).toString().padStart(2, "0"); 
-  const anio = fecha.getFullYear();
-  const fechaFormateada = `${dia}-${mes}-${anio}`;
-
-  //Formateo hora inicio
-  const horaInicioOriginal = values.startDatetime;
-  const horaInicio  = new Date(horaInicioOriginal);
-  const horasIni = horaInicio.getHours().toString().padStart(2, '0');
-  const minutosIni = horaInicio.getMinutes().toString().padStart(2, '0');
-  const horaInicioFormateada = `${horasIni}:${minutosIni}`;
-
-  //Formateo hora finalización
-  const horaFinOriginal = values.endDatetime;
-  const horaFin  = new Date(horaFinOriginal);
-  const horasFin = horaFin.getHours().toString().padStart(2, '0');
-  const minutosFin = horaFin.getMinutes().toString().padStart(2, '0');
-  const horaFinFormateada = `${horasFin}:${minutosFin}`;
-
-
 
   const confirm = async () => {
     const resp = await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values);
@@ -106,31 +110,16 @@ const ModalConfirm = ({ values, idClub, date }) => {
           Confirmación de reserva
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
+            <Typography>
             <ul>
-              <li>
-                <p>Club:</p>
-              </li>
-              <li>
-                <p>Cancha:</p>
-              </li>
-              <li>
-                <p>Fecha: {fechaFormateada}</p>
-              </li>
-              <li>
-                <p>Hora inicio: {horaInicioFormateada} hs</p>
-              </li>
-              <li>
-                <p>Hora finalización: {horaFinFormateada} hs</p>
-              </li>
-              <li>
-                <p>
-                  Usuario: {userData.name} {userData.lastname} -{" "}
-                  {userData.username}
-                </p>
-              </li>
+              <li>Club: {club?.name}</li>
+              <li>Cancha: {playingField?.description}</li>
+              <li>Fecha: {fechaFormateada}</li>
+              <li>Hora inicio: {horaInicioFormateada} hs</li>
+              <li>Hora finalización: {horaFinFormateada} hs</li>
+              <li>Usuario: {userData.name} {userData.lastname} -{" "}{userData.username}</li>
             </ul>
-          </DialogContentText>
+            </Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClick}>
