@@ -14,7 +14,6 @@ const SearchBar = () => {
   const { data: categories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
   const { data: cities } = useFetchApi(`${ENDPOINTS.CITY}`);
 
-  console.log(categories, cities)
   const { values, handleChange } = useForm({
     city: '',
     sport: '',
@@ -43,8 +42,8 @@ const SearchBar = () => {
     >
       <SelectInput handleChange={handleChange} options={cities} name="city" />
       <SelectInput handleChange={handleChange} options={categories} name="sport" />
-      <Datepicker handleChange={handleChange} name="date" type="DatePicker" />
-      <Datepicker handleChange={handleChange} name="time" type="DatePicker" />
+      <Datepicker handleChange={handleChange} name="date" type="DatePicker" label='Elegí un día'/>
+      <Datepicker handleChange={handleChange} name="time" type="DatePicker" label='Elegí un horario'/>
 
       <Button variant="contained" onClick={handleClick} type='submit'>Buscar Turno</Button>
     </Container >

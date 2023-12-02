@@ -16,5 +16,6 @@ export const ENDPOINTS = {
     EMAIL_CONFIRM: 'email/sendMessage',
     FAVORITES: 'favorites',
     RESERVATIONS_BY_CLUB: 'reservation/searchByClub',
+    RESERVATION: 'reservation',
     CLUB_SEARCH: 'club/search'
 }
