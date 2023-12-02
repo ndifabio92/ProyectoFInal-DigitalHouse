@@ -40,7 +40,7 @@ const FormReservations = ({club}) => {
 
     const { userData } = AuthContext();
 
-  //  const user = localStorage.getItem()
+
 
     useEffect(() => {
         setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm:ss')}`)
