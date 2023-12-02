@@ -9,8 +9,10 @@ import dayjs from 'dayjs';
 import Swal from 'sweetalert2';
 
 const ClubSearch = () => {
+
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
+    
     const filters = {
         city: { id: +queryParams.get('city') },
         category: { id: +queryParams.get('sport') },
@@ -45,13 +47,8 @@ const ClubSearch = () => {
                             key={club.id}
                             name={club.name}
                             tel={club.phone_number}
-                            city={
-                                club.address.street +
-                                " N° " +
-                                club.address.number +
-                                ", " +
-                                club.address.city.name
-                            }
+                            city={`${club.address.street } N° ${club.address.number },  ${club.address.city.name}`}
+                                
                             id={club.id}
                         />
                     ))
