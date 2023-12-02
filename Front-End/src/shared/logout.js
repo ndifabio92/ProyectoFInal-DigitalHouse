@@ -1,5 +1,5 @@
 
-export const logout = ({setUserData, setIsLogged,setFavorites }) => {
+export const logout = ({setUserData, setIsLogged, setFavorites }) => {
     setUserData(null);
     setIsLogged(false);
     setFavorites(null);

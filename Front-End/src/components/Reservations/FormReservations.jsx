@@ -16,6 +16,7 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import useAvailability from '../../hooks/useAvailability';
 import { useEffect } from 'react';
 import ModalConfirm from './ModalConfirm';
+import { AuthContext } from "../../auth/context";
 
 
 
@@ -38,6 +39,7 @@ const FormReservations = ({idClub} ) => {
     const { reservations } = useAvailability(idClub, startDatetime, endDatetime);
 
 
+    const { userData } = AuthContext();
 
   //  const user = localStorage.getItem()
 
@@ -70,17 +72,12 @@ const FormReservations = ({idClub} ) => {
     };
 
     
-
-    ////// CAMBIAR IDUSUARIO POR EL ID REAL DEL ENTORNO QUE PASO POR PROPS COMO IDUSER //////// 
-
     const values= {
         playingField: { id: parseInt(playfieldId) },
-        usuario: {id: 9 }, 
+        usuario: {id: userData.id }, 
         startDatetime: startDatetime ,
         endDatetime: endDatetime
     };
-
-    //////--------------------------------------------/////////
 
 
 return (

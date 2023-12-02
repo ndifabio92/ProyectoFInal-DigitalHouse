@@ -74,7 +74,7 @@ const Header = () => {
       navigate("/admin");
     }
     if (setting === "Cerrar sesión") {
-      handleLogout({setUserData, setIsLogged});
+      handleLogout({setUserData, setIsLogged, setFavorites});
     }
     setAnchorElUser(null);
   };
