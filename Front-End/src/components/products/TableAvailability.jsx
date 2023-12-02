@@ -8,45 +8,39 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
-
-
+import Swal from "sweetalert2";
 
 const TableAvailability = (props) => {
 
     const navigate = useNavigate()
     
     const {playingfields, reservations, date, idClub} = props
-
-    
+ 
     const isReserved = (playingFieldId, hour) => {
         return reservations.some((reservation) => {
             const startHour = new Date(reservation.startDatetime).getHours();
             const endHour = new Date(reservation.endDatetime).getHours();
     
-
             return (
                 reservation.playingField.id === playingFieldId &&
                 (hour >= startHour && hour < endHour)
             );
         });
     };
-/*
-    //funcion de comprobacion de si el usuario esta logueado o no
-    
-    const isUser = () => 
-    {
 
-    }
-*/
     const handleClick = (idClub, idPlayingfield, date, time ) => {
 
-        // aca agregar la comprobacion para que si isUser es true haga el navigate
-        // si el usuario no esta logueado que redirija a login
-
-
-        const queryParams = `idClub=${encodeURIComponent(idClub)}&idPlayingfield=${encodeURIComponent(idPlayingfield)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}:00:00`;
-
-        navigate(`/reservations?${queryParams}`) 
+        if (!localStorage.getItem("user")) {
+            Swal.fire({
+              title: "Para realizar una reserva por favor iniciá sesión",
+              icon: "error",
+            }).then(() => {
+                navigate('/signin', { state: { fromReserveButton: true } });
+            });
+          } else {
+              const queryParams = `idClub=${encodeURIComponent(idClub)}&idPlayingfield=${encodeURIComponent(idPlayingfield)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}:00:00`;
+              navigate(`/reservations?${queryParams}`); 
+          }
 
     }
 
