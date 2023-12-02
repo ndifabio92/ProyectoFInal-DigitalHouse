@@ -57,6 +57,7 @@ export const DataProvider = ({ children }) => {
     favorites,
     saveFavorites,
     updateFavorites,
+    setFavorites
   };
 
   return (

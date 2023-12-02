@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import dayjs from "dayjs";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -16,6 +15,9 @@ import Loading from '../loading/Loading';
 import { ENDPOINTS } from '../../constants/endpoints';
 import useAvailability from '../../hooks/useAvailability';
 import { useEffect } from 'react';
+import ModalConfirm from './ModalConfirm';
+import { AuthContext } from "../../auth/context";
+
 
 
 const FormReservations = ({idClub} ) => {
@@ -28,63 +30,54 @@ const FormReservations = ({idClub} ) => {
 
     const [playfieldId, setPlayfieldId] = useState(queryParams.get('idPlayingfield')) 
 
-    const [startDatetime, setStartDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm'))
+    const [startDatetime, setStartDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).format('YYYY-MM-DD HH:mm:ss'))
 
-    const [endDatetime, setEndDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm'))
+    const [endDatetime, setEndDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm:ss'))
 
     const { data: playfields, isLoading: isLoadingPlayfields, error: errorPlayfields} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`);
 
-    const { reservations, period, showMessage } = useAvailability(idClub, startDatetime, endDatetime);
+    const { reservations } = useAvailability(idClub, startDatetime, endDatetime);
 
-    const message = "No Disponible";
 
-   
+    const { userData } = AuthContext();
+
+  //  const user = localStorage.getItem()
 
     useEffect(() => {
-        setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm')}`)
-        setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(endDatetime).format('HH:mm')}`)
+        setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm:ss')}`)
+        setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(endDatetime).format('HH:mm:ss')}`)
     }, [date]);
 
+    useEffect(() => {
+       reservations
+       isReserved
+    }, [startDatetime, endDatetime]);
 
-    const isReserved = (playingFieldId, startDatetime, endDatetime ) => {
+    const isReserved = (idPlayfield) => {
+
         return reservations?.some((reservation) => {
-            return (
-                reservation.playingField.id === playingFieldId &&
-                (startDatetime.isSameOrAfter(dayjs(reservation.startDatetime) ) && endDatetime.isSameOrBefore(reservation.endDatetime) )
-            );
-        });
+
+            const day = `${dayjs(startDatetime).format('YYYY-MM-DD')}`
+            const dayR = `${dayjs(reservation.startDatetime).format('YYYY-MM-DD')}`
+
+            const startHH = parseInt(dayjs(startDatetime).format('HH')) 
+            const startRH = parseInt(dayjs(reservation.startDatetime).format('HH'))
+
+            const endHH = parseInt(dayjs(endDatetime).format('HH')) 
+            const endRH = parseInt(dayjs(reservation.endDatetime).format('HH'))
+
+            return (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) 
+        }) 
+        
     };
 
-
-
-    //--------------------------------
     
-    
-    //---------------------------------------------
-
-    // aca se arma el objeto para el post... ver bien como deberia quedar armado cuando este el back
-    // controlar y corregir las propiedades del objeto y el formato de los tipos de datos, en especial los de fecha y hora
-    // se dejan asi solo a modo de ejemplo!!!!!!!!!!!!!!!!!!!!!!!!!!!
- 
-
     const values= {
-        playfield: { id: playfieldId },
+        playingField: { id: parseInt(playfieldId) },
+        usuario: {id: userData.id }, 
         startDatetime: startDatetime ,
         endDatetime: endDatetime
     };
-
-    //---------------------------------------------
-
-    const handleClick = () => {
-
-        // aca tengo que hacer la logica para pasar a la confirmacion de la reserva
-        //puedo hacerlo con un model
-
-        console.log(values.startDatetime)
-        console.log(values.endDatetime)
-        console.log(values.playfield.id)
-        console.log(reservations)
-    }
 
 
 return (
@@ -114,7 +107,7 @@ return (
                         label='Fecha'
                         views={['year', 'month', 'day']}
                         value={dayjs(date)}
-                        onChange={(newValue) => {setDate(dayjs(newValue).format('YYYY-MM-DD HH:mm'))}}
+                        onChange={(newValue) => {setDate(dayjs(newValue).format('YYYY-MM-DD HH:mm:ss'))}}
                     />
                     <Box sx={{
                         display: 'flex',
@@ -126,14 +119,14 @@ return (
                         sx={{width:'200px', textAlign:'center'}}
                         label="Hora de inicio"
                         value={dayjs(startDatetime)}
-                        onChange={(newValue) => setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
+                        onChange={(newValue) => setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm:ss')}`)}
                         format="HH:00"
                     />
                     <TimeField
                         sx={{width:'200px', textAlign:'center'}}
-                        label="Hora de finalizacion"
+                        label="Hora de finalización"
                         value={dayjs(endDatetime)}
-                        onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm')}`)}
+                        onChange={(newValue) => setEndDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(newValue).format('HH:mm:ss')}`)}
                         format="HH:00"
                     />
                     <Select
@@ -144,11 +137,11 @@ return (
                     >
                     {playfields?.map((playfield) => (
                         <MenuItem 
-                            value={playfield.id}
+                            value={isReserved(playfield.id)? '': playfield.id}
                             key={playfield.id}
-                         //  disabled={isReserved(playfield.id, startDatetime, endDatetime)}
+                            disabled={isReserved(playfield.id)}
                         >
-                        {playfield.description}
+                        {isReserved(playfield.id)? 'Cancha no Disponible': playfield.description}
                         </MenuItem>
                     ))}
                     </Select>  
@@ -156,16 +149,13 @@ return (
                 </DemoContainer>
             </LocalizationProvider>
 
-            <Button 
-                variant="contained" 
-                onClick={handleClick} 
-                type='submit'
-                sx={{
-                    marginX:'auto'
-                    }}
-            >
-                Reservar
-            </Button>
+            
+
+            <ModalConfirm 
+                values = {values}
+                idClub = {idClub}
+                date={date}
+            />
        
         </FormControl>
         }
