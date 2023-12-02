@@ -23,7 +23,7 @@ const settings = ["Perfil", "Cerrar sesión"];
 const Header = () => {
   const logo = "https://res.cloudinary.com/dreso9ye9/image/upload/v1701465116/logoNaranjaNeg_rd1s1x.png";
 
-  const { userData , setUserData, setIsLogged} = AuthContext();
+  const { userData , setUserData, setIsLogged, setFavorites} = AuthContext();
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -42,12 +42,12 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
-  const handleLogout = (setUserData, setIsLogged) => {
+  const handleLogout = (setUserData, setIsLogged, setFavorites) => {
     Swal.fire({
       title: "¡Hasta luego! Esperamos verte pronto 😊",
       icon: "warning",
     });
-    logout(setUserData, setIsLogged);
+    logout(setUserData, setIsLogged, setFavorites);
     navigate("/");
   };
 

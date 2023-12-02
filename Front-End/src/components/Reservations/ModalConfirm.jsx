@@ -18,7 +18,7 @@ import { AuthContext } from "../../auth/context";
 
 const ModalConfirm = ({values, idClub}) => {
 
-    const {  } = AuthContext();
+    const { userData } = AuthContext();
 
     const navigate = useNavigate();
     
