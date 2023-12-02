@@ -71,7 +71,8 @@ const FormReservations = ({idClub} ) => {
 
             if ( 
                 (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) || 
-                (queryParams.get('date') == dayjs(today).format("YYYY-MM-DD") && today.getHours() >= startHH )
+                (queryParams.get('date') == dayjs(today).format("YYYY-MM-DD") && today.getHours() >= startHH ) || 
+                (startHH > endHH)
             ){
                 return true
             }
