@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { ENDPOINTS } from "../../../constants/endpoints";
 import { METHODS } from "../../../constants/methods";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../../auth/context";
 
 const FormUserSignIn = () => {
@@ -97,6 +97,7 @@ const FormUserSignIn = () => {
           <Button variant="contained" type="submit">
             Iniciar sesión
           </Button>
+          <h5 style={{ color: "#1F2E7B" }}>¿Aún no tenés una cuenta? <Link to='/signup' style={{ color: "#FF914D" }} >Registrate</Link></h5>
         </form>
       )}
     </Container>
