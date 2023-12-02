@@ -45,7 +45,7 @@ const Header = () => {
   const handleLogout = (setUserData, setIsLogged) => {
     Swal.fire({
       title: "¡Hasta luego! Esperamos verte pronto 😊",
-      icon: "warning",
+      icon: "success",
     });
     logout(setUserData, setIsLogged);
     navigate("/");

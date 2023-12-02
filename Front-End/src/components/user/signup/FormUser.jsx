@@ -37,7 +37,7 @@ const FormUser = () => {
         text: "Te enviamos la confirmación por correo, antes de cerrar esta ventana, revisá tu bandeja de entrada. Si no lo recibiste, hace click en el botón reenviar correo de confirmación.",
         icon: "success",
         showCancelButton: true,
-        confirmButtonText: "Ok",
+        confirmButtonText: "OK",
         cancelButtonText: "Reenviar correo de confirmación",
       }).then((result) => {
         if (result.isConfirmed) {
