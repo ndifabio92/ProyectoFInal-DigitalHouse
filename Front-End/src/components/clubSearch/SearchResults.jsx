@@ -45,7 +45,14 @@ const SearchResults = () => {
             <h1 style={{ margin: '20px 0', color: '#333' }}>RESULTADOS DE TU BÚSQUEDA</h1>
             {isLoading && <Loading />}
             {!isLoading && data.length > 0 ? (
-            <>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                gap: '10px'
+            }}>
                 {data.map((club) => (
                 <CardProducts
                     key={club.id}
@@ -64,7 +71,7 @@ const SearchResults = () => {
                 <Button variant="contained" onClick={() => window.location.href = '/'} sx={{ mt: 2 }}>
                     NUEVA BÚSQUEDA
                 </Button>
-            </>
+            </div>
         ) : (
             <Container
                 sx={{
