@@ -42,7 +42,7 @@ const SearchResults = () => {
         id="home"
         >
         <div style={{ padding: '20px' }}>
-            <h1 style={{ margin: '20px 0', color: '#333' }}>RESULTADOS DE TU BÚSQUEDA</h1>
+            <h1 style={{ margin: '20px 0', color: '#1F2E7B' }}>RESULTADOS DE TU BÚSQUEDA</h1>
             {isLoading && <Loading />}
             {!isLoading && data.length > 0 ? (
             <div style={{
