@@ -23,6 +23,8 @@ const SearchResults = () => {
     ).format('HH:mm:ss[Z]')}`,
   };
 
+  const navigate = useNavigate()
+
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.CLUB_SEARCH, METHODS.POST, filters);
 
   return (
@@ -68,7 +70,7 @@ const SearchResults = () => {
                     id={club.id}
                 />
             ))}
-                <Button variant="contained" onClick={() => window.location.href = '/'} sx={{ mt: 2 }}>
+                <Button variant="contained" onClick={navigate('/')} sx={{ mt: 2 }}>
                     NUEVA BÚSQUEDA
                 </Button>
             </div>
