@@ -49,16 +49,4 @@ public class EmailService extends CustomFieldException implements IEmailService{
         );
     }
 
-    // pasar por parametro los datos que faltan para el mensaje como String
-
-    public String buildMessageReservation(ReservationDto reservationDto) {
-        return String.format(
-                "Su reserva se realizó de forma exitosa! Club: %s, Cancha: %s, Fecha y hora %s",
-
-                reservationDto.getPlayingField().getIdClub(),
-                reservationDto.getPlayingField(),
-                reservationDto.getStartDatetime()
-        );
-    }
-
 }
