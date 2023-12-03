@@ -1,12 +1,16 @@
 package com.dh.canchas365.controller;
 
+import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.dto.PlayingFieldDTO;
 import com.dh.canchas365.dto.ReservationDto;
 import com.dh.canchas365.dto.SearchReservationDTO;
 import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
+import com.dh.canchas365.model.PlayingField;
 import com.dh.canchas365.model.Reservation;
 import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.repository.ReservationRepository;
+import com.dh.canchas365.service.PlayingFieldService;
 import com.dh.canchas365.service.ReservationService;
 import com.dh.canchas365.service.mail.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,11 @@ public class ReservationController extends CustomFieldException {
     @Autowired
     ReservationRepository reservationRepository;
 
+    @Autowired
+    private PlayingFieldService playingFieldService;
+
+
+
 
     @Autowired
     private EmailService emailService;
@@ -40,8 +49,15 @@ public class ReservationController extends CustomFieldException {
                 return validate(bindingResult);
             }
 
+            PlayingFieldDTO playingField = playingFieldService.findById(id);
+
+           // Club club = clubService.findById(id ) ;
+
+
             // armar los String para pasar por parametro con
             // apellido, nombre, nombre de la cancha, nombre del club
+
+
             
 
 
