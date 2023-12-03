@@ -8,7 +8,7 @@ import { ENDPOINTS } from "../../../constants/endpoints";
 import { METHODS } from "../../../constants/methods";
 import Loading from "../../loading/Loading";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const FormUser = () => {
@@ -171,6 +171,7 @@ const FormUser = () => {
                 <Button variant="contained" type="submit">
                   Registrarse
                 </Button>
+                <h5 style={{ color: "#1F2E7B" }}>¿Ya tenés una cuenta? <Link to='/signin' style={{ color: "#FF914D" }} >Iniciar sesión</Link></h5>
               </Form>
             )}
           </Formik>

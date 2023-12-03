@@ -46,4 +46,5 @@ public class EmailService extends CustomFieldException implements IEmailService{
                 usuario.getName(), usuario.getLastname(), usuario.getUsername(), appUrl
         );
     }
+
 }

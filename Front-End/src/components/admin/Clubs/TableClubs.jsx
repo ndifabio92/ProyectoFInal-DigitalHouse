@@ -121,10 +121,10 @@ const TableAdmin = ({ handleUpdate }) => {
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.characteristics.map((char)=>(<p key={char.id}> {char.name} </p>))}
                                                 </TableCell>
-                                                <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                    <Button variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
-                                                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CLUB')}>Modificar</Button>
+                                                <TableCell component="th" scope="row" align='center' width={'120px'} >
+                                                    <Button sx={{display: 'inline-block', margin:'10px', width:'200px'}} variant="outlined" startIcon={<SendIcon />} onClick={() => handleView(row.id)}>Canchas</Button>
+                                                    <Button sx={{display: 'inline-block', margin:'10px', width:'200px'}} variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id)}>Eliminar</Button>
+                                                    <Button sx={{display: 'inline-block', margin:'10px', width:'200px'}} variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CLUB')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

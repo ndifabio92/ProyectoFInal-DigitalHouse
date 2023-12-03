@@ -17,24 +17,22 @@ const Detail = () => {
     navigate("/");
   };
 
-  const { id } = useParams();
+  const { id } = useParams()
 
-  const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id);
+  const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id)
 
   return (
-    <> 
+    <Container  maxWidth="xl"
+    sx={{
+      mt: "120px",
+      mb: "40px",
+      color: "#011A5B",
+      backgroundColor: "#FFFFFF",
+      padding:'0px'
+    }}>
     {(isLoading) ? <Loading /> :
-    <Container
-     maxWidth="xl"
-      sx={{
-        mt: "120px",
-        mb: "40px",
-        color: "#011A5B",
-        backgroundColor: "#FFFFFF",
-      }}
-    >
+    <>
     
-     
       <Box
         sx={{
           display: "flex",
@@ -80,9 +78,9 @@ const Detail = () => {
       <Characteristic club={data} />
       <Availability idClub={id}/>
       
-    </Container>
-      }
     </>
+      }
+    </Container>
   );
 };
 

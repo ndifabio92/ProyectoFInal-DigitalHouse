@@ -7,7 +7,7 @@ import SearchResults from '../../components/clubSearch/searchResults';
 import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const ClubSearch = () => {
 
   const navigate = useNavigate();
 
@@ -48,4 +48,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default ClubSearch;
