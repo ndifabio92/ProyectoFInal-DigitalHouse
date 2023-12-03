@@ -143,7 +143,6 @@ public class ClubService {
         for (Club club : clubes) {
             clubDTO = mapper.map(club, ClubDTO.class);
 //            clubDTO.setCharacteristics(new HashSet<>());
-
 //            for (Characteristic characteristic : club.getCharacteristics()) {
 //                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
 //            }

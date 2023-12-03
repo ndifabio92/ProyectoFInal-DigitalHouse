@@ -8,19 +8,19 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import useFetchApi from "../../hooks/useFetchApi";
 import FavoriteButton from "../favs/FavoriteButton";
 
-const CardProducts = ({ name, tel, city, id}) => {
+const CardProducts = ({ club }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`/${ENDPOINTS.CLUB}/${id}`);
+  const handleClick = () => navigate(`/${ENDPOINTS.CLUB}/${club.id}`);
 
-  const { data } = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
-
-  const imagesURL = data?.map((image) => ({
+  const imagesURL = club.images.map((image) => ({
     id: `${image.id}`,
-    url: `${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`,
+    url: `${import.meta.env.VITE_BACKEND_API}image/${club.id}/download/${image.id}`,
   }));
 
-  const imagenPrinc = imagesURL ? imagesURL[0] : [];
+  console.log(club)
+
+  const imagenPrinc = imagesURL[0]
 
   return (
     <Card
@@ -58,12 +58,12 @@ const CardProducts = ({ name, tel, city, id}) => {
             color: "#1F2E7B",
           }}
         >
-          {name}
+          {club.name}
         </Typography>
         <CardMedia
           component="img"
           height={100}
-          image={imagenPrinc.url}
+          image={imagenPrinc}
           sx={{ margin: "20px" }}
         />
 
@@ -76,16 +76,16 @@ const CardProducts = ({ name, tel, city, id}) => {
           }}
         >
           <Typography variant="p" component="p">
-            {city}
+            {`${club.address.street} N° ${club.address.number}, ${club.address.city.name}`}
           </Typography>
           <Typography variant="p" component="p">
-            {tel}
+            {club.phone_number}
           </Typography>
         </CardContent>
       </CardActionArea>
 
       <FavoriteButton
-        clubId={id}
+        clubId={club.id}
       />
     </Card>
   );
