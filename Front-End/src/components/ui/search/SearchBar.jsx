@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useForm } from '../../../hooks/useForm';
@@ -7,20 +8,28 @@ import Datepicker from '../../datepicker/Datepicker';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
 
-
 const SearchBar = () => {
-
   const navigate = useNavigate();
   const { data: categories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
   const { data: cities } = useFetchApi(`${ENDPOINTS.CITY}`);
 
-  console.log(categories, cities)
   const { values, handleChange } = useForm({
     city: '',
     sport: '',
     date: '',
     time: ''
   });
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const handleFieldChange = () => {
+    const areAllFieldsFilled = Object.values(values).every((value) => value !== '');
+    setIsButtonDisabled(!areAllFieldsFilled);
+  };
+
+  useEffect(() => {
+    handleFieldChange();
+  }, [values]);
 
   const handleClick = () => {
     const queryParams = `city=${encodeURIComponent(values.city.id)}&sport=${encodeURIComponent(values.sport.id)}&date=${encodeURIComponent(values.date)}&time=${encodeURIComponent(values.time)}`;
@@ -29,7 +38,6 @@ const SearchBar = () => {
 
   return (
     <Container
-
       sx={{
         color: '#FF914D',
         display: 'flex',
@@ -46,10 +54,11 @@ const SearchBar = () => {
       <Datepicker handleChange={handleChange} name="date" type="DatePicker" />
       <Datepicker handleChange={handleChange} name="time" type="DatePicker" />
 
-      <Button variant="contained" onClick={handleClick} type='submit'>Buscar Turno</Button>
-    </Container >
-
+      <Button variant="contained" onClick={handleClick} type='submit' disabled={isButtonDisabled}>
+        Buscar Turno
+      </Button>
+    </Container>
   );
-}
+};
 
 export default SearchBar;
