@@ -11,11 +11,11 @@ const ClubSearch = () => {
       sx={{
         padding: '0',
         mt: '120px',
+        mb: '40px',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'center',
-        pb: '50px'
       }}
       id='home'
     >
