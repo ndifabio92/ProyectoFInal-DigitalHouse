@@ -1,137 +1,182 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
-import useFetchDataApi from "../../hooks/useFetchDataApi";
-import { METHODS } from "../../constants/methods";
-import { ENDPOINTS } from "../../constants/endpoints";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import { useState } from 'react';
+import useFetchDataApi from '../../hooks/useFetchDataApi';
+import { METHODS } from '../../constants/methods';
+import { ENDPOINTS } from '../../constants/endpoints';
+import Swal from 'sweetalert2';
+import { useNavigate} from "react-router-dom";
 import { AuthContext } from "../../auth/context";
-import useFetchApi from "../../hooks/useFetchApi";
-import { Typography } from "@mui/material";
+import Loading from '../loading/Loading'
+import { Box } from '@mui/material';
+import dayjs from "dayjs";
+import useFetchApi from '../../hooks/useFetchApi';
 
 
-const ModalConfirm = ({ values, idClub, date }) => {
-  const { userData } = AuthContext();
 
-  const navigate = useNavigate();
+const ModalConfirm = ({values, club}) => {
 
-  const theme = useTheme();
+    const { userData } = AuthContext();
 
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+    const navigate = useNavigate();
+    
+    const theme = useTheme();
 
-  const [isOpen, setIsOpen] = useState(false);
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { fetchData } = useFetchDataApi();
+    const [isOpen, setIsOpen] = useState(false);
 
-  const { data: club } = useFetchApi(`${ENDPOINTS.CLUB}`, METHODS.GET, idClub)
-  const { data: playingField } = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}`, METHODS.GET, values.playingField.id)
+    const {fetchData, isLoading, error} = useFetchDataApi()
 
-   //Formateo fecha
-   const fechaOriginal = date;
-   const fecha = new Date(fechaOriginal);
-   const dia = fecha.getDate().toString().padStart(2, "0");
-   const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
-   const anio = fecha.getFullYear();
-   const fechaFormateada = `${dia}-${mes}-${anio}`;
- 
-   //Formateo hora inicio
-   const horaInicioOriginal = values.startDatetime;
-   const horaInicio = new Date(horaInicioOriginal);
-   const horasIni = horaInicio.getHours().toString().padStart(2, "0");
-   const minutosIni = horaInicio.getMinutes().toString().padStart(2, "0");
-   const horaInicioFormateada = `${horasIni}:${minutosIni}`;
- 
-   //Formateo hora finalización
-   const horaFinOriginal = values.endDatetime;
-   const horaFin = new Date(horaFinOriginal);
-   const horasFin = horaFin.getHours().toString().padStart(2, "0");
-   const minutosFin = horaFin.getMinutes().toString().padStart(2, "0");
-   const horaFinFormateada = `${horasFin}:${minutosFin}`;
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const confirm = async () => {
-    const resp = await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values);
-
-    handleClick();
-
-    if (resp.error) {
-      Swal.fire({
-        title: resp.error,
-        icon: "warning",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Confirmar",
-      }).then(() => {
-        console.log(resp.error);
-      });
-    } else {
-      Swal.fire({
-        title: "Reserva agregada con éxito",
-        icon: "success",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Confirmar",
-      }).then(() => {
-        console.log("Reserva agregada con éxito");
-      });
+    const handleClick = () => {
+        setIsOpen(!isOpen)
     }
 
-    navigate(`/club/${idClub}`);
-  };
+    const { data: playingField } = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}`, METHODS.GET, values.playingField.id)
 
-  return (
-    <React.Fragment>
-      <Button
-        variant="contained"
-        onClick={handleClick}
-        type="submit"
-        sx={{
-          marginX: "auto",
-        }}
-      >
-        Reservar
-      </Button>
-      <Dialog
-        fullScreen={fullScreen}
-        open={isOpen}
-        onClose={handleClick}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogTitle id="responsive-dialog-title" style={{ color: "#FF914D" }}>
-          Confirmación de reserva
-        </DialogTitle>
-        <DialogContent>
-            <Typography>
-            <ul>
-              <li>Club: {club?.name}</li>
-              <li>Cancha: {playingField?.description}</li>
-              <li>Fecha: {fechaFormateada}</li>
-              <li>Hora inicio: {horaInicioFormateada} hs</li>
-              <li>Hora finalización: {horaFinFormateada} hs</li>
-              <li>Usuario: {userData.name} {userData.lastname} -{" "}{userData.username}</li>
-            </ul>
-            </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClick}>
-            Cancelar
-          </Button>
-          <Button onClick={confirm} autoFocus>
-            Aceptar
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
-};
+    const confirm = async() => {
 
-export default ModalConfirm;
+        await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values)
+
+        if (error){
+            Swal.fire({
+                title: error,
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Confirmar',
+            }).then(() => {
+               console.log(error)
+            }
+            )
+        }
+        else{
+            Swal.fire({
+                title: "Reserva agregada con éxito",
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Confirmar',
+            }).then(() => {
+               console.log("Reserva agregada con éxito")
+            }).then(
+                navigate(`/club/${club.id}`)
+            )
+        } 
+
+    }
+    
+
+    return(
+        <> 
+        { (isLoading)? <Loading/> :
+        <React.Fragment>
+            <Button 
+                variant="contained" 
+                onClick={handleClick} 
+                type='submit'
+                sx={{
+                    marginX:'auto'
+                    }}
+            >
+                Reservar
+            </Button>
+            
+            <Dialog
+                open={isOpen}
+                onClose={handleClick}
+                aria-labelledby="responsive-dialog-title"
+            >
+                <DialogTitle id="responsive-dialog-title"
+                    sx={{
+                        color: '#011A5B',
+                        backgroundColor:'#FF914D',
+                        textAlign: 'center',
+                        fontWeight:'bold',
+                    }}>
+                   Confirmación de Reserva 
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText sx={{
+                        color: '#011A5B',
+                        textAlign: 'left',
+                        margin:'0px',
+                        padding:'0px',
+                        fontSize:'16px'
+
+                    }} >
+                        <Box sx={{
+                            fontSize:'20px',
+                            textAlign: 'center',
+                            margin:'0px',
+                            padding:'20px',
+                            display:'flex',
+                            flexDirection: 'column',
+                            border: 'solid 1px #EDEBEE'
+                            }} > 
+                             <h5>{`${userData.name} ${userData.lastname}`}</h5>
+                            <span>{`${userData.username}`}</span>
+                        </Box>
+                        <Box sx={{
+                            fontSize:'20px',
+                            textAlign: 'center',
+                            margin:'0px',
+                            padding:'20px',
+                            display:'flex',
+                            flexDirection: 'column',
+                            border: 'solid 1px #EDEBEE'
+                            }} >
+                            <span> {`Día ${dayjs(values.startDatetime).format('DD/MM/YYYY')} `} </span> 
+                            <span> {`Hora de inicio ${dayjs(values.startDatetime).format('HH:mm')} Hs. `}</span>
+                            <span> {`Hora de finalización ${dayjs(values.endDatetime).format('HH:mm')} Hs. `}</span>
+                        </Box>
+                        
+
+                        <Box sx={{
+                            fontSize:'16px',
+                            textAlign: 'center',
+                            margin:'0px',
+                            padding:'20px',
+                            display:'flex',
+                            flexDirection: 'column',
+                            border: 'solid 1px #EDEBEE'
+                            }} > 
+        
+                            <h3> {club.name} </h3>
+                            <span> {club.address?.street} N° {club.address?.number} </span>
+                            <span> {club.address?.city?.name} </span>
+                            <span> {playingField?.description} </span>
+                        </Box>
+
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions sx={{
+                        color: '#011A5B',
+                        textAlign: 'center',
+                        fontWeight:'bold',
+                        display:'flex',
+                        flexWrap:'wrap',
+                        justifyContent:'space-around',
+                        margin:'20px'
+                    }}  >
+                    <Button autoFocus onClick={handleClick} variant="contained" >
+                        Cancelar
+                    </Button>
+                    <Button onClick={confirm} autoFocus variant="contained" >
+                        Aceptar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            
+        </React.Fragment>
+        }
+        </>
+    )
+}
+
+export default ModalConfirm

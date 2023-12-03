@@ -20,7 +20,7 @@ import { AuthContext } from "../../auth/context";
 
 
 
-const FormReservations = ({idClub} ) => {
+const FormReservations = ({club}) => {
 
     const location = useLocation();
 
@@ -34,14 +34,13 @@ const FormReservations = ({idClub} ) => {
 
     const [endDatetime, setEndDatetime] = useState(dayjs(`${date} ${queryParams.get('time')}`).add(1,'h').format('YYYY-MM-DD HH:mm:ss'))
 
-    const { data: playfields, isLoading: isLoadingPlayfields, error: errorPlayfields} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${idClub}`);
+    const { data: playfields, isLoading: isLoadingPlayfields, error: errorPlayfields} = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}/club/${club.id}`);
 
-    const { reservations } = useAvailability(idClub, startDatetime, endDatetime);
-
+    const { reservations } = useAvailability(club.id, startDatetime, endDatetime);
 
     const { userData } = AuthContext();
 
-  //  const user = localStorage.getItem()
+
 
     useEffect(() => {
         setStartDatetime(`${dayjs(date).format('YYYY-MM-DD')} ${dayjs(startDatetime).format('HH:mm:ss')}`)
@@ -52,6 +51,7 @@ const FormReservations = ({idClub} ) => {
        reservations
        isReserved
     }, [startDatetime, endDatetime]);
+
 
     const isReserved = (idPlayfield) => {
 
@@ -65,8 +65,20 @@ const FormReservations = ({idClub} ) => {
 
             const endHH = parseInt(dayjs(endDatetime).format('HH')) 
             const endRH = parseInt(dayjs(reservation.endDatetime).format('HH'))
+            const today = new Date()
 
-            return (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) 
+
+            if ( 
+                (reservation.playingField.id == idPlayfield && day === dayR && (startHH <= startRH  && endHH >= endRH)) || 
+                (queryParams.get('date') == dayjs(today).format("YYYY-MM-DD") && today.getHours() >= startHH ) || 
+                (startHH > endHH)
+            ){
+                return true
+            }
+            else{ return false}
+
+
+            
         }) 
         
     };
@@ -149,12 +161,9 @@ return (
                 </DemoContainer>
             </LocalizationProvider>
 
-            
-
             <ModalConfirm 
                 values = {values}
-                idClub = {idClub}
-                date={date}
+                club = {club}
             />
        
         </FormControl>

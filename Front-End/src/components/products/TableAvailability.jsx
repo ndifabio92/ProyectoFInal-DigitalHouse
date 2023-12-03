@@ -9,6 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import dayjs from 'dayjs';
+
 
 const TableAvailability = (props) => {
 
@@ -20,11 +22,18 @@ const TableAvailability = (props) => {
         return reservations.some((reservation) => {
             const startHour = new Date(reservation.startDatetime).getHours();
             const endHour = new Date(reservation.endDatetime).getHours();
-    
-            return (
-                reservation.playingField.id === playingFieldId &&
-                (hour >= startHour && hour < endHour)
-            );
+            const today = new Date()
+            
+
+                if(
+                    (reservation.playingField.id === playingFieldId && (hour >= startHour && hour < endHour)) ||  
+                    (date == dayjs(today).format("YYYY-MM-DD") && today.getHours() >= hour )
+                ) {return true}
+
+                else{ return false}
+                
+                
+            
         });
     };
 
@@ -63,7 +72,7 @@ const TableAvailability = (props) => {
                             <TableHead>
                                 <TableRow>                 
                                     <TableCell/>
-                                    {[...Array(15)].map((_, index) => (
+                                    {[...Array(14)].map((_, index) => (
                                                 <TableCell 
                                                     key={index}
                                                     sx={{position: 'relative',
@@ -82,7 +91,7 @@ const TableAvailability = (props) => {
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.description}
                                                 </TableCell>
-                                                {[...Array(14)].map((_, index) => (
+                                                {[...Array(13)].map((_, index) => (
                                                 <TableCell 
                                                     key={index} 
                                                     sx={{padding:'0px',

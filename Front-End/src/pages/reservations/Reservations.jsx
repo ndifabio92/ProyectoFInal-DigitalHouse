@@ -3,8 +3,9 @@ import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTo
 import { useNavigate, useLocation } from "react-router-dom";
 import DataClub from "../../components/Reservations/DataClub";
 import FormReservations from "../../components/Reservations/FormReservations";
-
-
+import useFetchApi from "../../hooks/useFetchApi";
+import { METHODS } from "../../constants/methods";
+import { ENDPOINTS } from "../../constants/endpoints";
 
 const Reservations = () => {
 
@@ -12,14 +13,17 @@ const Reservations = () => {
 
     const queryParams = new URLSearchParams(location.search);
 
-    const idClub = queryParams.get('idClub')
+    const idClub = parseInt(queryParams.get('idClub'))
 
     const navigate = useNavigate();
-      
+
+    const { data:club, isLoading: isLoadingClub , error: errorClub } = useFetchApi(`${ENDPOINTS.CLUB}`, METHODS.GET, idClub)
+
     const handleGoback = () => {
         navigate(`/club/${idClub}`);
     };
 
+    club && console.log(club)
     
 
     return(
@@ -64,10 +68,13 @@ const Reservations = () => {
                 justifyContent: 'space-evenly'
             }}>
 
-                <DataClub idClub={idClub} />
-                
-                <FormReservations idClub={idClub} />
-                
+                {club && 
+                <> 
+                    <DataClub club={club} />
+                    
+                    <FormReservations club={club} />
+                </>
+                }
             </Box> 
             
             

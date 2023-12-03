@@ -57,7 +57,7 @@ const Categories = () => {
                   justifyContent: 'center',}}
               >
                 <img src={category.url} alt={category.title} width={'60px'} />
-                <h3> {category.title} </h3>
+                <h4> {category.title} </h4>
                 
               </Button>
             ))}
