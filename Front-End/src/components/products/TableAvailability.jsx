@@ -72,7 +72,7 @@ const TableAvailability = (props) => {
                             <TableHead>
                                 <TableRow>                 
                                     <TableCell/>
-                                    {[...Array(15)].map((_, index) => (
+                                    {[...Array(14)].map((_, index) => (
                                                 <TableCell 
                                                     key={index}
                                                     sx={{position: 'relative',
@@ -91,7 +91,7 @@ const TableAvailability = (props) => {
                                                 <TableCell component="th" scope="row" align='center'>
                                                     {row.description}
                                                 </TableCell>
-                                                {[...Array(14)].map((_, index) => (
+                                                {[...Array(13)].map((_, index) => (
                                                 <TableCell 
                                                     key={index} 
                                                     sx={{padding:'0px',

@@ -15,9 +15,13 @@ import Swal from 'sweetalert2';
 import { useNavigate} from "react-router-dom";
 import { AuthContext } from "../../auth/context";
 import Loading from '../loading/Loading'
+import { Box } from '@mui/material';
+import dayjs from "dayjs";
+import useFetchApi from '../../hooks/useFetchApi';
 
 
-const ModalConfirm = ({values, idClub}) => {
+
+const ModalConfirm = ({values, club}) => {
 
     const { userData } = AuthContext();
 
@@ -34,6 +38,8 @@ const ModalConfirm = ({values, idClub}) => {
     const handleClick = () => {
         setIsOpen(!isOpen)
     }
+
+    const { data: playingField } = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}`, METHODS.GET, values.playingField.id)
 
     const confirm = async() => {
 
@@ -59,13 +65,9 @@ const ModalConfirm = ({values, idClub}) => {
             }).then(() => {
                console.log("Reserva agregada con éxito")
             }).then(
-                navigate(`/club/${idClub}`)
+                navigate(`/club/${club.id}`)
             )
         } 
-
-        
-
-        
 
     }
     
@@ -86,25 +88,86 @@ const ModalConfirm = ({values, idClub}) => {
             </Button>
             
             <Dialog
-                fullScreen={fullScreen}
                 open={isOpen}
                 onClose={handleClick}
                 aria-labelledby="responsive-dialog-title"
             >
-                <DialogTitle id="responsive-dialog-title">
-                    Confirmación de Reserva
+                <DialogTitle id="responsive-dialog-title"
+                    sx={{
+                        color: '#011A5B',
+                        backgroundColor:'#FF914D',
+                        textAlign: 'center',
+                        fontWeight:'bold',
+                    }}>
+                   Confirmación de Reserva 
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        aca va todo lo que hay que renderizar en el ModalConfirm
+                    <DialogContentText sx={{
+                        color: '#011A5B',
+                        textAlign: 'left',
+                        margin:'0px',
+                        padding:'0px',
+                        fontSize:'16px'
+
+                    }} >
+                        <Box sx={{
+                            fontSize:'20px',
+                            textAlign: 'center',
+                            margin:'0px',
+                            padding:'20px',
+                            display:'flex',
+                            flexDirection: 'column',
+                            border: 'solid 1px #EDEBEE'
+                            }} > 
+                             <h5>{`${userData.name} ${userData.lastname}`}</h5>
+                            <span>{`${userData.username}`}</span>
+                        </Box>
+                        <Box sx={{
+                            fontSize:'20px',
+                            textAlign: 'center',
+                            margin:'0px',
+                            padding:'20px',
+                            display:'flex',
+                            flexDirection: 'column',
+                            border: 'solid 1px #EDEBEE'
+                            }} >
+                            <span> {`Día ${dayjs(values.startDatetime).format('DD/MM/YYYY')} `} </span> 
+                            <span> {`Hora de inicio ${dayjs(values.startDatetime).format('HH:mm')} Hs. `}</span>
+                            <span> {`Hora de finalización ${dayjs(values.endDatetime).format('HH:mm')} Hs. `}</span>
+                        </Box>
+                        
+
+                        <Box sx={{
+                            fontSize:'16px',
+                            textAlign: 'center',
+                            margin:'0px',
+                            padding:'20px',
+                            display:'flex',
+                            flexDirection: 'column',
+                            border: 'solid 1px #EDEBEE'
+                            }} > 
+        
+                            <h3> {club.name} </h3>
+                            <span> {club.address?.street} N° {club.address?.number} </span>
+                            <span> {club.address?.city?.name} </span>
+                            <span> {playingField?.description} </span>
+                        </Box>
 
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClick}>
+                <DialogActions sx={{
+                        color: '#011A5B',
+                        textAlign: 'center',
+                        fontWeight:'bold',
+                        display:'flex',
+                        flexWrap:'wrap',
+                        justifyContent:'space-around',
+                        margin:'20px'
+                    }}  >
+                    <Button autoFocus onClick={handleClick} variant="contained" >
                         Cancelar
                     </Button>
-                    <Button onClick={confirm} autoFocus>
+                    <Button onClick={confirm} autoFocus variant="contained" >
                         Aceptar
                     </Button>
                 </DialogActions>
