@@ -22,11 +22,6 @@ const SearchResults = () => {
       queryParams.get('time')
     ).format('HH:mm:ss[Z]')}`,
   };
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/");
-  };
 
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.CLUB_SEARCH, METHODS.POST, filters);
 
@@ -34,8 +29,8 @@ const SearchResults = () => {
     <Container
         maxWidth="xl"
         sx={{
-            padding: '0',
-            mb: '40px',
+            padding: '10px',
+            mb: '0px',
             backgroundColor: '#FFFFFF',
             mx: "auto",
             display: 'flex',
@@ -47,14 +42,6 @@ const SearchResults = () => {
         id="home"
         >
         <div style={{ padding: '20px' }}>
-            <IconButton
-                aria-label="Volver"
-                color="#FFFFFF"
-                size="large"
-                onClick={handleClick}
-            >
-                <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
-            </IconButton>
             <h1 style={{ margin: '20px 0', color: '#333' }}>RESULTADOS DE TU BÚSQUEDA</h1>
             {isLoading && <Loading />}
             {!isLoading && data.length > 0 ? (
@@ -75,7 +62,7 @@ const SearchResults = () => {
                 />
             ))}
                 <Button variant="contained" onClick={() => window.location.href = '/'} sx={{ mt: 2 }}>
-                    REALIZAR NUEVA BÚSQUEDA
+                    NUEVA BÚSQUEDA
                 </Button>
             </>
         ) : (
@@ -85,6 +72,7 @@ const SearchResults = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     textAlign: 'center',
                 }}
             >
@@ -94,7 +82,7 @@ const SearchResults = () => {
                     : 'No se encontraron turnos disponibles para tu búsqueda, por favor inténtalo nuevamente.'}
                 </Typography>
                 <Button variant="contained" onClick={() => window.location.href = '/'} sx={{ mt: "10px" }}>
-                    REALIZAR NUEVA BÚSQUEDA
+                    NUEVA BÚSQUEDA
                 </Button>
             </Container>
         )}
