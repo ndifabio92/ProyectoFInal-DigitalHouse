@@ -34,12 +34,22 @@ public class ReservationController extends CustomFieldException {
     private EmailService emailService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ReservationDto reservation, BindingResult bindingResult){
+    public ResponseEntity<?> create(@RequestBody ReservationDto reservationDto, BindingResult bindingResult){
         try{
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
-            return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.create(reservation));
+
+            // armar los String para pasar por parametro con
+            // apellido, nombre, nombre de la cancha, nombre del club
+            
+
+
+            var message = emailService.buildMessageReservation(reservationDto);
+            emailService.sendEmail(reservationDto.getUsuario().getUsername(), "Confirmacion de turno",message);
+
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.create(reservationDto));
 
         } catch (Exception ex) {
             return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,14 +83,6 @@ public class ReservationController extends CustomFieldException {
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
-
-
-
-        reservationRepository.save(reservation);
-            var message = emailService.buildMessageReservation(reservation);
-            emailService.sendEmail(reservation.getUsuario().getUsername(), "Confirmacion de turno",message);
-
-
 
             return ResponseEntity.status(HttpStatus.OK).body(reservationService.update(reservation));
         }

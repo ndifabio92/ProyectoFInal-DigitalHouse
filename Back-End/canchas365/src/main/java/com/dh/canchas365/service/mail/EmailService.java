@@ -1,5 +1,6 @@
 package com.dh.canchas365.service.mail;
 
+import com.dh.canchas365.dto.ReservationDto;
 import com.dh.canchas365.dto.auth.UsuarioDto;
 import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.model.Reservation;
@@ -48,13 +49,15 @@ public class EmailService extends CustomFieldException implements IEmailService{
         );
     }
 
-    public String buildMessageReservation(Reservation reservation) {
+    // pasar por parametro los datos que faltan para el mensaje como String
+
+    public String buildMessageReservation(ReservationDto reservationDto) {
         return String.format(
-                "Hola %s %s,  su reserva en la cancha %s para el dia %s se realizó de forma exitosa.",
+                "Su reserva se realizó de forma exitosa! Club: %s, Cancha: %s, Fecha y hora %s",
 
-
-
-                reservation.getUsuario().getName(), reservation.getUsuario().getLastname(), reservation.getPlayingField(), reservation.getStartDatetime()
+                reservationDto.getPlayingField().getIdClub(),
+                reservationDto.getPlayingField(),
+                reservationDto.getStartDatetime()
         );
     }
 
