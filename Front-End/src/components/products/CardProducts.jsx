@@ -18,9 +18,9 @@ const CardProducts = ({ club }) => {
     url: `${import.meta.env.VITE_BACKEND_API}image/${club.id}/download/${image.id}`,
   }));
 
-  console.log(club)
-
   const imagenPrinc = imagesURL[0]
+
+  console.log(imagenPrinc)
 
   return (
     <Card
@@ -63,7 +63,7 @@ const CardProducts = ({ club }) => {
         <CardMedia
           component="img"
           height={100}
-          image={imagenPrinc}
+          image={imagenPrinc.url}
           sx={{ margin: "20px" }}
         />
 
