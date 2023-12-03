@@ -223,6 +223,7 @@ public class ClubService {
         for (Club club : filteredClubs) {
             ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
             clubDTO.setCharacteristics(new HashSet<>());
+            clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
 
             for (Characteristic characteristic : club.getCharacteristics()) {
                 clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
@@ -263,10 +264,13 @@ public class ClubService {
             for (Club club : clubSearch) {
                 ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
                 List<PlayingFieldDTO> playingFieldsDTO = playingFieldService.getPlayingFieldByClub(club.getId());
+                clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
                 clubDTO.setPlayingFields(playingFieldsDTO);
                 clubesDTO.add(clubDTO);
             }
+
         }
+
 
         return clubesDTO;
     }
