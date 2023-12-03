@@ -21,6 +21,7 @@ const Detail = () => {
 
   const { data, isLoading, error } = useFetchApi(`${ENDPOINTS.CLUB}`,METHODS.GET, id)
 
+  
   return (
     <Container  maxWidth="xl"
     sx={{
@@ -74,7 +75,7 @@ const Detail = () => {
         <p> Provincia: {data?.address?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
       </Box>
-      <Images id={id} />
+      <Images images={data.images} idClub={ id } />
       <Characteristic club={data} />
       <Availability idClub={id}/>
       

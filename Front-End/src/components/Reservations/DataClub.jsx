@@ -1,17 +1,16 @@
 import { Box } from "@mui/material"
-import { ENDPOINTS } from "../../constants/endpoints";
-import useFetchApi from "../../hooks/useFetchApi";
+
 
 const DataClub = ({club}) => {
     
-    const { data: clubImages } = useFetchApi(`${ENDPOINTS.IMAGES}/${club.id}`);
+   
 
-    const imagesURL = clubImages?.map((image) => ({
+    const imagesURL = club.images.map((image) => ({
         id: `${image.id}`,
         url: `${import.meta.env.VITE_BACKEND_API}image/${club.id}/download/${image.id}`,
     }));
 
-  const imagenPrinc = imagesURL ? imagesURL[0] : [];
+  const imagenPrinc = imagesURL[0]
 
 
     return(

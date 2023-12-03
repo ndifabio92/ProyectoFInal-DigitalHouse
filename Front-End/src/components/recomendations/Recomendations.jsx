@@ -13,8 +13,6 @@ const Recomendations = () => {
 
   const handleClick = (id) => navigate(`${ENDPOINTS.CLUB}/${id.toString()}`)
 
-  
-
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.RECOMMENDED);
 
   return (
@@ -41,7 +39,7 @@ const Recomendations = () => {
                   <Button onClick={() => handleClick(club.id)}>
                     <TitleClub id ={club.id}/>
                   </Button>
-                    <ImagesCarousel id ={club.id}/>
+                    <ImagesCarousel images ={club.images} idClub ={club.id}/>
                 </div>
               ))
             }
