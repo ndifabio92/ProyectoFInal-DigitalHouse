@@ -2,9 +2,7 @@ import { Box } from "@mui/material"
 
 
 const DataClub = ({club}) => {
-    
-   
-
+ 
     const imagesURL = club.images.map((image) => ({
         id: `${image.id}`,
         url: `${import.meta.env.VITE_BACKEND_API}image/${club.id}/download/${image.id}`,
