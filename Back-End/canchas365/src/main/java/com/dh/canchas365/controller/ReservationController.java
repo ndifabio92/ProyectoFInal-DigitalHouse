@@ -43,28 +43,13 @@ public class ReservationController extends CustomFieldException {
     @Autowired
     private EmailService emailService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ReservationDto reservationDto, BindingResult bindingResult){
         try{
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
-
-            // hasta aca llega bien
-
-            // aca se rompe --> no manda el mail y no hace la reserva
-            var message = String.format(
-                    "Estimado %s %s: Confimamos su reserva de turno para el día %s, desde las %s hasta las %s, en el club %s (%s)",
-                    userService.getByUsername(reservationDto.getUsuario().getUsername()).getName(),
-                    userService.getByUsername(reservationDto.getUsuario().getUsername()).getLastname(),
-                    reservationDto.getStartDatetime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    reservationDto.getStartDatetime().format(DateTimeFormatter.ofPattern("HH:mm")),
-                    reservationDto.getEndDatetime().format(DateTimeFormatter.ofPattern("HH:mm")),
-                    clubService.findById(reservationDto.getPlayingField().getIdClub()).getName(),
-                    reservationDto.getPlayingField().getDescription()
-            );
-
-            emailService.sendEmail(reservationDto.getUsuario().getUsername(), "Confirmacion de reserva",message);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.create(reservationDto));
 
