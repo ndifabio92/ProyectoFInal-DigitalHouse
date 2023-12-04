@@ -16,8 +16,8 @@ const SearchResults = () => {
   const filters = {
     city: { id: +queryParams.get('city') },
     category: { id: +queryParams.get('sport') },
-    datetime: `${dayjs(queryParams.get('date')).format('YYYY-MM-DD')}T${dayjs(queryParams.get('time')).format('HH:mm:ss.SSS')}Z`,
-  };
+    datetime: `${dayjs(queryParams.get('date')).format('YYYY-MM-DDT')}${dayjs(queryParams.get('time')).format('HH:mm:ss[Z]')}`,
+    };
 
   const navigate = useNavigate()
 
