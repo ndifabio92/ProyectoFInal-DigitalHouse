@@ -53,21 +53,30 @@ const SearchResults = () => {
                 flexWrap: 'wrap',
                 gap: '10px'
             }}>
-                {data.map((club) => (
-                <CardProducts
-                    key={club.id}
-                    name={club.name}
-                    tel={club.phone_number}
-                    city={
-                    club.address.street +
-                    ' N° ' +
-                    club.address.number +
-                    ', ' +
-                    club.address.city.name
-                    }
-                    id={club.id}
-                />
-            ))}
+                <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                gap: '10px'
+            }}>
+                    {data.map((club) => (
+                    <CardProducts
+                        key={club.id}
+                        name={club.name}
+                        tel={club.phone_number}
+                        city={
+                        club.address.street +
+                        ' N° ' +
+                        club.address.number +
+                        ', ' +
+                        club.address.city.name
+                        }
+                        id={club.id}
+                    />
+                    ))}
+                </div>
                 <Button variant="contained" onClick={() => window.location.href = '/'} sx={{ mt: 2 }}>
                     NUEVA BÚSQUEDA
                 </Button>
