@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CardProducts from '../products/CardProducts';
 import { useLocation } from 'react-router-dom';
-import { Container, Button, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { METHODS } from '../../constants/methods';
