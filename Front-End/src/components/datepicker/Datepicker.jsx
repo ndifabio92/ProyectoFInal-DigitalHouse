@@ -18,7 +18,7 @@ const Datepicker = ({ handleChange, name}) => {
   const shouldDisableTime = (selectedTime) => {
 
     const day = `${dayjs(date).format('YYYY-MM-DD')}`
-    const time = dayjs(selectedTime).format('HH')
+    const time = dayjs(selectedTime).format('HH:mm')
     
     if ( (day == `${dayjs(today).format('YYYY-MM-DD')}`) && `${dayjs(today).format('HH')}` >= time ) {
       return true
@@ -47,6 +47,7 @@ const Datepicker = ({ handleChange, name}) => {
             sx={{ width: 200 }}
             format="HH:00"
             value = {time}
+            shouldDisableTime = {shouldDisableTime}
             onChange={(selectedTime) => {setTime(`${dayjs(selectedTime).format('HH:00')}`)      
               handleChange({ name, value:`${dayjs(selectedTime).format('HH')}`});
             }}

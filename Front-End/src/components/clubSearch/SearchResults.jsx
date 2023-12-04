@@ -50,11 +50,11 @@ const SearchResults = () => {
                     club={club}
                 />
             ))}
-            
+                {/*
                 <Button variant="contained" onClick={navigate('/')} sx={{ mt: 2 }}>
                     NUEVA BÚSQUEDA
                 </Button>
-              
+                */}
             </div>
         ) : (
             <Container
@@ -72,11 +72,11 @@ const SearchResults = () => {
                     ? ''
                     : 'No se encontraron turnos disponibles para tu búsqueda, por favor inténtalo nuevamente.'}
                 </Typography>
-               
+               {/*
                 <Button variant="contained" onClick={navigate('/')} sx={{ mt: "10px" }}>
                     NUEVA BÚSQUEDA
                 </Button>
-
+                */}
             </Container>
         )}
     </Container>
