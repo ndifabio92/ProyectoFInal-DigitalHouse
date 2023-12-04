@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import useFetchApi from "../../hooks/useFetchApi";
 
 const FavoriteButton = ({ clubId }) => {
+  
   const { pathname } = useLocation();
 
   const [isFav, setIsFav] = useState(pathname === "/userprofile");

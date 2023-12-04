@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
 import CardProducts from '../products/CardProducts';
 import { useLocation } from 'react-router-dom';
-import { Container, Button, Typography, IconButton } from '@mui/material';
+import { Container, Button, Typography } from '@mui/material';
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { METHODS } from '../../constants/methods';
 import dayjs from 'dayjs';
 import Loading from '../loading/Loading';
-import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
 import { useNavigate } from "react-router-dom";
 
 
@@ -58,16 +56,7 @@ const SearchResults = () => {
                 {data.map((club) => (
                 <CardProducts
                     key={club.id}
-                    name={club.name}
-                    tel={club.phone_number}
-                    city={
-                    club.address.street +
-                    ' N° ' +
-                    club.address.number +
-                    ', ' +
-                    club.address.city.name
-                    }
-                    id={club.id}
+                    club={club}
                 />
             ))}
                 <Button variant="contained" onClick={navigate('/')} sx={{ mt: 2 }}>

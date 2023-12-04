@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../constants/endpoints";
-import useFetchApi from "../../hooks/useFetchApi";
 import FavoriteButton from "../favs/FavoriteButton";
 
 const CardProducts = ({ club }) => {
