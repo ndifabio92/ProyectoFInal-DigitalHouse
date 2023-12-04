@@ -32,17 +32,8 @@ const Favorites = ({ userId }) => {
           {favorites &&
             favorites?.map((club) => (
               <CardProducts
-                key={club?.id}
-                name={club?.name}
-                tel={club?.phone_number}
-                city={
-                  club?.address?.street +
-                  " N° " +
-                  club?.address?.number +
-                  ", " +
-                  club?.address?.city?.name
-                }
-                id={club?.id}
+                key={club.id}
+                club={club}
               />
             ))}
         </Box>

@@ -4,17 +4,15 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import Loading from '../loading/Loading';
 
 
-const ImagesCarousel = ({id}) =>{
+const ImagesCarousel = ({images, idClub}) =>{
 
-    const {data, isLoading} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
-    const imagesURL = data?.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`}))
+    const imagesURL = images.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${idClub}/download/${image.id}`}))
 
-    const newData = imagesURL? imagesURL.slice(0,4) : []
+    const newData = imagesURL.slice(0,4) 
 
     return(
-      <>
-      { isLoading? <Loading/> :
+
         <Container sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -41,8 +39,6 @@ const ImagesCarousel = ({id}) =>{
             ))
           }
         </Container>
-      }
-      </>
     )
    
 } 

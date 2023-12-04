@@ -28,6 +28,11 @@ public class ImagesService {
     @Autowired
     private FileStore fileStore;
 
+
+    public  void saveAll(List<Images> imagesToSave) {
+        imagesRepository.saveAll(imagesToSave);
+    }
+
     public List<ImageDTO> getImagesByClub(Long id){
         ModelMapper mapper = new ModelMapper();
         List<ImageDTO> imageDTOS = new ArrayList<>();
