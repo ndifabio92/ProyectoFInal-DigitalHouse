@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Container from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useForm } from '../../../hooks/useForm';
@@ -52,7 +52,7 @@ const SearchBar = () => {
       <SelectInput handleChange={handleChange} options={cities} name="city" />
       <SelectInput handleChange={handleChange} options={categories} name="sport" />
       <Datepicker handleChange={handleChange} name="date" type="DatePicker" label='Elegí un día'/>
-      <Datepicker handleChange={handleChange} name="time" type="DatePicker" label='Elegí un horario'/>
+      <Datepicker handleChange={handleChange} name="time" type="TimeField" label='Elegí un horario'/>
 
       <Button variant="contained" onClick={handleClick} type='submit' disabled={isButtonDisabled}>
         Buscar Turno

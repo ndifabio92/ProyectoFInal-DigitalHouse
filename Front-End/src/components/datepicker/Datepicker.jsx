@@ -4,35 +4,32 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
 
 const today = new Date();
 const initialDay = dayjs(today);
 
-const Datepicker = ({ handleChange, name, label, defaultValue }) => {
+const Datepicker = ({ handleChange, name}) => {
   const [date, setDate] = useState(initialDay);
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState(`${dayjs(today).format('HH:00:00')}`);
 
-  // Función para deshabilitar fechas anteriores a la fecha actual
-  const shouldDisableDate = (selectedDate) => {
-    const currentDate = dayjs();
-    return selectedDate.isBefore(currentDate, 'day');
-  };
 
   // Función para deshabilitar horarios anteriores al horario actual
   const shouldDisableTime = (selectedTime) => {
-    const currentTime = dayjs();
-    return selectedTime.isBefore(currentTime, 'minute');
-  };
 
-  // Función para redondear el tiempo seleccionado a la hora más cercana
-  const roundToNearestHour = (selectedTime) => {
-    return selectedTime.minute(0);
+    const day = `${dayjs(date).format('YYYY-MM-DD')}`
+    const time = dayjs(selectedTime).format('HH')
+    
+    if ( (day == `${dayjs(today).format('YYYY-MM-DD')}`) && `${dayjs(today).format('HH')}` >= time ) {
+      return true
+    }
+    else{ return false}
+
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={name === 'date' ? ['DatePicker'] : ['TimePicker']}>
+      <DemoContainer components={name === 'date' ? ['DatePicker'] : ['TimeField']}>
         {name === 'date' ? (
           <DatePicker
             label="Elegí un día"
@@ -40,24 +37,19 @@ const Datepicker = ({ handleChange, name, label, defaultValue }) => {
             value={date}
             onChange={(selectedDate) => {
               setDate(selectedDate);
-              handleChange({ name, value: selectedDate.$d });
+              handleChange({ name, value:`${dayjs(selectedDate).format('YYYY-MM-DD')}` });
             }}
-            // Deshabilitar fechas anteriores a la fecha actual
-            shouldDisableDate={shouldDisableDate}
+            disablePast
           />
         ) : (
-          <TimePicker
+          <TimeField
             label="Elegí un horario"
             sx={{ width: 200 }}
-            defaultValue={defaultValue}
-            onChange={(selectedTime) => {
-              const roundedTime = roundToNearestHour(selectedTime);
-              setTime(roundedTime);
-              handleChange({ name, value: roundedTime.$d });
+            format="HH:00"
+            value = {time}
+            onChange={(selectedTime) => {setTime(`${dayjs(selectedTime).format('HH:00')}`)      
+              handleChange({ name, value:`${dayjs(selectedTime).format('HH')}`});
             }}
-            // Deshabilitar horarios anteriores al horario actual
-            shouldDisableTime={shouldDisableTime}
-            minutesStep={60} // Establecer el paso de minutos a 60 para permitir solo la selección de horas
           />
         )}
       </DemoContainer>

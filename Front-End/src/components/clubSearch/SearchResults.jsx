@@ -16,9 +16,7 @@ const SearchResults = () => {
   const filters = {
     city: { id: +queryParams.get('city') },
     category: { id: +queryParams.get('sport') },
-    datetime: `${dayjs(queryParams.get('date').$d).format('YYYY-MM-DDT')}${dayjs(
-      queryParams.get('time')
-    ).format('HH:mm:ss[Z]')}`,
+    datetime: `${dayjs(queryParams.get('date')).format('YYYY-MM-DD')}T${dayjs(queryParams.get('time')).format('HH:mm:ss.SSS')}Z`,
   };
 
   const navigate = useNavigate()
@@ -29,29 +27,22 @@ const SearchResults = () => {
     <Container
         maxWidth="xl"
         sx={{
-            padding: '10px',
-            mb: '0px',
+            padding: '30px',
             backgroundColor: '#FFFFFF',
             mx: "auto",
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
             textAlign: 'center',
         }}
         id="home"
         >
-        <div style={{ padding: '20px' }}>
             <h1 style={{ margin: '20px 0', color: '#1F2E7B' }}>RESULTADOS DE TU BÚSQUEDA</h1>
             {isLoading && <Loading />}
             {!isLoading && data.length > 0 ? (
             <div style={{
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
-                gap: '10px'
+                gap: '40px'
             }}>
                 {data.map((club) => (
                 <CardProducts
@@ -59,9 +50,11 @@ const SearchResults = () => {
                     club={club}
                 />
             ))}
+            
                 <Button variant="contained" onClick={navigate('/')} sx={{ mt: 2 }}>
                     NUEVA BÚSQUEDA
                 </Button>
+              
             </div>
         ) : (
             <Container
@@ -79,12 +72,13 @@ const SearchResults = () => {
                     ? ''
                     : 'No se encontraron turnos disponibles para tu búsqueda, por favor inténtalo nuevamente.'}
                 </Typography>
-                <Button variant="contained" onClick={() => window.location.href = '/'} sx={{ mt: "10px" }}>
+               
+                <Button variant="contained" onClick={navigate('/')} sx={{ mt: "10px" }}>
                     NUEVA BÚSQUEDA
                 </Button>
+
             </Container>
         )}
-        </div>
     </Container>
     );
 };
