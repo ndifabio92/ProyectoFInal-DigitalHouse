@@ -8,16 +8,16 @@ import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Address;
 import com.dh.canchas365.repository.ClubRepository;
 import com.dh.canchas365.repository.ReservationRepository;
-import com.dh.canchas365.repository.images.ImagesRepository;
 import com.dh.canchas365.repository.location.AddressRepository;
+import com.dh.canchas365.service.images.ImagesService;
 import com.dh.canchas365.service.location.AdressService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +33,7 @@ public class ClubService {
     private AdressService adressService;
 
     @Autowired
-    private ImagesRepository imagesRepository;
+    private ImagesService imagesService;
 
     @Autowired
     private CategoryService categoryService;
@@ -103,7 +103,7 @@ public class ClubService {
             imagesTosave.add(imageToSave);
         }
 
-        imagesRepository.saveAll(imagesTosave);
+        imagesService.saveAll(imagesTosave);
 
         return clubSaved;
     }
@@ -131,18 +131,18 @@ public class ClubService {
         return clubDTO;
     }
 
-    public List<ClubDTO> getAllClubs(){
-        List<Club> clubes =clubRepository.findAll();
+    public List<ClubDTO> getAllClubs() {
+        List<Club> clubes = clubRepository.findAll();
         ModelMapper mapper = new ModelMapper();
         List<ClubDTO> clubesDTO = new ArrayList<>();
 
+        ClubDTO clubDTO;
         for (Club club : clubes) {
-            ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
-            clubDTO.setCharacteristics(new HashSet<>());
-
-            for (Characteristic characteristic : club.getCharacteristics()) {
-                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
-            }
+            clubDTO = mapper.map(club, ClubDTO.class);
+//            clubDTO.setCharacteristics(new HashSet<>());
+//            for (Characteristic characteristic : club.getCharacteristics()) {
+//                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
+//            }
 
             clubesDTO.add(clubDTO);
         }
@@ -156,12 +156,20 @@ public class ClubService {
 
     public ClubDTO findById(Long id){
         Club club = clubRepository.findById(id).orElse(null);
-
         if(club != null) {
+            Characteristic characteristic = characteristicService.findById(club.getId()).orElse(null);
+
             ModelMapper mapper = new ModelMapper();
 
-            ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+            ClubDTO clubDTO;
             clubDTO = mapper.map(club, ClubDTO.class);
+            if(characteristic != null) {
+                clubDTO.setCharacteristics(new HashSet<>());
+                clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
+            }
+            clubDTO.setPlayingFields(playingFieldService.getPlayingFieldByClub(club.getId()));
+            clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
+
             return clubDTO;
         } else {
             return null;
@@ -171,9 +179,14 @@ public class ClubService {
     public List<ClubDTO> getClubsRecommended(){
         List<Club> clubes =clubRepository.getClubRecommended();
         ModelMapper mapper = new ModelMapper();
-        List<ClubDTO> clubesDTO = new ArrayList<ClubDTO>();
+        List<ClubDTO> clubesDTO = new ArrayList<>();
+
+        ClubDTO clubDTO;
         for(Club club: clubes){
-            clubesDTO.add(mapper.map(club, ClubDTO.class));
+            clubDTO = mapper.map(club, ClubDTO.class);
+            clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
+
+            clubesDTO.add(clubDTO);
         }
         return clubesDTO;
     }
@@ -181,10 +194,16 @@ public class ClubService {
     public List<ClubDTO> getRandomClubs(){
         List<Club> clubes =clubRepository.getRandomClubs();
         ModelMapper mapper = new ModelMapper();
-        List<ClubDTO> clubesDTO = new ArrayList<ClubDTO>();
+        List<ClubDTO> clubesDTO = new ArrayList<>();
+
+        ClubDTO clubDTO;
         for(Club club: clubes){
-            clubesDTO.add(mapper.map(club, ClubDTO.class));
+            clubDTO = mapper.map(club, ClubDTO.class);
+            clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
+
+            clubesDTO.add(clubDTO);
         }
+
         return clubesDTO;
     }
 
@@ -204,6 +223,7 @@ public class ClubService {
         for (Club club : filteredClubs) {
             ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
             clubDTO.setCharacteristics(new HashSet<>());
+            clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
 
             for (Characteristic characteristic : club.getCharacteristics()) {
                 clubDTO.getCharacteristics().add(mapper.map(characteristic, CharacteristicDto.class));
@@ -244,10 +264,13 @@ public class ClubService {
             for (Club club : clubSearch) {
                 ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
                 List<PlayingFieldDTO> playingFieldsDTO = playingFieldService.getPlayingFieldByClub(club.getId());
+                clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
                 clubDTO.setPlayingFields(playingFieldsDTO);
                 clubesDTO.add(clubDTO);
             }
+
         }
+
 
         return clubesDTO;
     }

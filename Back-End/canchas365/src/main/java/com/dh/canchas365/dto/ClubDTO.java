@@ -1,5 +1,6 @@
 package com.dh.canchas365.dto;
 
+import com.dh.canchas365.dto.images.ImageDTO;
 import com.dh.canchas365.dto.location.AddressDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -33,5 +34,7 @@ public class ClubDTO {
     private Set<CharacteristicDto> characteristics;
 
     private List<PlayingFieldDTO> playingFields;
+
+    private List<ImageDTO> images;
 
 }
