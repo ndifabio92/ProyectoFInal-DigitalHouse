@@ -1,11 +1,16 @@
 package com.dh.canchas365.controller;
-
 import com.dh.canchas365.dto.ReservationDto;
 import com.dh.canchas365.dto.SearchReservationDTO;
 import com.dh.canchas365.exceptions.CustomFieldException;
 import com.dh.canchas365.exceptions.ResourceNotFoundException;
 import com.dh.canchas365.model.Reservation;
+import com.dh.canchas365.model.auth.Usuario;
+import com.dh.canchas365.repository.ReservationRepository;
+import com.dh.canchas365.service.ClubService;
+import com.dh.canchas365.service.PlayingFieldService;
 import com.dh.canchas365.service.ReservationService;
+import com.dh.canchas365.service.auth.UserService;
+import com.dh.canchas365.service.mail.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,13 +29,30 @@ public class ReservationController extends CustomFieldException {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    ReservationRepository reservationRepository;
+
+    @Autowired
+    private PlayingFieldService playingFieldService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ClubService clubService;
+    @Autowired
+    private EmailService emailService;
+
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ReservationDto reservation, BindingResult bindingResult){
+    public ResponseEntity<?> create(@RequestBody ReservationDto reservationDto, BindingResult bindingResult){
         try{
             if(bindingResult.hasErrors()) {
                 return validate(bindingResult);
             }
-            return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.create(reservation));
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.create(reservationDto));
+
         } catch (Exception ex) {
             return customResponseError(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
