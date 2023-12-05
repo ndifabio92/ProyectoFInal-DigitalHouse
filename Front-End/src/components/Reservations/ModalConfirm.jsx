@@ -43,9 +43,10 @@ const ModalConfirm = ({values, club}) => {
 
     const confirm = async() => {
 
-        await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values)
+       await fetchData(ENDPOINTS.RESERVATION, METHODS.POST, values)
 
         if (error){
+            
             Swal.fire({
                 title: error,
                 icon: 'warning',
@@ -119,7 +120,7 @@ const ModalConfirm = ({values, club}) => {
                             flexDirection: 'column',
                             border: 'solid 1px #EDEBEE'
                             }} > 
-                             <h5>{`${userData.name} ${userData.lastname}`}</h5>
+                            <h5>{`${userData.name} ${userData.lastname}`}</h5>
                             <span>{`${userData.username}`}</span>
                         </Box>
                         <Box sx={{

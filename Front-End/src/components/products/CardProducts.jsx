@@ -10,6 +10,8 @@ import FavoriteButton from "../favs/FavoriteButton";
 const CardProducts = ({ club }) => {
   const navigate = useNavigate();
 
+  console.log(club)
+
   const handleClick = () => navigate(`/${ENDPOINTS.CLUB}/${club.id}`);
 
   const imagesURL = club.images.map((image) => ({
@@ -18,8 +20,6 @@ const CardProducts = ({ club }) => {
   }));
 
   const imagenPrinc = imagesURL[0]
-
-  console.log(imagenPrinc)
 
   return (
     <Card

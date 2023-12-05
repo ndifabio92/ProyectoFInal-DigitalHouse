@@ -10,6 +10,7 @@ import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.model.emun.ERol;
 import com.dh.canchas365.repository.auth.RolRepository;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
+import com.dh.canchas365.service.images.ImagesService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class UserService {
 
     @Autowired
     private RolRepository rolRepository;
+
+    @Autowired
+    private ImagesService imagesService;
 
     public Usuario getByUsername(String username) {
         Optional<Usuario> usuario = repository.findByUsername(username);
@@ -79,8 +83,11 @@ public class UserService {
 
         var user = repository.findById(id).orElse(null);
 
+        ClubDTO clubDTO;
         for (Club club : user.getFavorites()) {
-            ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+            clubDTO = mapper.map(club, ClubDTO.class);
+            clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
+
             clubesDTO.add(clubDTO);
         }
 

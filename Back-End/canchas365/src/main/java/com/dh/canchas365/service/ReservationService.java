@@ -11,6 +11,9 @@ import com.dh.canchas365.model.auth.Usuario;
 import com.dh.canchas365.repository.PlayingFieldRepository;
 import com.dh.canchas365.repository.ReservationRepository;
 import com.dh.canchas365.repository.auth.UsuarioRepository;
+import com.dh.canchas365.service.auth.UserService;
+import com.dh.canchas365.service.mail.EmailService;
+import jakarta.validation.constraints.Email;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,15 @@ public class ReservationService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ClubService clubService;
+
+    @Autowired
+    private EmailService emailService;
 
     public List<ReservationDto> searchReservationByClub(SearchReservationDTO searchReservationDTO){
         List<Reservation> reservations = new ArrayList<>();
@@ -89,7 +101,7 @@ public class ReservationService {
         Reservation reservation =  new Reservation();
 
         Optional<PlayingField> optionalPlayingField = playingFieldRepository.findById(reservationDto.getPlayingField().getId());
-        PlayingField playingField = new PlayingField();
+        PlayingField playingField;
         if(optionalPlayingField.isPresent()){
             playingField = optionalPlayingField.get();
         }
@@ -111,7 +123,12 @@ public class ReservationService {
         reservation.setStartDatetime(reservationDto.getStartDatetime());
         reservation.setEndDatetime(reservationDto.getEndDatetime());
 
-        return reservationRepository.save(reservation);
+        var saveReservation = reservationRepository.save(reservation);
+        var message = emailService.buildMessageReservation(usuario,reservationDto,playingField);
+
+        emailService.sendEmail(usuario.getUsername(), "Confirmacion de reserva",message);
+
+        return saveReservation;
     }
     public Reservation update(Reservation reservation){
         Optional<Reservation> optional = findById(reservation.getId());

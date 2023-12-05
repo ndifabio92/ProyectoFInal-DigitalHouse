@@ -3,7 +3,7 @@ import CardProducts from "../products/CardProducts";
 import Box from "@mui/material/Box";
 import { AuthContext } from "../../auth/context";
 
-const Favorites = ({ userId }) => {
+const Favorites = () => {
 
   const { favorites } = AuthContext();
 
