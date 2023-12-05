@@ -8,9 +8,8 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import FavoriteButton from "../favs/FavoriteButton";
 
 const CardProducts = ({ club }) => {
+  
   const navigate = useNavigate();
-
-  console.log(club)
 
   const handleClick = () => navigate(`/${ENDPOINTS.CLUB}/${club.id}`);
 

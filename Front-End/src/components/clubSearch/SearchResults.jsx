@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CardProducts from '../products/CardProducts';
 import { useLocation } from 'react-router-dom';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Button, Box } from '@mui/material';
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { METHODS } from '../../constants/methods';
@@ -34,29 +34,39 @@ const SearchResults = () => {
         }}
         id="home"
         >
-            <h1 style={{ margin: '20px 0', color: '#1F2E7B' }}>RESULTADOS DE TU BÚSQUEDA</h1>
+           
+            <h1 style={{ 
+                    margin: '20px 0', color: '#1F2E7B' 
+                }}>RESULTADOS DE TU BÚSQUEDA
+            </h1>
+
             {isLoading && <Loading />}
-            {!isLoading && data.length > 0 ? (
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-                gap: '40px'
-            }}>
-                {data.map((club) => (
-                <CardProducts
-                    key={club.id}
-                    club={club}
-                />
-            ))}
-                {/*
-                <Button variant="contained" onClick={navigate('/')} sx={{ mt: 2 }}>
-                    NUEVA BÚSQUEDA
+
+            {!isLoading && data.length > 0 ? 
+            <>  
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    gap: '40px',
+                    marginY:'40px'
+                }}>
+                    {data.map((club) => (
+                    <CardProducts
+                        key={club.id}
+                        club={club}
+                    />
+                ))}
+                
+                </Box>
+                <Button variant="contained" onClick={()=>{navigate('/')}} sx={{ mt: 2 }}>
+                NUEVA BÚSQUEDA
                 </Button>
-                */}
-            </div>
-        ) : (
+
+            </>
+
+         : (
             <Container
                 sx={{
                     minHeight: '200px',
@@ -72,11 +82,11 @@ const SearchResults = () => {
                     ? ''
                     : 'No se encontraron turnos disponibles para tu búsqueda, por favor inténtalo nuevamente.'}
                 </Typography>
-               {/*
-                <Button variant="contained" onClick={navigate('/')} sx={{ mt: "10px" }}>
+               
+                <Button variant="contained" onClick={()=>{navigate('/')}} sx={{ mt: "10px" }}>
                     NUEVA BÚSQUEDA
                 </Button>
-                */}
+                
             </Container>
         )}
     </Container>
