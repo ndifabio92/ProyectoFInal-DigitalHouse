@@ -103,8 +103,7 @@ const Politics = () => {
         >
           <p>
             Inclusividad: Queremos que todos, desde principiantes hasta expertos, se sientan
-            bienvenidos. Nuestra plataforma está diseñada para ser un espacio donde se celebra la
-            diversidad de habilidades y niveles de experiencia.
+            bienvenidos.
           </p>
           <p>
             Respeto Mutuo: Valoramos el respeto y la cortesía. En nuestra comunidad, cada individuo
