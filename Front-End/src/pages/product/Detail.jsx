@@ -74,8 +74,8 @@ const Detail = () => {
         <p> Ciudad: {data?.address?.city?.name}</p>
         <p> Provincia: {data?.address?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
-        <Button href={`https://wa.me/${(data?.phone_number)?.replace(/[\s-]/g, '')}`} sx={{position: 'fixed', bottom: '90px', right: '50px', width: '70px', height: '70px', backgroundColor:'#25D366', borderRadius:'100%', boxShadow:'0 0 10px #676463'}} target="_blank">
-          <WhatsAppIcon style={{color:"white", fontSize: '48px'}}/>
+        <Button href={`https://wa.me/${(data?.phone_number)?.replace(/[\s-]/g, '')}`} sx={{position: 'fixed', bottom: '50px', right: '30px', width: '40px', height: '60px', backgroundColor:'#25D366', borderRadius:'100%', boxShadow:'0 0 10px #676463'}} target="_blank">
+          <WhatsAppIcon style={{color:"white", fontSize: '30px'}}/>
         </Button>
       </Box>
       <Images images={data.images} idClub={ id } />
