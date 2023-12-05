@@ -54,7 +54,7 @@ public class EmailService extends CustomFieldException implements IEmailService{
 
     public String buildMessageReservation(Usuario usuario, ReservationDto reservationDto, PlayingField playingField) {
         return String.format(
-                "Estimado %s %s: Confimamos su reserva de turno para el día %s, desde las %s hasta las %s, en el club %s (%s)",
+                "Hola %s %s: Confimamos su reserva de turno para el día %s, desde las %s hasta las %s, en el club %s (%s)",
                 usuario.getName(),
                 usuario.getLastname(),
                 reservationDto.getStartDatetime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
