@@ -25,6 +25,7 @@ const Politics = () => {
         </Typography>
     <div className="politics-container"> 
       <div className="section-container">
+      <CalendarMonthIcon sx={{color:"#1F2E7B"}}/> 
         <Typography
           variant="h5"
           component="h5"
@@ -36,7 +37,7 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          Reservas <CalendarMonthIcon />
+         Reservas 
         </Typography>
         
         
@@ -55,6 +56,7 @@ const Politics = () => {
       </div>
 
       <div className="section-container">
+      <PaidIcon sx={{color:"#1F2E7B"}}  />
         <Typography
           variant="h5"
           component="h5"
@@ -66,7 +68,7 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          Pagos <PaidIcon/>
+          Pagos 
         </Typography>
         <Typography
           variant="body1"
@@ -83,6 +85,7 @@ const Politics = () => {
       </div>
 
       <div className="section-container">
+      <HandshakeIcon sx={{color:"#1F2E7B"}}/>
         <Typography
           variant="h5"
           component="h5"
@@ -94,7 +97,7 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          Uniendo Pasiones, forjando Comunidad <HandshakeIcon/>
+          Uniendo Pasiones, forjando Comunidad 
         </Typography>
         <Typography
           variant="body1"
