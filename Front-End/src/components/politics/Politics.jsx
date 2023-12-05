@@ -1,7 +1,12 @@
 import Typography from "@mui/material/Typography";
 import "./Politics.css"
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PaidIcon from '@mui/icons-material/Paid';
+import HandshakeIcon from '@mui/icons-material/Handshake';
 
 const Politics = () => {
+
+
   return (
     <>
     <Typography
@@ -31,8 +36,10 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          Reservas
+          Reservas <CalendarMonthIcon />
         </Typography>
+        
+        
         <Typography
           variant="body1"
           component="div"
@@ -42,11 +49,7 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          <p>Se puede realizar una reserva hasta una hora antes del inicio de la misma.</p>
-          <p>
-            Se puede cancelar una reserva hasta una hora antes del inicio de la misma. En caso
-            contrario, el usuario deberá abonar el precio del turno en el lugar de la reserva.
-          </p>
+          <p>Se puede realizar  o cancelar una reserva hasta una hora antes del inicio de la misma. Las cancealaciones que no cumplan este plazo serán cobradas.</p>
         </Typography>
       </div>
 
@@ -62,7 +65,7 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          Pagos
+          Pagos <PaidIcon/>
         </Typography>
         <Typography
           variant="body1"
@@ -73,8 +76,8 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          <p>Los pagos se realizan personalmente en el lugar de la reserva.</p>
-          <p>El precio es por cancha, no importa la cantidad de jugadores que vayan.</p>
+          <p>Los pagos se realizan personalmente en el lugar de la reserva antes de iniciar el turno.</p>
+          <p>El precio es por cancha, no importa la cantidad de jugadores que asistan.</p>
         </Typography>
       </div>
 
@@ -90,7 +93,7 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          Uniendo Pasiones, Forjando Comunidad
+          Uniendo Pasiones, forjando Comunidad <HandshakeIcon/>
         </Typography>
         <Typography
           variant="body1"
@@ -102,16 +105,14 @@ const Politics = () => {
           }}
         >
           <p>
-            Inclusividad: Queremos que todos, desde principiantes hasta expertos, se sientan
-            bienvenidos.
+            Inclusividad: Queremos que todas las personas, principiantes y expertas, se sientan
+            bienvenidas.
           </p>
           <p>
-            Respeto Mutuo: Valoramos el respeto y la cortesía. En nuestra comunidad, cada individuo
-            es apreciado, y esperamos que todos traten a los demás con amabilidad y consideración.
+            Respeto Mutuo: Valoramos a las personas en su diversidad. En nuestra comunidad, nos brindamos siempre un trato respetuoso, cordial y justo.
           </p>
           <p>
-            Momentos Agradables: No solo se trata de deporte, sino también de disfrutar del tiempo
-            juntos. Queremos que cada momento sea memorable y lleno de alegría.
+            Momentos Agradables: Entrenar no solo se trata de deporte, sino también de disfrutar del tiempo compartido. Queremos que cada momento sea memorable y lleno de alegría.
           </p>
         </Typography>
       </div>

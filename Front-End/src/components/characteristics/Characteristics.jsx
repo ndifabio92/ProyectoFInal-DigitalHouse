@@ -2,6 +2,7 @@ import { Typography, Box, Grid } from "@mui/material"
 
 
 
+
 const Characteristic = ({club}) => {
 
   
