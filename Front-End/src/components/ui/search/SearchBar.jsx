@@ -31,7 +31,7 @@ const SearchBar = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleFieldChange = () => {
-    const areAllFieldsFilled = Object.values(values).every((value) => value !== '');
+    const areAllFieldsFilled = Object.values(values).every((value) => (value !== '' && value !== null ));
     setIsButtonDisabled(!areAllFieldsFilled);
     return areAllFieldsFilled;
   };
