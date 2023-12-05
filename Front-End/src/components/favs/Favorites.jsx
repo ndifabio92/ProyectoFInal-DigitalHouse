@@ -3,7 +3,7 @@ import CardProducts from "../products/CardProducts";
 import Box from "@mui/material/Box";
 import { AuthContext } from "../../auth/context";
 
-const Favorites = ({ userId }) => {
+const Favorites = () => {
 
   const { favorites } = AuthContext();
 
@@ -32,17 +32,8 @@ const Favorites = ({ userId }) => {
           {favorites &&
             favorites?.map((club) => (
               <CardProducts
-                key={club?.id}
-                name={club?.name}
-                tel={club?.phone_number}
-                city={
-                  club?.address?.street +
-                  " N° " +
-                  club?.address?.number +
-                  ", " +
-                  club?.address?.city?.name
-                }
-                id={club?.id}
+              key={club.id}
+              club={club}
               />
             ))}
         </Box>

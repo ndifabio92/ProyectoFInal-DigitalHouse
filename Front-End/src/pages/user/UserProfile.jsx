@@ -46,7 +46,7 @@ const UserProfile = () => {
 
       <div>
         <h2>Tus favoritos</h2>
-        <Favorites userId={userData.id}/>
+        <Favorites/>
       </div>
 
     </Container>
