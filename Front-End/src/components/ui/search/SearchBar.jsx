@@ -4,14 +4,22 @@ import Button from '@mui/material/Button';
 import { useForm } from '../../../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 import SelectInput from '../../selectinput/SelectInput';
-import Datepicker from '../../datepicker/Datepicker';
 import { ENDPOINTS } from '../../../constants/endpoints';
 import useFetchApi from '../../../hooks/useFetchApi';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
+import dayjs from 'dayjs';
 
 const SearchBar = () => {
   const navigate = useNavigate();
   const { data: categories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
   const { data: cities } = useFetchApi(`${ENDPOINTS.CITY}`);
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const today = new Date();
 
   const { values, handleChange } = useForm({
     city: '',
@@ -20,21 +28,44 @@ const SearchBar = () => {
     time: ''
   });
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleFieldChange = () => {
     const areAllFieldsFilled = Object.values(values).every((value) => value !== '');
     setIsButtonDisabled(!areAllFieldsFilled);
+    return areAllFieldsFilled;
   };
-
+  
   useEffect(() => {
     handleFieldChange();
   }, [values]);
+
+  const shouldDisableTime = (selectedTime) => {
+
+    const d = `${dayjs(date).format('YYYY-MM-DD')}`
+    const t = dayjs(selectedTime).format('HH')
+    
+    if ( (d == `${dayjs(today).format('YYYY-MM-DD')}`) && `${dayjs(today).format('HH')}` >= t ) {
+      setIsButtonDisabled(true)
+      return true
+    }
+    else{
+      
+       return false}
+
+  };
+
+  useEffect(() => {
+    shouldDisableTime(time);
+  }, [date, time]);
+
 
   const handleClick = () => {
     const queryParams = `city=${encodeURIComponent(values.city.id)}&sport=${encodeURIComponent(values.sport.id)}&date=${encodeURIComponent(values.date)}&time=${encodeURIComponent(values.time)}`;
     navigate(`/club/search?${queryParams}`);
   };
+
+  console.log(values)
 
   return (
     <Container
@@ -51,9 +82,35 @@ const SearchBar = () => {
     >
       <SelectInput handleChange={handleChange} options={cities} name="city" />
       <SelectInput handleChange={handleChange} options={categories} name="sport" />
-      <Datepicker handleChange={handleChange} name="date" type="DatePicker" label='Elegí un día'/>
-      <Datepicker handleChange={handleChange} name="time" type="TimeField" label='Elegí un horario'/>
-
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={['DatePicker']}>
+          <DatePicker
+            label="Elegí un día"
+            sx={{ width: 200, textAlign:'center' }}
+            value={date}
+            onChange={(selectedDate) => {
+              setDate(selectedDate)
+              handleChange({name: 'date', value:`${dayjs(selectedDate).format('YYYY-MM-DD')}` })
+            }}
+            disablePast
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer components={['TimeField']}>
+          <TimeField
+            label="Elegí un horario"
+            sx={{ width: 200, textAlign:'center' }}
+            format="HH:00"
+            value = {dayjs(time)}
+            shouldDisableTime = {shouldDisableTime}
+            onChange={(selectedTime) => {
+              setTime(selectedTime)      
+              handleChange({ name: 'time', value:`${dayjs(selectedTime).format('YYYY-MM-DD HH:00')}`}) 
+            }}
+          />
+      </DemoContainer>
+    </LocalizationProvider>
       <Button variant="contained" onClick={handleClick} type='submit' disabled={isButtonDisabled}>
         Buscar Turno
       </Button>
