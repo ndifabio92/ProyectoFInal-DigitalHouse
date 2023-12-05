@@ -49,7 +49,8 @@ const Politics = () => {
             color: "#1F2E7B",
           }}
         >
-          <p>Se puede realizar  o cancelar una reserva hasta una hora antes del inicio de la misma. Las cancealaciones que no cumplan este plazo serán cobradas.</p>
+          <p>Se puede realizar  o cancelar una reserva hasta una hora antes del inicio de la misma.</p>
+          <p> Las cancealaciones que no cumplan este plazo serán cobradas.</p>
         </Typography>
       </div>
 
