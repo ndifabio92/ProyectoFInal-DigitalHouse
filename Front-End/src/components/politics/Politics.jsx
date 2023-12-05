@@ -1,8 +1,8 @@
 import Typography from "@mui/material/Typography";
 import "./Politics.css"
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import PaidIcon from '@mui/icons-material/Paid';
-import HandshakeIcon from '@mui/icons-material/Handshake';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 
 const Politics = () => {
 
@@ -25,7 +25,7 @@ const Politics = () => {
         </Typography>
     <div className="politics-container"> 
       <div className="section-container">
-      <CalendarMonthIcon sx={{color:"#1F2E7B"}}/> 
+      <CalendarMonthOutlinedIcon sx={{color:"#1F2E7B"}}/> 
         <Typography
           variant="h5"
           component="h5"
@@ -56,7 +56,7 @@ const Politics = () => {
       </div>
 
       <div className="section-container">
-      <PaidIcon sx={{color:"#1F2E7B"}}  />
+      <PaidOutlinedIcon sx={{color:"#1F2E7B"}}  />
         <Typography
           variant="h5"
           component="h5"
@@ -85,7 +85,7 @@ const Politics = () => {
       </div>
 
       <div className="section-container">
-      <HandshakeIcon sx={{color:"#1F2E7B"}}/>
+      <HandshakeOutlinedIcon sx={{color:"#1F2E7B"}}/>
         <Typography
           variant="h5"
           component="h5"
