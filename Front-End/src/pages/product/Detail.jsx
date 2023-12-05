@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Box, Container, IconButton} from "@mui/material";
+import { Box, Button, Container, IconButton} from "@mui/material";
 import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
 import Images from "../../components/products/Images";
 import useFetchApi from "../../hooks/useFetchApi";
@@ -9,6 +9,9 @@ import { METHODS } from '../../constants/methods';
 import Characteristic from '../../components/characteristics/Characteristics'
 import Loading from "../../components/loading/Loading";
 import Availability from "../../components/products/Availability";
+import Fab from '@mui/material/Fab';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -67,20 +70,19 @@ const Detail = () => {
           paddingLeft: "150px",
         }}
       >
-        <p>
-          {" "}
-          Domicilio: {`${data?.address?.street} N° ${data?.address?.number}`}
-        </p>
+        <p>Domicilio: {`${data?.address?.street} N° ${data?.address?.number}`}</p>
         <p> Ciudad: {data?.address?.city?.name}</p>
         <p> Provincia: {data?.address?.city?.state?.name}</p>
         <p> Teléfono: {data?.phone_number}</p>
+        <Button href={`https://wa.me/${(data?.phone_number)?.replace(/[\s-]/g, '')}`} sx={{position: 'fixed', bottom: '50px', right: '30px', width: '40px', height: '60px', backgroundColor:'#25D366', borderRadius:'100%', boxShadow:'0 0 10px #676463'}} target="_blank">
+          <WhatsAppIcon style={{color:"white", fontSize: '30px'}}/>
+        </Button>
       </Box>
       <Images images={data.images} idClub={ id } />
       <Characteristic club={data} />
       <Availability idClub={id}/>
-      
     </>
-      }
+    }
     </Container>
   );
 };

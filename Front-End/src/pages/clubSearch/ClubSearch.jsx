@@ -20,7 +20,7 @@ const ClubSearch = () => {
     };
 
     const { data, isLoading, error } = useFetchApi(ENDPOINTS.CLUB_SEARCH, METHODS.POST, filters);
-
+    
     if (data?.lenght > 0) {
         Swal.fire('', '', 'warning')
     }

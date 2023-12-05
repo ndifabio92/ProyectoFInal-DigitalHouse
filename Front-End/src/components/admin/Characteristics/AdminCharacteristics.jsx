@@ -31,7 +31,7 @@ const AdminCharacteristics = () => {
 
     const [characteristic, setCharacteristic] = useState({});
 
-    const [action, setAction] = useState('AGREGAR CARACTERISTICA');
+    const [action, setAction] = useState('AGREGAR CARACTERÍSTICA');
 
     const handleChange = (event, newValue ) => {
         setValue(newValue);

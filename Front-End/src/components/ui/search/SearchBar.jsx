@@ -1,4 +1,5 @@
 import Container from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useForm } from '../../../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
@@ -32,6 +33,7 @@ const SearchBar = () => {
       sx={{
         color: '#FF914D',
         display: 'flex',
+        flexDirection: 'column',
         backgroundColor: '#FFFFFF',
         flexWrap: 'wrap',
         gap: '40px',
@@ -40,12 +42,28 @@ const SearchBar = () => {
         padding: '50px'
       }}
     >
+      <h1>Buscá un turno para tu cancha y empezá a entrenar!</h1>
+      <Box sx={{
+        color: '#FF914D',
+        display: 'flex',
+        backgroundColor: '#FFFFFF',
+        flexWrap: 'wrap',
+        gap: '20px',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        padding: '50px'
+      }}>
       <SelectInput handleChange={handleChange} options={cities} name="city" />
       <SelectInput handleChange={handleChange} options={categories} name="sport" />
       <Datepicker handleChange={handleChange} name="date" type="DatePicker" label='Elegí un día'/>
       <Datepicker handleChange={handleChange} name="time" type="DatePicker" label='Elegí un horario'/>
 
-      <Button variant="contained" onClick={handleClick} type='submit'>Buscar Turno</Button>
+      <Button variant="contained" onClick={handleClick} type='submit'
+        sx={{
+          height: '3.6rem',
+        }}
+      >Buscar Turno</Button>
+      </Box>
     </Container >
 
   );
