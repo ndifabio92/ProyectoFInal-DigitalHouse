@@ -75,7 +75,7 @@ const Categories = () => {
               <InputLabel>Buscar por categorias</InputLabel>
               <Select
                 labelId="categorias"
-                input={<OutlinedInput label="Buscar por categorias" />}
+                input={<OutlinedInput label="Buscar por categorías" />}
               >
                 {categories?.map((category) => (
                   <MenuItem

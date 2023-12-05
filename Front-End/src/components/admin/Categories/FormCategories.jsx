@@ -14,7 +14,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
    
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = action == 'MODIFICAR CATEGORIA' ? {
+    const initialValues = action == 'MODIFICAR CATEGORÍA' ? {
         id:category.id,
         title:category.title,
         description:category.description, 
@@ -26,13 +26,13 @@ const FormCategory = ({action, category, handleUpdate}) => {
             url:'' 
         }
     
-    const labels = action == 'MODIFICAR CATEGORIA' ?{
+    const labels = action == 'MODIFICAR CATEGORÍA' ?{
         title:category.title,
         description:category.description, 
         url: category.url
         }: {
-            title:'TITULO',
-            description:'DESCRIPCION' , 
+            title:'TÍTULO',
+            description:'DESCRIPCIÓN' , 
             url:'URL FOTO'
         }
             
@@ -77,11 +77,11 @@ const FormCategory = ({action, category, handleUpdate}) => {
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
-                console.log("La Solicitur Post se envio correctamente")
+                console.log("La Solicitud Post se envio correctamente")
             }) 
         }
         
-        handleUpdate(0, {}, 'AGREGAR CATEGORIA')
+        handleUpdate(0, {}, 'AGREGAR CATEGORÍA')
     }
 
     
@@ -110,7 +110,7 @@ const FormCategory = ({action, category, handleUpdate}) => {
             })                 
         }
 
-        handleUpdate(0, {}, 'AGREGAR CATEGORIA')
+        handleUpdate(0, {}, 'AGREGAR CATEGORÍA')
     }
 
     return (
@@ -121,15 +121,15 @@ const FormCategory = ({action, category, handleUpdate}) => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(action == 'AGREGAR CATEGORIA' && isComplete(formik.values)){
+                if(action == 'AGREGAR CATEGORÍA' && isComplete(formik.values)){
                     submitFormCreate(formik.values)
                 }
-                else if (action == 'MODIFICAR CATEGORIA'){
+                else if (action == 'MODIFICAR CATEGORÍA'){
                     submitFormUpdate(formik.values)
                 }
                 else{
                     Swal.fire({
-                        title: 'Debe completar todos los campos del formulario',
+                        title: 'Tenes que completar todos los campos del formulario',
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',

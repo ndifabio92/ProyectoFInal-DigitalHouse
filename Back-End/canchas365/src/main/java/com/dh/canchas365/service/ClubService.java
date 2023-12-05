@@ -58,7 +58,7 @@ public class ClubService {
 
         Optional<Club> optionalClub = clubRepository.findByName(dto.getName());
         if(optionalClub.isPresent()){
-            throw new ResourceDuplicateException("Ese nombre de Club ya existe");
+            throw new ResourceDuplicateException("El nombre del Club ya está en uso");
         }
 
         Optional<Address> optionalAddress = addressRepository.findByAddress(dto.getAddress().getStreet(), dto.getAddress().getNumber(), dto.getAddress().getCity().getId());
