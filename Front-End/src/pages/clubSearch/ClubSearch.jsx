@@ -1,13 +1,14 @@
 import { Container } from '@mui/material';
 import Categories from '../../components/categories/Categories';
 import Recomendations from '../../components/recomendations/Recomendations';
-import SearchResults from '../../components/clubSearch/searchResults';
+import SearchResults from '../../components/clubSearch/SearchResults';
+
 
 const ClubSearch = () => {
 
   return (
-    <Container 
-    maxWidth="xl"
+    <Container
+      maxWidth="xl"
       sx={{
         padding: '0',
         mt: '120px',
@@ -19,11 +20,11 @@ const ClubSearch = () => {
       }}
       id='home'
     >
-            <Categories />
-            <SearchResults />
-            <Recomendations/>
-        </Container>
-    );
+      <Categories />
+      <SearchResults />
+      <Recomendations />
+    </Container>
+  );
 }
 
 export default ClubSearch;
