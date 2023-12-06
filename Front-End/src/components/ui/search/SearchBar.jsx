@@ -62,7 +62,14 @@ const SearchBar = () => {
 
       <Button variant="contained" onClick={handleClick} type='submit'
         sx={{
-          height: '3.6rem',
+          padding: '10px',
+          backgroundColor:'#1F2E7B',
+          border:'solid 3px #FF914D',
+          color:'#ffffff',
+          ':hover': {
+            backgroundColor:'#EDEBEE',
+            color: '#1F2E7B'
+          } 
         }}
       >Buscar Turno</Button>
       </Box>

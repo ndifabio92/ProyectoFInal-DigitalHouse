@@ -82,8 +82,15 @@ const ModalConfirm = ({values, club}) => {
                 onClick={handleClick} 
                 type='submit'
                 sx={{
-                    marginX:'auto'
-                    }}
+                    padding: '10px',
+                    backgroundColor:'#1F2E7B',
+                    border:'solid 3px #FF914D',
+                    color:'#ffffff',
+                    ':hover': {
+                      backgroundColor:'#EDEBEE',
+                      color: '#1F2E7B'
+                    } 
+                  }}
             >
                 Reservar
             </Button>
@@ -165,10 +172,29 @@ const ModalConfirm = ({values, club}) => {
                         justifyContent:'space-around',
                         margin:'20px'
                     }}  >
-                    <Button autoFocus onClick={handleClick} variant="contained" >
+                    <Button sx={{
+                    padding: '10px',
+                    backgroundColor:'#1F2E7B',
+                    border:'solid 3px #FF914D',
+                    color:'#ffffff',
+                    ':hover': {
+                      backgroundColor:'#EDEBEE',
+                      color: '#1F2E7B'
+                    } 
+                  }} autoFocus onClick={handleClick} variant="contained" >
                         Cancelar
                     </Button>
-                    <Button onClick={confirm} autoFocus variant="contained" >
+                    <Button sx={{
+                    padding: '10px',
+                    backgroundColor:'#1F2E7B',
+                    border:'solid 3px #FF914D',
+                    color:'#ffffff',
+                    ':hover': {
+                      backgroundColor:'#EDEBEE',
+                      color: '#1F2E7B'
+                    } 
+                    }}
+                    onClick={confirm} autoFocus variant="contained" >
                         Aceptar
                     </Button>
                 </DialogActions>
