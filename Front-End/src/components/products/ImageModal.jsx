@@ -56,6 +56,13 @@ const ImageModal = ({ images }) => {
           variant="contained"
           sx={{
             padding: '10px',
+            backgroundColor:'#1F2E7B',
+            border:'solid 3px #FF914D',
+            color:'#ffffff',
+            ':hover': {
+              backgroundColor:'#EDEBEE',
+              color: '#1F2E7B'
+            } 
           }}
           onClick={handleOpen}
         >

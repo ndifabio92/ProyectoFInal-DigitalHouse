@@ -1,51 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
+
+const today = new Date();
+
+const Datepicker = ({ handleChange, name}) => {
+
+ 
 
 
+  // Función para deshabilitar horarios anteriores al horario actual
+  const shouldDisableTime = (selectedTime) => {
 
-const today = new Date()
-const inicialDay = (today.getFullYear() + '-' + today.getMonth + '-' + today.getDay)
+    const d = `${dayjs(date).format('YYYY-MM-DD')}`
+    const t = dayjs(selectedTime).format('HH')
+    
+    if ( (d == `${dayjs(today).format('YYYY-MM-DD')}`) && `${dayjs(today).format('HH')}` >= t ) {
+
+      console.log('entra al if -- se deshabilita la hora')
+      console.log(d)
+      console.log(`${dayjs(today).format('YYYY-MM-DD')}`)
+      console.log(`${dayjs(today).format('HH')}`)
+      console.log(t)
+
+      return true
+    }
+    else{
+      console.log('No entra al if -- se habilita la hora')
+      console.log(d)
+      console.log(`${dayjs(today).format('YYYY-MM-DD')}`)
+      console.log(`${dayjs(today).format('HH')}`)
+      console.log(t)
+       return false}
+
+  };
+
+  useEffect(() => {
+    shouldDisableTime();
+  }, [date, time]);
 
 
-const Datepicker = ({ handleChange, name, label, defaultValue, inicialDay }) => {
+  return (
+    
 
-    const [date, setDate] = useState(dayjs(inicialDay));
-    const [time, setTime] = useState('')
+      
+  );
+};
 
-    return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {
-                name === 'date' ?
-                    <DemoContainer components={['DatePicker']}>
-                        <DatePicker
-                            label="Elegí un día"
-                            sx={{ width: 200 }}
-                            value={date}
-                            onChange={(selectDate) => {
-                                setDate(selectDate)
-                                handleChange({ name, value: selectDate.$d })
-                            }}
-                        />
-                    </DemoContainer>
-                    : <DemoContainer components={['TimePicker']}>
-                        <TimePicker
-                            label="Elegí un horario"
-                            sx={{ width: 200 }}
-                            defaultValue={defaultValue}
-                            onChange={(selecTime) => {
-                                setTime(selecTime)
-                                handleChange({ name, value: selecTime.$d })
-                            }}
-                        />
-                    </DemoContainer>
-            }
-        </LocalizationProvider>
-    );
-}
-
-export default Datepicker
+export default Datepicker;

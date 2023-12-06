@@ -58,8 +58,8 @@ import Politics from "../../components/politics/Politics";
                     <Container
                         maxWidth="xl"
                         sx={{
-                            padding:'40px',
-                            color: "#011A5B",
+                            paddingX:'auto',
+                            color: "#1F2E7B",
                             backgroundColor: "#FFFFFF",
                             textAlign:'center',
                         }}
@@ -89,12 +89,7 @@ import Politics from "../../components/politics/Politics";
                                 sx={{
                                     backgroundColor: '#FFFFFF',
                                     color: '#1F2E7B',
-                                    display: { xs: 'none', sm: 'flex' },
-                                    flexDirection: 'column',
-                                    direction: 'row',
                                     textAlign: 'center',
-                                    gap: '10px',
-                                    flexWrap: 'wrap',
                                     mt: '40px',
                                     padding: '20px'
                                 }}

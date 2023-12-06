@@ -15,6 +15,7 @@ const Favorites = () => {
         backgroundColor: "#FFFFFF",
         textAlign: "center",
         padding: "100px",
+        pt:'30px'
       }}
     >
         <Box
@@ -32,8 +33,8 @@ const Favorites = () => {
           {favorites &&
             favorites?.map((club) => (
               <CardProducts
-              key={club.id}
-              club={club}
+                key={club.id}
+                club={club}
               />
             ))}
         </Box>

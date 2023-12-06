@@ -1,58 +1,29 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import CardProducts from '../../components/products/CardProducts';
-import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
-import useFetchApi from '../../hooks/useFetchApi';
-import { ENDPOINTS } from '../../constants/endpoints';
-import { METHODS } from '../../constants/methods';
-import dayjs from 'dayjs';
-import Swal from 'sweetalert2';
+import Categories from '../../components/categories/Categories';
+import Recomendations from '../../components/recomendations/Recomendations';
+import SearchResults from '../../components/clubSearch/searchResults';
 
 const ClubSearch = () => {
 
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    
-    const filters = {
-        city: { id: +queryParams.get('city') },
-        category: { id: +queryParams.get('sport') },
-        datetime: `${dayjs(queryParams.get('date').$d).format('YYYY-MM-DDT')}${dayjs(queryParams.get('time')).format('HH:mm:ss[Z]')}`
-    };
-
-    const { data, isLoading, error } = useFetchApi(ENDPOINTS.CLUB_SEARCH, METHODS.POST, filters);
-    
-    if (data?.lenght > 0) {
-        Swal.fire('', '', 'warning')
-    }
-
-    return (
-        <Container
-            maxWidth="xl"
-            sx={{
-                padding: '0',
-                mt: '120px',
-                mb: '40px',
-                display: 'flex',
-                flexDirection: 'column',
-                textAlign: 'center',
-            }}
-            id='home'
-        >
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-                <h1 style={{ margin: '20px 0', color: '#333' }}>RESULTADOS DE TU BÚSQUEDA</h1>
-                {!isLoading &&
-
-                    data.map((club) => (
-                        <CardProducts
-                            key={club.id}
-                            club={club}
-                        />
-                    ))
-                }
-
-            </div>
-        </Container >
+  return (
+    <Container 
+    maxWidth="xl"
+      sx={{
+        padding: '0',
+        mt: '120px',
+        mb: '40px',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'center',
+      }}
+      id='home'
+    >
+            <Categories />
+            <SearchResults />
+            <Recomendations/>
+        </Container>
     );
-};
+}
 
 export default ClubSearch;
