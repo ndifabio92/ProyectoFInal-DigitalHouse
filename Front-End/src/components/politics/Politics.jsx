@@ -117,9 +117,6 @@ const Politics = () => {
           <p>
             Respeto Mutuo: Valoramos a las personas en su diversidad. En nuestra comunidad, nos brindamos siempre un trato respetuoso, cordial y justo.
           </p>
-          <p>
-            Momentos Agradables: Entrenar no solo se trata de deporte, sino también de disfrutar del tiempo compartido. Queremos que cada momento sea memorable y lleno de alegría.
-          </p>
         </Typography>
       </div>
     </div>
