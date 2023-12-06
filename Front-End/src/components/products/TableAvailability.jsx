@@ -60,7 +60,7 @@ const TableAvailability = (props) => {
             textAlign:'left',
             padding:'0px'
             }}> 
-                <Paper sx={{ mb: 2, padding:'0px'}}>
+                <Paper sx={{ mb: 2, padding: '0px', overflowX: 'auto', maxWidth:'100%' }}>
                     <TableContainer component={Paper} sx={{padding:'0px'}}>
                         <Table sx={{
                                 backgroundColor:'#FFFFFF',
@@ -121,6 +121,8 @@ const TableAvailability = (props) => {
                 </Paper>
                 <Box sx={{
                         display:'flex',
+                        flexWrap:'wrap',
+                        flexDirection: { sm: 'row', xs: 'column' },
                         alignItems:'center',
                         justifyContent:'center',
                         gap:'10px'
