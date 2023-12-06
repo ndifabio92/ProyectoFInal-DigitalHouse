@@ -2,6 +2,7 @@ import { Typography, Box, Grid } from "@mui/material"
 
 
 
+
 const Characteristic = ({club}) => {
 
   
@@ -20,7 +21,7 @@ const Characteristic = ({club}) => {
             padding: "40px 80px 40px 80px"
           }}
         >
-          <Typography variant="p" sx={{ mb: 2 }}>Características del club:</Typography>
+          <Typography variant="p" sx={{ mb: 2, fontWeight: 'bold' }}>Características del club:</Typography>
           <Grid container spacing={2}>
             {club?.characteristics?.map((characteristic) => (
               <Grid item xs={6} sm={4} md={3} key={characteristic.id}>

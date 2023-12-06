@@ -60,7 +60,18 @@ const SearchResults = () => {
                 ))}
                 
                 </Box>
-                <Button variant="contained" onClick={()=>{navigate('/')}} sx={{ mt: 2 }}>
+                <Button sx={{
+                    padding: '10px',
+                    backgroundColor:'#1F2E7B',
+                    border:'solid 3px #FF914D',
+                    color:'#ffffff',
+                    ':hover': {
+                      backgroundColor:'#EDEBEE',
+                      color: '#1F2E7B'
+                    } 
+                    }} 
+                    variant="contained" 
+                    onClick={()=>{navigate('/')}}>
                 NUEVA BÚSQUEDA
                 </Button>
 
@@ -83,7 +94,17 @@ const SearchResults = () => {
                     : 'No se encontraron turnos disponibles para tu búsqueda, por favor inténtalo nuevamente.'}
                 </Typography>
                
-                <Button variant="contained" onClick={()=>{navigate('/')}} sx={{ mt: "10px" }}>
+                <Button sx={{
+                    padding: '10px',
+                    backgroundColor:'#1F2E7B',
+                    border:'solid 3px #FF914D',
+                    color:'#ffffff',
+                    ':hover': {
+                      backgroundColor:'#EDEBEE',
+                      color: '#1F2E7B'
+                    } 
+                    }} 
+                    variant="contained" onClick={()=>{navigate('/')}}>
                     NUEVA BÚSQUEDA
                 </Button>
                 

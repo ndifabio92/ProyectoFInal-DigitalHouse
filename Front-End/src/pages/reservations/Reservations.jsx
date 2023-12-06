@@ -1,11 +1,11 @@
-import { Box, Container, IconButton} from "@mui/material";
-import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
+import { Box, Container} from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import DataClub from "../../components/Reservations/DataClub";
 import FormReservations from "../../components/Reservations/FormReservations";
 import useFetchApi from "../../hooks/useFetchApi";
 import { METHODS } from "../../constants/methods";
 import { ENDPOINTS } from "../../constants/endpoints";
+import Goback from "../../components/ui/icons/Goback";
 
 const Reservations = () => {
 
@@ -48,14 +48,7 @@ const Reservations = () => {
             margin: '0px'
             }}>
                 <h2> Reservá tu cancha </h2>
-                <IconButton
-                aria-label="Volver"
-                color="#FFFFFF"
-                size="large"
-                onClick={handleGoback}
-                >
-                    <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
-                </IconButton>
+                <Goback handleClick={handleGoback}/>
             </Box>
             
             <Box sx={{

@@ -31,7 +31,7 @@ const AdminCategories = () => {
 
     const [category, setCategory] = useState({});
 
-    const [action, setAction] = useState('AGREGAR CATEGORIA');
+    const [action, setAction] = useState('AGREGAR CATEGORÍA');
 
     const handleChange = (event, newValue ) => {
         setValue(newValue);

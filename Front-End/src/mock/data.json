@@ -3,11 +3,11 @@
     "id": 1,
     "name": "LOS AMIGOS FUTBOL 5",
     "images": [
-      "./futbol1.png",
-      "./futbol2.png",
-      "./futbol3.png",
-      "./futbol4.png",
-      "./futbol5.png"
+      "./fútbol1.png",
+      "./fútbol2.png",
+      "./fútbol3.png",
+      "./fútbol4.png",
+      "./fútbol5.png"
     ],
     "location": {
       "id": 1,
@@ -21,7 +21,7 @@
         "id": 1,
         "sports": {
           "id": 1,
-          "name": "Futbol"
+          "name": "Fútbol"
         }
       }
     ]

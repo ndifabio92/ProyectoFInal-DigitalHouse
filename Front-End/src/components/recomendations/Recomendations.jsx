@@ -6,6 +6,7 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import Loading from '../loading/Loading';
 import TitleClub from '../products/TitleClub';
 import ImagesCarousel from './ImagesCarousel';
+import { Typography } from '@mui/material';
 
 const Recomendations = () => {
 
@@ -38,7 +39,7 @@ const Recomendations = () => {
               data && data.map((club, index) => (
                 <div key={club.id}>
                   <Button onClick={() => handleClick(club.id)}>
-                    <TitleClub id ={club.id}/>
+                    <TitleClub id ={club.id} />
                   </Button>
                     <ImagesCarousel images ={club.images} idClub ={club.id}/>
                 </div>

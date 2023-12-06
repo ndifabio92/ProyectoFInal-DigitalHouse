@@ -57,8 +57,8 @@ import useAvailability from '../../hooks/useAvailability'
                     <Container
                         maxWidth="xl"
                         sx={{
-                            padding:'40px',
-                            color: "#011A5B",
+                            paddingX:'auto',
+                            color: "#1F2E7B",
                             backgroundColor: "#FFFFFF",
                             textAlign:'center',
                         }}
@@ -88,12 +88,7 @@ import useAvailability from '../../hooks/useAvailability'
                                 sx={{
                                     backgroundColor: '#FFFFFF',
                                     color: '#1F2E7B',
-                                    display: { xs: 'none', sm: 'flex' },
-                                    flexDirection: 'column',
-                                    direction: 'row',
                                     textAlign: 'center',
-                                    gap: '10px',
-                                    flexWrap: 'wrap',
                                     mt: '40px',
                                     padding: '20px'
                                 }}

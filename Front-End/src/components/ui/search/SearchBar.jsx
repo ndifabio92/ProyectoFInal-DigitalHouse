@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Container from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useForm } from '../../../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
@@ -70,16 +71,30 @@ const SearchBar = () => {
   return (
     <Container
       sx={{
-        color: '#FF914D',
+        color: '#1F2E7B',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#FFFFFF',
+        flexWrap: 'wrap',
+        gap: '10px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        paddingBottom:'100px',
+      }}
+    >
+      <h2>Buscá un turno para tu cancha</h2>
+
+      <Box sx={{
+        color: '#1F2E7B',
         display: 'flex',
         backgroundColor: '#FFFFFF',
         flexWrap: 'wrap',
-        gap: '40px',
-        alignItems: 'center',
+        gap: '20px',
+        alignItems: 'flex-end',
         justifyContent: 'center',
-        padding: '50px'
-      }}
-    >
+        padding: '20px'
+      }}>
       <SelectInput handleChange={handleChange} options={cities} name="city" />
       <SelectInput handleChange={handleChange} options={categories} name="sport" />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -109,9 +124,24 @@ const SearchBar = () => {
               handleChange({ name: 'time', value:`${dayjs(selectedTime).format('YYYY-MM-DD HH:00')}`}) 
             }}
           />
-      </DemoContainer>
-    </LocalizationProvider>
-      <Button variant="contained" onClick={handleClick} type='submit' disabled={isButtonDisabled}>
+        </DemoContainer>
+      </LocalizationProvider>
+      </Box>
+      <Button sx={{
+            padding: '10px',
+            backgroundColor:'#1F2E7B',
+            border:'solid 3px #FF914D',
+            color:'#ffffff',
+            ':hover': {
+              backgroundColor:'#EDEBEE',
+              color: '#1F2E7B'
+            },
+            ':disabled': {
+              backgroundColor:'#EDEBEE',
+              color: '#1F2E7B'
+            }  
+          }} 
+          variant="contained" onClick={handleClick} type='submit' disabled={isButtonDisabled}>
         Buscar Turno
       </Button>
     </Container>

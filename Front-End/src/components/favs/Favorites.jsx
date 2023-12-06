@@ -15,6 +15,7 @@ const Favorites = () => {
         backgroundColor: "#FFFFFF",
         textAlign: "center",
         padding: "100px",
+        pt:'30px'
       }}
     >
         <Box
