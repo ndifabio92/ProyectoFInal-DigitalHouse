@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { Box, CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../../constants/endpoints";
 import FavoriteButton from "../favs/FavoriteButton";
@@ -24,34 +24,57 @@ const CardProducts = ({ club }) => {
   return (
     <Card
       sx={{
-        width: 220,
-        height: 400,
-        border: "none",
+        width: 250,
+        height: 360,
+        marginBottom:'50px',
+        border: "solid 1px #FFFFFF",
         backgroundColor: "#EDEBEE",
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         flexDirection: "column",
+        borderRadius:'5%',
+        boxShadow: "0px 3px 3px grey",
       }}
     >
       <CardActionArea
         onClick={handleClick}
         sx={{
-          width: 220,
-          height: 400,
-          border: "none",
-          backgroundColor: "#EDEBEE",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           flexDirection: "column",
         }}
       >
+        <CardMedia
+          component="img"
+          height={160}
+          image={imagenPrinc.url}
+        />
+       
+        <CardContent
+          sx={{
+            border: "none",
+            color: "#1F2E7B",
+            padding: "10px",
+          }}
+        > 
+         <Box sx={{
+          padding:'5px',
+          gap:'10px',
+          alignItems:'center',
+          fontWeight:'bold',
+          width:'100%',
+          height:'35px',
+          }}> 
+          <img src={club.category.url} alt={club.category.title} width={'25px'} />
+          <span> {club.category.title} </span>
+        </Box>
         <Typography
           variant="p"
           component="p"
           sx={{
-            height: "30px",
+            height: "10px",
             padding: "10px",
-            margin: "auto",
+            marginX: "auto",
             fontSize: "16px",
             fontWeight: "bold",
             color: "#1F2E7B",
@@ -59,23 +82,11 @@ const CardProducts = ({ club }) => {
         >
           {club.name}
         </Typography>
-        <CardMedia
-          component="img"
-          height={100}
-          image={imagenPrinc.url}
-          sx={{ margin: "20px" }}
-        />
-
-        <CardContent
-          sx={{
-            border: "none",
-            color: "#1F2E7B",
-            height: "50px",
-            padding: "10px",
-          }}
-        >
           <Typography variant="p" component="p">
-            {`${club.address.street} N° ${club.address.number}, ${club.address.city.name}`}
+            {`${club.address.street} N° ${club.address.number}`}
+          </Typography>
+          <Typography variant="p" component="p">
+            {club.address.city.name}
           </Typography>
           <Typography variant="p" component="p">
             {club.phone_number}
@@ -84,6 +95,9 @@ const CardProducts = ({ club }) => {
       </CardActionArea>
 
       <FavoriteButton
+        sx={{
+          padding: "10px",
+        }}
         clubId={club.id}
       />
     </Card>

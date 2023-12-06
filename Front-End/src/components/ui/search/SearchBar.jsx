@@ -31,27 +31,29 @@ const SearchBar = () => {
     <Container
 
       sx={{
-        color: '#FF914D',
+        color: '#1F2E7B',
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#FFFFFF',
         flexWrap: 'wrap',
-        gap: '40px',
+        gap: '10px',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '50px'
+        padding: '20px',
+        paddingBottom:'50px',
       }}
     >
-      <h1>Buscá un turno para tu cancha y empezá a entrenar!</h1>
+      <h2>Buscá un turno para tu cancha</h2>
+
       <Box sx={{
-        color: '#FF914D',
+        color: '#1F2E7B',
         display: 'flex',
         backgroundColor: '#FFFFFF',
         flexWrap: 'wrap',
         gap: '20px',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        padding: '50px'
+        padding: '20px'
       }}>
       <SelectInput handleChange={handleChange} options={cities} name="city" />
       <SelectInput handleChange={handleChange} options={categories} name="sport" />

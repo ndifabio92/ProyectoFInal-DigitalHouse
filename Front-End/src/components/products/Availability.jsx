@@ -58,7 +58,7 @@ import useAvailability from '../../hooks/useAvailability'
                         maxWidth="xl"
                         sx={{
                             padding:'40px',
-                            color: "#011A5B",
+                            color: "#1F2E7B",
                             backgroundColor: "#FFFFFF",
                             textAlign:'center',
                         }}

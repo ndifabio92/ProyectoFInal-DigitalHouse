@@ -28,7 +28,7 @@ const Products = () => {
         <Box
           sx={{
             color: "#1F2E7B",
-
+            marginY:'30px',
             display: "flex",
             justifyContent: "space-around",
             textAlign: "center",

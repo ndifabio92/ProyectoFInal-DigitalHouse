@@ -32,7 +32,6 @@ const TableAvailability = (props) => {
 
                 else{ return false}
                 
-                
             
         });
     };
