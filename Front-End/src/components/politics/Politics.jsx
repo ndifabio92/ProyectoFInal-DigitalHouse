@@ -9,6 +9,7 @@ const Politics = () => {
 
   return (
     <>
+    <hr className="title-line" />
     <Typography
           variant="h4"
           component="h4"
@@ -19,6 +20,7 @@ const Politics = () => {
             fontWeight: "bold",
             color: "#1F2E7B",
             textDecoration: "underline",
+            margin:"30px",
           }}
         >
           Políticas de uso

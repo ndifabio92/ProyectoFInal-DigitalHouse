@@ -9,6 +9,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import dayjs from 'dayjs';
 import useAvailability from '../../hooks/useAvailability'
+import Politics from "../../components/politics/Politics";
 
 
 
@@ -122,6 +123,7 @@ import useAvailability from '../../hooks/useAvailability'
                                 ))}
                             </Box>
                         )}
+                        <Politics/>
                     </Container>
                 )}
             </>

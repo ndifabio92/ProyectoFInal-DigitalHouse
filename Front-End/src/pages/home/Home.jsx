@@ -3,7 +3,7 @@ import Categories from '../../components/categories/Categories';
 import Recomendations from '../../components/recomendations/Recomendations';
 import SearchBar from '../../components/ui/search/SearchBar';
 import Products from '../../components/products/Products';
-import Politics from "../../components/politics/Politics";
+
 
 const Home = () => {
 
@@ -24,7 +24,6 @@ const Home = () => {
       <SearchBar/>
       <Recomendations/>
       <Products/>
-      <Politics/>
     </Container>
   );
 }

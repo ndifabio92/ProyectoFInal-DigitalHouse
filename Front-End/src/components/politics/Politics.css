@@ -8,6 +8,11 @@
     margin: 10px; 
 }
 
+.title-line {
+    border-top: 2px solid #1F2E7B;
+    margin-top: 10px; /* Ajusta según sea necesario */
+}
+
 
 @media (max-width: 700px) {
     .politics-container {
