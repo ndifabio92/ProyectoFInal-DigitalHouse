@@ -4,6 +4,7 @@ import Recomendations from '../../components/recomendations/Recomendations';
 import SearchBar from '../../components/ui/search/SearchBar';
 import Products from '../../components/products/Products';
 
+
 const Home = () => {
 
   return (
