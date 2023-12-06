@@ -47,7 +47,7 @@ const Detail = () => {
           fontSize: "30px",
           fontWeight: "bold",
           paddingLeft: "20px",
-          margin: '0px'
+          margin: '0px',
         }}
       >
         <h4>{data?.name}</h4>

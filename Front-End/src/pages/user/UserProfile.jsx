@@ -16,7 +16,7 @@ const UserProfile = () => {
   return (
 
     <Container
-      maxWidth="xxl"
+      maxWidth="xl"
       sx={{
         backgroundColor: "#FFFFFF",
         color: "#1F2E7B",
