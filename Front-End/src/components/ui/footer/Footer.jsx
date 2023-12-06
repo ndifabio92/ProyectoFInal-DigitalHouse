@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 
 const Footer = () => {
 
-  const logo = './logoNaranjaNeg.png'
+  const logo = 'https://res.cloudinary.com/dreso9ye9/image/upload/v1701465116/logoNaranjaNeg_rd1s1x.png'
 
   return (
     <Box component="footer"

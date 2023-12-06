@@ -5,8 +5,6 @@ import useFetchDataApi from '../../hooks/useFetchDataApi';
 import useFetchApi from '../../hooks/useFetchApi';
 import Loading from '../../components/loading/Loading'
 import { ENDPOINTS } from '../../constants/endpoints';
-import { IconButton } from '@mui/material';
-import ArrowCircleLeftTwoToneIcon from "@mui/icons-material/ArrowCircleLeftTwoTone";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { METHODS } from '../../constants/methods';
@@ -17,6 +15,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Goback from '../../components/ui/icons/Goback';
 
 
 
@@ -98,28 +97,31 @@ const Filter = () => {
         color: '#1F2E7B',
         backgroundColor: '#FFFFFF',
         textAlign: 'center',
-        padding: '40px',
+        paddingX:'40px',
         mt: '120px',
-        mb: '40px',
-        mx:'auto',
       }}
     >
-          <IconButton
-            aria-label="Volver"
-            color="#FFFFFF"
-            size="large"
-            onClick={goBack}
-            sx={{
-              position: 'absolute',
-              right: 10,
-            }}
-          >
-            <ArrowCircleLeftTwoToneIcon fontSize="large" color="#FFFFFF" />
-          </IconButton>
-          
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          color: "#1F2E7B",
+          backgroundColor: "#FF914D",
+          fontSize: "30px",
+          fontWeight: "bold",
+          paddingLeft: "20px",
+          margin: '0px'
+        }}
+      >
+        <h4>Resultados de búsqueda</h4>
+        <Goback handleClick={goBack}/>
+      </Box>
+        
           <Container
             sx={{
               display:'flex',
+              mt: '40px',
               flexDirection:{ xs: 'column', md: 'row' },
               flexWrap:'nowrap',
               gap:'50px',
@@ -189,11 +191,10 @@ const Filter = () => {
             {
                 (isLoading) ? <Loading /> :
             <div> 
-              <h2>RESULTADOS DE TU BUSQUEDA</h2>
-              <h3>{`${total} clubes encontrados`}</h3>
+              <h3>{`${total} Clubes encontrados`}</h3>
               <Box sx={{
                 mx: 'auto',
-                my:'40px',
+                mt:'60px',
                 backgroundColor: '#FFFFFF',
                 color: '#1F2E7B',
                 display: 'flex',
@@ -205,7 +206,7 @@ const Filter = () => {
               }}>
                   {
                   clubs && data?.map((club) => (
-                    <CardProducts key={club.id} name={club.name} tel={club.phone_number} city={club.address.street + " N° " + club.address.number + ", " + club.address.city.name } id={club.id} />
+                    <CardProducts key={club.id} club={club} />
                   ))
                   }
                 

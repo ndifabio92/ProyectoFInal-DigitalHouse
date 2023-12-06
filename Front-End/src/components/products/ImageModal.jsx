@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import { Container } from '@mui/material';
 
 
 
@@ -33,23 +34,39 @@ const ImageModal = ({ images }) => {
   }, [open]);
 
   return (
-    <>
+    <Container maxWidth="xl" sx={{
+      textAlign: 'left',
+      margin: '0px',
+      display: 'flex',
+      justifyContent: 'flex-end',
+      backgroundColor:'#FFFFFF'
+      
+    }}>
 
       <Box sx={{
         textAlign: 'left',
         margin: '10px',
         marginRight:'150px',
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        backgroundColor:'#FFFFFF'
+        
       }}>
         <Button
           variant="contained"
           sx={{
             padding: '10px',
+            backgroundColor:'#1F2E7B',
+            border:'solid 3px #FF914D',
+            color:'#ffffff',
+            ':hover': {
+              backgroundColor:'#EDEBEE',
+              color: '#1F2E7B'
+            } 
           }}
           onClick={handleOpen}
         >
-          Ver Mas
+          Ver Más
         </Button>
       </Box>
 
@@ -98,7 +115,7 @@ const ImageModal = ({ images }) => {
           </Box>
         </DialogContent>
       </Dialog>
-    </>
+    </Container>
   );
 }
 

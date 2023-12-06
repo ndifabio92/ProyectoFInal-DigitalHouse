@@ -40,9 +40,9 @@ const TableCategory = ({ handleUpdate }) => {
     const handleDelete =  (id, title) => {
     
         Swal.fire({
-            title: `Esta por eliminar la categoria ${title}.`, 
+            title: `Estás por eliminar la categoría ${title}.`, 
             icon: 'warning',
-            text: 'En caso que la misma este siendo utilizada, se eliminaran todos los clubes que la tengan asignada ¿Esta seguro de confirmar la accion?',
+            text: 'En caso que la misma esté siendo utilizada, se eliminarán todos los clubes que la tengan asignada. ¿Estás seguro de confirmar la  siguiente acción?',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -53,16 +53,16 @@ const TableCategory = ({ handleUpdate }) => {
             if (result.isConfirmed) {
                 await fetchData(ENDPOINTS.CATEGORY, METHODS.DELETE, id)
                 if (deleteError) {
-                    console.error('Error al eliminar la categoria:', error)
+                    console.error('Error al eliminar la categoría:', error)
                     Swal.fire({
-                        title: 'Error al eliminar la categoria',
+                        title: 'Error al eliminar la categoría',
                         icon: 'error',
                       });
                 } 
                 else {
-                    console.log('Categoria eliminado con éxito');
+                    console.log('Categoría eliminada con éxito');
                     Swal.fire({
-                        title: 'Categoria eliminada con éxito',
+                        title: 'Categoría eliminada con éxito',
                         icon: 'success',
                       });
                     setCategories(categories.filter((club) => club.id !== id));
@@ -111,7 +111,7 @@ const TableCategory = ({ handleUpdate }) => {
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id, row.title)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CATEGORIA')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CATEGORÍA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

@@ -1,4 +1,4 @@
-import { Button, Container, FormControlLabel, MenuItem, Checkbox, Switch, TextField} from "@mui/material";
+import { Button, Container, FormControlLabel, MenuItem, Checkbox, Switch, TextField, Box} from "@mui/material";
 import { useFormik } from "formik";
 import { validationSchemaForm as validationSchema } from "../../../validations/ValidationSchemaAdmin";
 import styles from './styles.module.css';
@@ -157,9 +157,9 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 if (resp.error){
                     Swal.fire({
                         title: resp.error,
-                        icon: 'warning',
+                        icon: 'error',
                         confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Confirmar',
+                        confirmButtonText: 'OK',
                     }).then(() => {
                        console.log(resp.error)
                     }
@@ -228,7 +228,7 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                 }
                 else{
                     Swal.fire({
-                        title: 'Debe completar todos los campos del formulario',
+                        title: 'Tenés que completar todos los campos del formulario',
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
@@ -327,7 +327,12 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                         onChange={formik.handleChange} onBlur={formik.handleBlur} />}
                     />
                     
-
+                <Box sx={{
+                    display: 'flex', 
+                    gap: '10px',
+                    flexWrap:'wrap',
+                    justifyContent: 'space-between'
+                }} >
                 {
                     characteristics?.map((characteristic) => (
                         <FormControlLabel
@@ -342,9 +347,11 @@ const FormAdmin = ({action, club, handleUpdate}) => {
                                 />
                             }
                             label={characteristic?.name}
+                            sx={{width:'200px', textAlign:'left'}}
                         />
                     ))
                 }
+                </Box>
 
                 { <TextField variant="outlined" size="small" type="file" inputProps={{ multiple: true }} onChange={handleFilesChange} name="files" /> }
 

@@ -76,7 +76,7 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log("La Solicitur Post se envio correctamente")
+                       console.log("La Solicitud Post se envio correctamente")
                     }) 
                 }
         
@@ -105,7 +105,7 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
                     }).then(() => {
-                       console.log("La Solicitur Post se envio correctamente")
+                       console.log("La Solicitud Post se envio correctamente")
                     }) 
                 }
 
@@ -128,7 +128,7 @@ const FormPlayfields = ({idClub, action, playfield, handleUpdate }) => {
                 }
                 else{
                     Swal.fire({
-                        title: 'Debe completar todos los campos del formulario',
+                        title: 'Tenés que completar todos los campos del formulario',
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',

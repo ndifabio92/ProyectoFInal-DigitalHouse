@@ -40,9 +40,9 @@ const TableCharacteristic = ({ handleUpdate }) => {
     const handleDelete =  (id, name) => {
     
         Swal.fire({
-            title: `Esta por eliminar la categoria ${name}.`, 
+            title: `Estás por eliminar la característica. ${name}.`, 
             icon: 'warning',
-            text: 'En caso que la misma este siendo utilizada, no podra eliminarse ¿Esta seguro de confirmar la accion?',
+            text: 'En caso que la misma esté siendo utilizada, no podrá eliminarse. ¿Estás seguro de confirmar la acción?',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -60,7 +60,7 @@ const TableCharacteristic = ({ handleUpdate }) => {
                       });
                 } 
                 else {
-                    console.log('Característica eliminado con éxito');
+                    console.log('Característica eliminada con éxito');
                     Swal.fire({
                         title: 'Característica eliminada con éxito',
                         icon: 'success',
@@ -107,7 +107,7 @@ const TableCharacteristic = ({ handleUpdate }) => {
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center' sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(row.id, row.name)}>Eliminar</Button>
-                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CARACTERISTICA')}>Modificar</Button>
+                                                    <Button variant="outlined" startIcon={<EditIcon />} onClick={() => modificar(row,'MODIFICAR CARACTERÍSTICA')}>Modificar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

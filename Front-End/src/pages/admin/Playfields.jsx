@@ -103,7 +103,7 @@ const Playfields = () => {
                     marginY: '150px'
                 }}
             >
-                <p>Pagina no disponible desde el tipo de dispositivo desde el que desea acceder</p>
+                <p>Página no disponible desde el tipo de dispositivo desde el que desea acceder</p>
             </Box>
 
         </>

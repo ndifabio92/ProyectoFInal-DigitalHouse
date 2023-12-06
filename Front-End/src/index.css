@@ -13,10 +13,13 @@ body {
   padding: 0px;
   place-items: center;
   min-height: 100vh;
+  background-color: #EDEBEE;
 }
 
 a{
   text-decoration: none;
 }
+
+
 
 

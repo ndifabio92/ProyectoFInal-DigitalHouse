@@ -31,7 +31,7 @@ const AdminCategories = () => {
 
     const [category, setCategory] = useState({});
 
-    const [action, setAction] = useState('AGREGAR CATEGORIA');
+    const [action, setAction] = useState('AGREGAR CATEGORÍA');
 
     const handleChange = (event, newValue ) => {
         setValue(newValue);
@@ -58,7 +58,7 @@ const AdminCategories = () => {
                 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Listado de Categorias" />
+                        <Tab label="Listado de Categorías" />
                         <Tab label={action} />
                     </Tabs>
                 </Box>

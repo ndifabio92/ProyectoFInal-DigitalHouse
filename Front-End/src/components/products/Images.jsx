@@ -2,13 +2,14 @@ import { Container, Box} from '@mui/material';
 import ImageModal from './ImageModal';
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
+import Loading from '../loading/Loading';
 
 
-const Images = ({id}) => {
+const Images = ({images, idClub}) => {
 
-  const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
+ // const {data, isLoading} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
-  const imagesURL = data?.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`}))
+  const imagesURL = images?.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${idClub}/download/${image.id}`}))
 
   const imagenPrinc = imagesURL? imagesURL.slice(0,1) : []
 
@@ -16,8 +17,8 @@ const Images = ({id}) => {
 
 
   return (
-    <>
 
+    <>
       <Container maxWidth="xl"
         sx={{
           mx: 'auto',

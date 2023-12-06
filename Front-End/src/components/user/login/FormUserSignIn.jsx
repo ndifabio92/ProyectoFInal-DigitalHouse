@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { ENDPOINTS } from "../../../constants/endpoints";
 import { METHODS } from "../../../constants/methods";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../../auth/context";
 
 const FormUserSignIn = () => {
@@ -29,6 +29,9 @@ const FormUserSignIn = () => {
 
   const { saveData } = AuthContext();
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const fromReserveButton = location.state?.fromReserveButton;
 
   useEffect(() => {
     if (error) {
@@ -56,6 +59,8 @@ const FormUserSignIn = () => {
     <Container maxWidth="md">
       <h1>Iniciar sesión</h1>
 
+      {fromReserveButton && <h5 style={{ color: "#FF914D"}}>Para realizar una reserva por favor iniciá sesión</h5>}
+
       {isLoading ? (
         <Loading />
       ) : (
@@ -77,7 +82,7 @@ const FormUserSignIn = () => {
           <TextField
             variant="outlined"
             size="small"
-            label="Password"
+            label="Contraseña"
             type="password"
             name="password"
             className="input-background"
@@ -92,6 +97,7 @@ const FormUserSignIn = () => {
           <Button variant="contained" type="submit">
             Iniciar sesión
           </Button>
+          <h5 style={{ color: "#1F2E7B" }}>¿Aún no tenés una cuenta? <Link to='/signup' style={{ color: "#FF914D" }} >Registrate</Link></h5>
         </form>
       )}
     </Container>

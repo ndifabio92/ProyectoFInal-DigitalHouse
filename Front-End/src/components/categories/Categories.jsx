@@ -57,7 +57,7 @@ const Categories = () => {
                   justifyContent: 'center',}}
               >
                 <img src={category.url} alt={category.title} width={'60px'} />
-                <h3> {category.title} </h3>
+                <h4> {category.title} </h4>
                 
               </Button>
             ))}
@@ -75,7 +75,7 @@ const Categories = () => {
               <InputLabel>Buscar por categorias</InputLabel>
               <Select
                 labelId="categorias"
-                input={<OutlinedInput label="Buscar por categorias" />}
+                input={<OutlinedInput label="Buscar por categorías" />}
               >
                 {categories?.map((category) => (
                   <MenuItem

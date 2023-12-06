@@ -13,7 +13,7 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
    
     const { data, isLoading, error, fetchData } = useFetchDataApi();
 
-    const initialValues = action == 'MODIFICAR CARACTERISTICA' ? {
+    const initialValues = action == 'MODIFICAR CARACTERÍSTICA' ? {
         id:characteristic.id,
         name:characteristic.name,
         url: characteristic.url
@@ -23,11 +23,11 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
             url:'' 
         }
     
-    const labels = action == 'MODIFICAR CARACTERISTICA' ?{
+    const labels = action == 'MODIFICAR CARACTERÍSTICA' ?{
         name:characteristic.name,
         url: characteristic.url
         }: {
-            name:'CARACTERISTICA',
+            name:'CARACTERÍSTICA',
             url:'ICONO'
         }
             
@@ -66,16 +66,16 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
 
         } else {
             Swal.fire({
-                title: 'Caracteristica agregada con éxito',
+                title: 'Característica agregada con éxito',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
-                console.log("La Solicitur Post se envio correctamente")
+                console.log("La Solicitud Post se envió correctamente")
             }) 
         }
         
-        handleUpdate(0, {}, 'AGREGAR CARACTERISTICA')
+        handleUpdate(0, {}, 'AGREGAR CARACTERÍSTICA')
     }
 
     
@@ -100,11 +100,11 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Confirmar',
             }).then(() => {
-                console.log("La Solicitur Post se envio correctamente")
+                console.log("La Solicitud Post se envió correctamente")
             })                 
         }
 
-        handleUpdate(0, {}, 'AGREGAR CARACTERISTICA')
+        handleUpdate(0, {}, 'AGREGAR CARACTERÍSTICA')
     }
 
     return (
@@ -115,15 +115,15 @@ const FormCharacteristics = ({action, characteristic, handleUpdate}) => {
             
             <form onSubmit={(e) => { 
                 e.preventDefault();
-                if(action == 'AGREGAR CARACTERISTICA' && isComplete(formik.values)){
+                if(action == 'AGREGAR CARACTERÍSTICA' && isComplete(formik.values)){
                     submitFormCreate(formik.values)
                 }
-                else if (action == 'MODIFICAR CARACTERISTICA'){
+                else if (action == 'MODIFICAR CARACTERÍSTICA'){
                     submitFormUpdate(formik.values)
                 }
                 else{
                     Swal.fire({
-                        title: 'Debe completar todos los campos del formulario',
+                        title: 'Tenés que completar todos los campos del formulario',
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',

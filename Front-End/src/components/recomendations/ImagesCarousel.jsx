@@ -1,18 +1,18 @@
 import { Container, Box } from '@mui/material'
 import useFetchApi from '../../hooks/useFetchApi';
 import { ENDPOINTS } from '../../constants/endpoints';
+import Loading from '../loading/Loading';
 
 
-const ImagesCarousel = ({id}) =>{
+const ImagesCarousel = ({images, idClub}) =>{
 
-    const {data} = useFetchApi(`${ENDPOINTS.IMAGES}/${id}`);
 
-    const imagesURL = data?.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${id}/download/${image.id}`}))
+    const imagesURL = images.map((image)=> ({id:`${image.id}`, url:`${import.meta.env.VITE_BACKEND_API}image/${idClub}/download/${image.id}`}))
 
-    const newData = imagesURL? imagesURL.slice(0,4) : []
+    const newData = imagesURL.slice(0,4) 
 
     return(
-        
+
         <Container sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -20,9 +20,11 @@ const ImagesCarousel = ({id}) =>{
             justifyContent: 'center',
             alignItems: 'center',
             maxHeight: 800,
+            backgroundColor:'#FFFFFF'
 
           }}>
-            {newData?.map((image) => (
+          {
+            newData?.map((image) => (
               <Box
                 component="img"
                 key={image.id}
@@ -34,9 +36,11 @@ const ImagesCarousel = ({id}) =>{
                 }}
                 src={image.url}
               />
-            ))}
+            ))
+          }
         </Container>
     )
-}
+   
+} 
 
 export default ImagesCarousel
