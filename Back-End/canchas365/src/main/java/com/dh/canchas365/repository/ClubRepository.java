@@ -1,7 +1,9 @@
 package com.dh.canchas365.repository;
 
 import com.dh.canchas365.dto.ClubDTO;
+import com.dh.canchas365.model.Category;
 import com.dh.canchas365.model.Club;
+import com.dh.canchas365.model.location.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,4 +39,7 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
             "JOIN city ci on ci.id = ad.id_city " +
             "WHERE cl.id_category = :id_category and ci.id = :id_city", nativeQuery = true)
     Optional<List<Club>> clubSearch(@Param("id_category") Long category, @Param("id_city") Long city);
+
+    @Query(value = "SELECT cl FROM Club cl WHERE category = ?1 and address.city = ?2")
+    Optional<List<Club>> clubSearchAll(Category category, City city);
 }

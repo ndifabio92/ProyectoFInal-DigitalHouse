@@ -2,10 +2,12 @@ package com.dh.canchas365.service;
 
 import com.dh.canchas365.dto.*;
 import com.dh.canchas365.dto.images.ImageDTO;
+import com.dh.canchas365.dto.location.CityDTO;
 import com.dh.canchas365.exceptions.ResourceDuplicateException;
 import com.dh.canchas365.model.*;
 import com.dh.canchas365.model.images.Images;
 import com.dh.canchas365.model.location.Address;
+import com.dh.canchas365.model.location.City;
 import com.dh.canchas365.repository.ClubRepository;
 import com.dh.canchas365.repository.ReservationRepository;
 import com.dh.canchas365.repository.location.AddressRepository;
@@ -235,7 +237,7 @@ public class ClubService {
         return clubesDTO;
     }
 
-    public List<ClubDTO> search(SearchDto filters) {
+    public List<ClubDTO> search2(SearchDto filters) {
         ModelMapper mapper = new ModelMapper();
         List<ClubDTO> clubesDTO = new ArrayList<>();
         List<PlayingField> playingFieldsList = new ArrayList<>();
@@ -271,6 +273,46 @@ public class ClubService {
 
         }
 
+
+        return clubesDTO;
+    }
+
+    private Category getCategoryFromDto(CategoryDto categoryDto){
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(categoryDto, Category.class);
+    }
+
+    private City getCityFromDto(CityDTO cityDTO){
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(cityDTO, City.class);
+    }
+
+    public List<ClubDTO> search(SearchDto filters) {
+        ModelMapper mapper = new ModelMapper();
+        List<ClubDTO> clubesDTO = new ArrayList<>();
+
+        List<Club> clubSearch = clubRepository.clubSearchAll(getCategoryFromDto(filters.getCategory()), getCityFromDto(filters.getCity())).orElse(null);
+
+        for(Club club: clubSearch){
+            boolean isAvailable = true;
+            List<PlayingFieldDTO> playingFieldsList = playingFieldService.getPlayingFieldByClub(club.getId());
+            for(PlayingFieldDTO pl: playingFieldsList){
+                Optional<List<Reservation>> optionalReservations = reservationRepository.findByDateTime(filters.getDatetime(),mapper.map(pl, PlayingField.class));
+                if(optionalReservations.isPresent()){
+                    if(optionalReservations.get().size()>0) {
+                        isAvailable = false;
+                        break;
+                    }
+                }
+            }
+            if(isAvailable){
+                ClubDTO clubDTO = mapper.map(club, ClubDTO.class);
+                List<PlayingFieldDTO> playingFieldsDTO = playingFieldService.getPlayingFieldByClub(club.getId());
+                clubDTO.setImages(imagesService.getImagesByClub(club.getId()));
+                clubDTO.setPlayingFields(playingFieldsDTO);
+                clubesDTO.add(clubDTO);
+            }
+        }
 
         return clubesDTO;
     }
