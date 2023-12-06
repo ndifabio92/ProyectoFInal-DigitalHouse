@@ -43,7 +43,6 @@ public class ReservationController extends CustomFieldException {
     @Autowired
     private EmailService emailService;
 
-    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ReservationDto reservationDto, BindingResult bindingResult){
         try{
