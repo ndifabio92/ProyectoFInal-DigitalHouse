@@ -25,7 +25,7 @@ const Images = ({images, idClub}) => {
           marginY:'0px',
           backgroundColor: '#FFFFFF',
           display:'flex',
-          padding: '50px',
+          padding: {sm:'50px', xs:'0px'},
           gap:'0px',
           justifyContent:'center',
           alignItems:'center',
@@ -33,20 +33,21 @@ const Images = ({images, idClub}) => {
         }}
       >
         <Box sx={{
-          width: '400px', height: '400px'
+          width: {sm:'400px', xs:'300px'}, height: {sm:'400px', xs:'300px'}
         }} >
-          <img src={imagenPrinc[0]?.url} alt="" style={{ objectFit: 'cover', width: '400px', height: '400px' }} />
+          <img src={imagenPrinc[0]?.url} alt="" style={{ objectFit: 'cover', width: '100%', height: '100%'} } />
         </Box>
 
           <Box  
-            sx={{height:'400px', 
-            width: '400px',
-            display:'flex',
-            flexWrap: 'wrap',
+            sx={{
+              height: {sm:'400px', xs:'300px'}, 
+              width: {sm:'400px', xs:'300px'},
+              display:'flex',
+              flexWrap: 'wrap',
             
           }}>
               {imagenes?.map((image) => (
-                <img key={image.id} src={image.url} alt="" style={{ objectFit: 'cover', width: '200px', height: '200px' }} />
+                <img key={image.id} src={image.url} alt="" style={{ objectFit: 'cover', width: '50%', height: '50%'}} />
               ))}
           </Box>
       </Container>

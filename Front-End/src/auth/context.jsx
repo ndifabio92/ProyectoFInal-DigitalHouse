@@ -38,7 +38,6 @@ export const DataProvider = ({ children }) => {
   };
 
   const updateFavorites = (clubResult) => {
-    console.log(clubResult);
     if (!favorites.some((club) => club.id === clubResult.id)) {
       setFavorites([...favorites, clubResult]);
     } else {

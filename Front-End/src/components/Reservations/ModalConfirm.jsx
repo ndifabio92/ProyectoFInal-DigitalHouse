@@ -39,6 +39,8 @@ const ModalConfirm = ({values, club}) => {
         setIsOpen(!isOpen)
     }
 
+    console.log(values)
+
     const { data: playingField } = useFetchApi(`${ENDPOINTS.PLAYINGFIELD}`, METHODS.GET, values.playingField.id)
 
     const confirm = async() => {

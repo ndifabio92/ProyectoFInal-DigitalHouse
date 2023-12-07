@@ -67,8 +67,6 @@ const SearchBar = () => {
     navigate(`/club/search?${queryParams}`);
   };
 
-  console.log(values)
-
   return (
     <Container
       sx={{

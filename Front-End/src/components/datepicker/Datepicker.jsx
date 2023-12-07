@@ -21,20 +21,9 @@ const Datepicker = ({ handleChange, name}) => {
     
     if ( (d == `${dayjs(today).format('YYYY-MM-DD')}`) && `${dayjs(today).format('HH')}` >= t ) {
 
-      console.log('entra al if -- se deshabilita la hora')
-      console.log(d)
-      console.log(`${dayjs(today).format('YYYY-MM-DD')}`)
-      console.log(`${dayjs(today).format('HH')}`)
-      console.log(t)
-
       return true
     }
     else{
-      console.log('No entra al if -- se habilita la hora')
-      console.log(d)
-      console.log(`${dayjs(today).format('YYYY-MM-DD')}`)
-      console.log(`${dayjs(today).format('HH')}`)
-      console.log(t)
        return false}
 
   };
