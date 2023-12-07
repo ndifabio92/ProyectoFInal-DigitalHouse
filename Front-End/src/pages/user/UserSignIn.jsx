@@ -6,7 +6,7 @@ const UserSignIn = () => {
   return (
     <div>
       <Container
-        maxWidth="xxl"
+        maxWidth="xl"
         sx={{
           backgroundColor: "#FFFFFF",
           color: "#1F2E7B",
@@ -14,7 +14,7 @@ const UserSignIn = () => {
           flexDirection: "column",
           textAlign: "center",
           gap: "10px",
-          mt: { xs: "50px", sm: "150px" }, // Ajuste del margen en dispositivos móviles
+          mt: "150px" ,
           padding: "20px", // Ajuste del padding en dispositivos móviles
         }}
       >

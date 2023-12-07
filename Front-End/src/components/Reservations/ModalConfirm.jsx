@@ -85,6 +85,7 @@ const ModalConfirm = ({values, club}) => {
                     padding: '10px',
                     backgroundColor:'#1F2E7B',
                     border:'solid 3px #FF914D',
+                    margin:'10px',
                     color:'#ffffff',
                     ':hover': {
                       backgroundColor:'#EDEBEE',

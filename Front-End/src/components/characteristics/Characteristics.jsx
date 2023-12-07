@@ -9,7 +9,7 @@ const Characteristic = ({club}) => {
 
     return (
       <> 
-        <Typography variant="p" sx={{ mb: 2, fontWeight: 'bold' }}>Características del club:</Typography>
+        <Typography variant="p" sx={{ margin:'10px', fontWeight: 'bold' }}>Características del club:</Typography>
          
         <Box
           sx={{

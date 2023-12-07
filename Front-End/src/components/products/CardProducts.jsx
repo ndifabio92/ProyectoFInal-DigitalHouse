@@ -25,7 +25,7 @@ const CardProducts = ({ club }) => {
       sx={{
         width: 250,
         height: 360,
-        marginBottom:'50px',
+        marginBottom:{sm:'50px', xs:'20px'},
         border: "solid 1px #FFFFFF",
         backgroundColor: "#EDEBEE",
         display: "flex",

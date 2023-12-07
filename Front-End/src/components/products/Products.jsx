@@ -18,7 +18,7 @@ const Products = () => {
       sx={{
         color: "#1F2E7B",
         textAlign: "center",
-        padding: "100px",
+        padding: {sm: "100px", xs: '20px'},
         backgroundColor: "#FFFFFF",
       }}
     >

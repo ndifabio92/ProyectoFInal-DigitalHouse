@@ -60,7 +60,7 @@ const Detail = () => {
           backgroundColor: "#FFFFFF",
           textAlign: "left",
           padding: "10px",
-          paddingLeft: "150px",
+          paddingLeft: {sm:"150px", xs:'30px'},
         }}
       >
         <p> Domicilio: {`${data?.address?.street} N° ${data?.address?.number}`}</p>

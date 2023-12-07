@@ -14,7 +14,7 @@ const Favorites = () => {
         color: "#1F2E7B",
         backgroundColor: "#FFFFFF",
         textAlign: "center",
-        padding: "100px",
+        padding: { sm:"100px", xs: '20px'},
         pt:'30px'
       }}
     >

@@ -50,7 +50,7 @@ const UserProfile = () => {
         elevation={3} // Puedes ajustar el nivel de elevación según tu preferencia
         sx={{
           p: 2,
-          width: '400px',
+          width: {sm:'400px', xs:'250px'},
           marginX:'auto',
           marginY:'40px',
           backgroundColor: "#FFFFFF", // Color de fondo del Paper

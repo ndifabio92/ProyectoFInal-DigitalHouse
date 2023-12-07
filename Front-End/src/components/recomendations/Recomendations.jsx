@@ -12,7 +12,7 @@ const Recomendations = () => {
 
   const navigate = useNavigate();
 
-  const handleClick = (id) => navigate(`${ENDPOINTS.CLUB}/${id.toString()}`)
+  const handleClick = (id) => navigate(`/${ENDPOINTS.CLUB}/${id.toString()}`)
 
   const { data, isLoading, error } = useFetchApi(ENDPOINTS.RECOMMENDED);
 
