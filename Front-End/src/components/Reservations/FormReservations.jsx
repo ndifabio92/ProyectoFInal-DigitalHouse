@@ -120,6 +120,7 @@ return (
                         views={['year', 'month', 'day']}
                         value={dayjs(date)}
                         onChange={(newValue) => {setDate(dayjs(newValue).format('YYYY-MM-DD HH:mm:ss'))}}
+                        format="DD-MM-YYYY"
                     />
                     <Box sx={{
                         display: 'flex',

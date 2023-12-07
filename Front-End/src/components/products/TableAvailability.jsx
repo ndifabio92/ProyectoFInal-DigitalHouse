@@ -19,6 +19,12 @@ const TableAvailability = (props) => {
     const {playingfields, reservations, date, idClub} = props
  
     const isReserved = (playingFieldId, hour) => {
+
+        if (reservations.length === 0) {
+            const today = new Date();
+            return date === dayjs(today).format("YYYY-MM-DD") && today.getHours() >= hour;
+        }
+
         return reservations.some((reservation) => {
             const startHour = new Date(reservation.startDatetime).getHours();
             const endHour = new Date(reservation.endDatetime).getHours();
