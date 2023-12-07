@@ -1,4 +1,4 @@
-import { Typography, Box, Grid } from "@mui/material"
+import { Typography, Box} from "@mui/material"
 
 
 
@@ -8,12 +8,16 @@ const Characteristic = ({club}) => {
   
 
     return (
+      <> 
+        <Typography variant="p" sx={{ mb: 2, fontWeight: 'bold' }}>Características del club:</Typography>
+         
         <Box
           sx={{
             display:'flex',
             flexWrap: 'wrap',
-            flexDirection: 'column',
+            flexDirection: 'row',
             alignContent: 'center',
+            gap:'20px',
             justifyContent: 'center',
             color: "#011A5B",
             backgroundColor: "#FFFFFF",
@@ -21,11 +25,11 @@ const Characteristic = ({club}) => {
             padding: "40px 80px 40px 80px"
           }}
         >
-          <Typography variant="p" sx={{ mb: 2, fontWeight: 'bold' }}>Características del club:</Typography>
-          <Grid container spacing={2}>
+          
             {club?.characteristics?.map((characteristic) => (
-              <Grid item xs={6} sm={4} md={3} key={characteristic.id}>
-                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                <Box 
+                  key={characteristic.id}
+                  sx={{ display: "flex", flexWrap:'wrap', alignItems: "center", gap:'3px'}}>
                   <img
                     src={characteristic.url}
                     alt={characteristic.name}
@@ -33,10 +37,10 @@ const Characteristic = ({club}) => {
                   />
                   <Typography>{characteristic.name}</Typography>
                 </Box>
-              </Grid>
             ))}
-          </Grid>
+       
         </Box>
+      </>
     )
 }
 export default Characteristic
