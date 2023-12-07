@@ -25,6 +25,7 @@ const Calendar = (props) => {
               defaultValue={day}
               sx={{ width: 300 }}
               value={date}
+              format="DD-MM-YYYY"
               onChange={(selectedDate) => {
                 // Utiliza la función de devolución de llamada de setDate para asegurarte de que estás utilizando el valor más reciente
                 setDate((prevDate) => {

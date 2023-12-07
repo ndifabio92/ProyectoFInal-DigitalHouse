@@ -15,10 +15,10 @@ import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    @Query(value = "SELECT * FROM reservation r " +
-            "WHERE :datetime = r.start_datetime OR (:datetime > r.start_datetime AND :datetime < r.end_datetime)",
-            nativeQuery = true)
-    Optional<List<Reservation>> findByDateTime(@Param("datetime") LocalDateTime dateTime);
+    @Query(value = "SELECT r FROM Reservation r " +
+            "WHERE startDatetime = ?1 AND playingField = ?2")
+    Optional<List<Reservation>> findByDateTime(LocalDateTime dateTo,
+                                               PlayingField playingField);
 
     @Query(value = "SELECT r FROM Reservation r " +
             "WHERE startDatetime > ?1 AND endDatetime < ?2 AND playingField = ?3")

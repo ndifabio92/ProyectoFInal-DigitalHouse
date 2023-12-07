@@ -94,7 +94,8 @@ const Filter = () => {
   return (
     <Container maxWidth="xl"
       sx={{
-        color: '#1F2E7B',
+        mb:'40px',
+        color: "#011A5B",
         backgroundColor: '#FFFFFF',
         textAlign: 'center',
         paddingX:'40px',

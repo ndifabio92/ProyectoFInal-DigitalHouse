@@ -158,7 +158,7 @@ const ModalConfirm = ({values, club}) => {
                             <h3> {club.name} </h3>
                             <span> {club.address?.street} N° {club.address?.number} </span>
                             <span> {club.address?.city?.name} </span>
-                            <span> {playingField?.description} </span>
+                           {/* <span> {playingField?.description} </span> */}
                         </Box>
 
                     </DialogContentText>
