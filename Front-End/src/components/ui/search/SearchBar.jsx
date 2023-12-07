@@ -18,9 +18,9 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const { data: categories } = useFetchApi(`${ENDPOINTS.CATEGORY}`);
   const { data: cities } = useFetchApi(`${ENDPOINTS.CITY}`);
-  const [date, setDate] = useState();
-  const [time, setTime] = useState();
   const today = new Date();
+  const [date, setDate] = useState(null);
+  const [time, setTime] = useState(null);
 
   const { values, handleChange } = useForm({
     city: '',
@@ -100,9 +100,10 @@ const SearchBar = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DatePicker']}>
           <DatePicker
-            label="Elegí un día"
+            label="Ingresá un día"
             sx={{ width: 200, textAlign:'center' }}
             value={date}
+            format="DD-MM-YYYY"
             onChange={(selectedDate) => {
               setDate(selectedDate)
               handleChange({name: 'date', value:`${dayjs(selectedDate).format('YYYY-MM-DD')}` })
@@ -114,7 +115,8 @@ const SearchBar = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimeField']}>
           <TimeField
-            label="Elegí un horario"
+            error={false}
+            label="Ingresá una hora"
             sx={{ width: 200, textAlign:'center' }}
             format="HH:00"
             value = {dayjs(time)}
