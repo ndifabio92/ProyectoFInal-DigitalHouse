@@ -10,6 +10,7 @@ import { ENDPOINTS } from "../../../constants/endpoints";
 import { METHODS } from "../../../constants/methods";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../../../auth/context";
+import { Typography} from "@mui/material"
 
 const FormUserSignIn = () => {
   const { data, isLoading, error, fetchData } = useFetchDataApi();
@@ -57,7 +58,17 @@ const FormUserSignIn = () => {
 
   return (
     <Container maxWidth="md">
-      <h1>Iniciar sesión</h1>
+
+      <Typography variant="h3" component="h3" 
+        sx={{
+            padding: {sm:'50px', xs:'10px'},
+            margin:'auto',
+            color: '#1F2E7B',
+            fontSize:'30px', 
+            fontWeight:'bolder'
+        }}>
+            Iniciar sesión
+        </Typography>
 
       {fromReserveButton && <h5 style={{ color: "#FF914D"}}>Para realizar una reserva por favor iniciá sesión</h5>}
 

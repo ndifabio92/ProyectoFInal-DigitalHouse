@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 const User = () => {
   return (
     <div>
-      <Container maxWidth="xxl"
+      <Container maxWidth="xl"
         sx={{
           backgroundColor: '#FFFFFF',
           color: '#1F2E7B',
@@ -12,7 +12,7 @@ const User = () => {
           flexDirection: 'column',
           textAlign: 'center',
           gap: '10px',
-          mt: { xs: '50px', sm: '150px' }, // Ajuste del margen en dispositivos móviles
+          mt: '150px', // Ajuste del margen en dispositivos móviles
           padding: '20px', // Ajuste del padding en dispositivos móviles
         }}>
         <FormUser />

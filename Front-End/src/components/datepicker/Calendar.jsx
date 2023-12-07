@@ -23,7 +23,7 @@ const Calendar = (props) => {
               label={label}
               views={['year', 'month', 'day']}
               defaultValue={day}
-              sx={{ width: 300 }}
+              sx={{ width:{sm:300, xs:200}  }}
               value={date}
               format="DD-MM-YYYY"
               onChange={(selectedDate) => {
