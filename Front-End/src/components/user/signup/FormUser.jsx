@@ -70,7 +70,7 @@ const FormUser = () => {
   return (
     <Container maxWidth="md">
       <div>
-        <h1>Crear Usuario</h1>
+      <div className={`${styles.contenedor}`}><h1>Crear Usuario</h1></div>
         {isLoading ? (
           <Loading />
         ) : (

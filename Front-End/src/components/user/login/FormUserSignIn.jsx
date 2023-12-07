@@ -56,8 +56,8 @@ const FormUserSignIn = () => {
   }, [data, error]);
 
   return (
-    <Container maxWidth="md">
-      <h1>Iniciar sesión</h1>
+    <Container maxWidth="md" >
+      <div className={`${styles.contenedor}`}> <h1>Iniciar sesión</h1> </div>
 
       {fromReserveButton && <h5 style={{ color: "#FF914D"}}>Para realizar una reserva por favor iniciá sesión</h5>}
 
